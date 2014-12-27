@@ -42,3 +42,5 @@ Class names are in PascalCase, methods and variables in camelCase. Classes shoul
 'using namespace' in a header file is strictly forbidden; it's acceptable in .cpp-files.
 
 GLSL shaders should be stored in shaderName_type.glsl files in Resources, where shaderName is the name of the shader (eg. "default") and type is the type of shader (eg. "fragment", "geometry" or "vertex"). Example: "default_vertex.glsl".
+
+Use issue tracker to assign issues to person responsible for fixing them so multiple people don't work on the same thing.
