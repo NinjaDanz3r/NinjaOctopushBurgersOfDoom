@@ -6,20 +6,23 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+// Handles errors by printing them to the standard error stream.
 static void errorCallback(int error, const char* description) {
 	fputs(description, stderr);
 }
 
+// Handles key events.
 static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GL_TRUE);
 }
 
+// Main game function. Contains the main loop.
 int main() {
 	GLFWwindow* window;
-
+	
 	glfwSetErrorCallback(errorCallback);
-
+	
 	glewInit();
 
 	if (!glfwInit())
