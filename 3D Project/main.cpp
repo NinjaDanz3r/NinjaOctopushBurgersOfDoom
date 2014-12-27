@@ -20,6 +20,8 @@ int main() {
 
 	glfwSetErrorCallback(errorCallback);
 
+	glewInit();
+
 	if (!glfwInit())
 		exit(EXIT_FAILURE);
 
