@@ -44,7 +44,7 @@ void Game::setWindowFPS() {
 		char title[256];
 		title[255] = '\0';
 
-		sprintf(title, "%s - [FPS: %i]", "Super Awesome 3D Project ", frames);
+		sprintf(title, "Super Awesome 3D Project - [FPS: %i]", frames);
 
 		glfwSetWindowTitle(window, title);
 
