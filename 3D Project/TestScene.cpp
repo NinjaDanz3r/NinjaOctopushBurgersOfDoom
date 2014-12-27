@@ -11,8 +11,10 @@ TestScene::~TestScene() {
 
 }
 
-void TestScene::update(double time) {
+Scene::SceneEnd* TestScene::update(double time) {
 	rotation += (float)time * 50.f;
+
+	return nullptr;
 }
 
 void TestScene::render(int width, int height) {

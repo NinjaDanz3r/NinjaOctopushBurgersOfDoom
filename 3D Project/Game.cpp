@@ -15,8 +15,20 @@ void Game::update() {
 	int width, height;
 	glfwGetFramebufferSize(window, &width, &height);
 
-	currentScene->update(glfwGetTime() - lastTime);
-	currentScene->render(width, height);
+	Scene::SceneEnd* status = currentScene->update(glfwGetTime() - lastTime);
+	if (status == nullptr) {
+		currentScene->render(width, height);
+	} else {
+		if (status->command == Scene::SceneEnd::NEW_SCENE) {
+			delete currentScene;
+			currentScene = status->nextScene;
+		}
+
+		if (status->command == Scene::SceneEnd::QUIT)
+			glfwSetWindowShouldClose(window, GL_TRUE);
+
+		delete status;
+	}
 
 	lastTime = glfwGetTime();
 }

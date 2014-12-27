@@ -13,7 +13,7 @@ class TestScene : public Scene {
 		~TestScene();
 
 		// Updates the scene.
-		void update(double time);
+		SceneEnd* update(double time);
 
 		// Renders the scene.
 		void render(int width, int height);
