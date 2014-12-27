@@ -19,6 +19,7 @@ Apart from these, we are also aiming to implement the following techniques:
 ##Projection
 
 ##Acceleration
+* Back-face culling using geometry shader. (TODO)
 
 ##Miscellaneous
 
@@ -39,3 +40,5 @@ Since this is a school project, our intention is to implement all of this oursel
 Class names are in PascalCase, methods and variables in camelCase. Classes should be implemented in their own header-files with accompanying .cpp-files. These files should have the same filename as the name of the class (with the same capitalization). Source files implementing other functionality should be named in camelCase.
 
 'using namespace' in a header file is strictly forbidden; it's acceptable in .cpp-files.
+
+GLSL shaders should be stored in shaderName_type.glsl files in Resources, where shaderName is the name of the shader (eg. "default") and type is the type of shader (eg. "fragment", "geometry" or "vertex"). Example: "default_vertex.glsl".
