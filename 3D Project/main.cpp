@@ -34,8 +34,6 @@ int main() {
 	#endif
 	
 	glfwSetErrorCallback(errorCallback);
-	
-	glewInit();
 
 	if (!glfwInit())
 		exit(EXIT_FAILURE);
@@ -47,6 +45,8 @@ int main() {
 	}
 
 	glfwMakeContextCurrent(window);
+
+	glewInit();
 
 	glfwSetKeyCallback(window, keyCallback);
 

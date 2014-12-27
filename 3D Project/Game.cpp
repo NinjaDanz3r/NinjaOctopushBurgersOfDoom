@@ -7,6 +7,9 @@ Game::Game(GLFWwindow* window) {
 	this->window = window;
 	currentScene = new TestScene();
 	lastTime = glfwGetTime();
+
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
 }
 
 Game::~Game() {

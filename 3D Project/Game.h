@@ -1,7 +1,12 @@
 #ifndef __GAME_H__
 #define __GAME_H__
 
+#include <gl/glew.h>
+#include <gl/GL.h>
+
 #include "Scene.h"
+
+#define GLFW_DLL
 #include <GLFW/glfw3.h>
 
 // Game class to handle the active scene.
