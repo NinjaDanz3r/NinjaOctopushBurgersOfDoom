@@ -17,10 +17,14 @@ class Game {
 		void update();
 
 	private:
+		void setWindowFPS();
+
 		GLFWwindow* window;
 		Scene* currentScene;
 
 		double lastTime;
+		double prevFPSTime = 0.0;
+		int frames = 0;
 };
 
 #endif
