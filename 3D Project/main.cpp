@@ -1,13 +1,18 @@
 #include <GL/glew.h>
 
+#if defined(_WIN32) || defined(WIN32)
+#include <windows.h>
+#endif
+
 #define GLFW_DLL
 #include <GLFW/glfw3.h>
 
 #define _CRTDBG_MAP_ALLOC
 #include <crtdbg.h>
-
 #include <stdlib.h>
 #include <stdio.h>
+
+#include "Game.h"
 
 // Handles errors by printing them to the standard error stream.
 static void errorCallback(int error, const char* description) {
@@ -23,6 +28,10 @@ static void keyCallback(GLFWwindow* window, int key, int scancode, int action, i
 // Main game function. Contains the main loop.
 int main() {
 	GLFWwindow* window;
+
+	#if defined(_WIN32) || defined(WIN32)
+	FreeConsole();
+	#endif
 	
 	glfwSetErrorCallback(errorCallback);
 	
@@ -31,7 +40,7 @@ int main() {
 	if (!glfwInit())
 		exit(EXIT_FAILURE);
 
-	window = glfwCreateWindow(640, 480, "Simple example", NULL, NULL);
+	window = glfwCreateWindow(640, 480, "Super Awesome 3D Project", NULL, NULL);
 	if (!window){
 		glfwTerminate();
 		exit(EXIT_FAILURE);
@@ -41,39 +50,18 @@ int main() {
 
 	glfwSetKeyCallback(window, keyCallback);
 
+	Game* game = new Game(window);
+
 	while (!glfwWindowShouldClose(window)) {
-		float ratio;
-		int width, height;
-
-		glfwGetFramebufferSize(window, &width, &height);
-		ratio = width / (float)height;
-
-		glViewport(0, 0, width, height);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		glOrtho(-ratio, ratio, -1.f, 1.f, 1.f, -1.f);
-		glMatrixMode(GL_MODELVIEW);
-
-		glLoadIdentity();
-		glRotatef((float)glfwGetTime() * 50.f, 0.f, 0.f, 1.f);
-
-		glBegin(GL_TRIANGLES);
-		glColor3f(1.f, 0.f, 0.f);
-		glVertex3f(-0.6f, -0.4f, 0.f);
-		glColor3f(0.f, 1.f, 0.f);
-		glVertex3f(0.6f, -0.4f, 0.f);
-		glColor3f(0.f, 0.f, 1.f);
-		glVertex3f(0.f, 0.6f, 0.f);
-		glEnd();
+		game->update();
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
 
-	glfwDestroyWindow(window);
+	delete game;
 
+	glfwDestroyWindow(window);
 	glfwTerminate();
 
 	_CrtDumpMemoryLeaks();
