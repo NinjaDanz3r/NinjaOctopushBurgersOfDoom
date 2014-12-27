@@ -1,5 +1,5 @@
 /*
-Clone incoming triangles 0.5 units along the normal vector (world space) and prepare values for Phong fragment shader.
+Cull backfaces of incoming triangles and prepare values for Phong fragment shader.
 */
 #version 400
 
@@ -29,16 +29,19 @@ void main() {
 	vec3 n = cross(gl_in[1].gl_Position.xyz-gl_in[0].gl_Position.xyz, gl_in[2].gl_Position.xyz-gl_in[0].gl_Position.xyz);
 	vec3 normal = normalize(normalMatrix * n);
 	
-	// Regular triangle.
-	for(int i = 0; i < gl_in.length(); i++) {
-		// Copy attributes
-		vertexOut.position = vec3(viewMatrix * modelMatrix * gl_in[i].gl_Position);
-		vertexOut.normal = normal;
-		vertexOut.tex_coords = vertexIn[i].tex_coords;
-		gl_Position = projectionMatrix * vec4(vertexOut.position, 1.0);
+	// Only display triangle if it's facing the viewer.
+	float d = dot(normal, vec3(0.0, 0.0, 1.0));
+	if (d > 0.0) {
+		for(int i = 0; i < gl_in.length(); i++) {
+			// Copy attributes
+			vertexOut.position = vec3(viewMatrix * modelMatrix * gl_in[i].gl_Position);
+			vertexOut.normal = normal;
+			vertexOut.tex_coords = vertexIn[i].tex_coords;
+			gl_Position = projectionMatrix * vec4(vertexOut.position, 1.0);
 		
-		// done with the vertex
-		EmitVertex();
+			// done with the vertex
+			EmitVertex();
+		}
+		EndPrimitive();
 	}
-	EndPrimitive();
 }
