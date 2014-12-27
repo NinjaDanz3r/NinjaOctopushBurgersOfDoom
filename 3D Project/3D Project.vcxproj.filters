@@ -15,30 +15,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D3DClass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="D3DClass.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="bth_image.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="VertexShader.hlsl">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="PixelShader.hlsl">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="GeometryShader.hlsl">
-      <Filter>Source Files</Filter>
-    </None>
   </ItemGroup>
 </Project>
