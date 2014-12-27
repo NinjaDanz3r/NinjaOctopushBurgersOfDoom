@@ -3,6 +3,9 @@
 #define GLFW_DLL
 #include <GLFW/glfw3.h>
 
+#define _CRTDBG_MAP_ALLOC
+#include <crtdbg.h>
+
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -72,5 +75,8 @@ int main() {
 	glfwDestroyWindow(window);
 
 	glfwTerminate();
+
+	_CrtDumpMemoryLeaks();
+
 	exit(EXIT_SUCCESS);
 }
