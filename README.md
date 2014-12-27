@@ -19,7 +19,7 @@ Apart from these, we are also aiming to implement the following techniques:
 ##Projection
 
 ##Acceleration
-* Back-face culling using geometry shader. (TODO)
+* Back-face culling using geometry shader.
 
 ##Miscellaneous
 
