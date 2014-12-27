@@ -1,6 +1,8 @@
 #include <gl/glew.h>
 #include <gl/GL.h>
 
+#include <GLFW\glfw3.h>
+
 #include "TestScene.h"
 
 TestScene::TestScene() {
@@ -13,6 +15,9 @@ TestScene::~TestScene() {
 
 Scene::SceneEnd* TestScene::update(double time) {
 	rotation += (float)time * 50.f;
+
+	if (rotation > 270.f)
+		return new Scene::SceneEnd(Scene::SceneEnd::NEW_SCENE, new TestScene());
 
 	return nullptr;
 }
