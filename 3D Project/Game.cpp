@@ -1,10 +1,13 @@
 #include "Game.h"
 #include "TestScene.h"
+#include "input.h"
 
 #include <stdio.h>
 
 Game::Game(GLFWwindow* window) {
 	this->window = window;
+	input::setWindow(window);
+
 	currentScene = new TestScene();
 	lastTime = glfwGetTime();
 
