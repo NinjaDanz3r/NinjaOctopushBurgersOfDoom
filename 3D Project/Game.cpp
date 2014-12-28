@@ -6,7 +6,9 @@
 
 Game::Game(GLFWwindow* window) {
 	this->window = window;
+	input::init();
 	input::setWindow(window);
+	assignKeyboardBindings();
 
 	currentScene = new TestScene();
 	lastTime = glfwGetTime();
@@ -16,11 +18,14 @@ Game::Game(GLFWwindow* window) {
 
 Game::~Game() {
 	delete currentScene;
+	input::free();
 }
 
 void Game::update() {
 	int width, height;
 	glfwGetFramebufferSize(window, &width, &height);
+
+	input::update();
 
 	Scene::SceneEnd* status = currentScene->update(glfwGetTime() - lastTime);
 	if (status == nullptr) {
@@ -56,4 +61,11 @@ void Game::setWindowFPS() {
 		frames = 0;
 		prevFPSTime += 1.0;
 	}
+}
+
+void Game::assignKeyboardBindings() {
+	input::assignKeyboard(input::FORWARD, GLFW_KEY_W);
+	input::assignKeyboard(input::BACKWARD, GLFW_KEY_S);
+	input::assignKeyboard(input::LEFT, GLFW_KEY_A);
+	input::assignKeyboard(input::RIGHT, GLFW_KEY_D);
 }

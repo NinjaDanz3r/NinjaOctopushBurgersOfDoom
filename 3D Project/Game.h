@@ -23,6 +23,7 @@ class Game {
 
 	private:
 		void setWindowFPS();
+		void assignKeyboardBindings();
 
 		GLFWwindow* window;
 		Scene* currentScene;

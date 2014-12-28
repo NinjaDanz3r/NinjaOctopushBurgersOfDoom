@@ -1,17 +1,40 @@
 #include "input.h"
 
-#define GLFW_DLL
-#include <GLFW/glfw3.h>
+#include <vector>
 
 namespace input {
 	GLFWwindow* _window;
+	std::vector<int>* keyboardBindings;
+	bool buttonDown[BUTTONS];
+
+	void init() {
+		keyboardBindings = new std::vector<int>[BUTTONS];
+	}
+
+	void free() {
+		delete[] keyboardBindings;
+	}
 
 	void setWindow(GLFWwindow* window) {
 		_window = window;
 	}
 
+	void update() {
+		for (int button = 0; button < BUTTONS; button++) {
+			buttonDown[button] = false;
+			for (auto &key : keyboardBindings[button]) {
+				if (glfwGetKey(_window, key) == GLFW_PRESS)
+					buttonDown[button] = true;
+			}
+		}
+	}
+
+	void assignKeyboard(Button button, int key) {
+		keyboardBindings[button].push_back(key);
+	}
+
 	bool pressed(Button button) {
-		return glfwGetKey(_window, GLFW_KEY_W) == GLFW_KEY_DOWN;
+		return buttonDown[button];
 	}
 
 	double cursorX() {
