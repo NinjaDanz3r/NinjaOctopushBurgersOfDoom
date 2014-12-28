@@ -2,8 +2,12 @@
 #include <glm\gtc\matrix_inverse.hpp>
 
 void FirstPersonCamera::move(const glm::vec3& offset) {
-	//TODO
-	Camera::move(offset);
+	glm::vec3 movement;
+	movement += offset.x * right();
+	movement += offset.y * up();
+	movement += offset.z * forward();
+
+	Camera::move(movement);
 }
 
 void FirstPersonCamera::rotate(float horizontalAngle, float verticalAngle, float tiltAngle) {

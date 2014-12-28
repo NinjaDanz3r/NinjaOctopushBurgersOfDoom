@@ -15,7 +15,7 @@ Player::~Player() {
 
 void Player::update(double time) {
 	float dx = (float)time * (input::pressed(input::RIGHT) - input::pressed(input::LEFT));
-	float dz = (float)time * (input::pressed(input::BACKWARD) - input::pressed(input::FORWARD));
+	float dz = (float)time * (input::pressed(input::FORWARD) - input::pressed(input::BACKWARD));
 	_camera->move(glm::vec3(dx, 0.f, dz));
 
 	_camera->rotate((float)input::cursorCenterX() * 0.1f, (float)input::cursorCenterY() * 0.1f, 0.f);
