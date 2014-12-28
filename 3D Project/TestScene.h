@@ -5,7 +5,7 @@
 #include "Shaders.h"
 #include "Texture.h"
 #include "BTHSquare.h"
-#include "Camera.h"
+#include "Player.h"
 
 // Test scene. Used to test things.
 class TestScene : public Scene {
@@ -30,7 +30,7 @@ class TestScene : public Scene {
 		Shaders* shaders;
 		Texture* texture;
 		BTHSquare* bthSquare;
-		Camera* camera;
+		Player* player;
 
 		// Vertex buffer.
 		GLuint gVertexBuffer = 0;

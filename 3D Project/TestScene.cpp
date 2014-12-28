@@ -23,22 +23,20 @@ TestScene::TestScene() {
 	bthSquare = new BTHSquare();
 	bindTriangleData();
 
-	camera = new Camera();
-	camera->setPosition(glm::vec3(0.f, 0.f, 2.f));
+	player = new Player();
 }
 
 TestScene::~TestScene() {
 	delete texture;
 	delete shaders;
 	delete bthSquare;
-	delete camera;
+	delete player;
 }
 
 Scene::SceneEnd* TestScene::update(double time) {
 	//rotation += (float)time * 50.f;
 
-	//camera->move(glm::vec3((float)time * 1.f, 0.f, 0.f));
-	camera->rotate((float)time * 10.f, (float)time * 10.f);
+	player->update(time);
 
 	/*if (rotation > 270.f)
 		return new Scene::SceneEnd(Scene::SceneEnd::NEW_SCENE, new TestScene());*/
@@ -60,14 +58,14 @@ void TestScene::render(int width, int height) {
 	glm::mat4 model = glm::rotate(glm::radians(rotation), glm::vec3(0.f, -1.f, 0.f));
 
 	// Send the matrices to the shader.
-	glm::mat4 view = camera->view();
+	glm::mat4 view = player->camera()->view();
 	glm::mat4 MV = view * model;
 	glm::mat4 N = glm::transpose(glm::inverse(MV));
 
 	glUniformMatrix4fv(shaders->modelLocation(), 1, GL_FALSE, &model[0][0]);
 	glUniformMatrix4fv(shaders->viewLocation(), 1, GL_FALSE, &view[0][0]);
 	glUniformMatrix3fv(shaders->normalLocation(), 1, GL_FALSE, &glm::mat3(N)[0][0]);
-	glUniformMatrix4fv(shaders->projectionLocation(), 1, GL_FALSE, &camera->projection(width, height)[0][0]);
+	glUniformMatrix4fv(shaders->projectionLocation(), 1, GL_FALSE, &player->camera()->projection(width, height)[0][0]);
 
 	// Light information.
 	glm::vec4 lightPosition = view * glm::vec4(-5.f, 0.f, 5.f, 1.f);
