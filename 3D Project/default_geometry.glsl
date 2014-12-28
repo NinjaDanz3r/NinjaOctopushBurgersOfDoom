@@ -30,7 +30,7 @@ void main() {
 	vec3 normal = normalize(normalMatrix * n);
 	
 	// Only display triangle if it's facing the viewer.
-	float d = dot(normal, vec3(0.0, 0.0, 1.0));
+	float d = dot(normal, -vec3(viewMatrix * modelMatrix * gl_in[0].gl_Position));
 	if (d > 0.0) {
 		for(int i = 0; i < gl_in.length(); i++) {
 			// Copy attributes
