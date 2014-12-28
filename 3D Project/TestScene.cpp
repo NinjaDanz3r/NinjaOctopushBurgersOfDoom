@@ -22,16 +22,23 @@ TestScene::TestScene() {
 
 	bthSquare = new BTHSquare();
 	bindTriangleData();
+
+	camera = new Camera();
+	camera->setPosition(glm::vec3(0.f, 0.f, 2.f));
 }
 
 TestScene::~TestScene() {
 	delete texture;
 	delete shaders;
 	delete bthSquare;
+	delete camera;
 }
 
 Scene::SceneEnd* TestScene::update(double time) {
-	rotation += (float)time * 50.f;
+	//rotation += (float)time * 50.f;
+
+	//camera->move(glm::vec3((float)time * 1.f, 0.f, 0.f));
+	camera->rotate((float)time * 10.f, (float)time * 10.f);
 
 	/*if (rotation > 270.f)
 		return new Scene::SceneEnd(Scene::SceneEnd::NEW_SCENE, new TestScene());*/
@@ -43,16 +50,6 @@ void TestScene::render(int width, int height) {
 	glViewport(0, 0, width, height);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// View matrix
-	glm::mat4 view = glm::lookAt(
-		glm::vec3(0.0f, 0.0f, 2.0f),
-		glm::vec3(0.0f, 0.0f, 0.0f),
-		glm::vec3(0.0f, 1.0f, 0.0f)
-		);
-
-	// Projection matrix
-	glm::mat4 projection = glm::perspectiveFov(glm::radians(45.f), (float)width, (float)height, 0.5f, 20.0f);
-
 	glBindVertexArray(gVertexAttribute);
 
 	// Base image texture
@@ -60,24 +57,23 @@ void TestScene::render(int width, int height) {
 	glBindTexture(GL_TEXTURE_2D, texture->textureID());
 
 	// Model matrix, unique for each model.
-	glm::mat4 model = glm::rotate(glm::radians(rotation), glm::vec3(0.0f, -1.0f, 0.0f));
+	glm::mat4 model = glm::rotate(glm::radians(rotation), glm::vec3(0.f, -1.f, 0.f));
 
 	// Send the matrices to the shader.
+	glm::mat4 view = camera->view();
 	glm::mat4 MV = view * model;
 	glm::mat4 N = glm::transpose(glm::inverse(MV));
 
-	// Matrices.
 	glUniformMatrix4fv(shaders->modelLocation(), 1, GL_FALSE, &model[0][0]);
 	glUniformMatrix4fv(shaders->viewLocation(), 1, GL_FALSE, &view[0][0]);
 	glUniformMatrix3fv(shaders->normalLocation(), 1, GL_FALSE, &glm::mat3(N)[0][0]);
-	glUniformMatrix4fv(shaders->projectionLocation(), 1, GL_FALSE, &projection[0][0]);
+	glUniformMatrix4fv(shaders->projectionLocation(), 1, GL_FALSE, &camera->projection(width, height)[0][0]);
 
 	// Light information.
-	glm::vec4 lightPosition = view * glm::vec4(-5.0f, 0.0f, 5.0f, 1.0f);
-	glm::vec3 lightIntensity(1.0f, 1.0f, 1.0f);
-	glm::vec3 diffuseKoefficient(1.0f, 1.0f, 1.0f);
+	glm::vec4 lightPosition = view * glm::vec4(-5.f, 0.f, 5.f, 1.f);
+	glm::vec3 lightIntensity(1.f, 1.f, 1.f);
+	glm::vec3 diffuseKoefficient(1.f, 1.f, 1.f);
 
-	// Fragment shader uniforms.
 	glUniform4fv(shaders->lightPositionLocation(), 1, &lightPosition[0]);
 	glUniform3fv(shaders->lightIntensityLocation(), 1, &lightIntensity[0]);
 	glUniform3fv(shaders->diffuseKoefficientLocation(), 1, &diffuseKoefficient[0]);
