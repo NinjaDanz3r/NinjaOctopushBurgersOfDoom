@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="BTHSquare.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="FirstPersonCamera.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="main.cpp" />
@@ -26,6 +27,7 @@
     <ClInclude Include="BTHSquare.h" />
     <ClInclude Include="bth_image.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="FirstPersonCamera.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="Player.h" />

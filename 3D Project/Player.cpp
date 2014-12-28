@@ -1,10 +1,11 @@
 #include "Player.h"
+#include "FirstPersonCamera.h"
 #include "input.h"
 
 Player::Player() {
-	_camera = new Camera();
+	_camera = new FirstPersonCamera();
 	_camera->setPosition(glm::vec3(0.f, 0.f, 2.f));
-	_camera->setAngles(0.f, 0.f, 15.f);
+	//_camera->setAngles(0.f, 0.f, 15.f);
 	input::centerCursor();
 }
 

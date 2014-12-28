@@ -16,7 +16,7 @@ class Camera {
 		void setPosition(const glm::vec3& position);
 
 		// Move the current position by an offset.
-		void move(const glm::vec3& offset);
+		virtual void move(const glm::vec3& offset);
 
 		// Get horizontal angle (in degrees).
 		float horizontalAngle() const;
@@ -31,7 +31,7 @@ class Camera {
 		void setAngles(float horizontalAngle, float verticalAngle, float tiltAngle);
 
 		// Set angles by an offset (in degrees).
-		void rotate(float horizontalAngle, float verticalAngle, float tiltAngle);
+		virtual void rotate(float horizontalAngle, float verticalAngle, float tiltAngle);
 
 		// Orientation matrix.
 		glm::mat4 orientation() const;
