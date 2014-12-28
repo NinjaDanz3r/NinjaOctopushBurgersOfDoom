@@ -24,11 +24,14 @@ class Camera {
 		// Get vertical angle (in degrees).
 		float verticalAngle() const;
 
+		// Get tilt angle (in degrees).
+		float tiltAngle() const;
+
 		// Set angles (in degrees).
-		void setAngles(float horizontalAngle, float verticalAngle);
+		void setAngles(float horizontalAngle, float verticalAngle, float tiltAngle);
 
 		// Set angles by an offset (in degrees).
-		void rotate(float horizontalAngle, float verticalAngle);
+		void rotate(float horizontalAngle, float verticalAngle, float tiltAngle);
 
 		// Orientation matrix.
 		glm::mat4 orientation() const;
@@ -58,6 +61,7 @@ class Camera {
 		glm::vec3 _position;
 		float _horizontalAngle;
 		float _verticalAngle;
+		float _tiltAngle;
 		float _fieldOfView;
 		float zNear;
 		float zFar;
