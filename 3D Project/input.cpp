@@ -6,6 +6,8 @@ namespace input {
 	GLFWwindow* _window;
 	std::vector<int>* keyboardBindings;
 	bool buttonDown[BUTTONS];
+	bool buttonTriggered[BUTTONS];
+	bool buttonReleased[BUTTONS];
 
 	void init() {
 		keyboardBindings = new std::vector<int>[BUTTONS];
@@ -21,11 +23,15 @@ namespace input {
 
 	void update() {
 		for (int button = 0; button < BUTTONS; button++) {
-			buttonDown[button] = false;
+			bool pressed = false;
 			for (auto &key : keyboardBindings[button]) {
 				if (glfwGetKey(_window, key) == GLFW_PRESS)
-					buttonDown[button] = true;
+					pressed = true;
 			}
+
+			buttonTriggered[button] = !buttonDown[button] && pressed;
+			buttonReleased[button] = buttonDown[button] && !pressed;
+			buttonDown[button] = pressed;
 		}
 	}
 
@@ -35,6 +41,14 @@ namespace input {
 
 	bool pressed(Button button) {
 		return buttonDown[button];
+	}
+
+	bool triggered(Button button) {
+		return buttonTriggered[button];
+	}
+
+	bool released(Button button) {
+		return buttonReleased[button];
 	}
 
 	double cursorX() {

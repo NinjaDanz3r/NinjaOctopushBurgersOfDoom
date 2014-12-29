@@ -32,6 +32,12 @@ namespace input {
 	// Gets whether a button is currently down.
 	bool pressed(Button button);
 
+	// Gets whether a button was just pressed (lasts one frame).
+	bool triggered(Button button);
+
+	// Gets whether a button was just released (lasts one frame).
+	bool released(Button button);
+
 	// Get the cursor's x-position in the window.
 	double cursorX();
 
