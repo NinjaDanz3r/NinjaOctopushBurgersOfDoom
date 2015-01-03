@@ -8,6 +8,15 @@ namespace settings {
 	// Save the settings to an ini file.
 	void save(const char* filename);
 
+	// Get the display width.
+	int displayWidth();
+
+	// Get the display height.
+	int displayHeight();
+
+	// Set the display size.
+	void setDisplaySize(int width, int height);
+
 	// Get mouse sensitivity. (0-1)
 	float mouseSensitivity();
 

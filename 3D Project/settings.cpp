@@ -5,6 +5,7 @@ namespace settings {
 	float _mouseSensitivity;
 	float _fieldOfView;
 	bool _freeConsole;
+	int _displayWidth = 640, _displayHeight = 480;
 
 	void load(const char* filename) {
 		CSimpleIniA ini;
@@ -12,6 +13,8 @@ namespace settings {
 		ini.LoadFile(filename);
 
 		_mouseSensitivity = static_cast<float>(ini.GetDoubleValue("Controls", "Mouse Sensitivity", 0.5f));
+		_displayWidth = ini.GetLongValue("Graphics", "Width", 640);
+		_displayHeight = ini.GetLongValue("Graphics", "Height", 480);
 		_fieldOfView = static_cast<float>(ini.GetDoubleValue("Graphics", "Field of View", 45.f));
 		_freeConsole = ini.GetBoolValue("Debug", "freeConsole", true);
 	}
@@ -21,12 +24,27 @@ namespace settings {
 		ini.SetUnicode();
 
 		ini.SetDoubleValue("Controls", "Mouse Sensitivity", _mouseSensitivity);
+		ini.SetLongValue("Graphics", "Width", _displayWidth);
+		ini.SetLongValue("Graphics", "Height", _displayHeight);
 		ini.SetDoubleValue("Graphics", "Field of View", _fieldOfView);
 		ini.SetBoolValue("Debug", "Free Console", _freeConsole);
 
 		SI_Error rc = ini.SaveFile(filename);
 		if (rc < 0)
 			fputs("Couldn't save settings", stderr);
+	}
+
+	int displayWidth() {
+		return _displayWidth;
+	}
+
+	int displayHeight() {
+		return _displayHeight;
+	}
+
+	void setDisplaySize(int width, int height) {
+		_displayWidth = width;
+		_displayHeight = height;
 	}
 
 	float mouseSensitivity() {

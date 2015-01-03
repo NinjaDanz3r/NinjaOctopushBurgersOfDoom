@@ -44,7 +44,7 @@ int main() {
 	if (!glfwInit())
 		exit(EXIT_FAILURE);
 
-	window = glfwCreateWindow(640, 480, "Super Awesome 3D Project", NULL, NULL);
+	window = glfwCreateWindow(settings::displayWidth(), settings::displayHeight(), "Super Awesome 3D Project", NULL, NULL);
 	if (!window){
 		glfwTerminate();
 		exit(EXIT_FAILURE);
