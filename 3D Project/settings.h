@@ -23,6 +23,12 @@ namespace settings {
 	// Set whether we should render in fullscreen.
 	void setFullscreen(bool fullscreen);
 
+	// Get whether window should be borderless.
+	bool borderless();
+
+	// Set whether window should be borderless.
+	void setBorderless();
+
 	// Get mouse sensitivity. (0-1)
 	float mouseSensitivity();
 

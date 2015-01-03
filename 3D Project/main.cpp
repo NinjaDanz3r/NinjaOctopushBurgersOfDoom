@@ -32,18 +32,21 @@ int main() {
 	input::init();
 	settings::load("settings.ini");
 
-	GLFWwindow* window;
-
 	#if defined(_WIN32) || defined(WIN32)
 	if (settings::freeConsole())
 		FreeConsole();
 	#endif
 	
+	GLFWwindow* window;
+
 	glfwSetErrorCallback(errorCallback);
 
 	if (!glfwInit())
 		exit(EXIT_FAILURE);
 
+	if (settings::borderless())
+		glfwWindowHint(GLFW_DECORATED, GL_FALSE);
+	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 	GLFWmonitor* monitor = settings::fullscreen() ? glfwGetPrimaryMonitor() : nullptr;
 	window = glfwCreateWindow(settings::displayWidth(), settings::displayHeight(), "Super Awesome 3D Project", monitor, nullptr);
 	if (!window){
@@ -58,14 +61,12 @@ int main() {
 	glfwSetKeyCallback(window, keyCallback);
 
 	Game* game = new Game(window);
-
 	while (!glfwWindowShouldClose(window)) {
 		game->update();
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
-
 	delete game;
 
 	glfwDestroyWindow(window);

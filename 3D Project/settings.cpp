@@ -6,6 +6,7 @@ namespace settings {
 
 	int _displayWidth = 640, _displayHeight = 480;
 	bool _fullscreen;
+	bool _borderless;
 	float _fieldOfView;
 
 	bool _freeConsole;
@@ -19,6 +20,7 @@ namespace settings {
 		_displayWidth = ini.GetLongValue("Graphics", "Width", 640);
 		_displayHeight = ini.GetLongValue("Graphics", "Height", 480);
 		_fullscreen = ini.GetBoolValue("Graphics", "Fullscreen");
+		_borderless = ini.GetBoolValue("Graphics", "Borderless");
 		_fieldOfView = static_cast<float>(ini.GetDoubleValue("Graphics", "Field of View", 45.f));
 		_freeConsole = ini.GetBoolValue("Debug", "freeConsole", true);
 	}
@@ -31,6 +33,7 @@ namespace settings {
 		ini.SetLongValue("Graphics", "Width", _displayWidth);
 		ini.SetLongValue("Graphics", "Height", _displayHeight);
 		ini.SetBoolValue("Graphics", "Fullscreen", _fullscreen);
+		ini.SetBoolValue("Graphics", "Borderless", _borderless);
 		ini.SetDoubleValue("Graphics", "Field of View", _fieldOfView);
 		ini.SetBoolValue("Debug", "Free Console", _freeConsole);
 
@@ -58,6 +61,14 @@ namespace settings {
 
 	void setFullscreen(bool fullscreen) {
 		_fullscreen = fullscreen;
+	}
+
+	bool borderless() {
+		return _borderless;
+	}
+
+	void setBorderless(bool borderless) {
+		_borderless = borderless;
 	}
 
 	float mouseSensitivity() {
