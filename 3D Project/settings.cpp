@@ -3,9 +3,12 @@
 
 namespace settings {
 	float _mouseSensitivity;
-	float _fieldOfView;
-	bool _freeConsole;
+
 	int _displayWidth = 640, _displayHeight = 480;
+	bool _fullscreen;
+	float _fieldOfView;
+
+	bool _freeConsole;
 
 	void load(const char* filename) {
 		CSimpleIniA ini;
@@ -15,6 +18,7 @@ namespace settings {
 		_mouseSensitivity = static_cast<float>(ini.GetDoubleValue("Controls", "Mouse Sensitivity", 0.5f));
 		_displayWidth = ini.GetLongValue("Graphics", "Width", 640);
 		_displayHeight = ini.GetLongValue("Graphics", "Height", 480);
+		_fullscreen = ini.GetBoolValue("Graphics", "Fullscreen");
 		_fieldOfView = static_cast<float>(ini.GetDoubleValue("Graphics", "Field of View", 45.f));
 		_freeConsole = ini.GetBoolValue("Debug", "freeConsole", true);
 	}
@@ -26,6 +30,7 @@ namespace settings {
 		ini.SetDoubleValue("Controls", "Mouse Sensitivity", _mouseSensitivity);
 		ini.SetLongValue("Graphics", "Width", _displayWidth);
 		ini.SetLongValue("Graphics", "Height", _displayHeight);
+		ini.SetBoolValue("Graphics", "Fullscreen", _fullscreen);
 		ini.SetDoubleValue("Graphics", "Field of View", _fieldOfView);
 		ini.SetBoolValue("Debug", "Free Console", _freeConsole);
 
@@ -45,6 +50,14 @@ namespace settings {
 	void setDisplaySize(int width, int height) {
 		_displayWidth = width;
 		_displayHeight = height;
+	}
+
+	bool fullscreen() {
+		return _fullscreen;
+	}
+
+	void setFullscreen(bool fullscreen) {
+		_fullscreen = fullscreen;
 	}
 
 	float mouseSensitivity() {

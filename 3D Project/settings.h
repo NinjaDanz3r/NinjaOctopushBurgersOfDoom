@@ -17,6 +17,12 @@ namespace settings {
 	// Set the display size.
 	void setDisplaySize(int width, int height);
 
+	// Get whether we should render in fullscreen.
+	bool fullscreen();
+
+	// Set whether we should render in fullscreen.
+	void setFullscreen(bool fullscreen);
+
 	// Get mouse sensitivity. (0-1)
 	float mouseSensitivity();
 
