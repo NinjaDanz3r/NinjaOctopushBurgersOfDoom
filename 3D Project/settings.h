@@ -46,6 +46,12 @@ namespace settings {
 
 	// Set whether to show the console window. Only works on Windows.
 	void setShowConsole(bool show);
+
+	// Get whether to show the mouse cursor.
+	bool showMouseCursor();
+
+	// Set whether to show the mouse cursor.
+	void setShowMouseCursor(bool show);
 }
 
 #endif

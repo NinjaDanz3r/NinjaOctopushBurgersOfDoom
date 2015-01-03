@@ -10,6 +10,7 @@ namespace settings {
 	float _fieldOfView;
 
 	bool _showConsole;
+	bool _showMouseCursor;
 
 	void load(const char* filename) {
 		CSimpleIniA ini;
@@ -23,6 +24,7 @@ namespace settings {
 		_borderless = ini.GetBoolValue("Graphics", "Borderless");
 		_fieldOfView = static_cast<float>(ini.GetDoubleValue("Graphics", "Field of View", 45.f));
 		_showConsole = ini.GetBoolValue("Debug", "Show Console");
+		_showMouseCursor = ini.GetBoolValue("Debug", "Show Mouse Cursor");
 	}
 
 	void save(const char* filename) {
@@ -36,6 +38,7 @@ namespace settings {
 		ini.SetBoolValue("Graphics", "Borderless", _borderless);
 		ini.SetDoubleValue("Graphics", "Field of View", _fieldOfView);
 		ini.SetBoolValue("Debug", "Show Console", _showConsole);
+		ini.SetBoolValue("Debug", "Show Mouse Cursor", _showMouseCursor);
 
 		SI_Error rc = ini.SaveFile(filename);
 		if (rc < 0)
@@ -101,5 +104,13 @@ namespace settings {
 
 	void setShowConsole(bool show) {
 		_showConsole = show;
+	}
+
+	bool showMouseCursor() {
+		return _showMouseCursor;
+	}
+
+	void setShowMouseCursor(bool show) {
+		_showMouseCursor = show;
 	}
 }

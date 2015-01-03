@@ -67,6 +67,9 @@ GLFWwindow* createWindow() {
 		exit(EXIT_FAILURE);
 	}
 
+	if (!settings::showMouseCursor())
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
 	return window;
 }
 
