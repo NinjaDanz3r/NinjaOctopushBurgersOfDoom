@@ -31,6 +31,7 @@
     <ClInclude Include="FirstPersonCamera.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="main.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="settings.h" />

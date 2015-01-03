@@ -4,9 +4,7 @@
 #include <windows.h>
 #endif
 
-#define GLFW_DLL
-#include <GLFW/glfw3.h>
-
+#include "main.h"
 #include "Game.h"
 #include "settings.h"
 #include "input.h"
@@ -16,18 +14,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-// Handles errors by printing them to the standard error stream.
-static void errorCallback(int error, const char* description) {
-	fputs(description, stderr);
-}
-
-// Handles key events.
-static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, GL_TRUE);
-}
-
-// Main game function. Contains the main loop.
 int main() {
 	input::init();
 	settings::load("settings.ini");
@@ -37,23 +23,7 @@ int main() {
 		FreeConsole();
 	#endif
 	
-	GLFWwindow* window;
-
-	glfwSetErrorCallback(errorCallback);
-
-	if (!glfwInit())
-		exit(EXIT_FAILURE);
-
-	if (settings::borderless())
-		glfwWindowHint(GLFW_DECORATED, GL_FALSE);
-	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-	GLFWmonitor* monitor = settings::fullscreen() ? glfwGetPrimaryMonitor() : nullptr;
-	window = glfwCreateWindow(settings::displayWidth(), settings::displayHeight(), "Super Awesome 3D Project", monitor, nullptr);
-	if (!window){
-		glfwTerminate();
-		exit(EXIT_FAILURE);
-	}
-
+	GLFWwindow* window = createWindow();
 	glfwMakeContextCurrent(window);
 
 	glewInit();
@@ -77,4 +47,34 @@ int main() {
 	_CrtDumpMemoryLeaks();
 
 	exit(EXIT_SUCCESS);
+}
+
+GLFWwindow* createWindow() {
+	GLFWwindow* window;
+
+	glfwSetErrorCallback(errorCallback);
+
+	if (!glfwInit())
+		exit(EXIT_FAILURE);
+
+	if (settings::borderless())
+		glfwWindowHint(GLFW_DECORATED, GL_FALSE);
+	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+	GLFWmonitor* monitor = settings::fullscreen() ? glfwGetPrimaryMonitor() : nullptr;
+	window = glfwCreateWindow(settings::displayWidth(), settings::displayHeight(), "Super Awesome 3D Project", monitor, nullptr);
+	if (!window){
+		glfwTerminate();
+		exit(EXIT_FAILURE);
+	}
+
+	return window;
+}
+
+static void errorCallback(int error, const char* description) {
+	fputs(description, stderr);
+}
+
+static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, GL_TRUE);
 }
