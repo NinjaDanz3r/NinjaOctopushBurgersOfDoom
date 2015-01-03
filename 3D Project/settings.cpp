@@ -9,7 +9,7 @@ namespace settings {
 	bool _borderless;
 	float _fieldOfView;
 
-	bool _freeConsole;
+	bool _showConsole;
 
 	void load(const char* filename) {
 		CSimpleIniA ini;
@@ -22,7 +22,7 @@ namespace settings {
 		_fullscreen = ini.GetBoolValue("Graphics", "Fullscreen");
 		_borderless = ini.GetBoolValue("Graphics", "Borderless");
 		_fieldOfView = static_cast<float>(ini.GetDoubleValue("Graphics", "Field of View", 45.f));
-		_freeConsole = ini.GetBoolValue("Debug", "freeConsole", true);
+		_showConsole = ini.GetBoolValue("Debug", "Show Console");
 	}
 
 	void save(const char* filename) {
@@ -35,7 +35,7 @@ namespace settings {
 		ini.SetBoolValue("Graphics", "Fullscreen", _fullscreen);
 		ini.SetBoolValue("Graphics", "Borderless", _borderless);
 		ini.SetDoubleValue("Graphics", "Field of View", _fieldOfView);
-		ini.SetBoolValue("Debug", "Free Console", _freeConsole);
+		ini.SetBoolValue("Debug", "Show Console", _showConsole);
 
 		SI_Error rc = ini.SaveFile(filename);
 		if (rc < 0)
@@ -95,11 +95,11 @@ namespace settings {
 			_mouseSensitivity = 180.f;
 	}
 
-	bool freeConsole() {
-		return _freeConsole;
+	bool showConsole() {
+		return _showConsole;
 	}
 
-	void setFreeConsole(bool free) {
-		_freeConsole = free;
+	void setShowConsole(bool show) {
+		_showConsole = show;
 	}
 }

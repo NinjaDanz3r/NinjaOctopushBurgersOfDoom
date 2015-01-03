@@ -19,7 +19,7 @@ int main() {
 	settings::load("settings.ini");
 
 	#if defined(_WIN32) || defined(WIN32)
-	if (settings::freeConsole())
+	if (!settings::showConsole())
 		FreeConsole();
 	#endif
 	

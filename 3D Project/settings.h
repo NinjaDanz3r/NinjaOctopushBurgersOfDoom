@@ -41,11 +41,11 @@ namespace settings {
 	// Set field of view. (0-180)
 	void setFieldOfView(float fieldOfView);
 
-	// Get whether to free console.
-	bool freeConsole();
+	// Get whether to show the console window. Only works on Windows.
+	bool showConsole();
 
-	// Set whether to free console.
-	void setFreeConsole(bool free);
+	// Set whether to show the console window. Only works on Windows.
+	void setShowConsole(bool show);
 }
 
 #endif
