@@ -1,16 +1,6 @@
 #include "Camera.h"
 #include <glm\gtc\matrix_transform.hpp>
 
-Camera::Camera() {
-	_position = glm::vec3(0.f, 0.f, 0.f);
-	_horizontalAngle = 0.f;
-	_verticalAngle = 0.f;
-	_tiltAngle = 0.f;
-	_fieldOfView = 45.f;
-	zNear = 0.5f;
-	zFar = 20.f;
-}
-
 const glm::vec3& Camera::position() const {
 	return _position;
 }

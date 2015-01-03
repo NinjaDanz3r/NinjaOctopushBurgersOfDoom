@@ -7,14 +7,14 @@
 #define GLFW_DLL
 #include <GLFW/glfw3.h>
 
+#include "Game.h"
+#include "settings.h"
+#include "input.h"
+
 #define _CRTDBG_MAP_ALLOC
 #include <crtdbg.h>
 #include <stdlib.h>
 #include <stdio.h>
-
-#include "Game.h"
-#include "settings.h"
-#include "input.h"
 
 // Handles errors by printing them to the standard error stream.
 static void errorCallback(int error, const char* description) {

@@ -54,7 +54,7 @@ class Shaders {
 		// Helper method to check and print link errors (if there are any).
 		void checkLinkErrors(GLuint program);
 
-		GLuint gShaderProgram = 0;
+		GLuint gShaderProgram;
 		GLuint baseImageLoc;
 		GLuint modelLoc;
 		GLuint viewLoc;

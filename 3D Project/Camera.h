@@ -6,8 +6,8 @@
 // A camera in a 3D scene.
 class Camera {
 	public:
-		// Constructor
-		Camera();
+		// Destructor
+		virtual ~Camera() { }
 
 		// Get position.
 		const glm::vec3& position() const;
@@ -58,13 +58,15 @@ class Camera {
 		glm::mat4 projection(int width, int height) const;
 
 	private:
-		glm::vec3 _position;
-		float _horizontalAngle;
-		float _verticalAngle;
-		float _tiltAngle;
-		float _fieldOfView;
-		float zNear;
-		float zFar;
+		glm::vec3 _position = glm::vec3(0.f, 0.f, 0.f);
+
+		float _horizontalAngle = 0.f;
+		float _verticalAngle = 0.f;
+		float _tiltAngle = 0.f;
+
+		float _fieldOfView = 45.f;
+		float zNear = 0.5f;
+		float zFar = 20.f;
 };
 
 #endif
