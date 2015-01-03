@@ -6,7 +6,6 @@
 
 Game::Game(GLFWwindow* window) {
 	this->window = window;
-	input::init();
 	input::setWindow(window);
 	assignKeyboardBindings();
 

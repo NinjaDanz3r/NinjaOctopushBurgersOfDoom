@@ -13,6 +13,8 @@
 #include <stdio.h>
 
 #include "Game.h"
+#include "settings.h"
+#include "input.h"
 
 // Handles errors by printing them to the standard error stream.
 static void errorCallback(int error, const char* description) {
@@ -27,10 +29,14 @@ static void keyCallback(GLFWwindow* window, int key, int scancode, int action, i
 
 // Main game function. Contains the main loop.
 int main() {
+	input::init();
+	settings::load("settings.ini");
+
 	GLFWwindow* window;
 
 	#if defined(_WIN32) || defined(WIN32)
-	FreeConsole();
+	if (settings::freeConsole())
+		FreeConsole();
 	#endif
 	
 	glfwSetErrorCallback(errorCallback);
@@ -63,6 +69,8 @@ int main() {
 
 	glfwDestroyWindow(window);
 	glfwTerminate();
+
+	settings::save("settings.ini");
 
 	_CrtDumpMemoryLeaks();
 

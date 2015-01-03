@@ -19,6 +19,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="settings.cpp" />
     <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -32,6 +33,7 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="settings.h" />
     <ClInclude Include="Shaders.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Texture.h" />
@@ -71,11 +73,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\simpleini;..\glm;..\glew-1.11.0\include;..\glfw-3.0.4.bin.WIN32\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\simpleini-141111;..\glm;..\glew-1.11.0\include;..\glfw-3.0.4.bin.WIN32\include;$(IncludePath)</IncludePath>
     <LibraryPath>..\glew-1.11.0\lib\Release\Win32;..\glfw-3.0.4.bin.WIN32\lib-msvc120;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>..\simpleini;..\glm;..\glew-1.11.0\include;..\glfw-3.0.4.bin.WIN32\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\simpleini-141111;..\glm;..\glew-1.11.0\include;..\glfw-3.0.4.bin.WIN32\include;$(IncludePath)</IncludePath>
     <LibraryPath>..\glew-1.11.0\lib\Release\Win32;..\glfw-3.0.4.bin.WIN32\lib-msvc120;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

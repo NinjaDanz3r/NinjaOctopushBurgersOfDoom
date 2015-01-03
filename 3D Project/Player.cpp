@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "FirstPersonCamera.h"
 #include "input.h"
+#include "settings.h"
 
 Player::Player() {
 	_camera = new FirstPersonCamera();
@@ -18,7 +19,7 @@ void Player::update(double time) {
 	float dz = (float)time * (input::pressed(input::FORWARD) - input::pressed(input::BACKWARD));
 	_camera->move(glm::vec3(dx, 0.f, dz));
 
-	_camera->rotate((float)input::cursorCenterX() * 0.1f, (float)input::cursorCenterY() * 0.1f, 0.f);
+	_camera->rotate((float)input::cursorCenterX() * 0.2f * settings::mouseSensitivity(), (float)input::cursorCenterY() * 0.2f * settings::mouseSensitivity(), 0.f);
 
 	input::centerCursor();
 }
