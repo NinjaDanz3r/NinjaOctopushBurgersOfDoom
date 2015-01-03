@@ -8,11 +8,17 @@ namespace settings {
 	// Save the settings to an ini file.
 	void save(const char* filename);
 
-	// Get mouse sensitivity (0-1).
+	// Get mouse sensitivity. (0-1)
 	float mouseSensitivity();
 
 	// Set mouse sensitivity. (0-1)
 	void setMouseSensitivity(float sensitivity);
+
+	// Get field of view. (0-180)
+	float fieldOfView();
+
+	// Set field of view. (0-180)
+	void setFieldOfView(float fieldOfView);
 
 	// Get whether to free console.
 	bool freeConsole();

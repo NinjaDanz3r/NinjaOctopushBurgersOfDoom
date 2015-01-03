@@ -1,5 +1,10 @@
 #include "Camera.h"
+#include "settings.h"
 #include <glm\gtc\matrix_transform.hpp>
+
+Camera::Camera() {
+	_fieldOfView = settings::fieldOfView();
+}
 
 const glm::vec3& Camera::position() const {
 	return _position;
@@ -79,5 +84,5 @@ void Camera::setNearAndFarPlanes(float near, float far) {
 }
 
 glm::mat4 Camera::projection(int width, int height) const {
-	return glm::perspective(glm::radians(_fieldOfView), (float)width/(float)(height), zNear, zFar);
+	return glm::perspective(glm::radians(_fieldOfView), static_cast<float>(width)/height, zNear, zFar);
 }

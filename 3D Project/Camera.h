@@ -6,6 +6,9 @@
 // A camera in a 3D scene.
 class Camera {
 	public:
+		// Constructor
+		Camera();
+
 		// Destructor
 		virtual ~Camera() { }
 
