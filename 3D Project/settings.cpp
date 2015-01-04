@@ -10,6 +10,7 @@ namespace settings {
 	float _fieldOfView;
 
 	bool _showConsole;
+	bool _logging;
 	bool _showMouseCursor;
 
 	void load(const char* filename) {
@@ -24,6 +25,7 @@ namespace settings {
 		_borderless = ini.GetBoolValue("Graphics", "Borderless");
 		_fieldOfView = static_cast<float>(ini.GetDoubleValue("Graphics", "Field of View", 45.f));
 		_showConsole = ini.GetBoolValue("Debug", "Show Console");
+		_logging = ini.GetBoolValue("Debug", "Logging");
 		_showMouseCursor = ini.GetBoolValue("Debug", "Show Mouse Cursor");
 	}
 
@@ -38,6 +40,7 @@ namespace settings {
 		ini.SetBoolValue("Graphics", "Borderless", _borderless);
 		ini.SetDoubleValue("Graphics", "Field of View", _fieldOfView);
 		ini.SetBoolValue("Debug", "Show Console", _showConsole);
+		ini.SetBoolValue("Debug", "Logging", _logging);
 		ini.SetBoolValue("Debug", "Show Mouse Cursor", _showMouseCursor);
 
 		SI_Error rc = ini.SaveFile(filename);
@@ -104,6 +107,14 @@ namespace settings {
 
 	void setShowConsole(bool show) {
 		_showConsole = show;
+	}
+
+	bool logging() {
+		return _logging;
+	}
+
+	void setLogging(bool logging) {
+		_logging = logging;
 	}
 
 	bool showMouseCursor() {

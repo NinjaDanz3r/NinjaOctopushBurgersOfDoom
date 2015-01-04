@@ -47,6 +47,12 @@ namespace settings {
 	// Set whether to show the console window. Only works on Windows.
 	void setShowConsole(bool show);
 
+	// Get whether write to a log file.
+	bool logging();
+
+	// Set whether to write to a log file.
+	void setLogging(bool logging);
+
 	// Get whether to show the mouse cursor.
 	bool showMouseCursor();
 

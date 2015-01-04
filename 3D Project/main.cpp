@@ -22,6 +22,11 @@ int main() {
 	if (!settings::showConsole())
 		FreeConsole();
 	#endif
+
+	if (settings::logging())
+		freopen("log.txt", "a", stderr);
+
+	fputs("Game started\n", stderr);
 	
 	GLFWwindow* window = createWindow();
 	glfwMakeContextCurrent(window);
@@ -43,6 +48,8 @@ int main() {
 	glfwTerminate();
 
 	settings::save("settings.ini");
+
+	fputs("Game exited\n", stderr);
 
 	_CrtDumpMemoryLeaks();
 
