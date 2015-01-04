@@ -8,6 +8,7 @@
 #include "Game.h"
 #include "settings.h"
 #include "input.h"
+#include "util.h"
 
 #define _CRTDBG_MAP_ALLOC
 #include <crtdbg.h>
@@ -18,15 +19,8 @@ int main() {
 	input::init();
 	settings::load("settings.ini");
 
-	#if defined(_WIN32) || defined(WIN32)
-	if (!settings::showConsole())
-		FreeConsole();
-	#endif
-
-	if (settings::logging())
-		freopen("log.txt", "a", stderr);
-
-	fputs("Game started\n", stderr);
+	setupDebug();
+	util::logWithTime("Game started");
 	
 	GLFWwindow* window = createWindow();
 	glfwMakeContextCurrent(window);
@@ -49,11 +43,21 @@ int main() {
 
 	settings::save("settings.ini");
 
-	fputs("Game exited\n", stderr);
+	util::logWithTime("Game ended");
 
 	_CrtDumpMemoryLeaks();
 
 	exit(EXIT_SUCCESS);
+}
+
+void setupDebug() {
+#if defined(_WIN32) || defined(WIN32)
+	if (!settings::showConsole())
+		FreeConsole();
+#endif
+
+	if (settings::logging())
+		freopen("log.txt", "a", stderr);
 }
 
 GLFWwindow* createWindow() {

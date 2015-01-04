@@ -7,6 +7,9 @@
 // Main game function. Contains the main loop.
 int main();
 
+// Setup debug functionality (like logging).
+void setupDebug();
+
 // Create the main game window.
 GLFWwindow* createWindow();
 
