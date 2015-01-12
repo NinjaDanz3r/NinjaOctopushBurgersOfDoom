@@ -21,6 +21,7 @@ int main() {
 
 	setupDebug();
 	util::logWithTime("Game started");
+	util::log(util::savePath("settings.ini").c_str());
 	
 	GLFWwindow* window = createWindow();
 	glfwMakeContextCurrent(window);

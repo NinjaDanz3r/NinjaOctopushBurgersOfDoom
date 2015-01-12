@@ -1,10 +1,8 @@
-Game started - 2015-01-04 02:13:01
-Game ended - 2015-01-04 02:13:04
-Game started - 2015-01-04 14:13:34
-Game ended - 2015-01-04 14:13:37
-Game started - 2015-01-04 14:14:30
-Game ended - 2015-01-04 14:14:32
-Game started - 2015-01-04 14:15:23
-Game ended - 2015-01-04 14:15:28
-Game started - 2015-01-04 14:24:45
-Game ended - 2015-01-04 14:24:48
+Game started - 2015-01-12 22:01:20
+~/Library/Application Support/NinjaBurgers\settings.iniGame ended - 2015-01-12 22:01:22
+Game started - 2015-01-12 22:01:58
+~/Library/Application Support/NinjaBurgers\settings.ini - 2015-01-12 22:01:58
+Game ended - 2015-01-12 22:02:00
+Game started - 2015-01-12 22:04:29
+~/Library/Application Support/NinjaBurgers\settings.ini
+Game ended - 2015-01-12 22:04:31
