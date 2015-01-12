@@ -1,14 +1,6 @@
-Game started - 2015-01-12 22:01:20
-~/Library/Application Support/NinjaBurgers\settings.iniGame ended - 2015-01-12 22:01:22
-Game started - 2015-01-12 22:01:58
-~/Library/Application Support/NinjaBurgers\settings.ini - 2015-01-12 22:01:58
-Game ended - 2015-01-12 22:02:00
-Game started - 2015-01-12 22:04:29
-~/Library/Application Support/NinjaBurgers\settings.ini
-Game ended - 2015-01-12 22:04:31
-Game started - 2015-01-12 22:42:10
-~/.local/NinjaBurgers\settings.ini
-Game ended - 2015-01-12 22:42:12
-Game started - 2015-01-12 22:42:39
-~/.local/NinjaBurgers/settings.ini
-Game ended - 2015-01-12 22:42:41
+Game started - 2015-01-12 22:48:25
+C:\Users\Albin\AppData\Roaming\settings.ini
+Game ended - 2015-01-12 22:48:27
+Game started - 2015-01-12 22:48:53
+C:\Users\Albin\AppData\Roaming\NinjaBurgers\settings.ini
+Game ended - 2015-01-12 22:48:55

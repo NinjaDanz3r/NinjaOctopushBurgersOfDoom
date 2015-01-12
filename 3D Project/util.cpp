@@ -1,5 +1,6 @@
 #include "util.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 
 namespace util {
@@ -36,6 +37,9 @@ namespace util {
 
 #if defined(_WIN32) || defined(WIN32)
 		// Windows
+		path = getenv("APPDATA");
+		path += DELIMITER;
+		path += GAME_NAME;
 #elif __APPLE__
 		// MacOS
 		path = "~/Library/Application Support/";
