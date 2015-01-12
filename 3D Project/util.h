@@ -19,14 +19,14 @@ namespace util {
 	/* Get save path for application data folder, creating it if it does not exist.
 	On Windows, this is <User>\AppData\Roaming\<GameName>.
 	On MacOS, this is ~/Library/Application Support/<GameName>.
-	On Linux, this is .
+	On Linux, this is ~/.local/<GameName>.
 	*/
 	std::string savePath();
 
 	/* Get save path for application data, creating the folder if it does not exist.
 	On Windows, this is <User>\AppData\Roaming\<GameName>\<Filename>.
 	On MacOS, this is ~/Library/Application Support/<GameName>/<Filename>.
-	On Linux, this is .
+	On Linux, this is ~/.local/<GameName>/<Filename>.
 	*/
 	std::string savePath(const char* filename);
 }

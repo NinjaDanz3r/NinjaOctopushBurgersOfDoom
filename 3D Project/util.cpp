@@ -36,12 +36,14 @@ namespace util {
 
 #if defined(_WIN32) || defined(WIN32)
 		// Windows
-		//#elif __APPLE__
+#elif __APPLE__
 		// MacOS
 		path = "~/Library/Application Support/";
 		path += GAME_NAME;
-#else
+#elif __linux__
 		// Linux
+		path = "~/.local/";
+		path += GAME_NAME;
 #endif
 
 		return path;
