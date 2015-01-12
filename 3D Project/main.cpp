@@ -17,11 +17,10 @@
 
 int main() {
 	input::init();
-	settings::load("settings.ini");
+	settings::load(util::savePath("settings.ini").c_str());
 
 	setupDebug();
 	util::logWithTime("Game started");
-	util::log(util::savePath("settings.ini").c_str());
 	
 	GLFWwindow* window = createWindow();
 	glfwMakeContextCurrent(window);
@@ -42,7 +41,7 @@ int main() {
 	glfwDestroyWindow(window);
 	glfwTerminate();
 
-	settings::save("settings.ini");
+	settings::save(util::savePath("settings.ini").c_str());
 
 	util::logWithTime("Game ended");
 
@@ -58,7 +57,7 @@ void setupDebug() {
 #endif
 
 	if (settings::logging())
-		freopen("log.txt", "a", stderr);
+		freopen(util::savePath("log.txt").c_str(), "a", stderr);
 }
 
 GLFWwindow* createWindow() {
