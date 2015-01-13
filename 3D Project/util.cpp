@@ -78,6 +78,8 @@ namespace util {
 		path += GAME_NAME;
 #endif
 
+		createDirectory(path.c_str());
+
 		return path;
 	}
 
