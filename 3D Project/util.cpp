@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 namespace util {
 #if defined(_WIN32) || defined(WIN32)
@@ -30,6 +32,19 @@ namespace util {
 		strftime(buffer, 24, " - %Y-%m-%d %H:%M:%S", timeinfo);
 		
 		log(buffer);
+	}
+
+	bool fileExists(const char* filename) {
+#if defined(_WIN32) || defined(WIN32)
+		// Windows
+		struct _stat buf;
+		int result = _stat(filename, &buf);
+#else
+		// MacOS and Linux
+		struct stat buf;
+		int result = stat(Name.c_str(), &buf);
+#endif
+		return result == 0;
 	}
 
 	std::string savePath() {
