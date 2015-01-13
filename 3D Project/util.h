@@ -19,6 +19,9 @@ namespace util {
 	// Checks if a file exists. Works for directories as well.
 	bool fileExists(const char* filename);
 
+	// Creates a directory if it does not already exist. (Permission 0777 on Unix.)
+	void createDirectory(const char* filename);
+
 	/* Get save path for application data folder, creating it if it does not exist.
 	On Windows, this is <User>\AppData\Roaming\<GameName>.
 	On MacOS, this is ~/Library/Application Support/<GameName>.

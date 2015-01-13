@@ -4,6 +4,9 @@
 #include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#if defined(_WIN32) || defined(WIN32)
+#include <direct.h>
+#endif
 
 namespace util {
 #if defined(_WIN32) || defined(WIN32)
@@ -45,6 +48,16 @@ namespace util {
 		int result = stat(Name.c_str(), &buf);
 #endif
 		return result == 0;
+	}
+
+	void createDirectory(const char* filename) {
+#if defined(_WIN32) || defined(WIN32)
+		// Windows
+		_mkdir(filename);
+#else
+		// MacOS and Linux
+		mkdir(filename, ACCESSPERMS);
+#endif
 	}
 
 	std::string savePath() {
