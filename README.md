@@ -6,22 +6,22 @@ School project implementing various 3D techniques in OpenGL (C++11).
 #Implemented Techniques
 The mandatory techniques are perspective rendering, lighting, textures, three-dimensional objects and first-person camera movement.
 
-Apart from these, we are also aiming to implement the following techniques:
+Apart from these, we are also aiming to implement the following techniques (implemented|mandatory|available):
 
-##Core
+##Core (0|1|2)
 
-##Geometry
+##Geometry (0|2|5)
 * Height-map terrain rendering, user can walk on the terrain. (TODO)
 
-##Texturing and lighting
+##Texturing and lighting (0|1|3)
 * Blend-mapping. (TODO)
 
-##Projection
+##Projection (0|1|4)
 
-##Acceleration
+##Acceleration (1|2|3)
 * Back-face culling using geometry shader.
 
-##Miscellaneous
+##Miscellaneous (0|2|9)
 
 #Libraries
 Uses OpenGL, [glew](http://glew.sourceforge.net/), [GLFW](http://www.glfw.org/), [OpenGL Mathematics](http://glm.g-truc.net/0.9.6/index.html) and [simpleini](https://github.com/brofield/simpleini).
