@@ -76,11 +76,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\simpleini-141111;..\glm;..\glew-1.11.0\include;..\glfw-3.0.4.bin.WIN32\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\simpleini-141111;..\glm;..\glew-1.11.0\include;..\glfw-3.0.4.bin.WIN32\include;..\stb;$(IncludePath)</IncludePath>
     <LibraryPath>..\glew-1.11.0\lib\Release\Win32;..\glfw-3.0.4.bin.WIN32\lib-msvc120;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>..\simpleini-141111;..\glm;..\glew-1.11.0\include;..\glfw-3.0.4.bin.WIN32\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\simpleini-141111;..\glm;..\glew-1.11.0\include;..\glfw-3.0.4.bin.WIN32\include;..\stb;$(IncludePath)</IncludePath>
     <LibraryPath>..\glew-1.11.0\lib\Release\Win32;..\glfw-3.0.4.bin.WIN32\lib-msvc120;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
