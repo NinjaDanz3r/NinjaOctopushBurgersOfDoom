@@ -71,9 +71,6 @@
     <ClInclude Include="Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="bth_image.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="BTHSquare.h">
       <Filter>Header Files</Filter>
     </ClInclude>

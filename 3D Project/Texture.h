@@ -18,6 +18,7 @@ class Texture {
 
 	private:
 		GLuint texID;
+		unsigned char* data;
 };
 
 #endif
