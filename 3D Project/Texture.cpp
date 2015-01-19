@@ -13,10 +13,10 @@ Texture::Texture() {
 
 	// Load texture from file
 	int width, height, comp;
-	data = stbi_load("Textures/bth_image.tga", &width, &height, &comp, 0);
+	data = stbi_load("Resources/Textures/bth_image.tga", &width, &height, &comp, 0);
 
 	if (data == NULL) {
-		util::log("Couldn't load image: Textures/bth_image.tga");
+		util::log("Couldn't load image: Resources/Textures/bth_image.tga");
 	}
 
 	// Get which format the image is in

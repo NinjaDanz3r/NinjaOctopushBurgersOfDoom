@@ -23,6 +23,9 @@ bld/
 !glew-1.11.0/bin
 !glew-1.11.0/bin/Release
 
+# Share resources (textures, etc.) through Dropbox instead
+3D Project/Resources
+
 # Roslyn cache directories
 *.ide/
 
