@@ -18,6 +18,11 @@ bld/
 [Bb]in/
 [Oo]bj/
 
+# Don't ignore glew release folders
+!glew-1.11.0/lib/Release
+!glew-1.11.0/bin
+!glew-1.11.0/bin/Release
+
 # Roslyn cache directories
 *.ide/
 
