@@ -12,8 +12,8 @@ Texture::Texture() {
 	glBindTexture(GL_TEXTURE_2D, texID);
 
 	// Load texture from file
-	int width, height, comp;
-	data = stbi_load("Resources/Textures/bth_image.tga", &width, &height, &comp, 0);
+	int comp;
+	data = stbi_load("Resources/Textures/bth_image.tga", &_width, &_height, &comp, 0);
 
 	if (data == NULL) {
 		util::log("Couldn't load image: Resources/Textures/bth_image.tga");
@@ -37,7 +37,7 @@ Texture::Texture() {
 	}
 
 	// Give the image to OpenGL
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _width, _height, 0, format, GL_UNSIGNED_BYTE, data);
 
 	// When MAGnifying the image (no bigger mipmap available), use LINEAR filtering
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -54,4 +54,12 @@ Texture::~Texture() {
 
 GLuint Texture::textureID() const {
 	return texID;
+}
+
+int Texture::width() const {
+	return _width;
+}
+
+int Texture::height() const {
+	return _height;
 }
