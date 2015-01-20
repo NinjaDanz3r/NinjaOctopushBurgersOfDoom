@@ -4,7 +4,7 @@
 #include <stb_image.h>
 #include "util.h"
 
-Texture::Texture() {
+Texture::Texture(const char* filename) {
 	// Create one OpenGL texture
 	glGenTextures(1, &texID);
 
@@ -12,16 +12,17 @@ Texture::Texture() {
 	glBindTexture(GL_TEXTURE_2D, texID);
 
 	// Load texture from file
-	int comp;
-	data = stbi_load("Resources/Textures/bth_image.tga", &_width, &_height, &comp, 0);
+	int components;
+	data = stbi_load(filename, &_width, &_height, &components, 0);
 
 	if (data == NULL) {
-		util::log("Couldn't load image: Resources/Textures/bth_image.tga");
+		fputs("Couldn't load image: ", stderr);
+		util::log(filename);
 	}
 
 	// Get which format the image is in
 	GLenum format;
-	switch (comp) {
+	switch (components) {
 	case 1:
 		format = GL_RED;
 		break;

@@ -12,7 +12,7 @@
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))
 
 TestScene::TestScene() {
-	texture = new Texture();
+	texture = new Texture("Resources/Textures/bth_image.tga");
 	shaders = new Shaders("default");
 
 	glUseProgram(shaders->shaderProgram());

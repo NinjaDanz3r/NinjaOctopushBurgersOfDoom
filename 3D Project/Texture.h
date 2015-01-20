@@ -7,8 +7,8 @@
 // Represents a 2D-texture.
 class Texture {
 	public:
-		// Create new texture.
-		Texture();
+		// Create new texture from the given image file.
+		Texture(const char* filename);
 
 		// Destructor
 		~Texture();
