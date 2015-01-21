@@ -6,18 +6,6 @@ Camera::Camera() {
 	_fieldOfView = settings::fieldOfView();
 }
 
-const glm::vec3& Camera::position() const {
-	return _position;
-}
-
-void Camera::setPosition(const glm::vec3& position) {
-	_position = position;
-}
-
-void Camera::move(const glm::vec3& offset) {
-	_position += offset;
-}
-
 float Camera::horizontalAngle() const {
 	return _horizontalAngle;
 }
@@ -59,7 +47,7 @@ glm::mat4 Camera::orientation() const {
 }
 
 glm::mat4 Camera::view() const {
-	return orientation() * glm::translate(glm::mat4(), -_position);
+	return orientation() * glm::translate(glm::mat4(), -position());
 }
 
 float Camera::fieldOfView() const {

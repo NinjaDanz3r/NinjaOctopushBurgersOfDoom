@@ -13,15 +13,6 @@ class Camera : public Object {
 		// Destructor
 		virtual ~Camera() { }
 
-		// Get position.
-		const glm::vec3& position() const;
-
-		// Set position.
-		void setPosition(const glm::vec3& position);
-
-		// Move the current position by an offset.
-		virtual void move(const glm::vec3& offset);
-
 		// Get horizontal angle (in degrees).
 		float horizontalAngle() const;
 
@@ -62,8 +53,6 @@ class Camera : public Object {
 		glm::mat4 projection(int width, int height) const;
 
 	private:
-		glm::vec3 _position = glm::vec3(0.f, 0.f, 0.f);
-
 		float _horizontalAngle = 0.f;
 		float _verticalAngle = 0.f;
 		float _tiltAngle = 0.f;
