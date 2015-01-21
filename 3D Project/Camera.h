@@ -13,24 +13,6 @@ class Camera : public Object {
 		// Destructor
 		virtual ~Camera() { }
 
-		// Get horizontal angle (in degrees).
-		float horizontalAngle() const;
-
-		// Get vertical angle (in degrees).
-		float verticalAngle() const;
-
-		// Get tilt angle (in degrees).
-		float tiltAngle() const;
-
-		// Set angles (in degrees).
-		void setRotation(float horizontalAngle, float verticalAngle, float tiltAngle);
-
-		// Set angles by an offset (in degrees).
-		virtual void rotate(float horizontalAngle, float verticalAngle, float tiltAngle);
-
-		// Orientation matrix.
-		glm::mat4 orientation() const;
-
 		// The camera's view matrix (translation and orientation).
 		glm::mat4 view() const;
 
@@ -53,10 +35,6 @@ class Camera : public Object {
 		glm::mat4 projection(int width, int height) const;
 
 	private:
-		float _horizontalAngle = 0.f;
-		float _verticalAngle = 0.f;
-		float _tiltAngle = 0.f;
-
 		float _fieldOfView = 45.f;
 		float zNear = 0.5f;
 		float zFar = 20.f;
