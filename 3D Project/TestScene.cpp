@@ -35,12 +35,7 @@ TestScene::~TestScene() {
 }
 
 Scene::SceneEnd* TestScene::update(double time) {
-	//rotation += (float)time * 50.f;
-
 	player->update(time);
-
-	/*if (rotation > 270.f)
-		return new Scene::SceneEnd(Scene::SceneEnd::NEW_SCENE, new TestScene());*/
 
 	return nullptr;
 }
@@ -56,7 +51,7 @@ void TestScene::render(int width, int height) {
 	glBindTexture(GL_TEXTURE_2D, texture->textureID());
 
 	// Model matrix, unique for each model.
-	glm::mat4 model = glm::rotate(glm::radians(rotation), glm::vec3(0.f, -1.f, 0.f));
+	glm::mat4 model = bthSquare->modelMatrix();
 
 	// Send the matrices to the shader.
 	glm::mat4 view = player->camera()->view();

@@ -42,6 +42,9 @@ class Object {
 		// Orientation matrix.
 		glm::mat4 orientation() const;
 
+		// Model matrix.
+		glm::mat4 modelMatrix() const;
+
 	private:
 		glm::vec3 _position = glm::vec3(0.f, 0.f, 0.f);
 		glm::vec3 _scale = glm::vec3(1.f, 1.f, 1.f);

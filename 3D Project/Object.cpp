@@ -60,3 +60,9 @@ glm::mat4 Object::orientation() const {
 	orientation = glm::rotate(orientation, glm::radians(_horizontalAngle), glm::vec3(0, 1, 0));
 	return orientation;
 }
+
+glm::mat4 Object::modelMatrix() const {
+	glm::mat4 model;
+	model = glm::translate(glm::mat4(), _position) * orientation() * glm::scale(glm::mat4(), _scale);
+	return model;
+}
