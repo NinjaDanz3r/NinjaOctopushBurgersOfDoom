@@ -24,6 +24,7 @@ TestScene::TestScene() {
 	bindTriangleData();
 
 	player = new Player();
+	player->setMovementSpeed(2.0f);
 }
 
 TestScene::~TestScene() {
