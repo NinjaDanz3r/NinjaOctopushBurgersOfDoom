@@ -22,6 +22,7 @@ Apart from these, we are also aiming to implement the following techniques (impl
 * Back-face culling using geometry shader.
 
 ##Miscellaneous (0|2|9)
+* Particle system with billboarded particles. (TODO)
 
 #Libraries
 Uses OpenGL, [glew](http://glew.sourceforge.net/), [GLFW](http://www.glfw.org/), [OpenGL Mathematics](http://glm.g-truc.net/0.9.6/index.html), [simpleini](https://github.com/brofield/simpleini) and [stb](https://github.com/nothings/stb).
