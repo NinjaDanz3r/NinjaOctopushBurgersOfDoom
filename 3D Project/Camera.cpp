@@ -18,7 +18,7 @@ float Camera::tiltAngle() const {
 	return _tiltAngle;
 }
 
-void Camera::setAngles(float horizontalAngle, float verticalAngle, float tiltAngle) {
+void Camera::setRotation(float horizontalAngle, float verticalAngle, float tiltAngle) {
 	_horizontalAngle = horizontalAngle;
 	_verticalAngle = verticalAngle;
 	_tiltAngle = tiltAngle;

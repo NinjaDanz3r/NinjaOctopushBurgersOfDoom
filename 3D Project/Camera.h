@@ -23,7 +23,7 @@ class Camera : public Object {
 		float tiltAngle() const;
 
 		// Set angles (in degrees).
-		void setAngles(float horizontalAngle, float verticalAngle, float tiltAngle);
+		void setRotation(float horizontalAngle, float verticalAngle, float tiltAngle);
 
 		// Set angles by an offset (in degrees).
 		virtual void rotate(float horizontalAngle, float verticalAngle, float tiltAngle);

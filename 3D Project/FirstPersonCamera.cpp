@@ -25,7 +25,7 @@ void FirstPersonCamera::rotate(float horizontalAngle, float verticalAngle, float
 	if (tiltAngle < 0.f)
 		tiltAngle += 360.f;
 
-	Camera::setAngles(horizontalAngle, verticalAngle, tiltAngle);
+	Camera::setRotation(horizontalAngle, verticalAngle, tiltAngle);
 }
 
 glm::vec3 FirstPersonCamera::forward() const {
