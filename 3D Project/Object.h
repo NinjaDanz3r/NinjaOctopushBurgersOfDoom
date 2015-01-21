@@ -15,6 +15,12 @@ class Object {
 		// Set position.
 		void setPosition(const glm::vec3& position);
 
+		// Get scale.
+		const glm::vec3& scale() const;
+
+		// Set scale.
+		void setScale(const glm::vec3& scale);
+
 		// Move the current position by an offset.
 		virtual void move(const glm::vec3& offset);
 
@@ -38,6 +44,7 @@ class Object {
 
 	private:
 		glm::vec3 _position = glm::vec3(0.f, 0.f, 0.f);
+		glm::vec3 _scale = glm::vec3(1.f, 1.f, 1.f);
 
 		float _horizontalAngle = 0.f;
 		float _verticalAngle = 0.f;
