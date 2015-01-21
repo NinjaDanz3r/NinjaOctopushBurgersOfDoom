@@ -9,12 +9,24 @@ void Object::setPosition(const glm::vec3& position) {
 	_position = position;
 }
 
+void Object::setPosition(float x, float y, float z) {
+	_position.x = x;
+	_position.y = y;
+	_position.z = z;
+}
+
 const glm::vec3& Object::scale() const {
 	return _scale;
 }
 
 void Object::setScale(const glm::vec3& scale) {
 	_scale = scale;
+}
+
+void Object::setScale(float xScale, float yScale, float zScale) {
+	_scale.x = xScale;
+	_scale.y = yScale;
+	_scale.z = zScale;
 }
 
 void Object::move(const glm::vec3& offset) {
