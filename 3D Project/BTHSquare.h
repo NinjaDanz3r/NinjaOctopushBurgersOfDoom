@@ -1,8 +1,10 @@
 #ifndef __BTHSQUARE_H__
 #define __BTHSQUARE_H__
 
+#include "Object.h"
+
 // Represents a BTH square.
-class BTHSquare {
+class BTHSquare : public Object {
 	public:
 		// Represents a vertex point in a triangle.
 		struct TriangleVertex

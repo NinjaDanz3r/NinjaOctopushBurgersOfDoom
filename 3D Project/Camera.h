@@ -1,10 +1,11 @@
 #ifndef __CAMERA_H__
 #define __CAMERA_H__
 
+#include "Object.h"
 #include <glm/glm.hpp>
 
 // A camera in a 3D scene.
-class Camera {
+class Camera : public Object {
 	public:
 		// Constructor
 		Camera();
