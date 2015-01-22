@@ -10,9 +10,6 @@
 #include "SoundBuffer.h"
 #include "Sound.h"
 
-#include <AL/al.h>
-#include <AL/alc.h>
-
 // Test scene. Used to test things.
 class AudioScene : public Scene {
 public:
@@ -42,8 +39,6 @@ private:
 	int vertexCount = 0;
 
 	// Audio
-	ALCdevice *device;
-	ALCcontext *context;
 	WaveFile* waveFile;
 	SoundBuffer* buffer;
 	Sound* sound;

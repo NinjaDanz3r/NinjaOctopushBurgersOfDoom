@@ -29,16 +29,6 @@ AudioScene::AudioScene() {
 	player = new Player();
 	player->setMovementSpeed(2.0f);
 
-	// Open default audio device.
-	device = alcOpenDevice(nullptr);
-	if (!device)
-		util::log("Couldn't open default audio device.");
-
-	// Create audio context.
-	context = alcCreateContext(device, nullptr);
-	if (!alcMakeContextCurrent(context))
-		util::log("Couldn't create audio context.");
-
 	waveFile = new WaveFile("Resources/Audio/Testing.wav");
 	buffer = new SoundBuffer(waveFile);
 	sound = new Sound(buffer);
@@ -55,10 +45,6 @@ AudioScene::~AudioScene() {
 	delete sound;
 	delete buffer;
 	delete waveFile;
-
-	alcMakeContextCurrent(nullptr);
-	alcDestroyContext(context);
-	alcCloseDevice(device);
 }
 
 Scene::SceneEnd* AudioScene::update(double time) {

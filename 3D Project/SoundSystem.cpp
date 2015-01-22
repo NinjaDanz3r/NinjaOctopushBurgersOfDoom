@@ -1,6 +1,26 @@
 #include "SoundSystem.h"
 #include "util.h"
 
+#include <AL/al.h>
+
+SoundSystem::SoundSystem() {
+	// Open default audio device.
+	device = alcOpenDevice(nullptr);
+	if (!device)
+		util::log("Couldn't open default audio device.");
+
+	// Create audio context.
+	context = alcCreateContext(device, nullptr);
+	if (!alcMakeContextCurrent(context))
+		util::log("Couldn't create audio context.");
+}
+
+SoundSystem::~SoundSystem() {
+	alcMakeContextCurrent(nullptr);
+	alcDestroyContext(context);
+	alcCloseDevice(device);
+}
+
 void SoundSystem::checkError(const char* message) {
 	ALenum error = alGetError();
 	if (error != AL_NO_ERROR) {

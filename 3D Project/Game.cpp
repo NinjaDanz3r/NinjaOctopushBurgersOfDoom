@@ -8,6 +8,7 @@ Game::Game(GLFWwindow* window) {
 	this->window = window;
 	input::setWindow(window);
 	assignKeyboardBindings();
+	soundSystem = new SoundSystem();
 
 	currentScene = new AudioScene();
 	lastTime = glfwGetTime();
@@ -18,6 +19,7 @@ Game::Game(GLFWwindow* window) {
 
 Game::~Game() {
 	delete currentScene;
+	delete soundSystem;
 	input::free();
 }
 
