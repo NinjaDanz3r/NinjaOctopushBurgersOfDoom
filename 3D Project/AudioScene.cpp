@@ -6,7 +6,7 @@
 #include "AudioScene.h"
 #include "SoundSystem.h"
 
-#include "KaleidoBox.h"
+#include "Cube.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -25,7 +25,7 @@ AudioScene::AudioScene() {
 	// Texture unit 0 is for base images.
 	glUniform1i(shaders->baseImageLocation(), 0);
 
-	geometry = new KaleidoBox();
+	geometry = new Cube();
 	bindTriangleData();
 
 	player = new Player();

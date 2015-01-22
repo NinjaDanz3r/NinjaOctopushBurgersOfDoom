@@ -5,7 +5,7 @@
 
 #include "TestScene.h"
 
-#include "BTHSquare.h"
+#include "Square.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -22,7 +22,7 @@ TestScene::TestScene() {
 	// Texture unit 0 is for base images.
 	glUniform1i(shaders->baseImageLocation(), 0);
 
-	geometry = new BTHSquare();
+	geometry = new Square();
 	bindTriangleData();
 
 	player = new Player();

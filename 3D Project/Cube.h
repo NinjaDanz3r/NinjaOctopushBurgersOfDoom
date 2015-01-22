@@ -1,16 +1,16 @@
-#ifndef __KALEIDOBOX_H__
-#define __KALEIDOBOX_H__
+#ifndef __CUBE_H__
+#define __CUBE_H__
 
 #include "Geometry.h"
 
-// Represents a kaleidobox.
-class KaleidoBox : public Geometry {
+// Represents a cube.
+class Cube : public Geometry {
 	public:
 		// Create triangle data.
-		KaleidoBox();
+		Cube();
 
 		// Destructor
-		~KaleidoBox();
+		~Cube();
 
 		// Gets all the triangle vertices.
 		Vertex* vertices() const;

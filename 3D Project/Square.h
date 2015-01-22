@@ -1,16 +1,16 @@
-#ifndef __BTHSQUARE_H__
-#define __BTHSQUARE_H__
+#ifndef __SQUARE_H__
+#define __SQUARE_H__
 
 #include "Geometry.h"
 
-// Represents a BTH square.
-class BTHSquare : public Geometry {
+// Represents a square.
+class Square : public Geometry {
 	public:
 		// Create triangle data.
-		BTHSquare();
+		Square();
 
 		// Destructor
-		~BTHSquare();
+		~Square();
 
 		// Gets all the triangle vertices.
 		Vertex* vertices() const;

@@ -33,9 +33,6 @@
     <ClCompile Include="Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BTHSquare.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -75,7 +72,10 @@
     <ClCompile Include="Listener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="KaleidoBox.cpp">
+    <ClCompile Include="Square.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -93,9 +93,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BTHSquare.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
@@ -143,10 +140,13 @@
     <ClInclude Include="Listener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="KaleidoBox.h">
+    <ClInclude Include="Geometry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Geometry.h">
+    <ClInclude Include="Square.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

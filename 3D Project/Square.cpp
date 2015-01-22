@@ -1,8 +1,8 @@
-#include "KaleidoBox.h"
+#include "Square.h"
 
-KaleidoBox::KaleidoBox() {
+Square::Square() {
 	// Vertices
-	vertexNr = 6;
+	vertexNr = 4;
 	vertexData = new Vertex[vertexNr];
 
 	vertexData[0] = {
@@ -34,23 +34,23 @@ KaleidoBox::KaleidoBox() {
 	indexData[5] = 1;
 }
 
-KaleidoBox::~KaleidoBox() {
+Square::~Square() {
 	delete[] vertexData;
 	delete[] indexData;
 }
 
-Geometry::Vertex* KaleidoBox::vertices() const {
+Geometry::Vertex* Square::vertices() const {
 	return vertexData;
 }
 
-unsigned short KaleidoBox::vertexCount() const {
+unsigned short Square::vertexCount() const {
 	return vertexNr;
 }
 
-unsigned short* KaleidoBox::indices() const {
+unsigned short* Square::indices() const {
 	return indexData;
 }
 
-unsigned int KaleidoBox::indexCount() const {
+unsigned int Square::indexCount() const {
 	return indexNr;
 }

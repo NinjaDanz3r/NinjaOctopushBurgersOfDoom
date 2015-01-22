@@ -12,12 +12,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AudioScene.cpp" />
-    <ClCompile Include="BTHSquare.cpp" />
+    <ClCompile Include="Square.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="FirstPersonCamera.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="input.cpp" />
-    <ClCompile Include="KaleidoBox.cpp" />
+    <ClCompile Include="Cube.cpp" />
     <ClCompile Include="Listener.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -35,13 +35,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioScene.h" />
-    <ClInclude Include="BTHSquare.h" />
+    <ClInclude Include="Square.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="FirstPersonCamera.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="input.h" />
-    <ClInclude Include="KaleidoBox.h" />
+    <ClInclude Include="Cube.h" />
     <ClInclude Include="Listener.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Object.h" />
