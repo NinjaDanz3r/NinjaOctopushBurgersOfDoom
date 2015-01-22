@@ -48,29 +48,11 @@ AudioScene::AudioScene() {
 	alSource3f(source, AL_VELOCITY, 0.f, 0.f, 0.f);
 	alSourcei(source, AL_LOOPING, AL_TRUE);
 
-	// Create audio buffer.
-	ALenum error;
-	alGetError();
-	alGenBuffers((ALuint)1, &buffer);
-	error = alGetError();
-	if (error != AL_NO_ERROR)
-		util::log("Couldn't create buffers.");
-
 	waveFile = new WaveFile("Resources/Audio/Testing.wav");
+	buffer = new SoundBuffer(waveFile);
 
-	// Set the buffer data and play source.
-	alBufferData(buffer, waveFile->format(), waveFile->data(), waveFile->size(), waveFile->sampleRate());
-	error = alGetError();
-	if (error != AL_NO_ERROR) {
-		util::log("Couldn't set buffer data.");
-		if (error == AL_INVALID_NAME) util::log("Invalid name");
-		if (error == AL_INVALID_ENUM) util::log("Invalid enum");
-		if (error == AL_INVALID_VALUE) util::log("Invalid value");
-		if (error == AL_INVALID_OPERATION) util::log("Invalid operation");
-		if (error == AL_OUT_OF_MEMORY) util::log("Out of memory like!");
-	}
-
-	alSourcei(source, AL_BUFFER, buffer);
+	ALenum error;
+	alSourcei(source, AL_BUFFER, buffer->buffer());
 	error = alGetError();
 	if (error != AL_NO_ERROR)
 		util::log("Couldn't set sound source buffer.");
@@ -88,7 +70,6 @@ AudioScene::~AudioScene() {
 	delete player;
 
 	alDeleteSources(1, &source);
-	alDeleteBuffers(1, &buffer);
 	alcMakeContextCurrent(nullptr);
 	alcDestroyContext(context);
 	alcCloseDevice(device);

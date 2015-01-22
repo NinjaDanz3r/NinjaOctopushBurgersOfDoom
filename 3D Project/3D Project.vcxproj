@@ -23,6 +23,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="settings.cpp" />
     <ClCompile Include="Shaders.cpp" />
+    <ClCompile Include="SoundBuffer.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="util.cpp" />
@@ -41,6 +42,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="settings.h" />
     <ClInclude Include="Shaders.h" />
+    <ClInclude Include="SoundBuffer.h" />
     <ClInclude Include="SoundFile.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Texture.h" />

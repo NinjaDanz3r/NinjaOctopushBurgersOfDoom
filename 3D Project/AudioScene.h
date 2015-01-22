@@ -7,6 +7,7 @@
 #include "BTHSquare.h"
 #include "Player.h"
 #include "WaveFile.h"
+#include "SoundBuffer.h"
 
 #include <AL/al.h>
 #include <AL/alc.h>
@@ -43,8 +44,8 @@ private:
 	ALCdevice *device;
 	ALCcontext *context;
 	ALuint source;
-	ALuint buffer;
 	WaveFile* waveFile;
+	SoundBuffer* buffer;
 };
 
 #endif
