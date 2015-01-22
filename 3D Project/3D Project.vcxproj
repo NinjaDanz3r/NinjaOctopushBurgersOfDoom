@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AudioScene.cpp" />
     <ClCompile Include="BTHSquare.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="FirstPersonCamera.cpp" />
@@ -27,6 +28,7 @@
     <ClCompile Include="util.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AudioScene.h" />
     <ClInclude Include="BTHSquare.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="FirstPersonCamera.h" />

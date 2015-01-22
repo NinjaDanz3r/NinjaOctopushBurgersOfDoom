@@ -25,8 +25,6 @@ class TestScene : public Scene {
 	private:
 		void bindTriangleData();
 
-		float rotation = 0.f;
-
 		Shaders* shaders;
 		Texture* texture;
 		BTHSquare* bthSquare;
