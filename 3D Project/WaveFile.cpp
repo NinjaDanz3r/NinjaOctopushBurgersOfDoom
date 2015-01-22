@@ -21,7 +21,6 @@ WaveFile::WaveFile(const char* filename) {
 	// Read file size (excluding RIFF).
 	unsigned long size;
 	waveFile.read(reinterpret_cast<char*>(&size), sizeof(size));
-	fprintf(stderr, "Wave file size: %i\n", size);
 
 	// Read WAVE.
 	waveFile.read(id, 4);
@@ -40,10 +39,6 @@ WaveFile::WaveFile(const char* filename) {
 	waveFile.read(reinterpret_cast<char*>(&avgBytesPerSec), sizeof(avgBytesPerSec));
 	waveFile.read(reinterpret_cast<char*>(&blockAlign), sizeof(blockAlign));
 	waveFile.read(reinterpret_cast<char*>(&bitsPerSample), sizeof(bitsPerSample));
-
-	fprintf(stderr, "Channels: %i\n", channels);
-	fprintf(stderr, "Sizeof short: %i\n", sizeof(short));
-	fprintf(stderr, "Bits per sample: %i\n", bitsPerSample);
 
 	// Read data.
 	waveFile.read(id, 4);

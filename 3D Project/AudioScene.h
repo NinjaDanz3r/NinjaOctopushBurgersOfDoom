@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "WaveFile.h"
 #include "SoundBuffer.h"
+#include "Sound.h"
 
 #include <AL/al.h>
 #include <AL/alc.h>
@@ -43,9 +44,9 @@ private:
 	// Audio
 	ALCdevice *device;
 	ALCcontext *context;
-	ALuint source;
 	WaveFile* waveFile;
 	SoundBuffer* buffer;
+	Sound* sound;
 };
 
 #endif

@@ -1,11 +1,10 @@
 #include <gl/glew.h>
 #include <gl/GL.h>
 
-#include <GLFW\glfw3.h>
+#include <GLFW/glfw3.h>
 
 #include "AudioScene.h"
 #include "util.h"
-#include "SoundSystem.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -40,23 +39,11 @@ AudioScene::AudioScene() {
 	if (!alcMakeContextCurrent(context))
 		util::log("Couldn't create audio context.");
 
-	// Create audio source.
-	alGenSources((ALuint)1, &source);
-	
-	alSourcef(source, AL_PITCH, 1.f);
-	alSourcef(source, AL_GAIN, 1.f);
-	alSource3f(source, AL_POSITION, 0.f, 0.f, 0.f);
-	alSource3f(source, AL_VELOCITY, 0.f, 0.f, 0.f);
-	alSourcei(source, AL_LOOPING, AL_TRUE);
-
 	waveFile = new WaveFile("Resources/Audio/Testing.wav");
 	buffer = new SoundBuffer(waveFile);
-
-	alSourcei(source, AL_BUFFER, buffer->buffer());
-	SoundSystem::checkError("Couldn't set sound source buffer.");
-
-	alSourcePlay(source);
-	SoundSystem::checkError("Couldn't play sound.");
+	sound = new Sound(buffer);
+	sound->setLooping(true);
+	sound->play();
 }
 
 AudioScene::~AudioScene() {
@@ -65,13 +52,13 @@ AudioScene::~AudioScene() {
 	delete bthSquare;
 	delete player;
 
-	alDeleteSources(1, &source);
+	delete sound;
+	delete buffer;
+	delete waveFile;
+
 	alcMakeContextCurrent(nullptr);
 	alcDestroyContext(context);
 	alcCloseDevice(device);
-
-	delete waveFile;
-	delete buffer;
 }
 
 Scene::SceneEnd* AudioScene::update(double time) {
