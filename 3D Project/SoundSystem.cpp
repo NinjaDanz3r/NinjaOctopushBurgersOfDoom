@@ -3,6 +3,8 @@
 
 #include <AL/al.h>
 
+SoundSystem* SoundSystem::instance = nullptr;
+
 SoundSystem::SoundSystem() {
 	// Open default audio device.
 	device = alcOpenDevice(nullptr);
@@ -13,12 +15,25 @@ SoundSystem::SoundSystem() {
 	context = alcCreateContext(device, nullptr);
 	if (!alcMakeContextCurrent(context))
 		util::log("Couldn't create audio context.");
+
+	_listener = new Listener();
+	instance = this;
 }
 
 SoundSystem::~SoundSystem() {
+	delete _listener;
+
 	alcMakeContextCurrent(nullptr);
 	alcDestroyContext(context);
 	alcCloseDevice(device);
+}
+
+Listener* SoundSystem::listener() const {
+	return _listener;
+}
+
+SoundSystem* SoundSystem::getInstance() {
+	return instance;
 }
 
 void SoundSystem::checkError(const char* message) {

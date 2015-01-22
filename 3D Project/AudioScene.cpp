@@ -4,7 +4,7 @@
 #include <GLFW/glfw3.h>
 
 #include "AudioScene.h"
-#include "util.h"
+#include "SoundSystem.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -33,6 +33,7 @@ AudioScene::AudioScene() {
 	buffer = new SoundBuffer(waveFile);
 	sound = new Sound(buffer);
 	sound->setLooping(true);
+	sound->setGain(2.f);
 	sound->play();
 }
 
@@ -49,6 +50,9 @@ AudioScene::~AudioScene() {
 
 Scene::SceneEnd* AudioScene::update(double time) {
 	player->update(time);
+
+	SoundSystem::getInstance()->listener()->setPosition(player->camera()->position());
+	SoundSystem::getInstance()->listener()->setOrientation(player->camera()->forward(), player->camera()->up());
 
 	return nullptr;
 }

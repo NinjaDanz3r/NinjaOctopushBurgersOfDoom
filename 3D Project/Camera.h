@@ -13,6 +13,15 @@ class Camera : public Object {
 		// Destructor
 		virtual ~Camera() { }
 
+		// The direction in which the camera is currently facing.
+		glm::vec3 forward() const;
+
+		// The direction representing the direction to the right of the camera.
+		glm::vec3 right() const;
+
+		// The camera's up-vector.
+		glm::vec3 up() const;
+
 		// The camera's view matrix (translation and orientation).
 		glm::mat4 view() const;
 
