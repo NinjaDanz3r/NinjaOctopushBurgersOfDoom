@@ -9,6 +9,7 @@ The mandatory techniques are perspective rendering, lighting, textures, three-di
 Apart from these, we are also aiming to implement the following techniques (implemented|mandatory|available):
 
 ##Core (0|1|2)
+* Deferred rendering and lighting. (TODO)
 
 ##Geometry (0|2|5)
 * Height-map terrain rendering, user can walk on the terrain. (TODO)
@@ -25,12 +26,12 @@ Apart from these, we are also aiming to implement the following techniques (impl
 * Particle system with billboarded particles. (TODO)
 
 #Libraries
-Uses OpenGL, [glew](http://glew.sourceforge.net/), [GLFW](http://www.glfw.org/), [OpenGL Mathematics](http://glm.g-truc.net/0.9.6/index.html), [simpleini](https://github.com/brofield/simpleini) and [stb](https://github.com/nothings/stb).
+Uses OpenGL, [glew](http://glew.sourceforge.net/), [GLFW](http://www.glfw.org/), [OpenGL Mathematics](http://glm.g-truc.net/0.9.6/index.html), [simpleini](https://github.com/brofield/simpleini),  [stb](https://github.com/nothings/stb) and [OpenAL Soft](http://kcat.strangesoft.net/openal.html).
 
 #License
 This project is licensed under the MIT license.
 
-glew is licensed under the Modified BSD License, the Mesa 3-D License, and the Khronos License. GLFW is licensed under the zlib/libpng license. OpenGL Mathematics is licensed under the Happy Bunny license. simpleini is licensed under the MIT license. stb is public domain.
+glew is licensed under the Modified BSD License, the Mesa 3-D License, and the Khronos License. GLFW is licensed under the zlib/libpng license. OpenGL Mathematics is licensed under the Happy Bunny license. simpleini is licensed under the MIT license. stb is public domain. OpenAL Soft is licensed under the LGPL.
 
 #Resources
 The resources (textures, models, etc.) for this project are available separately and under a separate license (all rights reserved). You can download them [here](https://www.dropbox.com/sh/be6nx0qehx18kef/AABQPizx1kvYIurCqlS8N6uga?dl=1). Extract them to 3D Project/Resources.
