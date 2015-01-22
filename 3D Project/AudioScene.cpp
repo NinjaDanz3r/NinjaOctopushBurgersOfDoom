@@ -4,12 +4,18 @@
 #include <GLFW\glfw3.h>
 
 #include "AudioScene.h"
+#include "util.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 
+#include <fstream>
+#include <stdio.h>
+
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))
+
+using namespace std;
 
 AudioScene::AudioScene() {
 	texture = new Texture("Resources/Textures/bth_image.tga");
@@ -25,6 +31,103 @@ AudioScene::AudioScene() {
 
 	player = new Player();
 	player->setMovementSpeed(2.0f);
+
+	// Open default audio device.
+	device = alcOpenDevice(nullptr);
+	if (!device)
+		util::log("Couldn't open default audio device.");
+
+	// Create audio context.
+	context = alcCreateContext(device, nullptr);
+	if (!alcMakeContextCurrent(context))
+		util::log("Couldn't create audio context.");
+
+	// Create audio source.
+	alGenSources((ALuint)1, &source);
+	
+	alSourcef(source, AL_PITCH, 1.f);
+	alSourcef(source, AL_GAIN, 1.f);
+	alSource3f(source, AL_POSITION, 0.f, 0.f, 0.f);
+	alSource3f(source, AL_VELOCITY, 0.f, 0.f, 0.f);
+	alSourcei(source, AL_LOOPING, AL_TRUE);
+
+	// Create audio buffer.
+	ALenum error;
+	alGetError();
+	alGenBuffers((ALuint)1, &buffer);
+	error = alGetError();
+	if (error != AL_NO_ERROR)
+		util::log("Couldn't create buffers.");
+
+	// Read wave file.
+	ifstream waveFile;
+	waveFile.open("Resources/Audio/Testing.wav", ios::binary);
+	if (!waveFile.is_open())
+		util::log("Couldn't open wave file for reading.");
+
+	// Read RIFF.
+	char id[4];
+	waveFile.read(id, 4);
+	if (!strcmp(id, "RIFF"))
+		util::log("File is not a RIFF file.");
+
+	// Read file size (excluding RIFF).
+	unsigned long size;
+	waveFile.read(reinterpret_cast<char*>(&size), sizeof(size));
+	fprintf(stderr, "Wave file size: %i\n", size);
+
+	// Read WAVE.
+	waveFile.read(id, 4);
+	if (!strcmp(id, "WAVE"))
+		util::log("File is not a wave file.");
+
+	// Read format.
+	unsigned long formatLength, sampleRate, avgBytesPerSec;
+	short formatTag, channels, blockAlign, bitsPerSample;
+
+	waveFile.read(id, 4);
+	waveFile.read(reinterpret_cast<char*>(&formatLength), sizeof(formatLength));
+	waveFile.read(reinterpret_cast<char*>(&formatTag), sizeof(formatTag));
+	waveFile.read(reinterpret_cast<char*>(&channels), sizeof(channels));
+	waveFile.read(reinterpret_cast<char*>(&sampleRate), sizeof(sampleRate));
+	waveFile.read(reinterpret_cast<char*>(&avgBytesPerSec), sizeof(avgBytesPerSec));
+	waveFile.read(reinterpret_cast<char*>(&blockAlign), sizeof(blockAlign));
+	waveFile.read(reinterpret_cast<char*>(&bitsPerSample), sizeof(bitsPerSample));
+
+	fprintf(stderr, "Channels: %i\n", channels);
+	fprintf(stderr, "Sizeof short: %i\n", sizeof(short));
+	fprintf(stderr, "Bits per sample: %i\n", bitsPerSample);
+
+	// Read data.
+	unsigned long dataSize;
+	waveFile.read(id, 4);
+	waveFile.read(reinterpret_cast<char*>(&dataSize), sizeof(dataSize));
+	data = new char[dataSize];
+	waveFile.read(data, dataSize);
+
+	waveFile.close();
+
+	// Set the buffer data and play source.
+	alBufferData(buffer, toALFormat(channels, bitsPerSample), data, dataSize, sampleRate);
+	error = alGetError();
+	if (error != AL_NO_ERROR) {
+		util::log("Couldn't set buffer data.");
+		if (error == AL_INVALID_NAME) util::log("Invalid name");
+		if (error == AL_INVALID_ENUM) util::log("Invalid enum");
+		if (error == AL_INVALID_VALUE) util::log("Invalid value");
+		if (error == AL_INVALID_OPERATION) util::log("Invalid operation");
+		if (error == AL_OUT_OF_MEMORY) util::log("Out of memory like!");
+	}
+
+	alSourcei(source, AL_BUFFER, buffer);
+	error = alGetError();
+	if (error != AL_NO_ERROR)
+		util::log("Couldn't set sound source buffer.");
+
+	alSourcePlay(source);
+	error = alGetError();
+	if (error != AL_NO_ERROR)
+		util::log("Couldn't play sound.");
 }
 
 AudioScene::~AudioScene() {
@@ -32,6 +135,14 @@ AudioScene::~AudioScene() {
 	delete shaders;
 	delete bthSquare;
 	delete player;
+
+	alDeleteSources(1, &source);
+	alDeleteBuffers(1, &buffer);
+	alcMakeContextCurrent(nullptr);
+	alcDestroyContext(context);
+	alcCloseDevice(device);
+
+	delete[] data;
 }
 
 Scene::SceneEnd* AudioScene::update(double time) {
@@ -95,4 +206,23 @@ void AudioScene::bindTriangleData() {
 
 	GLuint vertexTexture = glGetAttribLocation(shaders->shaderProgram(), "vertex_texture");
 	glVertexAttribPointer(vertexTexture, 2, GL_FLOAT, GL_FALSE, sizeof(BTHSquare::TriangleVertex), BUFFER_OFFSET(sizeof(float) * 3));
+}
+
+ALenum AudioScene::toALFormat(short channels, short samples) {
+	bool stereo = (channels > 1);
+
+	switch (samples) {
+	case 16:
+		if (stereo)
+			return AL_FORMAT_STEREO16;
+		else
+			return AL_FORMAT_MONO16;
+	case 8:
+		if (stereo)
+			return AL_FORMAT_STEREO8;
+		else
+			return AL_FORMAT_MONO8;
+	default:
+		return -1;
+	}
 }

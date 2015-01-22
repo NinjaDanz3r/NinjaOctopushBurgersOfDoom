@@ -7,6 +7,9 @@
 #include "BTHSquare.h"
 #include "Player.h"
 
+#include <AL/al.h>
+#include <AL/alc.h>
+
 // Test scene. Used to test things.
 class AudioScene : public Scene {
 public:
@@ -34,6 +37,15 @@ private:
 	GLuint gVertexBuffer = 0;
 	GLuint gVertexAttribute = 0;
 	int vertexCount = 0;
+
+	// Audio
+	ALCdevice *device;
+	ALCcontext *context;
+	ALuint source;
+	ALuint buffer;
+	char* data;
+
+	static inline ALenum toALFormat(short channels, short samples);
 };
 
 #endif
