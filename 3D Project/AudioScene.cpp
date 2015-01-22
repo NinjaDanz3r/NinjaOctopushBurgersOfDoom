@@ -75,6 +75,7 @@ AudioScene::~AudioScene() {
 	alcCloseDevice(device);
 
 	delete waveFile;
+	delete buffer;
 }
 
 Scene::SceneEnd* AudioScene::update(double time) {
