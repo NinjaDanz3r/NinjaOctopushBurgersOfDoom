@@ -20,6 +20,7 @@ namespace util {
 	void log(const char* text) {
 		fputs(text, stderr);
 		fputs("\n", stderr);
+		fflush(stderr);
 	}
 
 	void logWithTime(const char* text) {

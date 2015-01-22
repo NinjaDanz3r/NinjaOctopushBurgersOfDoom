@@ -26,6 +26,7 @@
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="util.cpp" />
+    <ClCompile Include="WaveFile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioScene.h" />
@@ -40,9 +41,11 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="settings.h" />
     <ClInclude Include="Shaders.h" />
+    <ClInclude Include="SoundFile.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="util.h" />
+    <ClInclude Include="WaveFile.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="default_fragment.glsl" />

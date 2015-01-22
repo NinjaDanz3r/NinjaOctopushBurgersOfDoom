@@ -11,6 +11,7 @@ Game::Game(GLFWwindow* window) {
 
 	currentScene = new AudioScene();
 	lastTime = glfwGetTime();
+	prevFPSTime = lastTime;
 
 	glEnable(GL_DEPTH_TEST);
 }

@@ -6,6 +6,7 @@
 #include "Texture.h"
 #include "BTHSquare.h"
 #include "Player.h"
+#include "WaveFile.h"
 
 #include <AL/al.h>
 #include <AL/alc.h>
@@ -43,9 +44,7 @@ private:
 	ALCcontext *context;
 	ALuint source;
 	ALuint buffer;
-	char* data;
-
-	static inline ALenum toALFormat(short channels, short samples);
+	WaveFile* waveFile;
 };
 
 #endif
