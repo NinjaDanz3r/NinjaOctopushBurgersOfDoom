@@ -1,16 +1,16 @@
-#ifndef __BTHSQUARE_H__
-#define __BTHSQUARE_H__
+#ifndef __KALEIDOBOX_H__
+#define __KALEIDOBOX_H__
 
 #include "Geometry.h"
 
-// Represents a BTH square.
-class BTHSquare : public Geometry {
+// Represents a kaleidobox.
+class KaleidoBox : public Geometry {
 	public:
 		// Create triangle data.
-		BTHSquare();
+		KaleidoBox();
 
 		// Destructor
-		~BTHSquare();
+		~KaleidoBox();
 
 		// Gets all the triangle vertices.
 		Vertex* vertices() const;

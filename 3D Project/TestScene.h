@@ -4,7 +4,7 @@
 #include "Scene.h"
 #include "Shaders.h"
 #include "Texture.h"
-#include "BTHSquare.h"
+#include "Geometry.h"
 #include "Player.h"
 
 // Test scene. Used to test things.
@@ -27,13 +27,17 @@ class TestScene : public Scene {
 
 		Shaders* shaders;
 		Texture* texture;
-		BTHSquare* bthSquare;
+		Geometry* geometry;
 		Player* player;
 
 		// Vertex buffer.
-		GLuint gVertexBuffer = 0;
-		GLuint gVertexAttribute = 0;
-		int vertexCount = 0;
+		GLuint vertexBuffer = 0;
+		GLuint vertexAttribute = 0;
+		unsigned int vertexCount = 0;
+
+		// Index buffer.
+		GLuint indexBuffer = 0;
+		unsigned int indexCount = 0;
 };
 
 #endif

@@ -1,6 +1,6 @@
-#include "BTHSquare.h"
+#include "KaleidoBox.h"
 
-BTHSquare::BTHSquare() {
+KaleidoBox::KaleidoBox() {
 	// Vertices
 	vertexNr = 6;
 	vertexData = new Vertex[vertexNr];
@@ -34,23 +34,23 @@ BTHSquare::BTHSquare() {
 	indexData[5] = 1;
 }
 
-BTHSquare::~BTHSquare() {
+KaleidoBox::~KaleidoBox() {
 	delete[] vertexData;
 	delete[] indexData;
 }
 
-Geometry::Vertex* BTHSquare::vertices() const {
+Geometry::Vertex* KaleidoBox::vertices() const {
 	return vertexData;
 }
 
-unsigned short BTHSquare::vertexCount() const {
+unsigned short KaleidoBox::vertexCount() const {
 	return vertexNr;
 }
 
-unsigned short* BTHSquare::indices() const {
+unsigned short* KaleidoBox::indices() const {
 	return indexData;
 }
 
-unsigned int BTHSquare::indexCount() const {
+unsigned int KaleidoBox::indexCount() const {
 	return indexNr;
 }

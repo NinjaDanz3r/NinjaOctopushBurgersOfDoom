@@ -4,7 +4,7 @@
 #include "Scene.h"
 #include "Shaders.h"
 #include "Texture.h"
-#include "BTHSquare.h"
+#include "Geometry.h"
 #include "Player.h"
 #include "WaveFile.h"
 #include "SoundBuffer.h"
@@ -12,36 +12,40 @@
 
 // Test scene. Used to test things.
 class AudioScene : public Scene {
-public:
-	// Constructor
-	AudioScene();
+	public:
+		// Constructor
+		AudioScene();
 
-	// Destructor
-	~AudioScene();
+		// Destructor
+		~AudioScene();
 
-	// Updates the scene.
-	SceneEnd* update(double time);
+		// Updates the scene.
+		SceneEnd* update(double time);
 
-	// Renders the scene.
-	void render(int width, int height);
+		// Renders the scene.
+		void render(int width, int height);
 
-private:
-	void bindTriangleData();
+	private:
+		void bindTriangleData();
 
-	Shaders* shaders;
-	Texture* texture;
-	BTHSquare* bthSquare;
-	Player* player;
+		Shaders* shaders;
+		Texture* texture;
+		Geometry* geometry;
+		Player* player;
 
-	// Vertex buffer.
-	GLuint gVertexBuffer = 0;
-	GLuint gVertexAttribute = 0;
-	int vertexCount = 0;
+		// Vertex buffer.
+		GLuint vertexBuffer = 0;
+		GLuint vertexAttribute = 0;
+		unsigned short vertexCount = 0;
 
-	// Audio
-	WaveFile* waveFile;
-	SoundBuffer* buffer;
-	Sound* sound;
+		// Index buffer.
+		GLuint indexBuffer = 0;
+		unsigned int indexCount = 0;
+
+		// Audio
+		WaveFile* waveFile;
+		SoundBuffer* buffer;
+		Sound* sound;
 };
 
 #endif

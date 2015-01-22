@@ -17,6 +17,7 @@
     <ClCompile Include="FirstPersonCamera.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="KaleidoBox.cpp" />
     <ClCompile Include="Listener.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -38,7 +39,9 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="FirstPersonCamera.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Geometry.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="KaleidoBox.h" />
     <ClInclude Include="Listener.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Object.h" />
