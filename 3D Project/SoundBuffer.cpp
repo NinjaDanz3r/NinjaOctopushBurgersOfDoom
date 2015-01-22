@@ -1,26 +1,16 @@
 #include "SoundBuffer.h"
+#include "SoundSystem.h"
 #include "util.h"
 
 SoundBuffer::SoundBuffer(SoundFile* soundFile) {
 	// Create audio buffer.
-	ALenum error;
 	alGetError();
 	alGenBuffers((ALuint)1, &_buffer);
-	error = alGetError();
-	if (error != AL_NO_ERROR)
-		util::log("Couldn't create buffers.");
+	SoundSystem::checkError("Couldn't create buffers.");
 
 	// Set the buffer data.
 	alBufferData(_buffer, soundFile->format(), soundFile->data(), soundFile->size(), soundFile->sampleRate());
-	error = alGetError();
-	if (error != AL_NO_ERROR) {
-		util::log("Couldn't set buffer data.");
-		if (error == AL_INVALID_NAME) util::log("Invalid name");
-		if (error == AL_INVALID_ENUM) util::log("Invalid enum");
-		if (error == AL_INVALID_VALUE) util::log("Invalid value");
-		if (error == AL_INVALID_OPERATION) util::log("Invalid operation");
-		if (error == AL_OUT_OF_MEMORY) util::log("Out of memory like!");
-	}
+	SoundSystem::checkError("Couldn't set buffer data.");
 }
 
 SoundBuffer::~SoundBuffer() {

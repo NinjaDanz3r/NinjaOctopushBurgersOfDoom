@@ -5,6 +5,7 @@
 
 #include "AudioScene.h"
 #include "util.h"
+#include "SoundSystem.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -51,16 +52,11 @@ AudioScene::AudioScene() {
 	waveFile = new WaveFile("Resources/Audio/Testing.wav");
 	buffer = new SoundBuffer(waveFile);
 
-	ALenum error;
 	alSourcei(source, AL_BUFFER, buffer->buffer());
-	error = alGetError();
-	if (error != AL_NO_ERROR)
-		util::log("Couldn't set sound source buffer.");
+	SoundSystem::checkError("Couldn't set sound source buffer.");
 
 	alSourcePlay(source);
-	error = alGetError();
-	if (error != AL_NO_ERROR)
-		util::log("Couldn't play sound.");
+	SoundSystem::checkError("Couldn't play sound.");
 }
 
 AudioScene::~AudioScene() {
