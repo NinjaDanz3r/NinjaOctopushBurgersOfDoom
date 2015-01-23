@@ -23,7 +23,7 @@ TerrainScene::TerrainScene() {
 	// Texture unit 0 is for base images.
 	glUniform1i(shaders->baseImageLocation(), 0);
 
-	geometry = new Terrain();
+	geometry = new Terrain("Resources/HeightMaps/TestMap.tga");
 	geometry->setPosition(0.f, -1.f, 0.f);
 	geometry->setScale(2.f, 2.f, 2.f);
 	bindTriangleData();

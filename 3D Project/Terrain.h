@@ -7,7 +7,7 @@
 class Terrain : public Geometry {
 public:
 	// Constructor
-	Terrain();
+	Terrain(const char* filename);
 
 	// Destructor
 	~Terrain();
@@ -30,6 +30,9 @@ private:
 
 	unsigned short* indexData = nullptr;
 	int indexNr = 0;
+
+	int width;
+	int height;
 };
 
 #endif

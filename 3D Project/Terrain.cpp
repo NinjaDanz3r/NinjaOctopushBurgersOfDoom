@@ -1,6 +1,22 @@
 #include "Terrain.h"
+#include <stb_image.h>
+#include "util.h"
 
-Terrain::Terrain() {
+Terrain::Terrain(const char* filename) {
+	// Load height map from file
+	int components;
+	unsigned char* data;
+	data = stbi_load(filename, &width, &height, &components, 0);
+
+	if (data == NULL) {
+		fputs("Couldn't load image: ", stderr);
+		util::log(filename);
+	}
+
+	fprintf(stderr, "Height map size: %ix%i\n", width, height);
+
+	stbi_image_free(data);
+
 	// Vertices
 	vertexNr = 4;
 	vertexData = new Vertex[vertexNr];
