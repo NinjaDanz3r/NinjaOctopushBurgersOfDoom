@@ -6,7 +6,7 @@
 #include "TerrainScene.h"
 #include "SoundSystem.h"
 
-#include "Cube.h"
+#include "Terrain.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -23,7 +23,9 @@ TerrainScene::TerrainScene() {
 	// Texture unit 0 is for base images.
 	glUniform1i(shaders->baseImageLocation(), 0);
 
-	geometry = new Cube();
+	geometry = new Terrain();
+	geometry->setPosition(0.f, -1.f, 0.f);
+	geometry->setScale(2.f, 2.f, 2.f);
 	bindTriangleData();
 
 	player = new Player();
