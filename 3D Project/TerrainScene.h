@@ -1,23 +1,20 @@
-#ifndef __AUDIOSCENE_H__
-#define __AUDIOSCENE_H__
+#ifndef __TERRAINSCENE_H__
+#define __TERRAINSCENE_H__
 
 #include "Scene.h"
 #include "Shaders.h"
 #include "Texture.h"
 #include "Geometry.h"
 #include "Player.h"
-#include "WaveFile.h"
-#include "SoundBuffer.h"
-#include "Sound.h"
 
-// Scene used to test 3D audio.
-class AudioScene : public Scene {
+// Scene used to test terrain stuff (height maps).
+class TerrainScene : public Scene {
 	public:
 		// Constructor
-		AudioScene();
+		TerrainScene();
 
 		// Destructor
-		~AudioScene();
+		~TerrainScene();
 
 		// Updates the scene.
 		SceneEnd* update(double time);
@@ -41,11 +38,6 @@ class AudioScene : public Scene {
 		// Index buffer.
 		GLuint indexBuffer = 0;
 		unsigned int indexCount = 0;
-
-		// Audio
-		WaveFile* waveFile;
-		SoundBuffer* buffer;
-		Sound* sound;
 };
 
 #endif

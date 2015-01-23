@@ -3,7 +3,7 @@
 
 #include <GLFW/glfw3.h>
 
-#include "AudioScene.h"
+#include "TerrainScene.h"
 #include "SoundSystem.h"
 
 #include "Cube.h"
@@ -14,7 +14,7 @@
 
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))
 
-AudioScene::AudioScene() {
+TerrainScene::TerrainScene() {
 	texture = new Texture("Resources/Textures/kaleido.tga");
 	shaders = new Shaders("default");
 
@@ -28,27 +28,16 @@ AudioScene::AudioScene() {
 
 	player = new Player();
 	player->setMovementSpeed(2.0f);
-
-	waveFile = new WaveFile("Resources/Audio/Testing.wav");
-	buffer = new SoundBuffer(waveFile);
-	sound = new Sound(buffer);
-	sound->setLooping(true);
-	sound->setGain(2.f);
-	sound->play();
 }
 
-AudioScene::~AudioScene() {
+TerrainScene::~TerrainScene() {
 	delete texture;
 	delete shaders;
 	delete geometry;
 	delete player;
-
-	delete sound;
-	delete buffer;
-	delete waveFile;
 }
 
-Scene::SceneEnd* AudioScene::update(double time) {
+Scene::SceneEnd* TerrainScene::update(double time) {
 	player->update(time);
 
 	SoundSystem::getInstance()->listener()->setPosition(player->camera()->position());
@@ -57,7 +46,7 @@ Scene::SceneEnd* AudioScene::update(double time) {
 	return nullptr;
 }
 
-void AudioScene::render(int width, int height) {
+void TerrainScene::render(int width, int height) {
 	glViewport(0, 0, width, height);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -94,7 +83,7 @@ void AudioScene::render(int width, int height) {
 	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_SHORT, (void*)0);
 }
 
-void AudioScene::bindTriangleData() {
+void TerrainScene::bindTriangleData() {
 	// Vertex buffer
 	vertexCount = geometry->vertexCount();
 	glGenBuffers(1, &vertexBuffer);

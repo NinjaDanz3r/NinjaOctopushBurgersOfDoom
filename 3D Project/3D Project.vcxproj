@@ -28,6 +28,7 @@
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="SoundBuffer.cpp" />
     <ClCompile Include="SoundSystem.cpp" />
+    <ClCompile Include="TerrainScene.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="util.cpp" />
@@ -53,6 +54,7 @@
     <ClInclude Include="SoundBuffer.h" />
     <ClInclude Include="SoundFile.h" />
     <ClInclude Include="SoundSystem.h" />
+    <ClInclude Include="TerrainScene.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="util.h" />
