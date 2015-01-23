@@ -40,7 +40,7 @@ Cube::Cube() {
 
 	// Vertexindices
 	indexNr = 36;
-	indexData = new unsigned short[indexNr];
+	indexData = new unsigned int[indexNr];
 
 	// Side 1
 	indexData[0] = 0;
@@ -100,11 +100,11 @@ Geometry::Vertex* Cube::vertices() const {
 	return vertexData;
 }
 
-unsigned short Cube::vertexCount() const {
+unsigned int Cube::vertexCount() const {
 	return vertexNr;
 }
 
-unsigned short* Cube::indices() const {
+unsigned int* Cube::indices() const {
 	return indexData;
 }
 

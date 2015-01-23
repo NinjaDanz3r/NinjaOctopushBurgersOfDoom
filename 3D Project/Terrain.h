@@ -16,20 +16,20 @@ public:
 	Vertex* vertices() const;
 
 	// Gets the number of vertices.
-	unsigned short vertexCount() const;
+	unsigned int vertexCount() const;
 
 	// Gets all the vertex indices.
-	unsigned short* indices() const;
+	unsigned int* indices() const;
 
 	// Gets the number of indicies.
 	unsigned int indexCount() const;
 
 private:
 	Vertex *vertexData = nullptr;
-	int vertexNr = 0;
+	unsigned int vertexNr = 0;
 
-	unsigned short* indexData = nullptr;
-	int indexNr = 0;
+	unsigned int* indexData = nullptr;
+	unsigned int indexNr = 0;
 
 	int width;
 	int height;

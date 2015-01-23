@@ -24,7 +24,7 @@ Square::Square() {
 
 	// Vertexindices
 	indexNr = 6;
-	indexData = new unsigned short[indexNr];
+	indexData = new unsigned int[indexNr];
 
 	indexData[0] = 0;
 	indexData[1] = 1;
@@ -43,11 +43,11 @@ Geometry::Vertex* Square::vertices() const {
 	return vertexData;
 }
 
-unsigned short Square::vertexCount() const {
+unsigned int Square::vertexCount() const {
 	return vertexNr;
 }
 
-unsigned short* Square::indices() const {
+unsigned int* Square::indices() const {
 	return indexData;
 }
 

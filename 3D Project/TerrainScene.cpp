@@ -23,7 +23,7 @@ TerrainScene::TerrainScene() {
 	// Texture unit 0 is for base images.
 	glUniform1i(shaders->baseImageLocation(), 0);
 
-	geometry = new Terrain("Resources/HeightMaps/TestMap.tga");
+	geometry = new Terrain("Resources/HeightMaps/TestMapSmall.tga");
 	geometry->setPosition(0.f, -1.f, 0.f);
 	geometry->setScale(2.f, 2.f, 2.f);
 	bindTriangleData();
@@ -82,7 +82,7 @@ void TerrainScene::render(int width, int height) {
 	glUniform3fv(shaders->diffuseKoefficientLocation(), 1, &diffuseKoefficient[0]);
 
 	// Draw the triangles
-	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_SHORT, (void*)0);
+	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
 }
 
 void TerrainScene::bindTriangleData() {
@@ -108,5 +108,5 @@ void TerrainScene::bindTriangleData() {
 	indexCount = geometry->indexCount();
 	glGenBuffers(1, &indexBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(unsigned short), geometry->indices(), GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(unsigned int), geometry->indices(), GL_STATIC_DRAW);
 }

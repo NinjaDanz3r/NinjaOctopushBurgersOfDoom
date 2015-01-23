@@ -91,7 +91,7 @@ void AudioScene::render(int width, int height) {
 	glUniform3fv(shaders->diffuseKoefficientLocation(), 1, &diffuseKoefficient[0]);
 
 	// Draw the triangles
-	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_SHORT, (void*)0);
+	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
 }
 
 void AudioScene::bindTriangleData() {
@@ -117,5 +117,5 @@ void AudioScene::bindTriangleData() {
 	indexCount = geometry->indexCount();
 	glGenBuffers(1, &indexBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(unsigned short), geometry->indices(), GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(unsigned int), geometry->indices(), GL_STATIC_DRAW);
 }

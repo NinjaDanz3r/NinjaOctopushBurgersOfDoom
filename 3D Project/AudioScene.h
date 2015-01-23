@@ -36,7 +36,7 @@ class AudioScene : public Scene {
 		// Vertex buffer.
 		GLuint vertexBuffer = 0;
 		GLuint vertexAttribute = 0;
-		unsigned short vertexCount = 0;
+		unsigned int vertexCount = 0;
 
 		// Index buffer.
 		GLuint indexBuffer = 0;

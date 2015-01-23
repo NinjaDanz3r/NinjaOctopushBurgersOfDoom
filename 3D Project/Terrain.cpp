@@ -15,39 +15,36 @@ Terrain::Terrain(const char* filename) {
 
 	fprintf(stderr, "Height map size: %ix%i\n", width, height);
 
+	// TODO: Convert height map data to float.
+
 	stbi_image_free(data);
 
-	// Vertices
-	vertexNr = 4;
+	// Generate terrain vertices.
+	vertexNr = width * height;
 	vertexData = new Vertex[vertexNr];
 
-	vertexData[0] = {
-		0.5f, 0.0f, -0.5f,
-		1.0f, 0.0f
-	};
-	vertexData[1] = {
-		-0.5f, 0.0f, 0.5f,
-		0.0f, 1.0f
-	};
-	vertexData[2] = {
-		0.5f, 0.0f, 0.5f,
-		1.0f, 1.0f
-	};
-	vertexData[3] = {
-		-0.5f, 0.0f, -0.5f,
-		0.0f, 0.0f
-	};
+	for (unsigned int i = 0; i < vertexNr; i++) {
+		vertexData[i] = {
+			static_cast<float>(i % width)/width - 0.5f,
+			0.0f,
+			static_cast<float>(i / width) / height - 0.5f,
+			static_cast<float>(i % width) / width,
+			static_cast<float>(i / width) / height
+		};
+	}
+
+	// TODO: Generate terrain indices.
 
 	// Vertexindices
 	indexNr = 6;
-	indexData = new unsigned short[indexNr];
+	indexData = new unsigned int[indexNr];
 
 	indexData[0] = 0;
-	indexData[1] = 1;
-	indexData[2] = 2;
+	indexData[1] = 65535;
+	indexData[2] = 255;
 	indexData[3] = 0;
-	indexData[4] = 3;
-	indexData[5] = 1;
+	indexData[4] = 65280;
+	indexData[5] = 65535;
 }
 
 Terrain::~Terrain() {
@@ -59,11 +56,11 @@ Geometry::Vertex* Terrain::vertices() const {
 	return vertexData;
 }
 
-unsigned short Terrain::vertexCount() const {
+unsigned int Terrain::vertexCount() const {
 	return vertexNr;
 }
 
-unsigned short* Terrain::indices() const {
+unsigned int* Terrain::indices() const {
 	return indexData;
 }
 
