@@ -13,9 +13,17 @@ Terrain::Terrain(const char* filename) {
 		util::log(filename);
 	}
 
-	fprintf(stderr, "Height map size: %ix%i\n", width, height);
+	// Convert height map to float.
+	heightMap = new float*[width];
+	for (int i = 0; i < width; i++) {
+		heightMap[i] = new float[height];
+	}
 
-	// TODO: Convert height map data to float.
+	for (int x = 0; x < width; x++) {
+		for (int y = 0; y < height; y++) {
+			heightMap[x][y] = data[(x + y*width)*components] / 256.f;
+		}
+	}
 
 	stbi_image_free(data);
 
@@ -26,7 +34,7 @@ Terrain::Terrain(const char* filename) {
 	for (unsigned int i = 0; i < vertexNr; i++) {
 		vertexData[i] = {
 			static_cast<float>(i % width)/width - 0.5f,
-			0.0f,
+			heightMap[i % width][i / width],
 			static_cast<float>(i / width) / height - 0.5f,
 			static_cast<float>(i % width) / width,
 			static_cast<float>(i / width) / height
@@ -53,6 +61,11 @@ Terrain::Terrain(const char* filename) {
 Terrain::~Terrain() {
 	delete[] vertexData;
 	delete[] indexData;
+	
+	for (int i = 0; i < width; i++) {
+		delete[] heightMap[i];
+	}
+	delete[] heightMap;
 }
 
 Geometry::Vertex* Terrain::vertices() const {

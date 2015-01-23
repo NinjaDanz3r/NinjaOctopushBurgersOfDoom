@@ -31,6 +31,7 @@ private:
 	unsigned int* indexData = nullptr;
 	unsigned int indexNr = 0;
 
+	float** heightMap;
 	int width;
 	int height;
 };
