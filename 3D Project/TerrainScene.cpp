@@ -73,7 +73,7 @@ void TerrainScene::render(int width, int height) {
 	glUniformMatrix4fv(shaders->projectionLocation(), 1, GL_FALSE, &player->camera()->projection(width, height)[0][0]);
 
 	// Light information.
-	glm::vec4 lightPosition = view * glm::vec4(-5.f, 0.f, 5.f, 1.f);
+	glm::vec4 lightPosition = view * glm::vec4(0.f, 5.f, 0.f, 1.f);
 	glm::vec3 lightIntensity(1.f, 1.f, 1.f);
 	glm::vec3 diffuseKoefficient(1.f, 1.f, 1.f);
 

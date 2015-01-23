@@ -33,18 +33,21 @@ Terrain::Terrain(const char* filename) {
 		};
 	}
 
-	// TODO: Generate terrain indices.
-
-	// Vertexindices
-	indexNr = 6;
+	// Generate terrain indices.
+	indexNr = (width - 1) * (height - 1) * 6;
 	indexData = new unsigned int[indexNr];
 
-	indexData[0] = 0;
-	indexData[1] = 65535;
-	indexData[2] = 255;
-	indexData[3] = 0;
-	indexData[4] = 65280;
-	indexData[5] = 65535;
+	for (unsigned int i = 0; i < indexNr; i+=6) {
+		unsigned int x = (i / 6) % (width - 1);
+		unsigned int y = (i / 6) / (width - 1);
+
+		indexData[i] = x + y*width;
+		indexData[i+1] = (x+1) + (y+1)*width;
+		indexData[i+2] = (x+1) + y*width;
+		indexData[i+3] = x + y*width;
+		indexData[i+4] = x + (y+1)*width;
+		indexData[i+5] = (x+1) + (y+1)*width;
+	}
 }
 
 Terrain::~Terrain() {
