@@ -25,6 +25,9 @@ public:
 	unsigned int indexCount() const;
 
 private:
+	void generateVertices();
+	void generateIndices();
+
 	Vertex *vertexData = nullptr;
 	unsigned int vertexNr = 0;
 
