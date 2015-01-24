@@ -24,12 +24,12 @@ TerrainScene::TerrainScene() {
 	glUniform1i(shaders->baseImageLocation(), 0);
 
 	geometry = new Terrain("Resources/HeightMaps/TestMapSmall.tga");
-	geometry->setPosition(0.f, -1.f, 0.f);
-	geometry->setScale(2.f, 2.f, 2.f);
+	geometry->setPosition(0.f, -20.f, 0.f);
+	geometry->setScale(50.f, 50.f, 50.f);
 	bindTriangleData();
 
 	player = new Player();
-	player->setMovementSpeed(2.0f);
+	player->setMovementSpeed(5.0f);
 }
 
 TerrainScene::~TerrainScene() {
