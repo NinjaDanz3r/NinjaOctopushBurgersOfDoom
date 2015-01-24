@@ -27,6 +27,8 @@ Terrain::Terrain(const char* filename) {
 
 	stbi_image_free(data);
 
+	filter3x3();
+
 	generateVertices();
 	generateIndices();
 }
@@ -87,4 +89,44 @@ void Terrain::generateIndices() {
 		indexData[i + 4] = x + (y + 1)*width;
 		indexData[i + 5] = (x + 1) + (y + 1)*width;
 	}
+}
+
+void Terrain::filter3x3() {
+	float** filteredHeightMap = new float*[width];
+	for (int i = 0; i < width; i++) {
+		filteredHeightMap[i] = new float[height];
+	}
+
+	for (int x = 0; x < width; x++) {
+		for (int y = 0; y < height; y++) {
+			filteredHeightMap[x][y] = sampleHeight(x, y);
+		}
+	}
+
+	for (int x = 0; x < width; x++) {
+		for (int y = 0; y < height; y++) {
+			heightMap[x][y] = filteredHeightMap[x][y];
+		}
+	}
+
+	for (int i = 0; i < width; i++) {
+		delete[] filteredHeightMap[i];
+	}
+	delete[] filteredHeightMap;
+}
+
+float Terrain::sampleHeight(int x, int y) const {
+	int num = 0;
+	float sum = 0.f;
+
+	for (int i = x - 1; i <= x + 1; i++) {
+		for (int j = y - 1; j <= y; j++) {
+			if (i >= 0 && i < width && j >= 0 && j < height) {
+				num++;
+				sum += heightMap[i][j];
+			}
+		}
+	}
+
+	return sum / num;
 }

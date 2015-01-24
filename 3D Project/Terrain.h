@@ -27,6 +27,8 @@ public:
 private:
 	void generateVertices();
 	void generateIndices();
+	void filter3x3();
+	float sampleHeight(int x, int y) const;
 
 	Vertex *vertexData = nullptr;
 	unsigned int vertexNr = 0;
