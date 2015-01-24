@@ -24,8 +24,8 @@ TerrainScene::TerrainScene() {
 	glUniform1i(shaders->baseImageLocation(), 0);
 
 	geometry = new Terrain("Resources/HeightMaps/TestMapSmall.tga");
-	geometry->setPosition(0.f, -20.f, 0.f);
-	geometry->setScale(50.f, 50.f, 50.f);
+	geometry->setPosition(0.f, -5.f, 0.f);
+	geometry->setScale(50.f, 10.f, 50.f);
 	bindTriangleData();
 
 	player = new Player();
