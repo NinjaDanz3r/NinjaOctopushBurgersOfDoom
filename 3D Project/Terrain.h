@@ -2,6 +2,7 @@
 #define __TERRAIN_H__
 
 #include "Geometry.h"
+#include <glm/glm.hpp>
 
 // Represents a terrain object.
 class Terrain : public Geometry {
@@ -29,6 +30,7 @@ private:
 	void generateIndices();
 	void filter3x3();
 	float sampleHeight(int x, int y) const;
+	void calculateNormals();
 
 	Vertex *vertexData = nullptr;
 	unsigned int vertexNr = 0;
@@ -37,6 +39,7 @@ private:
 	unsigned int indexNr = 0;
 
 	float** heightMap;
+	glm::vec3** normals;
 	int width;
 	int height;
 };

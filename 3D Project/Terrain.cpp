@@ -15,8 +15,10 @@ Terrain::Terrain(const char* filename) {
 
 	// Convert height map to float.
 	heightMap = new float*[width];
+	normals = new glm::vec3*[width];
 	for (int i = 0; i < width; i++) {
 		heightMap[i] = new float[height];
+		normals[i] = new glm::vec3[height];
 	}
 
 	for (int x = 0; x < width; x++) {
@@ -28,9 +30,15 @@ Terrain::Terrain(const char* filename) {
 	stbi_image_free(data);
 
 	filter3x3();
+	calculateNormals();
 
 	generateVertices();
 	generateIndices();
+
+	for (int i = 0; i < width; i++) {
+		delete[] normals[i];
+	}
+	delete[] normals;
 }
 
 Terrain::~Terrain() {
@@ -70,9 +78,9 @@ void Terrain::generateVertices() {
 			heightMap[i % width][i / width],
 			static_cast<float>(i / width) / height - 0.5f,
 			// Normal
-			0.0f,
-			1.0f,
-			0.0f,
+			normals[i % width][i / width].x,
+			normals[i % width][i / width].y,
+			normals[i % width][i / width].z,
 			// Texture coordinates
 			static_cast<float>(i % width) / width,
 			static_cast<float>(i / width) / height
@@ -135,4 +143,20 @@ float Terrain::sampleHeight(int x, int y) const {
 	}
 
 	return sum / num;
+}
+
+void Terrain::calculateNormals() {
+	for (int x = 0; x < width; x++) {
+		for (int y = 0; y < height; y++) {
+			float sx = heightMap[x < width - 1 ? x + 1 : x][y] - heightMap[x > 0 ? x - 1 : x][y];
+			if (x == 0 || x == width - 1)
+				sx *= 2.f;
+
+			float sy = heightMap[x][y<height - 1 ? y + 1 : y] - heightMap[x][y > 0 ? y - 1 : y];
+			if (y == 0 || y == height - 1)
+				sy *= 2.f;
+
+			normals[x][y] = glm::normalize(glm::vec3(-width * sx, 2.f, -height * sy));
+		}
+	}
 }
