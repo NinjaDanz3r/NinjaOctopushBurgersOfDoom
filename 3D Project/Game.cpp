@@ -1,5 +1,5 @@
 #include "Game.h"
-#include "TestScene.h"
+#include "AudioScene.h"
 #include "input.h"
 
 #include <stdio.h>
@@ -8,15 +8,18 @@ Game::Game(GLFWwindow* window) {
 	this->window = window;
 	input::setWindow(window);
 	assignKeyboardBindings();
+	soundSystem = new SoundSystem();
 
-	currentScene = new TestScene();
+	currentScene = new AudioScene();
 	lastTime = glfwGetTime();
+	prevFPSTime = lastTime;
 
 	glEnable(GL_DEPTH_TEST);
 }
 
 Game::~Game() {
 	delete currentScene;
+	delete soundSystem;
 	input::free();
 }
 

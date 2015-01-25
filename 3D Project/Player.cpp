@@ -14,9 +14,17 @@ Player::~Player() {
 	delete _camera;
 }
 
+float Player::movementSpeed() const {
+	return _movementSpeed;
+}
+
+void Player::setMovementSpeed(float movementSpeed) {
+	_movementSpeed = movementSpeed;
+}
+
 void Player::update(double time) {
-	float dx = (float)time * (input::pressed(input::RIGHT) - input::pressed(input::LEFT));
-	float dz = (float)time * (input::pressed(input::FORWARD) - input::pressed(input::BACKWARD));
+	float dx = (float)time * _movementSpeed * (input::pressed(input::RIGHT) - input::pressed(input::LEFT));
+	float dz = (float)time * _movementSpeed * (input::pressed(input::FORWARD) - input::pressed(input::BACKWARD));
 	_camera->move(glm::vec3(dx, 0.f, dz));
 
 	_camera->rotate((float)input::cursorCenterX() * 0.2f * settings::mouseSensitivity(), (float)input::cursorCenterY() * 0.2f * settings::mouseSensitivity(), 0.f);

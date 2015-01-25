@@ -11,40 +11,67 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BTHSquare.cpp" />
+    <ClCompile Include="AudioScene.cpp" />
+    <ClCompile Include="Square.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="FirstPersonCamera.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="Listener.cpp" />
     <ClCompile Include="main.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleEmitter.cpp" />
+=======
+    <ClCompile Include="Object.cpp" />
+>>>>>>> origin/master
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="settings.cpp" />
     <ClCompile Include="Shaders.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="ParticleSystem.cpp" />
+=======
+    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="SoundBuffer.cpp" />
+    <ClCompile Include="SoundSystem.cpp" />
+>>>>>>> origin/master
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="util.cpp" />
+    <ClCompile Include="WaveFile.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BTHSquare.h" />
+    <ClInclude Include="AudioScene.h" />
+    <ClInclude Include="Square.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="FirstPersonCamera.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Geometry.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="Cube.h" />
+    <ClInclude Include="Listener.h" />
     <ClInclude Include="main.h" />
+<<<<<<< HEAD
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleEmitter.h" />
     <ClInclude Include="ParticleSystem.h" />
+=======
+    <ClInclude Include="Object.h" />
+>>>>>>> origin/master
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="settings.h" />
     <ClInclude Include="Shaders.h" />
+    <ClInclude Include="Sound.h" />
+    <ClInclude Include="SoundBuffer.h" />
+    <ClInclude Include="SoundFile.h" />
+    <ClInclude Include="SoundSystem.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="util.h" />
+    <ClInclude Include="WaveFile.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="default_fragment.glsl" />
@@ -81,12 +108,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\simpleini-141111;..\glm;..\glew-1.11.0\include;..\glfw-3.0.4.bin.WIN32\include;..\stb;$(IncludePath)</IncludePath>
-    <LibraryPath>..\glew-1.11.0\lib\Release\Win32;..\glfw-3.0.4.bin.WIN32\lib-msvc120;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\openal-soft-1.16.0\include;..\simpleini-141111;..\glm;..\glew-1.11.0\include;..\glfw-3.0.4.bin.WIN32\include;..\stb;$(IncludePath)</IncludePath>
+    <LibraryPath>..\openal-soft-1.16.0\libs\Win32;..\glew-1.11.0\lib\Release\Win32;..\glfw-3.0.4.bin.WIN32\lib-msvc120;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>..\simpleini-141111;..\glm;..\glew-1.11.0\include;..\glfw-3.0.4.bin.WIN32\include;..\stb;$(IncludePath)</IncludePath>
-    <LibraryPath>..\glew-1.11.0\lib\Release\Win32;..\glfw-3.0.4.bin.WIN32\lib-msvc120;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\openal-soft-1.16.0\include;..\simpleini-141111;..\glm;..\glew-1.11.0\include;..\glfw-3.0.4.bin.WIN32\include;..\stb;$(IncludePath)</IncludePath>
+    <LibraryPath>..\openal-soft-1.16.0\libs\Win32;..\glew-1.11.0\lib\Release\Win32;..\glfw-3.0.4.bin.WIN32\lib-msvc120;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -96,11 +123,12 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3dll.lib;opengl32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3dll.lib;opengl32.lib;glew32.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y "$(SolutionDir)glfw-3.0.4.bin.WIN32\lib-msvc120\glfw3.dll" "$(OutDir)"
-xcopy /y "$(SolutionDir)glew-1.11.0\bin\Release\Win32\glew32.dll" "$(OutDir)"</Command>
+xcopy /y "$(SolutionDir)glew-1.11.0\bin\Release\Win32\glew32.dll" "$(OutDir)"
+copy /y "$(SolutionDir)openal-soft-1.16.0\bin\Win32\soft_oal.dll" "$(OutDir)OpenAL32.dll"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -115,11 +143,12 @@ xcopy /y "$(SolutionDir)glew-1.11.0\bin\Release\Win32\glew32.dll" "$(OutDir)"</C
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glfw3dll.lib;opengl32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3dll.lib;opengl32.lib;glew32.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y "$(SolutionDir)glfw-3.0.4.bin.WIN32\lib-msvc120\glfw3.dll" "$(OutDir)"
-xcopy /y "$(SolutionDir)glew-1.11.0\bin\Release\Win32\glew32.dll" "$(OutDir)"</Command>
+xcopy /y "$(SolutionDir)glew-1.11.0\bin\Release\Win32\glew32.dll" "$(OutDir)"
+copy /y "$(SolutionDir)openal-soft-1.16.0\bin\Win32\soft_oal.dll" "$(OutDir)OpenAL32.dll"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

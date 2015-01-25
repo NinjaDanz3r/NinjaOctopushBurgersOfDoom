@@ -5,6 +5,8 @@
 
 #include "TestScene.h"
 
+#include "Square.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
@@ -20,26 +22,22 @@ TestScene::TestScene() {
 	// Texture unit 0 is for base images.
 	glUniform1i(shaders->baseImageLocation(), 0);
 
-	bthSquare = new BTHSquare();
+	geometry = new Square();
 	bindTriangleData();
 
 	player = new Player();
+	player->setMovementSpeed(2.0f);
 }
 
 TestScene::~TestScene() {
 	delete texture;
 	delete shaders;
-	delete bthSquare;
+	delete geometry;
 	delete player;
 }
 
 Scene::SceneEnd* TestScene::update(double time) {
-	//rotation += (float)time * 50.f;
-
 	player->update(time);
-
-	/*if (rotation > 270.f)
-		return new Scene::SceneEnd(Scene::SceneEnd::NEW_SCENE, new TestScene());*/
 
 	return nullptr;
 }
@@ -48,14 +46,15 @@ void TestScene::render(int width, int height) {
 	glViewport(0, 0, width, height);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glBindVertexArray(gVertexAttribute);
+	glBindVertexArray(vertexAttribute);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 
 	// Base image texture
 	glActiveTexture(GL_TEXTURE0 + 0);
 	glBindTexture(GL_TEXTURE_2D, texture->textureID());
 
 	// Model matrix, unique for each model.
-	glm::mat4 model = glm::rotate(glm::radians(rotation), glm::vec3(0.f, -1.f, 0.f));
+	glm::mat4 model = geometry->modelMatrix();
 
 	// Send the matrices to the shader.
 	glm::mat4 view = player->camera()->view();
@@ -76,27 +75,32 @@ void TestScene::render(int width, int height) {
 	glUniform3fv(shaders->lightIntensityLocation(), 1, &lightIntensity[0]);
 	glUniform3fv(shaders->diffuseKoefficientLocation(), 1, &diffuseKoefficient[0]);
 
-	// Draw the points from the currently bound VAO with current in-use shader
-	glDrawArrays(GL_TRIANGLES, 0, vertexCount);
+	// Draw the triangles
+	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
 }
 
 void TestScene::bindTriangleData() {
-	vertexCount = bthSquare->count();
-
-	// Create buffer and set data
-	glGenBuffers(1, &gVertexBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, gVertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(BTHSquare::TriangleVertex) * bthSquare->count(), bthSquare->vertexes(), GL_STATIC_DRAW);
+	// Vertex buffer
+	vertexCount = geometry->vertexCount();
+	glGenBuffers(1, &vertexBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+	glBufferData(GL_ARRAY_BUFFER, vertexCount * sizeof(Geometry::Vertex), geometry->vertices(), GL_STATIC_DRAW);
 
 	// Define vertex data layout
-	glGenVertexArrays(1, &gVertexAttribute);
-	glBindVertexArray(gVertexAttribute);
+	glGenVertexArrays(1, &vertexAttribute);
+	glBindVertexArray(vertexAttribute);
 	glEnableVertexAttribArray(0); //the vertex attribute object will remember its enabled attributes
 	glEnableVertexAttribArray(1);
 
 	GLuint vertexPos = glGetAttribLocation(shaders->shaderProgram(), "vertex_position");
-	glVertexAttribPointer(vertexPos, 3, GL_FLOAT, GL_FALSE, sizeof(BTHSquare::TriangleVertex), BUFFER_OFFSET(0));
+	glVertexAttribPointer(vertexPos, 3, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(0));
 
 	GLuint vertexTexture = glGetAttribLocation(shaders->shaderProgram(), "vertex_texture");
-	glVertexAttribPointer(vertexTexture, 2, GL_FLOAT, GL_FALSE, sizeof(BTHSquare::TriangleVertex), BUFFER_OFFSET(sizeof(float) * 3));
+	glVertexAttribPointer(vertexTexture, 2, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float) * 3));
+
+	// Index buffer
+	indexCount = geometry->indexCount();
+	glGenBuffers(1, &indexBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(unsigned int), geometry->indices(), GL_STATIC_DRAW);
 }

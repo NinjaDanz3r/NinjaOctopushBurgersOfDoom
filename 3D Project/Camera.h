@@ -1,10 +1,11 @@
 #ifndef __CAMERA_H__
 #define __CAMERA_H__
 
+#include "Object.h"
 #include <glm/glm.hpp>
 
 // A camera in a 3D scene.
-class Camera {
+class Camera : public Object {
 	public:
 		// Constructor
 		Camera();
@@ -12,32 +13,14 @@ class Camera {
 		// Destructor
 		virtual ~Camera() { }
 
-		// Get position.
-		const glm::vec3& position() const;
+		// The direction in which the camera is currently facing.
+		glm::vec3 forward() const;
 
-		// Set position.
-		void setPosition(const glm::vec3& position);
+		// The direction representing the direction to the right of the camera.
+		glm::vec3 right() const;
 
-		// Move the current position by an offset.
-		virtual void move(const glm::vec3& offset);
-
-		// Get horizontal angle (in degrees).
-		float horizontalAngle() const;
-
-		// Get vertical angle (in degrees).
-		float verticalAngle() const;
-
-		// Get tilt angle (in degrees).
-		float tiltAngle() const;
-
-		// Set angles (in degrees).
-		void setAngles(float horizontalAngle, float verticalAngle, float tiltAngle);
-
-		// Set angles by an offset (in degrees).
-		virtual void rotate(float horizontalAngle, float verticalAngle, float tiltAngle);
-
-		// Orientation matrix.
-		glm::mat4 orientation() const;
+		// The camera's up-vector.
+		glm::vec3 up() const;
 
 		// The camera's view matrix (translation and orientation).
 		glm::mat4 view() const;
@@ -61,12 +44,6 @@ class Camera {
 		glm::mat4 projection(int width, int height) const;
 
 	private:
-		glm::vec3 _position = glm::vec3(0.f, 0.f, 0.f);
-
-		float _horizontalAngle = 0.f;
-		float _verticalAngle = 0.f;
-		float _tiltAngle = 0.f;
-
 		float _fieldOfView = 45.f;
 		float zNear = 0.5f;
 		float zFar = 20.f;

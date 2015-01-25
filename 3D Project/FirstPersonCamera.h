@@ -11,15 +11,6 @@ class FirstPersonCamera : public Camera {
 
 		// Set angles by an offset (in degrees). Vertical angle limited to 85 degrees.
 		virtual void rotate(float horizontalAngle, float verticalAngle, float tiltAngle);
-
-		// The direction in which the camera is currently facing.
-		glm::vec3 forward() const;
-
-		// The direction representing the direction to the right of the camera.
-		glm::vec3 right() const;
-
-		// The camera's up-vector.
-		glm::vec3 up() const;
 };
 
 #endif
