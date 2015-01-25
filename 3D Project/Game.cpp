@@ -1,5 +1,5 @@
 #include "Game.h"
-#include "TerrainScene.h"
+#include "TestScene.h"
 #include "input.h"
 
 #include <stdio.h>
@@ -10,7 +10,7 @@ Game::Game(GLFWwindow* window) {
 	assignKeyboardBindings();
 	soundSystem = new SoundSystem();
 
-	currentScene = new TerrainScene();
+	currentScene = new TestScene();
 	lastTime = glfwGetTime();
 	prevFPSTime = lastTime;
 

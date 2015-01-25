@@ -91,12 +91,16 @@ void TestScene::bindTriangleData() {
 	glBindVertexArray(vertexAttribute);
 	glEnableVertexAttribArray(0); //the vertex attribute object will remember its enabled attributes
 	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
 
 	GLuint vertexPos = glGetAttribLocation(shaders->shaderProgram(), "vertex_position");
 	glVertexAttribPointer(vertexPos, 3, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(0));
 
+	GLuint vertexNormal = glGetAttribLocation(shaders->shaderProgram(), "vertex_normal");
+	glVertexAttribPointer(vertexNormal, 3, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float) * 3));
+
 	GLuint vertexTexture = glGetAttribLocation(shaders->shaderProgram(), "vertex_texture");
-	glVertexAttribPointer(vertexTexture, 2, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float) * 3));
+	glVertexAttribPointer(vertexTexture, 2, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float) * 6));
 
 	// Index buffer
 	indexCount = geometry->indexCount();

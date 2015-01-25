@@ -7,34 +7,42 @@ Cube::Cube() {
 
 	vertexData[0] = {
 		0.5f, 0.5f, 0.5f,
+		0.0f, 0.0f, 0.0f,
 		1.0f, 0.0f
 	};
 	vertexData[1] = {
 		-0.5f, -0.5f, 0.5f,
+		0.0f, 0.0f, 0.0f,
 		0.0f, 1.0f
 	};
 	vertexData[2] = {
 		0.5f, -0.5f, 0.5f,
+		0.0f, 0.0f, 0.0f,
 		1.0f, 1.0f
 	};
 	vertexData[3] = {
 		-0.5f, 0.5f, 0.5f,
+		0.0f, 0.0f, 0.0f,
 		0.0f, 0.0f
 	};
 	vertexData[4] = {
 		0.5f, 0.5f, -0.5f,
+		0.0f, 0.0f, 0.0f,
 		0.0f, 1.0f
 	};
 	vertexData[5] = {
 		-0.5f, -0.5f, -0.5f,
+		0.0f, 0.0f, 0.0f,
 		1.0f, 0.0f
 	};
 	vertexData[6] = {
 		0.5f, -0.5f, -0.5f,
+		0.0f, 0.0f, 0.0f,
 		0.0f, 0.0f
 	};
 	vertexData[7] = {
 		-0.5f, 0.5f, -0.5f,
+		0.0f, 0.0f, 0.0f,
 		1.0f, 1.0f
 	};
 

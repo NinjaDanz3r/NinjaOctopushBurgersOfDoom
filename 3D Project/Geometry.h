@@ -11,6 +11,8 @@ class Geometry : public Object {
 		{
 			// Position.
 			float x, y, z;
+			// Normal.
+			float normalX, normalY, normalZ;
 			// Texture coordinates.
 			float u, v;
 		};

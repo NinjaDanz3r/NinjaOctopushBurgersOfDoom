@@ -65,9 +65,15 @@ void Terrain::generateVertices() {
 
 	for (unsigned int i = 0; i < vertexNr; i++) {
 		vertexData[i] = {
+			// Position
 			static_cast<float>(i % width) / width - 0.5f,
 			heightMap[i % width][i / width],
 			static_cast<float>(i / width) / height - 0.5f,
+			// Normal
+			0.0f,
+			1.0f,
+			0.0f,
+			// Texture coordinates
 			static_cast<float>(i % width) / width,
 			static_cast<float>(i / width) / height
 		};
