@@ -41,6 +41,8 @@ TerrainScene::~TerrainScene() {
 
 Scene::SceneEnd* TerrainScene::update(double time) {
 	player->update(time);
+	glm::vec3 position = player->camera()->position();
+	player->camera()->setPosition(position.x, dynamic_cast<Terrain*>(geometry)->getY(position.x, position.z) + 2.f, position.z);
 
 	SoundSystem::getInstance()->listener()->setPosition(player->camera()->position());
 	SoundSystem::getInstance()->listener()->setOrientation(player->camera()->forward(), player->camera()->up());

@@ -25,6 +25,9 @@ public:
 	// Gets the number of indicies.
 	unsigned int indexCount() const;
 
+	// Gets the Y-position of the terrain at a given location.
+	float getY(float x, float z) const;
+
 private:
 	void generateVertices();
 	void generateIndices();

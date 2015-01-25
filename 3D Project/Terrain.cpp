@@ -67,6 +67,29 @@ unsigned int Terrain::indexCount() const {
 	return indexNr;
 }
 
+float Terrain::getY(float x, float z) const {
+	float xInTerrain = ((x - position().x) / scale().x + 0.5f) * width;
+	float zInTerrain = ((z - position().z) / scale().z + 0.5f) * height;
+
+	if (xInTerrain < 0.f || xInTerrain >= width || zInTerrain < 0.f || zInTerrain >= height) {
+		return 0.f;
+	}
+
+	int xFloor = (int) xInTerrain;
+	int zFloor = (int)zInTerrain;
+
+	float dx = xInTerrain - xFloor;
+	float dz = zInTerrain - zFloor;
+
+	// Bilinear interpolation.
+	float height = (1.f - dx)*(1.f - dz) * heightMap[xFloor][zFloor] +
+		           dx * (1.f - dz) * heightMap[xFloor + 1][zFloor] +
+		           (1.f - dx) * dz * heightMap[xFloor][zFloor + 1] +
+		           dx * dz * heightMap[xFloor + 1][zFloor + 1];
+
+	return height * scale().y + position().y;
+}
+
 void Terrain::generateVertices() {
 	vertexNr = width * height;
 	vertexData = new Vertex[vertexNr];
