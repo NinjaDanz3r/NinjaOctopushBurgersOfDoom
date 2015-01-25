@@ -68,6 +68,9 @@
     <None Include="default_fragment.glsl" />
     <None Include="default_geometry.glsl" />
     <None Include="default_vertex.glsl" />
+    <None Include="particle_fragment.glsl" />
+    <None Include="particle_geometry.glsl" />
+    <None Include="particle_vertex.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D9B72C7F-F035-4499-945B-D2A72B081EA2}</ProjectGuid>

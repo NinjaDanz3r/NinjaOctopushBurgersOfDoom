@@ -57,8 +57,6 @@
     <ClCompile Include="ParticleEmitter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Particle.cpp">
-	</ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -84,6 +82,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Cube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -130,8 +131,6 @@
     <ClInclude Include="ParticleEmitter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-	  <ClInclude Include="Particle.h">
-	</ClInclude>
     <ClInclude Include="Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -165,6 +164,9 @@
     <ClInclude Include="Cube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="default_fragment.glsl">
@@ -174,6 +176,15 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="default_vertex.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="particle_vertex.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="particle_geometry.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="particle_fragment.glsl">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
