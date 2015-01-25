@@ -58,6 +58,12 @@ namespace settings {
 
 	// Set whether to show the mouse cursor.
 	void setShowMouseCursor(bool show);
+
+	// Get whether to show frames per second in window title.
+	bool showFPS();
+
+	// Set whether to show frames per second in window title.
+	void setShowFPS(bool show);
 }
 
 #endif

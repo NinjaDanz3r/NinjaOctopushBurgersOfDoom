@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "TerrainScene.h"
 #include "input.h"
+#include "settings.h"
 
 #include <stdio.h>
 
@@ -46,7 +47,8 @@ void Game::update() {
 	}
 
 	lastTime = glfwGetTime();
-	setWindowFPS();
+	if (settings::showFPS())
+		setWindowFPS();
 }
 
 void Game::setWindowFPS() {
