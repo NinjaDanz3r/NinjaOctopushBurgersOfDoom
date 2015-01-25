@@ -20,23 +20,17 @@
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="Listener.cpp" />
     <ClCompile Include="main.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleEmitter.cpp" />
-=======
     <ClCompile Include="Object.cpp" />
->>>>>>> origin/master
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="settings.cpp" />
     <ClCompile Include="Shaders.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="ParticleSystem.cpp" />
-=======
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="SoundBuffer.cpp" />
     <ClCompile Include="SoundSystem.cpp" />
->>>>>>> origin/master
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="util.cpp" />
@@ -53,13 +47,10 @@
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Listener.h" />
     <ClInclude Include="main.h" />
-<<<<<<< HEAD
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleEmitter.h" />
     <ClInclude Include="ParticleSystem.h" />
-=======
     <ClInclude Include="Object.h" />
->>>>>>> origin/master
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="settings.h" />
