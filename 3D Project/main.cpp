@@ -70,6 +70,8 @@ GLFWwindow* createWindow() {
 
 	if (settings::borderless())
 		glfwWindowHint(GLFW_DECORATED, GL_FALSE);
+	if (settings::debugContext())
+		glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 	GLFWmonitor* monitor = settings::fullscreen() ? glfwGetPrimaryMonitor() : nullptr;
 	window = glfwCreateWindow(settings::displayWidth(), settings::displayHeight(), "Super Awesome 3D Project", monitor, nullptr);
