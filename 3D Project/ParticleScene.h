@@ -8,13 +8,13 @@
 #include "Player.h"
 
 // Test scene. Used to test things.
-class TestScene : public Scene {
+class ParticleScene : public Scene {
 public:
 	// Constructor
-	TestScene();
+	ParticleScene();
 
 	// Destructor
-	~TestScene();
+	~ParticleScene();
 
 	// Updates the scene.
 	SceneEnd* update(double time);

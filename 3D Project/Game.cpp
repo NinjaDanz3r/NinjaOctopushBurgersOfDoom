@@ -1,5 +1,5 @@
 #include "Game.h"
-#include "AudioScene.h"
+#include "ParticleScene.h"
 #include "input.h"
 
 #include <stdio.h>
@@ -10,7 +10,7 @@ Game::Game(GLFWwindow* window) {
 	assignKeyboardBindings();
 	soundSystem = new SoundSystem();
 
-	currentScene = new AudioScene();
+	currentScene = new ParticleScene();
 	lastTime = glfwGetTime();
 	prevFPSTime = lastTime;
 

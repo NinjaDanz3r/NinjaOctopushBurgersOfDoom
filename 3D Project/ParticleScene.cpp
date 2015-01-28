@@ -13,9 +13,9 @@
 
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))
 
-TestScene::TestScene() {
+ParticleScene::ParticleScene() {
 	texture = new Texture("Resources/Textures/kaleido.tga");
-	shaders = new Shaders("default");
+	shaders = new Shaders("particle");
 
 	glUseProgram(shaders->shaderProgram());
 
@@ -29,20 +29,20 @@ TestScene::TestScene() {
 	player->setMovementSpeed(2.0f);
 }
 
-TestScene::~TestScene() {
+ParticleScene::~ParticleScene() {
 	delete texture;
 	delete shaders;
 	delete geometry;
 	delete player;
 }
 
-Scene::SceneEnd* TestScene::update(double time) {
+Scene::SceneEnd* ParticleScene::update(double time) {
 	player->update(time);
 
 	return nullptr;
 }
 
-void TestScene::render(int width, int height) {
+void ParticleScene::render(int width, int height) {
 	glViewport(0, 0, width, height);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -60,10 +60,10 @@ void TestScene::render(int width, int height) {
 	glUniformMatrix4fv(shaders->projectionLocation(), 1, GL_FALSE, &player->camera()->projection(width, height)[0][0]);
 
 	// Draw the triangles
-	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
+	glDrawElements(GL_TRIANGLE_STRIP, 2, GL_UNSIGNED_INT, (void*)0);
 }
 
-void TestScene::bindTriangleData() {
+void ParticleScene::bindTriangleData() {
 	// Vertex buffer
 	vertexCount = geometry->vertexCount();
 	glGenBuffers(1, &vertexBuffer);
