@@ -48,12 +48,6 @@ class Shaders {
 		// Helper method to read a file to a std::string.
 		std::string readFile(const char *filePath);
 
-		// Helper method to check and print compile errors (if there are any).
-		void checkCompileErrors(GLuint shader);
-
-		// Helper method to check and print link errors (if there are any).
-		void checkLinkErrors(GLuint program);
-
 		GLuint gShaderProgram;
 		GLuint baseImageLoc;
 		GLuint modelLoc;

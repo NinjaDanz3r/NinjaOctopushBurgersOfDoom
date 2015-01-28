@@ -14,9 +14,12 @@ void setupDebug();
 GLFWwindow* createWindow();
 
 // Handles errors by printing them to the standard error stream.
-static void errorCallback(int error, const char* description);
+void errorCallback(int error, const char* description);
 
 // Handles key events.
-static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+
+// Handles OpenGL debug messages.
+void APIENTRY debugMessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam);
 
 #endif
