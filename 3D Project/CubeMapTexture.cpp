@@ -2,7 +2,7 @@
 #include <stb_image.h>
 #include "util.h"
 
-GLenum CubeMapTexture::targets[6] = { GL_TEXTURE_CUBE_MAP_NEGATIVE_X, GL_TEXTURE_CUBE_MAP_POSITIVE_Y, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, GL_TEXTURE_CUBE_MAP_POSITIVE_Z, GL_TEXTURE_CUBE_MAP_NEGATIVE_Z };
+GLenum CubeMapTexture::targets[6] = { GL_TEXTURE_CUBE_MAP_POSITIVE_X, GL_TEXTURE_CUBE_MAP_NEGATIVE_X, GL_TEXTURE_CUBE_MAP_POSITIVE_Y, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, GL_TEXTURE_CUBE_MAP_POSITIVE_Z, GL_TEXTURE_CUBE_MAP_NEGATIVE_Z };
 
 CubeMapTexture::CubeMapTexture(const char* posXFilename, const char* negXFilename, const char* posYFilename, const char* negYFilename, const char* posZFilename, const char* negZFilename) {
 	const char* filenames[6] = { posXFilename, negXFilename, posYFilename, negYFilename, posZFilename, negZFilename };
@@ -14,6 +14,11 @@ CubeMapTexture::CubeMapTexture(const char* posXFilename, const char* negXFilenam
 	for (int i = 0; i < 6; i++) {
 		int components;
 		unsigned char* data = stbi_load(filenames[i], &_width, &_height, &components, 0);
+
+		if (data == NULL) {
+			fputs("Couldn't load image: ", stderr);
+			util::log(filenames[i]);
+		}
 
 		glTexImage2D(targets[i], 0, GL_RGB, _width, _height, 0, format(components), GL_UNSIGNED_BYTE, data);
 

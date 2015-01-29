@@ -4,6 +4,7 @@
 #include "Scene.h"
 #include "Shaders.h"
 #include "Texture.h"
+#include "CubeMapTexture.h"
 #include "Geometry.h"
 #include "Player.h"
 
@@ -29,6 +30,9 @@ class TerrainScene : public Scene {
 		Texture* texture;
 		Geometry* geometry;
 		Player* player;
+
+		// Skybox
+		CubeMapTexture* skyboxTexture;
 
 		// Vertex buffer.
 		GLuint vertexBuffer = 0;

@@ -17,6 +17,14 @@
 
 TerrainScene::TerrainScene() {
 	texture = new Texture2D("Resources/Textures/kaleido.tga");
+	skyboxTexture = new CubeMapTexture(
+		"Resources/Textures/TropicalSunnyDay/Right.tga",
+		"Resources/Textures/TropicalSunnyDay/Left.tga", 
+		"Resources/Textures/TropicalSunnyDay/Up.tga", 
+		"Resources/Textures/TropicalSunnyDay/Down.tga", 
+		"Resources/Textures/TropicalSunnyDay/Back.tga", 
+		"Resources/Textures/TropicalSunnyDay/Front.tga" );
+
 	shaders = new Shaders("default");
 
 	glUseProgram(shaders->shaderProgram());
@@ -38,6 +46,7 @@ TerrainScene::~TerrainScene() {
 	delete shaders;
 	delete geometry;
 	delete player;
+	delete skyboxTexture;
 }
 
 Scene::SceneEnd* TerrainScene::update(double time) {
