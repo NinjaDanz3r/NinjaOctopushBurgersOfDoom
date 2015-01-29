@@ -6,6 +6,7 @@
 #include "TestScene.h"
 
 #include "Square.h"
+#include "Texture2D.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -14,7 +15,7 @@
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))
 
 TestScene::TestScene() {
-	texture = new Texture("Resources/Textures/bth_image.tga");
+	texture = new Texture2D("Resources/Textures/bth_image.tga");
 	shaders = new Shaders("default");
 
 	glUseProgram(shaders->shaderProgram());

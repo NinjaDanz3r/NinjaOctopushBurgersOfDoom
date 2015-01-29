@@ -7,6 +7,7 @@
 #include "SoundSystem.h"
 
 #include "Terrain.h"
+#include "Texture2D.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -15,7 +16,7 @@
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))
 
 TerrainScene::TerrainScene() {
-	texture = new Texture("Resources/Textures/kaleido.tga");
+	texture = new Texture2D("Resources/Textures/kaleido.tga");
 	shaders = new Shaders("default");
 
 	glUseProgram(shaders->shaderProgram());
