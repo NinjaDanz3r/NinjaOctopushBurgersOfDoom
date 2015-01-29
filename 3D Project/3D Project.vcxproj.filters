@@ -232,5 +232,11 @@
     <None Include="default_vertex.glsl">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="skybox_vertex.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="skybox_fragment.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

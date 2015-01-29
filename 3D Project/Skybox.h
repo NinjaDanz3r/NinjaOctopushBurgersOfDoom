@@ -3,6 +3,7 @@
 
 #include "CubeMapTexture.h"
 #include "Camera.h"
+#include "ShaderProgram.h"
 
 class Skybox {
 	public:
@@ -13,6 +14,9 @@ class Skybox {
 		// Constructor
 		Skybox(const CubeMapTexture* texture);
 
+		// Destructor
+		~Skybox();
+
 		// Render skybox.
 		void render(const Camera* camera);
 
@@ -21,6 +25,10 @@ class Skybox {
 		static unsigned int indices[36];
 
 		const CubeMapTexture* texture;
+
+		Shader* vertexShader;
+		Shader* fragmentShader;
+		ShaderProgram* shaderProgram;
 };
 
 #endif
