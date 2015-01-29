@@ -6,6 +6,10 @@
 
 class Skybox {
 	public:
+		struct Vertex {
+			float x, y, z;
+		};
+
 		// Constructor
 		Skybox(const CubeMapTexture* texture);
 
@@ -13,6 +17,9 @@ class Skybox {
 		void render(const Camera* camera);
 
 	private:
+		static Vertex vertices[8];
+		static unsigned int indices[36];
+
 		const CubeMapTexture* texture;
 };
 
