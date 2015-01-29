@@ -71,7 +71,7 @@ float Terrain::getY(float x, float z) const {
 	float xInTerrain = ((x - position().x) / scale().x + 0.5f) * width;
 	float zInTerrain = ((z - position().z) / scale().z + 0.5f) * height;
 
-	if (xInTerrain < 0.f || xInTerrain >= width || zInTerrain < 0.f || zInTerrain >= height) {
+	if (xInTerrain < 0.f || xInTerrain >= width - 1 || zInTerrain < 0.f || zInTerrain >= height - 1) {
 		return 0.f;
 	}
 
