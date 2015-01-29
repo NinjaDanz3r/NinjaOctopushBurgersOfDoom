@@ -30,11 +30,6 @@ TerrainScene::TerrainScene() {
 	fragmentShader = new Shader("default_fragment.glsl", GL_FRAGMENT_SHADER);
 	shaderProgram = new ShaderProgram({ vertexShader, geometryShader, fragmentShader });
 
-	glUseProgram(shaderProgram->shaderProgram());
-
-	// Texture unit 0 is for base images.
-	glUniform1i(glGetUniformLocation(shaderProgram->shaderProgram(), "baseImage"), 0);
-
 	geometry = new Terrain("Resources/HeightMaps/TestMapSmall.tga");
 	geometry->setPosition(0.f, -5.f, 0.f);
 	geometry->setScale(50.f, 10.f, 50.f);
@@ -75,8 +70,10 @@ void TerrainScene::render(int width, int height) {
 	glViewport(0, 0, width, height);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glBindVertexArray(vertexAttribute);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+	glUseProgram(shaderProgram->shaderProgram());
+
+	// Texture unit 0 is for base images.
+	glUniform1i(glGetUniformLocation(shaderProgram->shaderProgram(), "baseImage"), 0);
 
 	// Base image texture
 	glActiveTexture(GL_TEXTURE0 + 0);
@@ -104,10 +101,13 @@ void TerrainScene::render(int width, int height) {
 	glUniform3fv(glGetUniformLocation(shaderProgram->shaderProgram(), "lightIntensity"), 1, &lightIntensity[0]);
 	glUniform3fv(glGetUniformLocation(shaderProgram->shaderProgram(), "diffuseKoefficient"), 1, &diffuseKoefficient[0]);
 
+	glBindVertexArray(vertexAttribute);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+
 	// Draw the triangles
 	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
 
-	skybox->render(player->camera());
+	skybox->render(width, height, player->camera());
 }
 
 void TerrainScene::bindTriangleData() {

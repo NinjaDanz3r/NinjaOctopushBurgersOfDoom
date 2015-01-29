@@ -18,17 +18,27 @@ class Skybox {
 		~Skybox();
 
 		// Render skybox.
-		void render(const Camera* camera);
+		void render(int width, int height, const Camera* camera);
 
 	private:
+		void bindData();
+
 		static Vertex vertices[8];
 		static unsigned int indices[36];
 
 		const CubeMapTexture* texture;
 
+		// Shaders
 		Shader* vertexShader;
 		Shader* fragmentShader;
 		ShaderProgram* shaderProgram;
+
+		// Vertex buffer
+		GLuint vertexBuffer = 0;
+		GLuint vertexAttribute = 0;
+
+		// Index buffer.
+		GLuint indexBuffer = 0;
 };
 
 #endif
