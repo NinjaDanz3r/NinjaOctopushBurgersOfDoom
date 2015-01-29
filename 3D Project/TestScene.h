@@ -2,7 +2,8 @@
 #define __TESTSCENE_H__
 
 #include "Scene.h"
-#include "Shaders.h"
+#include "Shader.h"
+#include "ShaderProgram.h"
 #include "Texture.h"
 #include "Geometry.h"
 #include "Player.h"
@@ -25,7 +26,12 @@ class TestScene : public Scene {
 	private:
 		void bindTriangleData();
 
-		Shaders* shaders;
+		// Shaders
+		Shader* vertexShader;
+		Shader* geometryShader;
+		Shader* fragmentShader;
+		ShaderProgram* shaderProgram;
+
 		Texture* texture;
 		Geometry* geometry;
 		Player* player;

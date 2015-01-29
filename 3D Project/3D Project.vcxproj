@@ -13,6 +13,8 @@
   <ItemGroup>
     <ClCompile Include="AudioScene.cpp" />
     <ClCompile Include="CubeMapTexture.cpp" />
+    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="Square.cpp" />
@@ -27,7 +29,6 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="settings.cpp" />
-    <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="SoundBuffer.cpp" />
     <ClCompile Include="SoundSystem.cpp" />
@@ -41,6 +42,8 @@
   <ItemGroup>
     <ClInclude Include="AudioScene.h" />
     <ClInclude Include="CubeMapTexture.h" />
+    <ClInclude Include="Shader.h" />
+    <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="Square.h" />
@@ -56,7 +59,6 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="settings.h" />
-    <ClInclude Include="Shaders.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="SoundBuffer.h" />
     <ClInclude Include="SoundFile.h" />
