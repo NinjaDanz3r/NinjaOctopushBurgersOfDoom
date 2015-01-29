@@ -7,6 +7,7 @@
 #include "CubeMapTexture.h"
 #include "Geometry.h"
 #include "Player.h"
+#include "Skybox.h"
 
 // Scene used to test terrain stuff (height maps).
 class TerrainScene : public Scene {
@@ -32,6 +33,7 @@ class TerrainScene : public Scene {
 		Player* player;
 
 		// Skybox
+		Skybox* skybox;
 		CubeMapTexture* skyboxTexture;
 
 		// Vertex buffer.

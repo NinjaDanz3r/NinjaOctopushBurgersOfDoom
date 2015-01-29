@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="AudioScene.cpp" />
     <ClCompile Include="CubeMapTexture.cpp" />
+    <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="Square.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -40,6 +41,7 @@
   <ItemGroup>
     <ClInclude Include="AudioScene.h" />
     <ClInclude Include="CubeMapTexture.h" />
+    <ClInclude Include="Skybox.h" />
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="Square.h" />
     <ClInclude Include="Camera.h" />

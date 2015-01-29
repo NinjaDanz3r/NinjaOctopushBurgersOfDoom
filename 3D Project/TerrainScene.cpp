@@ -37,6 +37,8 @@ TerrainScene::TerrainScene() {
 	geometry->setScale(50.f, 10.f, 50.f);
 	bindTriangleData();
 
+	skybox = new Skybox(skyboxTexture);
+
 	player = new Player();
 	player->setMovementSpeed(5.0f);
 }
@@ -46,6 +48,7 @@ TerrainScene::~TerrainScene() {
 	delete shaders;
 	delete geometry;
 	delete player;
+	delete skybox;
 	delete skyboxTexture;
 }
 
@@ -95,6 +98,8 @@ void TerrainScene::render(int width, int height) {
 
 	// Draw the triangles
 	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
+
+	skybox->render(player->camera());
 }
 
 void TerrainScene::bindTriangleData() {
