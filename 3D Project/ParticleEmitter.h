@@ -11,7 +11,6 @@ public:
 	ParticleEmitter(const char* texturePath, glm::vec3 worldPos);
 	//Destructor
 	~ParticleEmitter();
-
 private:
 	glm::vec3 worldPos;
 };
