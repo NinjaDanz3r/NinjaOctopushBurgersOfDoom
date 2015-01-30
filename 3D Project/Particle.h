@@ -9,11 +9,12 @@ class Particle
 public:
 	//Constructor
 	Particle();
+	Particle(glm::vec3 WorldPos, Texture* texture);
+	glm::vec3 worldPos;
+	Texture* texture;
 	//Destructor
 	~Particle();
 private:
-	glm::vec3 worldPos;
-	Texture* texture;
 };
 
 #endif

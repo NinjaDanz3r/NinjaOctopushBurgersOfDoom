@@ -15,8 +15,10 @@ public:
 
 	//Create an emitter
 	void createEmitter(const char* texturePath, glm::vec3 worldPos);
+	int getParticleCount();
 private:
 	std::vector < ParticleEmitter > emitters;
+	int particleCount;
 };
 
 #endif
