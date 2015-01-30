@@ -11,8 +11,8 @@ Apart from these, we are also aiming to implement the following techniques (impl
 ##Core (0|1|2)
 * Deferred rendering and lighting. (TODO)
 
-##Geometry (0|2|5)
-* Height-map terrain rendering, user can walk on the terrain. (TODO)
+##Geometry (1|2|5)
+* Height-map terrain rendering, user can walk on the terrain.
 
 ##Texturing and lighting (0|1|3)
 * Blend-mapping. (TODO)

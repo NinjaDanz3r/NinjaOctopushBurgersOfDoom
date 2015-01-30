@@ -2,7 +2,8 @@
 #define __AUDIOSCENE_H__
 
 #include "Scene.h"
-#include "Shaders.h"
+#include "Shader.h"
+#include "ShaderProgram.h"
 #include "Texture.h"
 #include "Geometry.h"
 #include "Player.h"
@@ -10,7 +11,7 @@
 #include "SoundBuffer.h"
 #include "Sound.h"
 
-// Test scene. Used to test things.
+// Scene used to test 3D audio.
 class AudioScene : public Scene {
 	public:
 		// Constructor
@@ -28,7 +29,12 @@ class AudioScene : public Scene {
 	private:
 		void bindTriangleData();
 
-		Shaders* shaders;
+		// Shaders
+		Shader* vertexShader;
+		Shader* geometryShader;
+		Shader* fragmentShader;
+		ShaderProgram* shaderProgram;
+
 		Texture* texture;
 		Geometry* geometry;
 		Player* player;
@@ -36,7 +42,7 @@ class AudioScene : public Scene {
 		// Vertex buffer.
 		GLuint vertexBuffer = 0;
 		GLuint vertexAttribute = 0;
-		unsigned short vertexCount = 0;
+		unsigned int vertexCount = 0;
 
 		// Index buffer.
 		GLuint indexBuffer = 0;

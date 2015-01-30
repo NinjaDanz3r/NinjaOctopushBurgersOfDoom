@@ -4,28 +4,26 @@
 #include <gl/glew.h>
 #include <gl/GL.h>
 
-// Represents a 2D-texture.
+// Represents a texture.
 class Texture {
 	public:
-		// Create new texture from the given image file.
-		Texture(const char* filename);
+		// Constructor
+		Texture() { }
 
 		// Destructor
-		~Texture();
+		virtual ~Texture() { }
 
 		// Get OpenGL texture ID.
-		GLuint textureID() const;
+		virtual GLuint textureID() const = 0;
 
 		// Get the width of the texture.
-		int width() const;
+		virtual int width() const = 0;
 
 		// Get the height of the texture.
-		int height() const;
+		virtual int height() const = 0;
 
-	private:
-		GLuint texID;
-		unsigned char* data;
-		int _width, _height;
+		// Get image GL format based on color components.
+		static GLenum format(int components);
 };
 
 #endif

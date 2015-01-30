@@ -11,6 +11,8 @@ class Geometry : public Object {
 		{
 			// Position.
 			float x, y, z;
+			// Normal.
+			float normalX, normalY, normalZ;
 			// Texture coordinates.
 			float u, v;
 		};
@@ -22,10 +24,10 @@ class Geometry : public Object {
 		virtual Vertex* vertices() const = 0;
 
 		// Gets the number of vertices.
-		virtual unsigned short vertexCount() const = 0;
+		virtual unsigned int vertexCount() const = 0;
 
 		// Gets all the vertex indices.
-		virtual unsigned short* indices() const = 0;
+		virtual unsigned int* indices() const = 0;
 
 		// Gets the number of indicies.
 		virtual unsigned int indexCount() const = 0;

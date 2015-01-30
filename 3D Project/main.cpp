@@ -28,6 +28,8 @@ int main() {
 	glewInit();
 
 	glfwSetKeyCallback(window, keyCallback);
+	if (settings::debugContext())
+		glDebugMessageCallback(debugMessageCallback, nullptr);
 
 	Game* game = new Game(window);
 	while (!glfwWindowShouldClose(window)) {
@@ -70,6 +72,8 @@ GLFWwindow* createWindow() {
 
 	if (settings::borderless())
 		glfwWindowHint(GLFW_DECORATED, GL_FALSE);
+	if (settings::debugContext())
+		glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 	GLFWmonitor* monitor = settings::fullscreen() ? glfwGetPrimaryMonitor() : nullptr;
 	window = glfwCreateWindow(settings::displayWidth(), settings::displayHeight(), "Super Awesome 3D Project", monitor, nullptr);
@@ -84,11 +88,85 @@ GLFWwindow* createWindow() {
 	return window;
 }
 
-static void errorCallback(int error, const char* description) {
+void errorCallback(int error, const char* description) {
 	fputs(description, stderr);
 }
 
-static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GL_TRUE);
+}
+
+void APIENTRY debugMessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam) {
+	switch (source) {
+	case GL_DEBUG_SOURCE_API:
+		fputs("Open GL API", stderr);
+		break;
+	case GL_DEBUG_SOURCE_WINDOW_SYSTEM:
+		fputs("Window System", stderr);
+		break;
+	case GL_DEBUG_SOURCE_SHADER_COMPILER:
+		fputs("Shader Compiler", stderr);
+		break;
+	case GL_DEBUG_SOURCE_APPLICATION:
+		fputs("Application", stderr);
+		break;
+	default:
+		fputs("Other", stderr);
+	}
+
+	fputs(": ", stderr);
+
+	switch (type) {
+	case GL_DEBUG_TYPE_ERROR:
+		fputs("Error", stderr);
+		break;
+	case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR:
+		fputs("Deprecated Behavior", stderr);
+		break;
+	case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:
+		fputs("Undefined Behavior", stderr);
+		break;
+	case GL_DEBUG_TYPE_PORTABILITY:
+		fputs("Portability", stderr);
+		break;
+	case GL_DEBUG_TYPE_PERFORMANCE:
+		fputs("Performance", stderr);
+		break;
+	case GL_DEBUG_TYPE_MARKER:
+		fputs("Marker", stderr);
+		break;
+	case GL_DEBUG_TYPE_PUSH_GROUP:
+		fputs("Push Group", stderr);
+		break;
+	case GL_DEBUG_TYPE_POP_GROUP:
+		fputs("Pop Group", stderr);
+		break;
+	default:
+		fputs("Other", stderr);
+	}
+
+	fputs(" (", stderr);
+
+	switch (severity) {
+	case GL_DEBUG_SEVERITY_HIGH:
+		fputs("High Priority", stderr);
+		break;
+	case GL_DEBUG_SEVERITY_MEDIUM:
+		fputs("Medium Priority", stderr);
+		break;
+	case GL_DEBUG_SEVERITY_LOW:
+		fputs("Low Priority", stderr);
+		break;
+	case GL_DEBUG_SEVERITY_NOTIFICATION:
+		fputs("Notification", stderr);
+		break;
+	}
+
+	fputs("):\n", stderr);
+
+	fputs(message, stderr);
+	fputs("\n\n", stderr);
+
+	fflush(stderr);
 }

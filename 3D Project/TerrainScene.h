@@ -1,21 +1,23 @@
-#ifndef __TESTSCENE_H__
-#define __TESTSCENE_H__
+#ifndef __TERRAINSCENE_H__
+#define __TERRAINSCENE_H__
 
 #include "Scene.h"
 #include "Shader.h"
 #include "ShaderProgram.h"
 #include "Texture.h"
+#include "CubeMapTexture.h"
 #include "Geometry.h"
 #include "Player.h"
+#include "Skybox.h"
 
-// Test scene. Used to test things.
-class TestScene : public Scene {
+// Scene used to test terrain stuff (height maps).
+class TerrainScene : public Scene {
 	public:
 		// Constructor
-		TestScene();
+		TerrainScene();
 
 		// Destructor
-		~TestScene();
+		~TerrainScene();
 
 		// Updates the scene.
 		SceneEnd* update(double time);
@@ -35,6 +37,10 @@ class TestScene : public Scene {
 		Texture* texture;
 		Geometry* geometry;
 		Player* player;
+
+		// Skybox
+		Skybox* skybox;
+		CubeMapTexture* skyboxTexture;
 
 		// Vertex buffer.
 		GLuint vertexBuffer = 0;

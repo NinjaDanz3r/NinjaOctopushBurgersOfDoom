@@ -12,6 +12,8 @@ namespace settings {
 	bool _showConsole;
 	bool _logging;
 	bool _showMouseCursor;
+	bool _showFPS;
+	bool _debugContext;
 
 	void load(const char* filename) {
 		CSimpleIniA ini;
@@ -27,6 +29,8 @@ namespace settings {
 		_showConsole = ini.GetBoolValue("Debug", "Show Console");
 		_logging = ini.GetBoolValue("Debug", "Logging");
 		_showMouseCursor = ini.GetBoolValue("Debug", "Show Mouse Cursor");
+		_showFPS = ini.GetBoolValue("Debug", "Show FPS", true);
+		_debugContext = ini.GetBoolValue("Debug", "Debug Context", false);
 	}
 
 	void save(const char* filename) {
@@ -42,6 +46,8 @@ namespace settings {
 		ini.SetBoolValue("Debug", "Show Console", _showConsole);
 		ini.SetBoolValue("Debug", "Logging", _logging);
 		ini.SetBoolValue("Debug", "Show Mouse Cursor", _showMouseCursor);
+		ini.SetBoolValue("Debug", "Show FPS", _showFPS);
+		ini.SetBoolValue("Debug", "Debug Context", _debugContext);
 
 		SI_Error rc = ini.SaveFile(filename);
 		if (rc < 0)
@@ -123,5 +129,21 @@ namespace settings {
 
 	void setShowMouseCursor(bool show) {
 		_showMouseCursor = show;
+	}
+
+	bool showFPS() {
+		return _showFPS;
+	}
+
+	void setShowFPS(bool show) {
+		_showFPS = show;
+	}
+
+	bool debugContext() {
+		return _debugContext;
+	}
+
+	void setDebugContext(bool debug) {
+		_debugContext = debug;
 	}
 }
