@@ -2,7 +2,7 @@
 #include <vector>
 
 Particle::Particle(){
-	texture = new Texture("Resources/Textures/kaleido.tga");
+	texture = new Texture2D("Resources/Textures/kaleido.tga");
 	worldPos = glm::vec3(0, 0, 0);
 }
 

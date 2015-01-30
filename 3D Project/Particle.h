@@ -1,7 +1,7 @@
 #ifndef __PARTICLE_H__
 #define __PARTICLE_H__
 #include <glm\glm.hpp>
-#include "Texture.h"
+#include "Texture2D.h"
 
 //Particle
 class Particle
