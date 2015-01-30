@@ -18,16 +18,16 @@ out VertexData {
 } vertexOut;
 
 void main() {
-	vertexOut.position = projectionMatrix*viewMatrix*(gl_in.gl_position + vec3(-1,1,0));
+	vertexOut.position = projctionMatrix*viewMatrix*(gl_in.gl_position + vec3(-1,1,0));
 	texture = vec2(0,0);
 	emit_vertex();
-	vertexOut.position = projectionMatrix*viewMatrix*(gl_in.gl_position + vec3(-1,-1,0));
+	vertexOut.position = projctionMatrix*viewMatrix*(gl_in.gl_position + vec3(-1,-1,0));
 	texture = vec2(1,0);
 	emit_vertex();
-	vertexOut.position = projectionMatrix*viewMatrix*(gl_in.gl_position + vec3(1,1,0));
+	vertexOut.position = projctionMatrix*viewMatrix*(gl_in.gl_position + vec3(1,1,0));
 	texture = vec2(0,1);
 	emit_vertex();
-	vertexOut.position = projectionMatrix*viewMatrix*(gl_in.gl_position + vec3(1,-1,0));
+	vertexOut.position = projctionMatrix*viewMatrix*(gl_in.gl_position + vec3(1,-1,0));
 	texture = vec2(1,1);
 	emit_vertex();
 	EndPrimitive();

@@ -6,7 +6,6 @@
 #include "Texture.h"
 #include "Geometry.h"
 #include "Player.h"
-#include "Particle.h"
 
 // Test scene. Used to test things.
 class ParticleScene : public Scene {
@@ -28,8 +27,9 @@ private:
 
 	Shaders* shaders;
 	Texture* texture;
+	Geometry* geometry;
 	Player* player;
-	Particle* particle;
+
 	// Vertex buffer.
 	GLuint vertexBuffer = 0;
 	GLuint vertexAttribute = 0;
