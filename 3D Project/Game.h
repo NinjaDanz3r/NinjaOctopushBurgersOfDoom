@@ -10,16 +10,25 @@
 #define GLFW_DLL
 #include <GLFW/glfw3.h>
 
-// Game class to handle the active scene.
+/// Class to handle the active Scene.
+/**
+ * Class to handle the active Scene and switch between scenes (eg. level scene or menu scene) during the course of the game.
+ */
 class Game {
 	public:
-		// Constructor.
+		/// Constructor
+		/**
+		 * @param window Window for which to retrieve input, etc.
+		 */
 		Game(GLFWwindow* window);
 
-		// Destructor
+		/// Destructor
 		~Game();
 
-		// Update method. Called as often as possible.
+		/// Update method. Called as often as possible.
+		/**
+		 * Updates input and the active scene as well as rendering the active scene and show FPS count (if this has been enabled in settings).
+		 */
 		void update();
 
 	private:
