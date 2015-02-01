@@ -4,48 +4,85 @@
 #include "SoundBuffer.h"
 #include <glm/glm.hpp>
 
+/// A sound source in the game world.
+/**
+ * Represents a sound source in the game world. If its SoundBuffer is in mono, the sound will be 3D and played relative to the Listener position. If the SoundBuffer is in stereo it will not be 3D.
+ */
 class Sound {
 	public:
-		// Constructor
+		/// Create new sound source.
+		/**
+		 * @param buffer The SoundBuffer containing the sound.
+		 */
 		Sound(SoundBuffer* buffer);
 
-		// Destructor
+		/// Destructor
 		~Sound();
 
-		// Get position.
+		/// Get position.
+		/**
+		 * Starting position: (0.0, 0.0, 0.0).
+		 * @return The sound source's position in the game world
+		 */
 		const glm::vec3& position() const;
 
-		// Set position.
+		/// Set position.
+		/**
+		 * @param position New position for the sound source.
+		 */
 		void setPosition(const glm::vec3& position);
 
-		// Get pitch.
+		/// Get pitch.
+		/**
+		 * Default 1.0.
+		 * @return The sound source's pitch
+		 */
 		ALfloat pitch() const;
 
-		// Set pitch.
+		/// Set pitch.
+		/**
+		 * @param pitch The sound source's pitch.
+		 */
 		void setPitch(ALfloat pitch);
 
-		// Get gain.
+		/// Get gain.
+		/**
+		 * Default 1.0.
+		 * @return The sound's gain.
+		 */
 		ALfloat gain() const;
 
-		// Set gain.
+		/// Set gain.
+		/**
+		 * @param gain The sound's gain.
+		 */
 		void setGain(ALfloat gain);
 
-		// Get whether sound should loop.
+		/// Get whether sound should loop.
+		/**
+		 * @return Whether the sound should loop
+		 */
 		ALboolean looping() const;
 
-		// Set whether sound should loop.
+		/// Set whether sound should loop.
+		/**
+		 * @param loop Whether the sound should loop.
+		 */
 		void setLooping(ALboolean loop);
 
-		// Play sound.
+		/// Play sound.
 		void play();
 
-		// Pause sound.
+		/// Pause sound.
 		void pause();
 
-		// Stop sound.
+		/// Stop sound.
 		void stop();
 
-		// Get state. (AL_INITIAL, AL_PLAYING, AL_PAUSED or AL_STOPPED)
+		/// Get state.
+		/**
+		 * @return One of AL_INITIAL, AL_PLAYING, AL_PAUSED or AL_STOPPED.
+		 */
 		ALint state() const;
 
 	private:
