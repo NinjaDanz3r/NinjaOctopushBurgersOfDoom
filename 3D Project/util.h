@@ -3,9 +3,9 @@
 
 #include <string>
 
-/// Utilities namespace.
+/// Contains various utility functions
 /**
- * Contains various utility functions, primarily related to the file system.
+ * Primarily related to the file system.
  */
 namespace util {
 	/// Name of the game, used for eg. filepaths.
@@ -26,7 +26,7 @@ namespace util {
 	 */
 	void logWithTime(const char* text);
 
-	/// Checks if a file exists.
+	/// Check if a file exists.
 	/**
 	 * Works for directories as well.
 	 * @param filename Filename (either relative or absolute) to check.
@@ -34,7 +34,7 @@ namespace util {
 	 */
 	bool fileExists(const char* filename);
 
-	/// Creates a directory if it does not already exist.
+	/// Create a directory if it does not already exist.
 	/**
 	 * Permission for new directory is 0777 on Unix.
 	 * @param filename Filename (either absolute or relative) for the directory to create.

@@ -4,9 +4,8 @@
 #define GLFW_DLL
 #include <GLFW/glfw3.h>
 
-/// Input namespace.
+/// Handles player input.
 /**
- * Handles player input.
  * Rather than checking directly for key presses (like 'W'), keys are assigned to more general buttons (eg. 'Forward' to walk forward).
  * This allows keys to be rebound for different keyboard layouts or player preferences.
  */
