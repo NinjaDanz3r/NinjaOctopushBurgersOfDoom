@@ -5,18 +5,33 @@
 #include <gl/GL.h>
 #include <string>
 
+/// A GLSL shader.
+/**
+ * Compiles and handles a GLSL shader. Shaders should be linked together into a ShaderProgram.
+ */
 class Shader {
 	public:
-		// Constructor
+		/// Compile shader.
+		/**
+		 * @param filename Filename (relative or absolute) to shader source code.
+		 * @param shaderType %Shader type. One of GL_COMPUTE_SHADER, GL_VERTEX_SHADER, GL_TESS_CONTROL_SHADER, GL_TESS_EVALUATION_SHADER, GL_GEOMETRY_SHADER, or GL_FRAGMENT_SHADER.
+		 */
 		Shader(const char* filename, GLenum shaderType);
 
-		// Destructor
+		/// Destructor
 		~Shader();
 
-		// Get shader ID.
+		/// Get shader ID.
+		/**
+		 * Used when linking a ShaderProgram.
+		 * @return Shader identifier
+		 */
 		GLuint shaderID() const;
 
-		// Get shader type.
+		/// Get shader type.
+		/**
+		 * @return %Shader type. One of GL_COMPUTE_SHADER, GL_VERTEX_SHADER, GL_TESS_CONTROL_SHADER, GL_TESS_EVALUATION_SHADER, GL_GEOMETRY_SHADER, or GL_FRAGMENT_SHADER.
+		 */
 		GLenum shaderType() const;
 
 	private:
