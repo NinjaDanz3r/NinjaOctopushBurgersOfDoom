@@ -29,9 +29,14 @@ ParticleScene::ParticleScene() {
 }
 
 ParticleScene::~ParticleScene() {
-	//delete shaders;
 	delete particle;
 	delete player;
+	delete texture;
+
+	delete shaderProgram;
+	delete vertexShader;
+	delete geometryShader;
+	delete fragmentShader;
 }
 
 Scene::SceneEnd* ParticleScene::update(double time) {
