@@ -1,7 +1,7 @@
 #version 400
 in VertexData {
-	vec3 position;
-	vec2 texture;
+	vec4 position;
+	vec2 tex_coords;
 } vertexIn;
 
 uniform sampler2D baseImage;

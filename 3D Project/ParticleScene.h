@@ -2,7 +2,8 @@
 #define __TESTSCENE_H__
 
 #include "Scene.h"
-#include "Shaders.h"
+#include "Shader.h"
+#include "ShaderProgram.h"
 #include "Texture.h"
 #include "Geometry.h"
 #include "Player.h"
@@ -24,10 +25,15 @@ public:
 	void render(int width, int height);
 
 private:
-	void bindTriangleData();
+	void bindPointData();
 
-	Shaders* shaders;
+	//Shaders
+	Shader* fragmentShader;
+	Shader* geometryShader;
+	Shader* vertexShader;
+	ShaderProgram* shaderProgram;
 	Texture* texture;
+
 	Player* player;
 	Particle* particle;
 	// Vertex buffer.

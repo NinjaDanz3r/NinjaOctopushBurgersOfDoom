@@ -2,15 +2,14 @@
 #include <vector>
 
 Particle::Particle(){
-	texture = new Texture2D("Resources/Textures/kaleido.tga");
-	worldPos = glm::vec3(0, 0, 0);
+	worldPos = glm::vec3(0, 0, 10);
 }
 
 Particle::Particle(glm::vec3 worldPos, Texture* texture){
 	this->worldPos = worldPos;
-	this->texture = texture;
+	//this->texture = texture;
 }
 
 Particle::~Particle(){
-	delete texture;
+	//delete texture;
 }

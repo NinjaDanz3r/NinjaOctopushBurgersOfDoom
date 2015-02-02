@@ -32,7 +32,6 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="settings.cpp" />
-    <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="SoundBuffer.cpp" />

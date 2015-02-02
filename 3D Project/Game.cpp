@@ -1,9 +1,6 @@
 #include "Game.h"
-<<<<<<< HEAD
 #include "ParticleScene.h"
-=======
 #include "TerrainScene.h"
->>>>>>> origin/master
 #include "input.h"
 #include "settings.h"
 
