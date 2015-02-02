@@ -1,6 +1,5 @@
 #version 400
 in VertexData {
-	vec4 position;
 	vec2 tex_coords;
 } vertexIn;
 
