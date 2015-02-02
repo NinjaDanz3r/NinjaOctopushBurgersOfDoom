@@ -2,7 +2,7 @@
 #include <vector>
 
 Particle::Particle(){
-	worldPos = glm::vec3(0, 0, 10);
+	worldPos = glm::vec3(0.f, 0.f, 10.f);
 }
 
 Particle::Particle(glm::vec3 worldPos, Texture* texture){
