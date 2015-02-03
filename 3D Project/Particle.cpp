@@ -7,7 +7,6 @@ Particle::Particle(){
 
 Particle::Particle(glm::vec3 worldPos, Texture* texture){
 	this->worldPos = worldPos;
-	//this->texture = texture;
 }
 
 Particle::~Particle(){
