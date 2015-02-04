@@ -13,12 +13,33 @@ public:
 	//Destructor
 	~ParticleSystem();
 
-	//Create an emitter
-	void createEmitter(const char* texturePath, glm::vec3 worldPos);
 	int getParticleCount();
+	int getMaxParticleCount();
+	void update(double time);
 private:
-	std::vector < ParticleEmitter > emitters;
+	//Ordered pair of values, each particle has a property.
+	struct Vertex
+	{
+		glm::vec3 worldPos;
+	};
+	struct ParticleProperty
+	{
+		glm::vec3 velocity;
+		float lifetime;
+	};
+
+	std::vector < Vertex > vertices;
+	std::vector < ParticleProperty > particleProperties;
+	
+	//Properties of the system
+	glm::vec3 particleOrigin;
 	int particleCount;
+	int maxParticleCount;
+	float maxLifeTime;
+	float maxVelocity;
+	int chanceToEmit;
+	//Helper functions
+	void emitParticle();
 };
 
 #endif

@@ -41,7 +41,6 @@ ParticleScene::~ParticleScene() {
 
 Scene::SceneEnd* ParticleScene::update(double time) {
 	player->update(time);
-
 	return nullptr;
 }
 

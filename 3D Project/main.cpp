@@ -14,8 +14,10 @@
 #include <crtdbg.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
 int main() {
+	srand(time(NULL));
 	input::init();
 	settings::load(util::savePath("settings.ini").c_str());
 
