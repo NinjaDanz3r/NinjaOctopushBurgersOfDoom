@@ -38,7 +38,7 @@ ParticleSystem::Vertex* ParticleSystem::getStartAddress()
 
 void ParticleSystem::emitParticle()
 {
-	if ( (rand() % 100 + 1 <= chanceToEmit) && (particleCount < maxParticleCount))
+	if ( (rand() % 1000 + 1 <= chanceToEmit) && (particleCount < maxParticleCount))
 	{
 		Vertex newVertex;
 		ParticleProperty newProperty;
