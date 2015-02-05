@@ -2,12 +2,12 @@
 #include <vector>
 
 ParticleSystem::ParticleSystem(glm::vec3 origin, int maxParticleCount, int chanceToEmit, float maxVelocity, float maxLifeTime) {
-	this->particleOrigin = origin;
+	particleOrigin = origin;
 	this->maxParticleCount = maxParticleCount;
 	this->chanceToEmit = chanceToEmit;
 	this->maxVelocity = maxVelocity;
 	this->maxLifeTime = maxLifeTime;
-	this->particleCount = 0;
+	particleCount = 0;
 }
 
 unsigned int ParticleSystem::getParticleCount() {
@@ -35,8 +35,8 @@ void ParticleSystem::emitParticle() {
 		zVel = static_cast<float>(rand() % (2 * static_cast<int>(maxVelocity)) - static_cast<int>(maxVelocity));
 		newProperty.velocity = glm::vec3(xVel,yVel, zVel);
 
-		this->particlePositions.push_back(newVertex);
-		this->particleProperties.push_back(newProperty);
+		particlePositions.push_back(newVertex);
+		particleProperties.push_back(newProperty);
 
 		particleCount++;
 	}
@@ -44,15 +44,15 @@ void ParticleSystem::emitParticle() {
 
 void ParticleSystem::update(double time) {
 	if (!this->particlePositions.empty()) {
-		for (std::vector<int>::size_type i = 0; i != this->particleProperties.size(); i++) {
-			if (this->particleProperties[i].lifetime > maxLifeTime) {
-				this->particlePositions.erase(particlePositions.begin() + i);
-				this->particleProperties.erase(particleProperties.begin() + i);
+		for (std::vector<int>::size_type i = 0; i != particleProperties.size(); i++) {
+			if (particleProperties[i].lifetime > maxLifeTime) {
+				particlePositions.erase(particlePositions.begin() + i);
+				particleProperties.erase(particleProperties.begin() + i);
 				particleCount--;
 				i--;
 			} else {
-				this->particlePositions[i].worldPos += static_cast<float>(time)* (this->particleProperties[i].velocity);
-				this->particleProperties[i].lifetime += static_cast<float>(time);
+				particlePositions[i].worldPos += static_cast<float>(time)* particleProperties[i].velocity;
+				particleProperties[i].lifetime += static_cast<float>(time);
 			}
 		}
 	}
