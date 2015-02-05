@@ -23,19 +23,17 @@ ParticleSystem::ParticlePosition* ParticleSystem::getStartAddress() {
 }
 
 void ParticleSystem::emitParticle() {
-	if ((rand() % 1000 + 1 <= chanceToEmit) && (particleCount < maxParticleCount)) {
-		ParticlePosition newVertex;
+	if ((rand() % 1000 < chanceToEmit) && (particleCount < maxParticleCount)) {
+		ParticlePosition newPosition;
 		ParticleProperty newProperty;
-		float xVel, yVel, zVel;
 		
-		newVertex.worldPos = particleOrigin;
-		newProperty.lifetime = 0;
-		xVel = static_cast<float>(rand() % (2 * static_cast<int>(maxVelocity)) - static_cast<int>(maxVelocity));
-		yVel = static_cast<float>(rand() % (2 * static_cast<int>(maxVelocity)) - static_cast<int>(maxVelocity));
-		zVel = static_cast<float>(rand() % (2 * static_cast<int>(maxVelocity)) - static_cast<int>(maxVelocity));
-		newProperty.velocity = glm::vec3(xVel,yVel, zVel);
+		newPosition.worldPos = particleOrigin;
+		newProperty.lifetime = 0.f;
+		newProperty.velocity.x = static_cast<float>(rand() % (2 * static_cast<int>(maxVelocity)) - static_cast<int>(maxVelocity));
+		newProperty.velocity.y = static_cast<float>(rand() % (2 * static_cast<int>(maxVelocity)) - static_cast<int>(maxVelocity));
+		newProperty.velocity.z = static_cast<float>(rand() % (2 * static_cast<int>(maxVelocity)) - static_cast<int>(maxVelocity));
 
-		particlePositions.push_back(newVertex);
+		particlePositions.push_back(newPosition);
 		particleProperties.push_back(newProperty);
 
 		particleCount++;
