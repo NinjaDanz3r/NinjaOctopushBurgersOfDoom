@@ -46,7 +46,7 @@ Scene::SceneEnd* ParticleScene::update(double time) {
 	particleSystem->update(time);
 	vertexCount = particleSystem->getParticleCount();
 	if (vertexCount > 0)
-		glBufferData(GL_ARRAY_BUFFER, vertexCount * sizeof(ParticleSystem::Vertex), particleSystem->getStartAddress(), GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, vertexCount * sizeof(ParticleSystem::ParticlePosition), particleSystem->getStartAddress(), GL_STATIC_DRAW);
 	return nullptr;
 }
 
@@ -88,5 +88,5 @@ void ParticleScene::bindPointData() {
 	glEnableVertexAttribArray(0); //the vertex attribute object will remember its enabled attributes
 
 	GLuint vertexPos = glGetAttribLocation(shaderProgram->shaderProgram(), "vertex_position");
-	glVertexAttribPointer(vertexPos, 3, GL_FLOAT, GL_FALSE, sizeof(ParticleSystem::Vertex), BUFFER_OFFSET(0));
+	glVertexAttribPointer(vertexPos, 3, GL_FLOAT, GL_FALSE, sizeof(ParticleSystem::ParticlePosition), BUFFER_OFFSET(0));
 }

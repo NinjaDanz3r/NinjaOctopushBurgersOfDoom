@@ -3,71 +3,63 @@
 #include <vector>
 #include <glm\glm.hpp>
 
-/// Summary
-/**
-* Creates particles
-*/
+/// Handles particles.
 class ParticleSystem
 {
 public:
-	/// Summary
-	/**
-	* Describes vertex properties
-	*/
-	struct Vertex
+	/// A particle's position in the world.
+	struct ParticlePosition
 	{
+		/// Position.
 		glm::vec3 worldPos;
 	};
-	/// Summary
-	/**
-	* Describes particle properties
-	*/
+	/// A particle's properties.
 	struct ParticleProperty
 	{
+		/// Velocity.
 		glm::vec3 velocity;
+		/// Lifetime (in seconds).
 		float lifetime;
 	};
-	/// Summary
+
+	/// Create a new particle system with the given properties.
 	/**
-	* Default constructor (Not in use)
-	*/
-	ParticleSystem();
-	/// Summary
-	/**
-	* param glm::vec3 origin, int maxParticleCount, int chanceToEmit (x in 1000 chance), float maxVelocity, float maxLifeTime.
+	* @param origin Origin of the particle system.
+	* @param maxParticleCount The maximum amount of particles the particle system can hold.
+	* @param chanceToEmit How large chance to emit a particle each step (x in 1000 chance).
+	* @param maxVelocity Maximum velocity of the particles emitted.
+	* @param maxLifeTime Maximum lifetime of the particles emitted.
 	*/
 	ParticleSystem(glm::vec3 origin, int maxParticleCount, int chanceToEmit, float maxVelocity, float maxLifeTime);
-	/// Summary
-	/**
-	* Destructor
-	*/
-	~ParticleSystem();
 
-	/// Summary
+	/// Get the amount of particles.
 	/**
 	* @return How many particles currently exist.
 	*/
 	unsigned int getParticleCount();
-	/// Summary
+
+	/// Get the maximum amount of particles.
 	/**
 	* @return Maximum amount of particles.
 	*/
 	unsigned int getMaxParticleCount();
-	/// Summary
+
+	/// Update all the system's particles, spawn new particles etc.
 	/**
-	* Updates the system.
-	*/
+	 * @param time Time since last frame (in seconds).
+	 */
 	void update(double time);
-	/// Summary
+
+	/// Get the address to the dynamic array that holds the particle positions.
 	/**
-	* Returns the address to the dynamic array that holds the vertices.
+	* @return The address to the dynamic array that holds the particle positions
 	*/
-	Vertex* getStartAddress();
+	ParticlePosition* getStartAddress();
 private:
-	std::vector < Vertex > vertices;
-	std::vector < ParticleProperty > particleProperties;
+	std::vector<ParticlePosition> particlePositions;
+	std::vector<ParticleProperty> particleProperties;
 	
-	//System properties
+	// System properties
 	glm::vec3 particleOrigin;
 	unsigned int particleCount;
 	unsigned int maxParticleCount;
@@ -75,7 +67,7 @@ private:
 	float maxVelocity;
 	int chanceToEmit;
 
-	//Helper functions
+	// Helper functions
 	void emitParticle();
 };
 
