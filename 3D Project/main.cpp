@@ -17,7 +17,7 @@
 #include <time.h>
 
 int main() {
-	srand(time(NULL));
+	srand(static_cast<unsigned int>(time(NULL)));
 	input::init();
 	settings::load(util::savePath("settings.ini").c_str());
 
