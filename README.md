@@ -3,6 +3,8 @@ NinjaOctopushBurgersOfDoom
 
 School project implementing various 3D techniques in OpenGL (C++11).
 
+[Online Documentation](https://dl.dropboxusercontent.com/u/43861031/NinjaBurgers/Documentation/index.html)
+
 Implemented Techniques
 ======================
 The mandatory techniques are perspective rendering, lighting, textures, three-dimensional objects and first-person camera movement.
