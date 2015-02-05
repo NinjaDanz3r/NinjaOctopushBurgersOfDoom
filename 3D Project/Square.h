@@ -16,25 +16,25 @@ class Square : public Geometry {
 		/**
 		* @return Array of vertices
 		*/
-		virtual Vertex* vertices() const = 0;
+		Vertex* vertices() const;
 
 		/// Get the number of vertices.
 		/**
 		* @return The number of vertices
 		*/
-		virtual unsigned int vertexCount() const = 0;
+		unsigned int vertexCount() const;
 
 		/// Get all the vertex indices.
 		/**
 		* @return Array of vertex indices
 		*/
-		virtual unsigned int* indices() const = 0;
+		unsigned int* indices() const;
 
 		/// Get the number of indicies.
 		/**
 		* @return The number of vertex indices.
 		*/
-		virtual unsigned int indexCount() const = 0;
+		unsigned int indexCount() const;
 
 	private:
 		Vertex *vertexData = nullptr;
