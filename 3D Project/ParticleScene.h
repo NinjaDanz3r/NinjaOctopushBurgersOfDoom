@@ -9,19 +9,30 @@
 #include "Player.h"
 #include "ParticleSystem.h"
 
-// Test scene. Used to test things.
+/// %Scene used to test the ParticleSystem.
 class ParticleScene : public Scene {
 public:
-	// Constructor
+	/// Constructor
 	ParticleScene();
 
-	// Destructor
+	/// Destructor
+	/**
+	* Free allocated resources.
+	*/
 	~ParticleScene();
 
-	// Updates the scene.
+	/// Update the scene.
+	/**
+	* @param time Time since last frame (in seconds).
+	* @return SceneEnd-struct defining what to do next. nullptr if nothing should be done
+	*/
 	SceneEnd* update(double time);
 
-	// Renders the scene.
+	/// Render the scene.
+	/**
+	* @param width Width of the context.
+	* @param height Height of the context.
+	*/
 	void render(int width, int height);
 
 private:
