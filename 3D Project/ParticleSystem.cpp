@@ -1,5 +1,4 @@
 #include "ParticleSystem.h"
-#include "ParticleEmitter.h"
 #include <vector>
 
 ParticleSystem::ParticleSystem()
@@ -12,14 +11,29 @@ ParticleSystem::~ParticleSystem()
 
 }
 
-int ParticleSystem::getParticleCount()
+ParticleSystem::ParticleSystem(glm::vec3 origin, int maxParticleCount, int chanceToEmit, float maxVelocity, float maxLifeTime)
+{
+	this->particleOrigin = origin;
+	this->maxParticleCount = maxParticleCount;
+	this->chanceToEmit = chanceToEmit;
+	this->maxVelocity = maxVelocity;
+	this->maxLifeTime = maxLifeTime;
+	this->particleCount = 0;
+}
+
+unsigned int ParticleSystem::getParticleCount()
 {
 	return particleCount;
 }
 
-int ParticleSystem::getMaxParticleCount()
+unsigned int ParticleSystem::getMaxParticleCount()
 {
 	return maxParticleCount;
+}
+
+ParticleSystem::Vertex* ParticleSystem::getStartAddress()
+{
+	return &this->vertices[0];
 }
 
 void ParticleSystem::emitParticle()
