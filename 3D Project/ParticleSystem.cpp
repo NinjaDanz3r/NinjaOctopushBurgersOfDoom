@@ -46,9 +46,9 @@ void ParticleSystem::emitParticle()
 		
 		newVertex.worldPos = particleOrigin;
 		newProperty.lifetime = 0;
-		xVel = rand() % (2 * int(maxVelocity)) - int(maxVelocity);
-		yVel = rand() % (2 * int(maxVelocity)) - int(maxVelocity);
-		zVel = rand() % (2 * int(maxVelocity)) - int(maxVelocity);
+		xVel = static_cast<float>(rand() % (2 * static_cast<int>(maxVelocity)) - static_cast<int>(maxVelocity));
+		yVel = static_cast<float>(rand() % (2 * static_cast<int>(maxVelocity)) - static_cast<int>(maxVelocity));
+		zVel = static_cast<float>(rand() % (2 * static_cast<int>(maxVelocity)) - static_cast<int>(maxVelocity));
 		newProperty.velocity = glm::vec3(xVel,yVel, zVel);
 
 		this->vertices.push_back(newVertex);
