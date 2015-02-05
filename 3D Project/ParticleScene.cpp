@@ -45,8 +45,9 @@ Scene::SceneEnd* ParticleScene::update(double time) {
 	player->update(time);
 	particleSystem->update(time);
 	vertexCount = particleSystem->getParticleCount();
+
 	if (vertexCount > 0)
-		glBufferData(GL_ARRAY_BUFFER, vertexCount * sizeof(ParticleSystem::ParticlePosition), particleSystem->getStartAddress(), GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, vertexCount * sizeof(ParticleSystem::ParticlePosition), particleSystem->getStartAddress(), GL_DYNAMIC_DRAW);
 	return nullptr;
 }
 
