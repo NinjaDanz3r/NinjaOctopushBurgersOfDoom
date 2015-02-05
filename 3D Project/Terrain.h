@@ -44,7 +44,7 @@ public:
 	/**
 	 * If the position is outside the terrain, 0.0 is returned.
 	 * @param x X-position in the world.
-	 * @param y Y-position in the world.
+	 * @param z Z-position in the world.
 	 * @return Height of the terrain.
 	 */
 	float getY(float x, float z) const;
