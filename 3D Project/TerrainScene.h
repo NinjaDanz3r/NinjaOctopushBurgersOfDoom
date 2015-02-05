@@ -10,19 +10,30 @@
 #include "Player.h"
 #include "Skybox.h"
 
-// Scene used to test terrain stuff (height maps).
+/// %Scene used to test terrain (height maps).
 class TerrainScene : public Scene {
 	public:
-		// Constructor
+		/// Constructor
 		TerrainScene();
 
-		// Destructor
+		/// Destructor
+		/**
+		* Free allocated resources.
+		*/
 		~TerrainScene();
 
-		// Updates the scene.
+		/// Update the scene.
+		/**
+		* @param time Time since last frame (in seconds).
+		* @return SceneEnd-struct defining what to do next. nullptr if nothing should be done
+		*/
 		SceneEnd* update(double time);
 
-		// Renders the scene.
+		/// Render the scene.
+		/**
+		* @param width Width of the context.
+		* @param height Height of the context.
+		*/
 		void render(int width, int height);
 
 	private:

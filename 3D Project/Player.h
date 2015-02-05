@@ -3,25 +3,41 @@
 
 #include "Camera.h"
 
-// The player character.
+/// The player character.
+/**
+ * Holds a Camera object and manipulates that camera's position and rotation based on player input (first person camera).
+ */
 class Player {
 	public:
-		// Constructor
+		/// Creates a new player object.
 		Player();
 
-		// Destructor
+		/// Destructor
 		~Player();
 
-		// Get movement speed (units/second)
+		/// Get movement speed.
+		/**
+		 * @return Movement speed (units/second)
+		 */
 		float movementSpeed() const;
 
-		// Set movement speed (units/second)
+		/// Set movement speed.
+		/**
+		 * @param movementSpeed Movement speed (units/second).
+		 */
 		void setMovementSpeed(float movementSpeed);
 
-		// Update movement.
+		/// Update movement.
+		/**
+		 * Updates position and orientation based on player input.
+		 * @param time Time since last frame (in seconds).
+		 */
 		void update(double time);
 
-		// Player camera.
+		/// Get player camera.
+		/**
+		 * @return The player's Camera object
+		 */
 		Camera* camera() const;
 
 	private:

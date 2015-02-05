@@ -5,21 +5,40 @@
 
 #include <AL/alc.h>
 
+/// Handles OpenAL sound.
+/**
+ * There should only be one instance.
+ */
 class SoundSystem {
 	public:
-		// Constructor
+		/// Initializes OpenAL sound.
+		/**
+		 * Creates default audio device, audio context and Listener.
+		 */
 		SoundSystem();
 
-		// Destructor
+		/// Destructor
+		/**
+		 * Closes the audio device and destroys the audio context.
+		 */
 		~SoundSystem();
 
-		// Get listener.
+		/// Get listener.
+		/**
+		 * @return The listener
+		 */
 		Listener* listener() const;
 
-		// Get instance of SoundSystem.
+		/// Get instance of SoundSystem.
+		/**
+		 * @return The SoundSystem instance
+		 */
 		static SoundSystem* getInstance();
 
-		// Check for OpenAL Soft errors.
+		/// Check for OpenAL errors.
+		/**
+		 * @param message Message to print to standard error if an error was encountered.
+		 */
 		static void checkError(const char* message);
 
 	private:

@@ -11,19 +11,30 @@
 #include "SoundBuffer.h"
 #include "Sound.h"
 
-// Scene used to test 3D audio.
+/// %Scene used to test 3D audio.
 class AudioScene : public Scene {
 	public:
-		// Constructor
+		/// Constructor
 		AudioScene();
 
-		// Destructor
+		/// Destructor
+		/**
+		 * Free allocated resources.
+		 */
 		~AudioScene();
 
-		// Updates the scene.
+		/// Update the scene.
+		/**
+		* @param time Time since last frame (in seconds).
+		* @return SceneEnd-struct defining what to do next. nullptr if nothing should be done
+		*/
 		SceneEnd* update(double time);
 
-		// Renders the scene.
+		/// Render the scene.
+		/**
+		* @param width Width of the context.
+		* @param height Height of the context.
+		*/
 		void render(int width, int height);
 
 	private:

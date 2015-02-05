@@ -3,24 +3,44 @@
 
 #include "SoundFile.h"
 
+/// WAVE implementation of SoundFile.
+/**
+ * Loads .wave-files.
+ */
 class WaveFile : public SoundFile {
 	public:
-		// Constructor
+		/// Loads the specified wave-file.
+		/**
+		 * @param filename Filename (relative or absolute) to wave-file.
+		 */
 		WaveFile(const char* filename);
 
-		// Destructor
+		/// Destructor
 		~WaveFile();
 
-		// Get raw audio data.
+		/// Get raw audio data.
+		/**
+		* @return Raw audio data
+		*/
 		const char* data() const;
 
-		// Get data size.
+		/// Get data size.
+		/**
+		* @return The length of the raw audio data.
+		*/
 		ALsizei size() const;
 
-		// Get AL format.
+		/// Get AL format.
+		/**
+		* 32-bit sound is not supported in OpenAL.
+		* @return One of AL_FORMAT_MONO8, AL_FORMAT_MONO16, AL_FORMAT_STEREO8 or AL_FORMAT_STEREO16
+		*/
 		ALenum format() const;
 
-		// Get sample rate.
+		/// Get sample rate.
+		/**
+		* @return The sound file's sample rate (Hz)
+		*/
 		ALsizei sampleRate() const;
 
 	private:

@@ -3,26 +3,38 @@
 
 #include "Geometry.h"
 
-// Represents a square.
+/// A square.
 class Square : public Geometry {
 	public:
-		// Create triangle data.
+		/// Create new square at origo.
 		Square();
 
-		// Destructor
+		/// Destructor
 		~Square();
 
-		// Gets all the triangle vertices.
-		Vertex* vertices() const;
+		/// Get all the vertices.
+		/**
+		* @return Array of vertices
+		*/
+		virtual Vertex* vertices() const = 0;
 
-		// Gets the number of vertices.
-		unsigned int vertexCount() const;
+		/// Get the number of vertices.
+		/**
+		* @return The number of vertices
+		*/
+		virtual unsigned int vertexCount() const = 0;
 
-		// Gets all the vertex indices.
-		unsigned int* indices() const;
+		/// Get all the vertex indices.
+		/**
+		* @return Array of vertex indices
+		*/
+		virtual unsigned int* indices() const = 0;
 
-		// Gets the number of indicies.
-		unsigned int indexCount() const;
+		/// Get the number of indicies.
+		/**
+		* @return The number of vertex indices.
+		*/
+		virtual unsigned int indexCount() const = 0;
 
 	private:
 		Vertex *vertexData = nullptr;
