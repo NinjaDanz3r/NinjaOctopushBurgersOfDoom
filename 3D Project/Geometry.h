@@ -3,33 +3,58 @@
 
 #include "Object.h"
 
-// Interface for all forms of geometry, eg. BTHSquares or Models.
+/// Interface for renderable 3D geometry.
+/**
+ * Can be rendered using the default shaders.
+ */
 class Geometry : public Object {
 	public:
-		// Represents a vertex point in a triangle.
+		/// A vertex point.
 		struct Vertex
 		{
-			// Position.
-			float x, y, z;
-			// Normal.
-			float normalX, normalY, normalZ;
-			// Texture coordinates.
-			float u, v;
+			/// X-position.
+			float x;
+			/// Y-position.
+			float y;
+			/// Z-position.
+			float z;
+			/// Normal x.
+			float normalX;
+			/// Normal y.
+			float normalY;
+			/// Normal z.
+			float normalZ;
+			/// Texture x-coordinate.
+			float u;
+			/// Texture y-coordinate.
+			float v;
 		};
 
-		// Destructor
+		/// Destructor
 		virtual ~Geometry() { }
 
-		// Gets all the triangle vertices.
+		/// Get all the vertices.
+		/**
+		 * @return Array of vertices
+		 */
 		virtual Vertex* vertices() const = 0;
 
-		// Gets the number of vertices.
+		/// Get the number of vertices.
+		/**
+		 * @return The number of vertices
+		 */
 		virtual unsigned int vertexCount() const = 0;
 
-		// Gets all the vertex indices.
+		/// Get all the vertex indices.
+		/**
+		 * @return Array of vertex indices
+		 */
 		virtual unsigned int* indices() const = 0;
 
-		// Gets the number of indicies.
+		/// Get the number of indicies.
+		/**
+		 * @return The number of vertex indices.
+		 */
 		virtual unsigned int indexCount() const = 0;
 };
 
