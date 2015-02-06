@@ -21,7 +21,7 @@ ParticleScene::ParticleScene() {
 	fragmentShader = new Shader("particle_fragment.glsl", GL_FRAGMENT_SHADER);
 	shaderProgram = new ShaderProgram({ vertexShader, geometryShader, fragmentShader });
 	//particle = new Particle();
-	particleSystem = new ParticleSystem(glm::vec3(0.f, 0.f, -10.f), 400, 1, 6, 1);
+	particleSystem = new ParticleSystem(glm::vec3(0.f, 0.f, -10.f), 1000, 1000, 6, 1);
 	texture = new Texture2D("Resources/Textures/kaleido.tga");
 
 	bindPointData();

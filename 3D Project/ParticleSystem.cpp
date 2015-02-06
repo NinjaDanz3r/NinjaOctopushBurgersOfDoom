@@ -28,7 +28,7 @@ void ParticleSystem::emitParticle() {
 		ParticleProperty newProperty;
 		
 		newPosition.worldPos = particleOrigin;
-		newProperty.lifetime = 0.f;
+		newProperty.lifetime = 0.f - static_cast<float>(rand()%static_cast<int>(maxLifeTime*2));
 		newProperty.velocity.x = static_cast<float>(rand() % (2 * static_cast<int>(maxVelocity)) - static_cast<int>(maxVelocity));
 		newProperty.velocity.y = static_cast<float>(rand() % (2 * static_cast<int>(maxVelocity)) - static_cast<int>(maxVelocity));
 		newProperty.velocity.z = static_cast<float>(rand() % (2 * static_cast<int>(maxVelocity)) - static_cast<int>(maxVelocity));
