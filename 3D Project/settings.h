@@ -166,6 +166,10 @@ namespace settings {
 	 * @see <a href="https://www.opengl.org/wiki/Debug_Output">OpenGL Debug Output</a>
 	 */
 	void setDebugContext(bool debug);
+
+	const char* startingScene();
+
+	void setStartingScene(const char* startingScene);
 }
 
 #endif

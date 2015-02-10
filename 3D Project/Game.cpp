@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "ParticleScene.h"
 #include "TerrainScene.h"
+#include "AudioScene.h"
 #include "input.h"
 #include "settings.h"
 
@@ -73,4 +74,15 @@ void Game::assignKeyboardBindings() {
 	input::assignKeyboard(input::BACKWARD, GLFW_KEY_S);
 	input::assignKeyboard(input::LEFT, GLFW_KEY_A);
 	input::assignKeyboard(input::RIGHT, GLFW_KEY_D);
+}
+
+void Game::setSceneMap()
+{
+	
+	sceneMap["default"] = &createInstance<AudioScene>;
+	sceneMap["particle"] = &createInstance<ParticleScene>;
+}
+
+template<typename T> Scene * Game::createInstance() { 
+	return new T; 
 }

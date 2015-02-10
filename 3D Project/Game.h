@@ -3,6 +3,7 @@
 
 #include <gl/glew.h>
 #include <gl/GL.h>
+#include <map>
 
 #include "Scene.h"
 #include "SoundSystem.h"
@@ -33,8 +34,9 @@ class Game {
 
 	private:
 		void setWindowFPS();
+		void setSceneMap();
 		void assignKeyboardBindings();
-
+		template<typename T> Scene * createInstance();
 		GLFWwindow* window;
 		SoundSystem* soundSystem;
 		Scene* currentScene;
@@ -42,6 +44,9 @@ class Game {
 		double lastTime;
 		double prevFPSTime = 0.0;
 		int frames = 0;
+
+		typedef std::map<std::string, Scene*(*)()> mapType;
+		mapType sceneMap;
 };
 
 #endif
