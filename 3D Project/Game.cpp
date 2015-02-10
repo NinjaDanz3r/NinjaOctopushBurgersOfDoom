@@ -76,13 +76,11 @@ void Game::assignKeyboardBindings() {
 	input::assignKeyboard(input::RIGHT, GLFW_KEY_D);
 }
 
-void Game::setSceneMap()
-{
-	
-	sceneMap["default"] = &createInstance<AudioScene>;
-	sceneMap["particle"] = &createInstance<ParticleScene>;
+void Game::setSceneMap() {
+	sceneMap["default"] = &Game::createInstance<AudioScene>;
+	sceneMap["particle"] = &Game::createInstance<ParticleScene>;
 }
 
-template<typename T> Scene * Game::createInstance() { 
-	return new T; 
+template<typename T> Scene * Game::createInstance() {
+	return new T;
 }

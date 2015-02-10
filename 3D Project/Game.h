@@ -37,6 +37,7 @@ class Game {
 		void setSceneMap();
 		void assignKeyboardBindings();
 		template<typename T> Scene * createInstance();
+
 		GLFWwindow* window;
 		SoundSystem* soundSystem;
 		Scene* currentScene;
@@ -45,8 +46,7 @@ class Game {
 		double prevFPSTime = 0.0;
 		int frames = 0;
 
-		typedef std::map<std::string, Scene*(*)()> mapType;
-		mapType sceneMap;
+		std::map<std::string, Scene*(Game::*)()> sceneMap;
 };
 
 #endif
