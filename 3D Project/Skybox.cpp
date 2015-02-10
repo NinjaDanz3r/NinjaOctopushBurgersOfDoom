@@ -22,7 +22,7 @@ Skybox::~Skybox() {
 }
 
 void Skybox::render(int width, int height, const Camera* camera) {
-	glUseProgram(shaderProgram->shaderProgram());
+	shaderProgram->use();
 
 	// Texture unit 0 is for base images.
 	glUniform1i(glGetUniformLocation(shaderProgram->shaderProgram(), "cubeMapTexture"), 0);

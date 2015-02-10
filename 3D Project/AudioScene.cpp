@@ -23,7 +23,7 @@ AudioScene::AudioScene() {
 	fragmentShader = new Shader("default_fragment.glsl", GL_FRAGMENT_SHADER);
 	shaderProgram = new ShaderProgram({ vertexShader, geometryShader, fragmentShader });
 
-	glUseProgram(shaderProgram->shaderProgram());
+	shaderProgram->use();
 
 	// Texture unit 0 is for base images.
 	glUniform1i(glGetUniformLocation(shaderProgram->shaderProgram(), "baseImage"), 0);

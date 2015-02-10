@@ -33,6 +33,13 @@ class ShaderProgram {
 		 */
 		GLuint shaderProgram() const;
 
+		/// Use shader program.
+		/**
+		 * Installs the program object as part of the current rendering state.
+		 * @see <a href="https://www.opengl.org/sdk/docs/man4/html/glUseProgram.xhtml">glUseProgram</a>
+		 */
+		void use() const;
+
 	private:
 		GLuint _shaderProgram;
 };

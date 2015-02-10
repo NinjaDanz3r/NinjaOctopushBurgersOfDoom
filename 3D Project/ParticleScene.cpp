@@ -55,7 +55,7 @@ void ParticleScene::render(int width, int height) {
 	glViewport(0, 0, width, height);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glUseProgram(shaderProgram->shaderProgram());
+	shaderProgram->use();
 
 	glUniform1i(glGetUniformLocation(shaderProgram->shaderProgram(), "baseImage"), 0);
 

@@ -16,3 +16,7 @@ ShaderProgram::~ShaderProgram() {
 GLuint ShaderProgram::shaderProgram() const {
 	return _shaderProgram;
 }
+
+void ShaderProgram::use() const {
+	glUseProgram(_shaderProgram);
+}
