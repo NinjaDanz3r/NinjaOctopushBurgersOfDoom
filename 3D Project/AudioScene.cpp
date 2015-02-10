@@ -26,7 +26,7 @@ AudioScene::AudioScene() {
 	shaderProgram->use();
 
 	// Texture unit 0 is for base images.
-	glUniform1i(glGetUniformLocation(shaderProgram->shaderProgram(), "baseImage"), 0);
+	glUniform1i(shaderProgram->uniformLocation("baseImage"), 0);
 
 	geometry = new Cube();
 	bindTriangleData();
@@ -86,19 +86,19 @@ void AudioScene::render(int width, int height) {
 	glm::mat4 MV = view * model;
 	glm::mat4 N = glm::transpose(glm::inverse(MV));
 
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram->shaderProgram(), "modelMatrix"), 1, GL_FALSE, &model[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram->shaderProgram(), "viewMatrix"), 1, GL_FALSE, &view[0][0]);
-	glUniformMatrix3fv(glGetUniformLocation(shaderProgram->shaderProgram(), "normalMatrix"), 1, GL_FALSE, &glm::mat3(N)[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram->shaderProgram(), "projectionMatrix"), 1, GL_FALSE, &player->camera()->projection(width, height)[0][0]);
+	glUniformMatrix4fv(shaderProgram->uniformLocation("modelMatrix"), 1, GL_FALSE, &model[0][0]);
+	glUniformMatrix4fv(shaderProgram->uniformLocation("viewMatrix"), 1, GL_FALSE, &view[0][0]);
+	glUniformMatrix3fv(shaderProgram->uniformLocation("normalMatrix"), 1, GL_FALSE, &glm::mat3(N)[0][0]);
+	glUniformMatrix4fv(shaderProgram->uniformLocation("projectionMatrix"), 1, GL_FALSE, &player->camera()->projection(width, height)[0][0]);
 
 	// Light information.
 	glm::vec4 lightPosition = view * glm::vec4(-5.f, 0.f, 5.f, 1.f);
 	glm::vec3 lightIntensity(1.f, 1.f, 1.f);
 	glm::vec3 diffuseKoefficient(1.f, 1.f, 1.f);
 
-	glUniform4fv(glGetUniformLocation(shaderProgram->shaderProgram(), "lightPosition"), 1, &lightPosition[0]);
-	glUniform3fv(glGetUniformLocation(shaderProgram->shaderProgram(), "lightIntensity"), 1, &lightIntensity[0]);
-	glUniform3fv(glGetUniformLocation(shaderProgram->shaderProgram(), "diffuseKoefficient"), 1, &diffuseKoefficient[0]);
+	glUniform4fv(shaderProgram->uniformLocation("lightPosition"), 1, &lightPosition[0]);
+	glUniform3fv(shaderProgram->uniformLocation("lightIntensity"), 1, &lightIntensity[0]);
+	glUniform3fv(shaderProgram->uniformLocation("diffuseKoefficient"), 1, &diffuseKoefficient[0]);
 
 	// Draw the triangles
 	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
@@ -118,13 +118,13 @@ void AudioScene::bindTriangleData() {
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
 
-	GLuint vertexPos = glGetAttribLocation(shaderProgram->shaderProgram(), "vertex_position");
+	GLuint vertexPos = shaderProgram->attributeLocation("vertex_position");
 	glVertexAttribPointer(vertexPos, 3, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(0));
 
-	GLuint vertexNormal = glGetAttribLocation(shaderProgram->shaderProgram(), "vertex_normal");
+	GLuint vertexNormal = shaderProgram->attributeLocation("vertex_normal");
 	glVertexAttribPointer(vertexNormal, 3, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float) * 3));
 
-	GLuint vertexTexture = glGetAttribLocation(shaderProgram->shaderProgram(), "vertex_texture");
+	GLuint vertexTexture = shaderProgram->attributeLocation("vertex_texture");
 	glVertexAttribPointer(vertexTexture, 2, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float) * 6));
 
 	// Index buffer

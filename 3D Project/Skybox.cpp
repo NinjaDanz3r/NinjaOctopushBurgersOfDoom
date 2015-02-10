@@ -25,7 +25,7 @@ void Skybox::render(int width, int height, const Camera* camera) {
 	shaderProgram->use();
 
 	// Texture unit 0 is for base images.
-	glUniform1i(glGetUniformLocation(shaderProgram->shaderProgram(), "cubeMapTexture"), 0);
+	glUniform1i(shaderProgram->uniformLocation("cubeMapTexture"), 0);
 
 	// Since our Z is always 1.0, we need to set depth buffer to render at <= 1.0 instead of the default < 1.0.
 	GLint oldDepthFunctionMode;
@@ -37,8 +37,8 @@ void Skybox::render(int width, int height, const Camera* camera) {
 	glBindTexture(GL_TEXTURE_CUBE_MAP, texture->textureID());
 
 	// Set uniforms.
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram->shaderProgram(), "viewMatrix"), 1, GL_FALSE, &camera->orientation()[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram->shaderProgram(), "projectionMatrix"), 1, GL_FALSE, &camera->projection(width, height)[0][0]);
+	glUniformMatrix4fv(shaderProgram->uniformLocation("viewMatrix"), 1, GL_FALSE, &camera->orientation()[0][0]);
+	glUniformMatrix4fv(shaderProgram->uniformLocation("projectionMatrix"), 1, GL_FALSE, &camera->projection(width, height)[0][0]);
 
 	glBindVertexArray(vertexAttribute);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
@@ -60,7 +60,7 @@ void Skybox::bindData() {
 	glBindVertexArray(vertexAttribute);
 	glEnableVertexAttribArray(0);
 
-	GLuint vertexPos = glGetAttribLocation(shaderProgram->shaderProgram(), "vertex_position");
+	GLuint vertexPos = shaderProgram->attributeLocation("vertex_position");
 	glVertexAttribPointer(vertexPos, 3, GL_FLOAT, GL_FALSE, sizeof(Skybox::Vertex), BUFFER_OFFSET(0));
 
 	// Index buffer
