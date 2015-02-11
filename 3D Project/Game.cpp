@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "ParticleScene.h"
 #include "TerrainScene.h"
+#include "TestScene.h"
 #include "AudioScene.h"
 #include "input.h"
 #include "settings.h"
@@ -83,7 +84,8 @@ template<typename T> Scene * createInstance() {
 }
 
 void Game::setSceneMap() {
-	sceneMap["default"] = &createInstance<AudioScene>;
+	sceneMap["default"] = &createInstance<TestScene>;
+	sceneMap["audio"] = &createInstance<AudioScene>;
 	sceneMap["particle"] = &createInstance<ParticleScene>;
 	sceneMap["terrain"] = &createInstance<TerrainScene>;
 }

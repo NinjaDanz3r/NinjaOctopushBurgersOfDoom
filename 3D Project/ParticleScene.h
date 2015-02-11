@@ -1,5 +1,5 @@
-#ifndef __TESTSCENE_H__
-#define __TESTSCENE_H__
+#ifndef __PARTICLESCENE_H__
+#define __PARTICLESCENE_H__
 
 #include "Scene.h"
 #include "Shader.h"
