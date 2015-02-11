@@ -28,12 +28,12 @@ int main() {
 	glfwMakeContextCurrent(window);
 
 	glewInit();
-
+	std::string test = settings::startingScene();
 	glfwSetKeyCallback(window, keyCallback);
 	if (settings::debugContext())
 		glDebugMessageCallback(debugMessageCallback, nullptr);
 
-	Game* game = new Game(window);
+	Game* game = new Game(window, settings::startingScene());
 	while (!glfwWindowShouldClose(window)) {
 		game->update();
 

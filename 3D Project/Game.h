@@ -15,13 +15,15 @@
 /**
  * Class to handle the active Scene and switch between scenes (eg. level scene or menu scene) during the course of the game.
  */
+static std::map<std::string, Scene*(*)()> sceneMap;
+
 class Game {
 	public:
 		/// Constructor
 		/**
 		 * @param window Window for which to retrieve input, etc.
 		 */
-		Game(GLFWwindow* window);
+		Game(GLFWwindow* window, const char* sceneName);
 
 		/// Destructor
 		~Game();
@@ -35,18 +37,15 @@ class Game {
 	private:
 		void setWindowFPS();
 		void setSceneMap();
+		void setScene(const char*);
 		void assignKeyboardBindings();
-		template<typename T> Scene * createInstance();
 
 		GLFWwindow* window;
 		SoundSystem* soundSystem;
 		Scene* currentScene;
-
 		double lastTime;
 		double prevFPSTime = 0.0;
 		int frames = 0;
-
-		std::map<std::string, Scene*(Game::*)()> sceneMap;
 };
 
 #endif

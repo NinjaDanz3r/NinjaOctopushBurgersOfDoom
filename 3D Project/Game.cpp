@@ -7,13 +7,15 @@
 
 #include <stdio.h>
 
-Game::Game(GLFWwindow* window) {
+Game::Game(GLFWwindow* window, const char* sceneName) {
 	this->window = window;
 	input::setWindow(window);
 	assignKeyboardBindings();
 	soundSystem = new SoundSystem();
 
-	currentScene = new ParticleScene();
+	setSceneMap();
+	setScene(sceneName);
+
 	lastTime = glfwGetTime();
 	prevFPSTime = lastTime;
 
@@ -76,11 +78,17 @@ void Game::assignKeyboardBindings() {
 	input::assignKeyboard(input::RIGHT, GLFW_KEY_D);
 }
 
-void Game::setSceneMap() {
-	sceneMap["default"] = &Game::createInstance<AudioScene>;
-	sceneMap["particle"] = &Game::createInstance<ParticleScene>;
-}
-
-template<typename T> Scene * Game::createInstance() {
+template<typename T> Scene * createInstance() {
 	return new T;
 }
+
+void Game::setSceneMap() {
+	sceneMap["default"] = &createInstance<AudioScene>;
+	sceneMap["particle"] = &createInstance<ParticleScene>;
+	sceneMap["terrain"] = &createInstance<TerrainScene>;
+}
+
+void Game::setScene(const char* sceneName){
+	currentScene = sceneMap[sceneName]();
+}
+
