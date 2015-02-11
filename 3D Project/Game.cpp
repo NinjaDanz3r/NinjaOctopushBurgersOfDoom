@@ -1,4 +1,6 @@
 #include "Game.h"
+#include "TestScene.h"
+#include "DefRenderTestScene.h"
 #include "AudioScene.h"
 #include "input.h"
 
@@ -9,7 +11,7 @@ Game::Game(GLFWwindow* window) {
 	input::setWindow(window);
 	assignKeyboardBindings();
 
-	currentScene = new AudioScene();
+	currentScene = new DefRenderTestScene(); //new AudioScene();
 	lastTime = glfwGetTime();
 	prevFPSTime = lastTime;
 

@@ -14,7 +14,9 @@
     <ClCompile Include="AudioScene.cpp" />
     <ClCompile Include="BTHSquare.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="DefRenderTestScene.cpp" />
     <ClCompile Include="FirstPersonCamera.cpp" />
+    <ClCompile Include="FrameBufferObjects.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="main.cpp" />
@@ -23,6 +25,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="settings.cpp" />
     <ClCompile Include="Shaders.cpp" />
+    <ClCompile Include="Cube.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="util.cpp" />
@@ -32,7 +35,9 @@
     <ClInclude Include="AudioScene.h" />
     <ClInclude Include="BTHSquare.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="DefRenderTestScene.h" />
     <ClInclude Include="FirstPersonCamera.h" />
+    <ClInclude Include="FrameBufferObjects.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="main.h" />
@@ -42,6 +47,7 @@
     <ClInclude Include="settings.h" />
     <ClInclude Include="Shaders.h" />
     <ClInclude Include="SoundFile.h" />
+    <ClInclude Include="Cube.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="util.h" />
@@ -51,6 +57,10 @@
     <None Include="default_fragment.glsl" />
     <None Include="default_geometry.glsl" />
     <None Include="default_vertex.glsl" />
+    <None Include="deferredrender_fragment.glsl" />
+    <None Include="deferredrender_vertex.glsl" />
+    <None Include="deferredshade_fragment.glsl" />
+    <None Include="deferredshade_vertex.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D9B72C7F-F035-4499-945B-D2A72B081EA2}</ProjectGuid>
