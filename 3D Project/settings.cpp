@@ -1,5 +1,6 @@
 #include "settings.h"
 #include <SimpleIni.h>
+#include <string>
 
 namespace settings {
 	float _mouseSensitivity;
@@ -14,7 +15,7 @@ namespace settings {
 	bool _showMouseCursor;
 	bool _showFPS;
 	bool _debugContext;
-	const char * _startingScene;
+	std::string _startingScene;
 
 	void load(const char* filename) {
 		CSimpleIniA ini;
@@ -149,11 +150,11 @@ namespace settings {
 		_debugContext = debug;
 	}
 
-	const char* startingScene() {
+	std::string startingScene() {
 		return _startingScene;
 	}
 
-	void setStartingScene(const char* startingScene) {
+	void setStartingScene(std::string startingScene) {
 		_startingScene = startingScene;
 	}
 }

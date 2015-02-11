@@ -1,5 +1,6 @@
 #ifndef __SETTINGS_H__
 #define __SETTINGS_H__
+#include <string>
 
 /// Handles various settings that the user can modify.
 /**
@@ -167,9 +168,17 @@ namespace settings {
 	 */
 	void setDebugContext(bool debug);
 
-	const char* startingScene();
+	/// Get the name of the starting scene.
+	/**
+	* @return returns the name of the scene to load.
+	*/
+	std::string startingScene();
 
-	void setStartingScene(const char* startingScene);
+	/// Set the name of the starting scene.
+	/**
+	* @param name of the starting scene.
+	*/
+	void setStartingScene(std::string startingScene);
 }
 
 #endif

@@ -33,7 +33,7 @@ int main() {
 	if (settings::debugContext())
 		glDebugMessageCallback(debugMessageCallback, nullptr);
 
-	Game* game = new Game(window, settings::startingScene());
+	Game* game = new Game(window, settings::startingScene().c_str());
 	while (!glfwWindowShouldClose(window)) {
 		game->update();
 
