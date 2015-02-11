@@ -85,12 +85,18 @@ template<typename T> Scene * createInstance() {
 
 void Game::setSceneMap() {
 	sceneMap["default"] = &createInstance<TestScene>;
+	sceneMap["test"] = &createInstance<TestScene>;
 	sceneMap["audio"] = &createInstance<AudioScene>;
 	sceneMap["particle"] = &createInstance<ParticleScene>;
 	sceneMap["terrain"] = &createInstance<TerrainScene>;
 }
 
 void Game::setScene(const char* sceneName){
-	currentScene = sceneMap[sceneName]();
+	std::map<std::string, Scene*(*)()>::const_iterator itFound;
+	itFound = sceneMap.find(sceneName);
+	if (itFound != sceneMap.end())
+		currentScene = sceneMap[sceneName]();
+	else
+		currentScene = sceneMap["default"]();
 }
 
