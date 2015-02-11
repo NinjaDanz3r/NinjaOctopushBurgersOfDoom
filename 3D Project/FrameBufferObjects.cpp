@@ -41,7 +41,7 @@ FrameBufferObjects::FrameBufferObjects(int width, int height)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, diffuseTex, 0);
+	glFramebufferTexture2DEXT(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, diffuseTex, 0);
 
 	// Generate and bind the OGL texture for positions
 	glGenTextures(1, &positionTex);
@@ -52,7 +52,7 @@ FrameBufferObjects::FrameBufferObjects(int width, int height)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	// Attach the texture to the FBO
-	glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT1_EXT, GL_TEXTURE_2D, positionTex, 0);
+	glFramebufferTexture2DEXT(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, positionTex, 0);
 
 	// Generate and bind the OGL texture for normals
 	glGenTextures(1, &normalTex);
@@ -63,7 +63,7 @@ FrameBufferObjects::FrameBufferObjects(int width, int height)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	// Attach the texture to the FBO
-	glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT2_EXT, GL_TEXTURE_2D, normalTex, 0);
+	glFramebufferTexture2DEXT(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, normalTex, 0);
 
 	state = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 	if (state!=GL_FRAMEBUFFER_COMPLETE)
@@ -103,11 +103,55 @@ void FrameBufferObjects::begin()
 	glEnable(GL_TEXTURE_2D);
 
 	// Specify what to render an start acquiring
-	GLenum buffers[] = { GL_COLOR_ATTACHMENT0_EXT, GL_COLOR_ATTACHMENT1_EXT, GL_COLOR_ATTACHMENT2_EXT };
+	GLenum buffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
 	glDrawBuffers(3, buffers);
 };
 void FrameBufferObjects::end()
 {
-	glBindFramebuffer(GL_FRAMEBUFFER_EXT, 0);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glPopAttrib();
 };
+void FrameBufferObjects::showTexture(unsigned int i, float fSizeX, float fSizeY, float x, float y) const {
+	GLuint texture = diffuseTex;
+	if (i == 1) texture = positionTex;
+	else
+	if (i == 2) texture = normalTex;
+
+	//Projection setup
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	glOrtho(0, width, 0, height, 0.1f, 2);
+
+	//Model setup
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+
+	glActiveTextureARB(GL_TEXTURE0_ARB);
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	// Render the quad
+	glLoadIdentity();
+	glTranslatef(x, -y, -1.0);
+
+	glColor3f(1, 1, 1);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 1);
+	glVertex3f(0.0f, (float)height, 0.0f);
+	glTexCoord2f(0, 0);
+	glVertex3f(0.0f, height - fSizeY, 0.0f);
+	glTexCoord2f(1, 0);
+	glVertex3f(fSizeX, height - fSizeY, 0.0f);
+	glTexCoord2f(1, 1);
+	glVertex3f(fSizeX, (float)height, 0.0f);
+	glEnd();
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	//Reset to the matrices	
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+}

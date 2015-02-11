@@ -57,10 +57,12 @@
     <None Include="default_fragment.glsl" />
     <None Include="default_geometry.glsl" />
     <None Include="default_vertex.glsl" />
-    <None Include="deferredrender_fragment.glsl" />
-    <None Include="deferredrender_vertex.glsl" />
-    <None Include="deferredshade_fragment.glsl" />
-    <None Include="deferredshade_vertex.glsl" />
+    <None Include="deferred_first_geometry.glsl" />
+    <None Include="deferred_second_fragment.glsl" />
+    <None Include="deferred_second_geometry.glsl" />
+    <None Include="deferred_second_vertex.glsl" />
+    <None Include="deferred_first_fragment.glsl" />
+    <None Include="deferred_first_vertex.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D9B72C7F-F035-4499-945B-D2A72B081EA2}</ProjectGuid>

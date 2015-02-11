@@ -145,16 +145,22 @@
     <None Include="default_vertex.glsl">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="deferredrender_fragment.glsl">
+    <None Include="deferred_first_vertex.glsl">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="deferredrender_vertex.glsl">
+    <None Include="deferred_first_fragment.glsl">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="deferredshade_fragment.glsl">
+    <None Include="deferred_second_vertex.glsl">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="deferredshade_vertex.glsl">
+    <None Include="deferred_second_fragment.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="deferred_first_geometry.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="deferred_second_geometry.glsl">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
