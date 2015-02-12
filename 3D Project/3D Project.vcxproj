@@ -32,16 +32,11 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="settings.cpp" />
-<<<<<<< HEAD
-    <ClCompile Include="Shaders.cpp" />
-    <ClCompile Include="Cube.cpp" />
-=======
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="SoundBuffer.cpp" />
     <ClCompile Include="SoundSystem.cpp" />
     <ClCompile Include="TerrainScene.cpp" />
->>>>>>> origin/master
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Texture2D.cpp" />
@@ -75,12 +70,6 @@
     <ClInclude Include="Sound.h" />
     <ClInclude Include="SoundBuffer.h" />
     <ClInclude Include="SoundFile.h" />
-<<<<<<< HEAD
-    <ClInclude Include="Cube.h" />
-=======
-    <ClInclude Include="SoundSystem.h" />
-    <ClInclude Include="TerrainScene.h" />
->>>>>>> origin/master
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Texture2D.h" />
@@ -91,20 +80,17 @@
     <None Include="default_fragment.glsl" />
     <None Include="default_geometry.glsl" />
     <None Include="default_vertex.glsl" />
-<<<<<<< HEAD
     <None Include="deferred_first_geometry.glsl" />
     <None Include="deferred_second_fragment.glsl" />
     <None Include="deferred_second_geometry.glsl" />
     <None Include="deferred_second_vertex.glsl" />
     <None Include="deferred_first_fragment.glsl" />
     <None Include="deferred_first_vertex.glsl" />
-=======
     <None Include="particle_fragment.glsl" />
     <None Include="particle_geometry.glsl" />
     <None Include="particle_vertex.glsl" />
     <None Include="skybox_fragment.glsl" />
     <None Include="skybox_vertex.glsl" />
->>>>>>> origin/master
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D9B72C7F-F035-4499-945B-D2A72B081EA2}</ProjectGuid>

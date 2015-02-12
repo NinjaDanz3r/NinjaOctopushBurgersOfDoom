@@ -88,14 +88,14 @@
     <ClCompile Include="WaveFile.cpp">
       <Filter>Source Files\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="DefRenderTestScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Cube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FrameBufferObjects.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DefRenderTestScene.cpp">
+      <Filter>Source Files\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -171,9 +171,6 @@
     <ClInclude Include="Texture2D.h">
       <Filter>Header Files\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="TerrainScene.h">
-      <Filter>Header Files\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="TestScene.h">
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
@@ -183,23 +180,20 @@
     <ClInclude Include="Square.h">
       <Filter>Header Files\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="SoundSystem.h">
-      <Filter>Header Files\Audio</Filter>
-    </ClInclude>
     <ClInclude Include="WaveFile.h">
       <Filter>Header Files\Audio</Filter>
     </ClInclude>
     <ClInclude Include="ParticleScene.h">
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="DefRenderTestScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Cube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FrameBufferObjects.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DefRenderTestScene.h">
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -221,7 +215,6 @@
     <None Include="particle_vertex.glsl">
       <Filter>Resource Files</Filter>
     </None>
-<<<<<<< HEAD
     <None Include="deferred_first_vertex.glsl">
       <Filter>Resource Files</Filter>
     </None>
@@ -240,7 +233,6 @@
     <None Include="deferred_second_geometry.glsl">
       <Filter>Resource Files</Filter>
     </None>
-=======
     <None Include="skybox_fragment.glsl">
       <Filter>Resource Files</Filter>
     </None>
@@ -294,6 +286,5 @@
     <Filter Include="Source Files\Texture">
       <UniqueIdentifier>{cbc7a3ca-dda2-4f0b-9a60-4bdc3464c263}</UniqueIdentifier>
     </Filter>
->>>>>>> origin/master
   </ItemGroup>
 </Project>

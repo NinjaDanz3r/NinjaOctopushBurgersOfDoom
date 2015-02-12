@@ -4,10 +4,13 @@
 #include "FrameBufferObjects.h"
 #include "Scene.h"
 #include "settings.h"
-#include "Shaders.h"
+#include "Scene.h"
+#include "Shader.h"
+#include "ShaderProgram.h"
 #include "Texture.h"
-#include "Cube.h"
+#include "Geometry.h"
 #include "Player.h"
+#include "Cube.h"
 
 class DefRenderTestScene :public Scene
 {
@@ -34,15 +37,38 @@ private:
 	FrameBufferObjects* multiplerendertargets;
 	FrameBufferObjects* fboRT;
 
-	Shaders* deffshaders;
-	Shaders* shaders;
+	//Shaders
+	ShaderProgram* currentShaderProgram;
+
+	Geometry* geometry;
+	Shader* vertexShader;
+	Shader* geometryShader;
+	Shader* fragmentShader;
+	ShaderProgram* shaderProgram;
+
+	Shader* firstVertexShader;
+	Shader* firstGeometryShader;
+	Shader* firstFragmentShader;
+	ShaderProgram* firstShaderProgram;
+
+	Shader* secondVertexShader;
+	Shader* secondGeometryShader;
+	Shader* secondFragmentShader;
+	ShaderProgram* secondShaderProgram;
+
+	//Misc
+	int state; //0 == normal render, 1== deferred rendering.
 	Texture* texture;
 	Cube* testCube;
 	Player* player;
 
-	// Vertex buffer.
+	// Vertex buffer
 	GLuint gVertexBuffer = 0;
 	GLuint gVertexAttribute = 0;
+
+	//Index buffer
+	GLuint indexBuffer = 0;
+	unsigned int indexCount = 0;
 	int vertexCount = 0;
 };
 #endif

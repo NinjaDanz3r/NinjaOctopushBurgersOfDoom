@@ -1,12 +1,10 @@
 #include "Game.h"
-<<<<<<< HEAD
 #include "TestScene.h"
 #include "DefRenderTestScene.h"
-=======
+
 #include "ParticleScene.h"
 #include "TerrainScene.h"
 #include "TestScene.h"
->>>>>>> origin/master
 #include "AudioScene.h"
 #include "input.h"
 #include "settings.h"
@@ -24,10 +22,6 @@ Game::Game(GLFWwindow* window, const char* sceneName) {
 	setSceneMap();
 	setScene(sceneName);
 
-<<<<<<< HEAD
-	currentScene = new DefRenderTestScene(); //new AudioScene();
-=======
->>>>>>> origin/master
 	lastTime = glfwGetTime();
 	prevFPSTime = lastTime;
 
@@ -100,6 +94,7 @@ void Game::setSceneMap() {
 	sceneMap["audio"] = &createInstance<AudioScene>;
 	sceneMap["particle"] = &createInstance<ParticleScene>;
 	sceneMap["terrain"] = &createInstance<TerrainScene>;
+	sceneMap["deferred"] = &createInstance<DefRenderTestScene>;
 }
 
 void Game::setScene(const char* sceneName){
