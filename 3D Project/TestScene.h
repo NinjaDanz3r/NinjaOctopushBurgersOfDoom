@@ -2,38 +2,59 @@
 #define __TESTSCENE_H__
 
 #include "Scene.h"
-#include "Shaders.h"
+#include "Shader.h"
+#include "ShaderProgram.h"
 #include "Texture.h"
-#include "BTHSquare.h"
+#include "Geometry.h"
 #include "Player.h"
 
-// Test scene. Used to test things.
+/// %Scene used to test basic rendering technology.
 class TestScene : public Scene {
 	public:
-		// Constructor
+		/// Constructor
 		TestScene();
 
-		// Destructor
+		/// Destructor
+		/**
+		* Free allocated resources.
+		*/
 		~TestScene();
 
-		// Updates the scene.
+		/// Update the scene.
+		/**
+		* @param time Time since last frame (in seconds).
+		* @return SceneEnd-struct defining what to do next. nullptr if nothing should be done
+		*/
 		SceneEnd* update(double time);
 
-		// Renders the scene.
+		/// Render the scene.
+		/**
+		* @param width Width of the context.
+		* @param height Height of the context.
+		*/
 		void render(int width, int height);
 
 	private:
 		void bindTriangleData();
 
-		Shaders* shaders;
+		// Shaders
+		Shader* vertexShader;
+		Shader* geometryShader;
+		Shader* fragmentShader;
+		ShaderProgram* shaderProgram;
+
 		Texture* texture;
-		BTHSquare* bthSquare;
+		Geometry* geometry;
 		Player* player;
 
 		// Vertex buffer.
-		GLuint gVertexBuffer = 0;
-		GLuint gVertexAttribute = 0;
-		int vertexCount = 0;
+		GLuint vertexBuffer = 0;
+		GLuint vertexAttribute = 0;
+		unsigned int vertexCount = 0;
+
+		// Index buffer.
+		GLuint indexBuffer = 0;
+		unsigned int indexCount = 0;
 };
 
 #endif

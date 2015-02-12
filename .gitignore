@@ -17,6 +17,7 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
+doc-build/
 
 # Don't ignore glew release folders
 !glew-1.11.0/lib/Release

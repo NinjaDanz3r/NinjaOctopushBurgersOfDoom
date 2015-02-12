@@ -1,5 +1,6 @@
 #include "settings.h"
 #include <SimpleIni.h>
+#include <string>
 
 namespace settings {
 	float _mouseSensitivity;
@@ -12,6 +13,9 @@ namespace settings {
 	bool _showConsole;
 	bool _logging;
 	bool _showMouseCursor;
+	bool _showFPS;
+	bool _debugContext;
+	std::string _startingScene;
 
 	void load(const char* filename) {
 		CSimpleIniA ini;
@@ -27,6 +31,9 @@ namespace settings {
 		_showConsole = ini.GetBoolValue("Debug", "Show Console");
 		_logging = ini.GetBoolValue("Debug", "Logging");
 		_showMouseCursor = ini.GetBoolValue("Debug", "Show Mouse Cursor");
+		_showFPS = ini.GetBoolValue("Debug", "Show FPS", true);
+		_debugContext = ini.GetBoolValue("Debug", "Debug Context", false);
+		_startingScene = ini.GetValue("Debug", "Starting Scene", "default");
 	}
 
 	void save(const char* filename) {
@@ -42,7 +49,9 @@ namespace settings {
 		ini.SetBoolValue("Debug", "Show Console", _showConsole);
 		ini.SetBoolValue("Debug", "Logging", _logging);
 		ini.SetBoolValue("Debug", "Show Mouse Cursor", _showMouseCursor);
-
+		ini.SetBoolValue("Debug", "Show FPS", _showFPS);
+		ini.SetBoolValue("Debug", "Debug Context", _debugContext);
+		ini.SetValue("Debug", "Starting Scene", "default");
 		SI_Error rc = ini.SaveFile(filename);
 		if (rc < 0)
 			fputs("Couldn't save settings", stderr);
@@ -123,5 +132,29 @@ namespace settings {
 
 	void setShowMouseCursor(bool show) {
 		_showMouseCursor = show;
+	}
+
+	bool showFPS() {
+		return _showFPS;
+	}
+
+	void setShowFPS(bool show) {
+		_showFPS = show;
+	}
+
+	bool debugContext() {
+		return _debugContext;
+	}
+
+	void setDebugContext(bool debug) {
+		_debugContext = debug;
+	}
+
+	std::string startingScene() {
+		return _startingScene;
+	}
+
+	void setStartingScene(std::string startingScene) {
+		_startingScene = startingScene;
 	}
 }

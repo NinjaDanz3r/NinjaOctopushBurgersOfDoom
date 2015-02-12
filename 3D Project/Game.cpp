@@ -1,17 +1,33 @@
 #include "Game.h"
+<<<<<<< HEAD
 #include "TestScene.h"
 #include "DefRenderTestScene.h"
+=======
+#include "ParticleScene.h"
+#include "TerrainScene.h"
+#include "TestScene.h"
+>>>>>>> origin/master
 #include "AudioScene.h"
 #include "input.h"
+#include "settings.h"
 
 #include <stdio.h>
 
-Game::Game(GLFWwindow* window) {
+static std::map<std::string, Scene*(*)()> sceneMap;
+
+Game::Game(GLFWwindow* window, const char* sceneName) {
 	this->window = window;
 	input::setWindow(window);
 	assignKeyboardBindings();
+	soundSystem = new SoundSystem();
 
+	setSceneMap();
+	setScene(sceneName);
+
+<<<<<<< HEAD
 	currentScene = new DefRenderTestScene(); //new AudioScene();
+=======
+>>>>>>> origin/master
 	lastTime = glfwGetTime();
 	prevFPSTime = lastTime;
 
@@ -20,6 +36,7 @@ Game::Game(GLFWwindow* window) {
 
 Game::~Game() {
 	delete currentScene;
+	delete soundSystem;
 	input::free();
 }
 
@@ -46,7 +63,8 @@ void Game::update() {
 	}
 
 	lastTime = glfwGetTime();
-	setWindowFPS();
+	if (settings::showFPS())
+		setWindowFPS();
 }
 
 void Game::setWindowFPS() {
@@ -71,3 +89,25 @@ void Game::assignKeyboardBindings() {
 	input::assignKeyboard(input::LEFT, GLFW_KEY_A);
 	input::assignKeyboard(input::RIGHT, GLFW_KEY_D);
 }
+
+template<typename T> Scene * createInstance() {
+	return new T;
+}
+
+void Game::setSceneMap() {
+	sceneMap["default"] = &createInstance<TestScene>;
+	sceneMap["test"] = &createInstance<TestScene>;
+	sceneMap["audio"] = &createInstance<AudioScene>;
+	sceneMap["particle"] = &createInstance<ParticleScene>;
+	sceneMap["terrain"] = &createInstance<TerrainScene>;
+}
+
+void Game::setScene(const char* sceneName){
+	std::map<std::string, Scene*(*)()>::const_iterator itFound;
+	itFound = sceneMap.find(sceneName);
+	if (itFound != sceneMap.end())
+		currentScene = sceneMap[sceneName]();
+	else
+		currentScene = sceneMap["default"]();
+}
+

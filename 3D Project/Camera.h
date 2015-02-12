@@ -4,34 +4,79 @@
 #include "Object.h"
 #include <glm/glm.hpp>
 
-// A camera in a 3D scene.
+/// A camera through which the world can be rendered.
 class Camera : public Object {
 	public:
-		// Constructor
+		/// Create new camera.
 		Camera();
 
-		// Destructor
+		/// Destructor
 		virtual ~Camera() { }
 
-		// The camera's view matrix (translation and orientation).
+		/// Get the direction in which the camera is currently facing.
+		/**
+		 * @return The direction in which the camera is currently facing
+		 */
+		glm::vec3 forward() const;
+
+		/// Get the direction to the right of the camera.
+		/**
+		 * @return The direction to the right of the camera
+		 */
+		glm::vec3 right() const;
+
+		/// Get the camera's up-vector.
+		/**
+		 * @return The camera's up-vector
+		 */
+		glm::vec3 up() const;
+
+		/// Get the camera's view matrix (translation and orientation).
+		/**
+		 * @return The view matrix
+		 */
 		glm::mat4 view() const;
 
-		// Get field of view (in degrees, 0-180).
+		/// Get field of view.
+		/**
+		 * Default: 45.0
+		 * @return Field of view (in degrees, 0.0-180.0)
+		 */
 		float fieldOfView() const;
 
-		// Set field of view (in degrees, 0-180).
+		/// Set field of view.
+		/**
+		 * @param fieldOfView Field of view (in degrees, 0.0-180.0)
+		 */
 		void setFieldOfView(float fieldOfView);
 
-		// Get near plane.
+		/// Get near plane.
+		/**
+		 * Default: 0.5
+		 * @return Near plane
+		 */
 		float nearPlane() const;
 
-		// Get far plane.
+		/// Get far plane.
+		/**
+		 * Default: 20.0
+		 * @return Far plane
+		 */
 		float farPlane() const;
 
-		// Set near and far planes.
+		/// Set near and far planes.
+		/**
+		 * @param near Near plane.
+		 * @param far Far plane.
+		 */
 		void setNearAndFarPlanes(float near, float far);
 
-		// Projection matrix.
+		/// Get the projection matrix.
+		/**
+		 * @param width Width of context to render to.
+		 * @param height Height of context to render to.
+		 * @return Projection matrix
+		 */
 		glm::mat4 projection(int width, int height) const;
 
 	private:

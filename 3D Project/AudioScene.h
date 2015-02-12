@@ -2,49 +2,67 @@
 #define __AUDIOSCENE_H__
 
 #include "Scene.h"
-#include "Shaders.h"
+#include "Shader.h"
+#include "ShaderProgram.h"
 #include "Texture.h"
-#include "BTHSquare.h"
+#include "Geometry.h"
 #include "Player.h"
 #include "WaveFile.h"
+#include "SoundBuffer.h"
+#include "Sound.h"
 
-#include <AL/al.h>
-#include <AL/alc.h>
-
-// Test scene. Used to test things.
+/// %Scene used to test 3D audio.
 class AudioScene : public Scene {
-public:
-	// Constructor
-	AudioScene();
+	public:
+		/// Constructor
+		AudioScene();
 
-	// Destructor
-	~AudioScene();
+		/// Destructor
+		/**
+		 * Free allocated resources.
+		 */
+		~AudioScene();
 
-	// Updates the scene.
-	SceneEnd* update(double time);
+		/// Update the scene.
+		/**
+		* @param time Time since last frame (in seconds).
+		* @return SceneEnd-struct defining what to do next. nullptr if nothing should be done
+		*/
+		SceneEnd* update(double time);
 
-	// Renders the scene.
-	void render(int width, int height);
+		/// Render the scene.
+		/**
+		* @param width Width of the context.
+		* @param height Height of the context.
+		*/
+		void render(int width, int height);
 
-private:
-	void bindTriangleData();
+	private:
+		void bindTriangleData();
 
-	Shaders* shaders;
-	Texture* texture;
-	BTHSquare* bthSquare;
-	Player* player;
+		// Shaders
+		Shader* vertexShader;
+		Shader* geometryShader;
+		Shader* fragmentShader;
+		ShaderProgram* shaderProgram;
 
-	// Vertex buffer.
-	GLuint gVertexBuffer = 0;
-	GLuint gVertexAttribute = 0;
-	int vertexCount = 0;
+		Texture* texture;
+		Geometry* geometry;
+		Player* player;
 
-	// Audio
-	ALCdevice *device;
-	ALCcontext *context;
-	ALuint source;
-	ALuint buffer;
-	WaveFile* waveFile;
+		// Vertex buffer.
+		GLuint vertexBuffer = 0;
+		GLuint vertexAttribute = 0;
+		unsigned int vertexCount = 0;
+
+		// Index buffer.
+		GLuint indexBuffer = 0;
+		unsigned int indexCount = 0;
+
+		// Audio
+		WaveFile* waveFile;
+		SoundBuffer* buffer;
+		Sound* sound;
 };
 
 #endif
