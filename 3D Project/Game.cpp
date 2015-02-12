@@ -8,6 +8,8 @@
 
 #include <stdio.h>
 
+static std::map<std::string, Scene*(*)()> sceneMap;
+
 Game::Game(GLFWwindow* window, const char* sceneName) {
 	this->window = window;
 	input::setWindow(window);

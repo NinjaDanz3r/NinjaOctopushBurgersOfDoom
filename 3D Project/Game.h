@@ -13,10 +13,8 @@
 
 /// Class to handle the active Scene.
 /**
- * Class to handle the active Scene and switch between scenes (eg. level scene or menu scene) during the course of the game.
- */
-static std::map<std::string, Scene*(*)()> sceneMap;
-
+* Class to handle the active Scene and switch between scenes (eg. level scene or menu scene) during the course of the game.
+*/
 class Game {
 	public:
 		/// Constructor
