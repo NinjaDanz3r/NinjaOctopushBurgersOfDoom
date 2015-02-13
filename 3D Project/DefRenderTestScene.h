@@ -26,7 +26,7 @@ public:
 
 	// Renders the scene.
 	void render(int width, int height);
-
+	void deferredRender(int width, int height);
 private:
 	void bindTriangleData();
 
@@ -38,8 +38,6 @@ private:
 	FrameBufferObjects* fboRT;
 
 	//Shaders
-	ShaderProgram* currentShaderProgram;
-
 	Geometry* geometry;
 	Shader* vertexShader;
 	Shader* geometryShader;
@@ -67,7 +65,7 @@ private:
 	GLuint gVertexAttribute = 0;
 
 	//Index buffer
-	GLuint indexBuffer = 0;
+	GLuint gIndexBuffer = 0;
 	unsigned int indexCount = 0;
 	int vertexCount = 0;
 };

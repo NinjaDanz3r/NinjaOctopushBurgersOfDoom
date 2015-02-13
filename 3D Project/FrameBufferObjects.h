@@ -12,7 +12,7 @@ public:
 	FrameBufferObjects(int width, int height);
 	~FrameBufferObjects();
 
-	void showTexture(unsigned int i, float fSizeX, float fSizeY, float x, float y) const;
+	void showTexture(unsigned int i, float fSizeX = 400, float fSizeY = 400, float x = 0, float y = 0) const;
 	GLuint getPositionTex() const;
 	GLuint getDiffuseTex() const;
 	GLuint getNormalTex() const;

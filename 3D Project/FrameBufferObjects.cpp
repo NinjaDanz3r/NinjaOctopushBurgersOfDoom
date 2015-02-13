@@ -25,12 +25,12 @@ FrameBufferObjects::FrameBufferObjects(int width, int height)
 	
 	glGenRenderbuffers(1, &positionRenderTarget);
 	glBindRenderbuffer(GL_RENDERBUFFER, positionRenderTarget);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_RGBA32F_ARB, this->width, this->height);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_RGBA32F, this->width, this->height);
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_RENDERBUFFER, positionRenderTarget);
 
 	glGenRenderbuffers(1, &normalRenderTarget);
 	glBindRenderbuffer(GL_RENDERBUFFER, normalRenderTarget);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_RGBA32F_ARB, this->width, this->height);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_RGBA32F, this->width, this->height);
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_RENDERBUFFER, normalRenderTarget);
 
 	//UPDATE THIS!!!
@@ -41,29 +41,29 @@ FrameBufferObjects::FrameBufferObjects(int width, int height)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glFramebufferTexture2DEXT(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, diffuseTex, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, diffuseTex, 0);
 
 	// Generate and bind the OGL texture for positions
 	glGenTextures(1, &positionTex);
 	glBindTexture(GL_TEXTURE_2D, positionTex);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F_ARB, this->width, this->height, 0, GL_RGBA, GL_FLOAT, nullptr);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, this->width, this->height, 0, GL_RGBA, GL_FLOAT, nullptr);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	// Attach the texture to the FBO
-	glFramebufferTexture2DEXT(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, positionTex, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, positionTex, 0);
 
 	// Generate and bind the OGL texture for normals
 	glGenTextures(1, &normalTex);
 	glBindTexture(GL_TEXTURE_2D, normalTex);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F_ARB, this->width, this->height, 0, GL_RGBA, GL_FLOAT, nullptr);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, this->width, this->height, 0, GL_RGBA, GL_FLOAT, nullptr);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	// Attach the texture to the FBO
-	glFramebufferTexture2DEXT(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, normalTex, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, normalTex, 0);
 
 	state = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 	if (state!=GL_FRAMEBUFFER_COMPLETE)
@@ -92,14 +92,14 @@ void FrameBufferObjects::begin()
 {
 	// Bind our FBO and set the viewport to the proper size
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-	glPushAttrib(GL_VIEWPORT_BIT);
-	glViewport(0, 0, this->width, this->height);
+	/*glPushAttrib(GL_VIEWPORT_BIT);
+	glViewport(0, 0, this->width, this->height);*/
 
 	// Clear the render targets
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-	glActiveTextureARB(GL_TEXTURE0_ARB);
+	glActiveTextureARB(GL_TEXTURE0);
 	glEnable(GL_TEXTURE_2D);
 
 	// Specify what to render an start acquiring
@@ -116,20 +116,6 @@ void FrameBufferObjects::showTexture(unsigned int i, float fSizeX, float fSizeY,
 	if (i == 1) texture = positionTex;
 	else
 	if (i == 2) texture = normalTex;
-
-	//Projection setup
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix();
-	glLoadIdentity();
-	glOrtho(0, width, 0, height, 0.1f, 2);
-
-	//Model setup
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-
-	glActiveTextureARB(GL_TEXTURE0_ARB);
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, texture);
 
 	// Render the quad
 	glLoadIdentity();
