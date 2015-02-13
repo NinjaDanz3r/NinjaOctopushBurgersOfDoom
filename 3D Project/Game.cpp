@@ -3,6 +3,7 @@
 #include "TerrainScene.h"
 #include "TestScene.h"
 #include "AudioScene.h"
+#include "PickingScene.h"
 #include "input.h"
 #include "settings.h"
 
@@ -91,6 +92,7 @@ void Game::setSceneMap() {
 	sceneMap["audio"] = &createInstance<AudioScene>;
 	sceneMap["particle"] = &createInstance<ParticleScene>;
 	sceneMap["terrain"] = &createInstance<TerrainScene>;
+	sceneMap["picking"] = &createInstance<PickingScene>;
 }
 
 void Game::setScene(const char* sceneName){
