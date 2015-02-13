@@ -17,6 +17,7 @@ Core (0|1|2)
 
 Geometry (1|2|5)
 ----------------
+* Parsing and rendering of an existing model format. (TODO)
 * Height-map terrain rendering, user can walk on the terrain.
 
 Texturing and lighting (0|1|3)
@@ -30,9 +31,9 @@ Acceleration (1|2|3)
 --------------------
 * Back-face culling using geometry shader.
 
-Miscellaneous (0|2|9)
+Miscellaneous (1|2|9)
 ---------------------
-* Particle system with billboarded particles. (TODO)
+* Particle system with billboarded particles.
 
 Libraries
 =========

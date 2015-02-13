@@ -15,7 +15,15 @@ namespace settings {
 	bool _showMouseCursor;
 	bool _showFPS;
 	bool _debugContext;
-	std::string _startingScene;
+	std::string* _startingScene;
+
+	void init() {
+		_startingScene = new std::string();
+	}
+
+	void free() {
+		delete _startingScene;
+	}
 
 	void load(const char* filename) {
 		CSimpleIniA ini;
@@ -33,7 +41,7 @@ namespace settings {
 		_showMouseCursor = ini.GetBoolValue("Debug", "Show Mouse Cursor");
 		_showFPS = ini.GetBoolValue("Debug", "Show FPS", true);
 		_debugContext = ini.GetBoolValue("Debug", "Debug Context", false);
-		_startingScene = ini.GetValue("Debug", "Starting Scene", "default");
+		*_startingScene = ini.GetValue("Debug", "Starting Scene", "default");
 	}
 
 	void save(const char* filename) {
@@ -51,7 +59,7 @@ namespace settings {
 		ini.SetBoolValue("Debug", "Show Mouse Cursor", _showMouseCursor);
 		ini.SetBoolValue("Debug", "Show FPS", _showFPS);
 		ini.SetBoolValue("Debug", "Debug Context", _debugContext);
-		ini.SetValue("Debug", "Starting Scene", "default");
+		ini.SetValue("Debug", "Starting Scene", _startingScene->c_str());
 		SI_Error rc = ini.SaveFile(filename);
 		if (rc < 0)
 			fputs("Couldn't save settings", stderr);
@@ -151,10 +159,10 @@ namespace settings {
 	}
 
 	std::string startingScene() {
-		return _startingScene;
+		return *_startingScene;
 	}
 
 	void setStartingScene(std::string startingScene) {
-		_startingScene = startingScene;
+		*_startingScene = startingScene;
 	}
 }

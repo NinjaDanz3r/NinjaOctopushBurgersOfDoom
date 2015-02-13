@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 
-static std::map<std::string, Scene*(*)()> sceneMap;
+static std::map<std::string, Scene*(*)()>* sceneMap;
 
 Game::Game(GLFWwindow* window, const char* sceneName) {
 	this->window = window;
@@ -19,6 +19,7 @@ Game::Game(GLFWwindow* window, const char* sceneName) {
 	assignKeyboardBindings();
 	soundSystem = new SoundSystem();
 
+	sceneMap = new std::map< std::string, Scene*(*)()>();
 	setSceneMap();
 	setScene(sceneName);
 
@@ -31,7 +32,7 @@ Game::Game(GLFWwindow* window, const char* sceneName) {
 Game::~Game() {
 	delete currentScene;
 	delete soundSystem;
-	input::free();
+	delete sceneMap;
 }
 
 void Game::update() {
@@ -89,20 +90,28 @@ template<typename T> Scene * createInstance() {
 }
 
 void Game::setSceneMap() {
+<<<<<<< HEAD
 	sceneMap["default"] = &createInstance<TestScene>;
 	sceneMap["test"] = &createInstance<TestScene>;
 	sceneMap["audio"] = &createInstance<AudioScene>;
 	sceneMap["particle"] = &createInstance<ParticleScene>;
 	sceneMap["terrain"] = &createInstance<TerrainScene>;
 	sceneMap["deferred"] = &createInstance<DefRenderTestScene>;
+=======
+	(*sceneMap)["default"] = &createInstance<TestScene>;
+	(*sceneMap)["test"] = &createInstance<TestScene>;
+	(*sceneMap)["audio"] = &createInstance<AudioScene>;
+	(*sceneMap)["particle"] = &createInstance<ParticleScene>;
+	(*sceneMap)["terrain"] = &createInstance<TerrainScene>;
+>>>>>>> origin/master
 }
 
 void Game::setScene(const char* sceneName){
 	std::map<std::string, Scene*(*)()>::const_iterator itFound;
-	itFound = sceneMap.find(sceneName);
-	if (itFound != sceneMap.end())
-		currentScene = sceneMap[sceneName]();
+	itFound = sceneMap->find(sceneName);
+	if (itFound != sceneMap->end())
+		currentScene = (*sceneMap)[sceneName]();
 	else
-		currentScene = sceneMap["default"]();
+		currentScene = (*sceneMap)["default"]();
 }
 

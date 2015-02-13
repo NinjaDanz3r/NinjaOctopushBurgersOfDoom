@@ -33,6 +33,8 @@ ParticleScene::ParticleScene() {
 ParticleScene::~ParticleScene() {
 	delete player;
 	delete texture;
+
+	glDeleteBuffers(1, &vertexBuffer);
 	delete particleSystem;
 
 	delete shaderProgram;

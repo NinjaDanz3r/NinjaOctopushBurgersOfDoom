@@ -7,6 +7,18 @@
  * Settings are stored in util::savePath("settings.ini").
  */
 namespace settings {
+	/// Initialize the settings module.
+	/**
+	* Needs to be called before all other functions.
+	*/
+	void init();
+
+	/// Free the input module.
+	/**
+	* Should not be called twice.
+	*/
+	void free();
+
 	/// Load settings from an ini file.
 	/**
 	 * Settings are given default values if file can not be found or does not contain the corresponding setting.
