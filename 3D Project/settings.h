@@ -152,6 +152,20 @@ namespace settings {
 	 */
 	void setShowMouseCursor(bool show);
 
+	/// Get whether mouse cursor should be centered each frame.
+	/**
+	 * Necessary for good first person movement.
+	 * Default true.
+	 * @return Whether mouse cursor should be centered
+	 */
+	bool centerMouseCursor();
+
+	/// Set whether mouse cursor should be centered each frame.
+	/**
+	 * @param Whether mouse cursor should be centered.
+	 */
+	void setCenterMouseCursor(bool center);
+
 	/// Get whether to show frames per second in window title.
 	/**
 	 * Default true.
