@@ -19,6 +19,9 @@ Skybox::~Skybox() {
 	delete shaderProgram;
 	delete vertexShader;
 	delete fragmentShader;
+
+	glDeleteBuffers(1, &vertexBuffer);
+	glDeleteBuffers(1, &indexBuffer);
 }
 
 void Skybox::render(int width, int height, const Camera* camera) {
