@@ -51,7 +51,7 @@ namespace settings {
 		ini.SetBoolValue("Debug", "Show Mouse Cursor", _showMouseCursor);
 		ini.SetBoolValue("Debug", "Show FPS", _showFPS);
 		ini.SetBoolValue("Debug", "Debug Context", _debugContext);
-		ini.SetValue("Debug", "Starting Scene", "default");
+		ini.SetValue("Debug", "Starting Scene", _startingScene.c_str());
 		SI_Error rc = ini.SaveFile(filename);
 		if (rc < 0)
 			fputs("Couldn't save settings", stderr);
