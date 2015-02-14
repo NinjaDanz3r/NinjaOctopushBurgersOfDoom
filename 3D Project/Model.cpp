@@ -85,15 +85,15 @@ unsigned int Model::indexCount() const {
 }
 
 glm::vec3 Model::readVec3(std::ifstream &modelFile) {
-	glm::vec3 position;
-	modelFile >> position.x >> position.y >> position.z;
-	return position;
+	glm::vec3 vec;
+	modelFile >> vec.x >> vec.y >> vec.z;
+	return vec;
 }
 
 glm::vec2 Model::readVec2(std::ifstream &modelFile) {
-	glm::vec2 textureCoordinate;
-	modelFile >> textureCoordinate.x >> textureCoordinate.y;
-	return textureCoordinate;
+	glm::vec2 vec;
+	modelFile >> vec.x >> vec.y;
+	return vec;
 }
 
 Geometry::Vertex Model::readVertex(std::ifstream &modelFile, std::vector<glm::vec3> &positions, std::vector<glm::vec3> &normals, std::vector<glm::vec2> &textureCoordinates) {
@@ -103,20 +103,17 @@ Geometry::Vertex Model::readVertex(std::ifstream &modelFile, std::vector<glm::ve
 
 	// Position.
 	modelFile >> index;
-	vertex.x = positions[index-1].x;
-	vertex.y = positions[index-1].y;
-	vertex.z = positions[index-1].z;
+	vertex.position = positions[index - 1];
 
 	// Texture coordinate.
 	modelFile >> delimiter >> index;
-	vertex.u = textureCoordinates[index - 1].x;
-	vertex.v = 1.f-textureCoordinates[index - 1].y;
+	vertex.textureCoordinate = textureCoordinates[index - 1];
+	// OpenGL has origin in lower left corner, not upper left corner.
+	vertex.textureCoordinate.y = 1.f - vertex.textureCoordinate.y;
 
 	// Normal.
 	modelFile >> delimiter >> index;
-	vertex.normalX = normals[index-1].x;
-	vertex.normalY = normals[index-1].y;
-	vertex.normalZ = normals[index-1].z;
+	vertex.normal = glm::normalize(normals[index - 1]);
 
 	return vertex;
 }

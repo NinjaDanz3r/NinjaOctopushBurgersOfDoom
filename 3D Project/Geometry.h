@@ -10,24 +10,13 @@
 class Geometry : public Object {
 	public:
 		/// A vertex point.
-		struct Vertex
-		{
-			/// X-position.
-			float x;
-			/// Y-position.
-			float y;
-			/// Z-position.
-			float z;
-			/// Normal x.
-			float normalX;
-			/// Normal y.
-			float normalY;
-			/// Normal z.
-			float normalZ;
-			/// Texture x-coordinate.
-			float u;
-			/// Texture y-coordinate.
-			float v;
+		struct Vertex {
+			/// Position.
+			glm::vec3 position;
+			/// Normal.
+			glm::vec3 normal;
+			/// %Texture coordinate.
+			glm::vec2 textureCoordinate;
 		};
 
 		/// Destructor
