@@ -82,7 +82,7 @@ class Camera : public Object {
 	private:
 		float _fieldOfView = 45.f;
 		float zNear = 0.5f;
-		float zFar = 20.f;
+		float zFar = 100.f;
 };
 
 #endif
