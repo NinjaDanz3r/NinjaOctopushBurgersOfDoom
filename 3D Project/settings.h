@@ -162,7 +162,7 @@ namespace settings {
 
 	/// Set whether mouse cursor should be centered each frame.
 	/**
-	 * @param Whether mouse cursor should be centered.
+	 * @param center Whether mouse cursor should be centered.
 	 */
 	void setCenterMouseCursor(bool center);
 
@@ -196,13 +196,13 @@ namespace settings {
 
 	/// Get the name of the starting scene.
 	/**
-	* @return returns the name of the scene to load.
+	* @return The name of the scene to load
 	*/
 	std::string startingScene();
 
 	/// Set the name of the starting scene.
 	/**
-	* @param name of the starting scene.
+	* @param startingScene Name of the starting scene.
 	*/
 	void setStartingScene(std::string startingScene);
 }
