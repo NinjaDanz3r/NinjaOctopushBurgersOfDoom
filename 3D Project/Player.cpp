@@ -25,8 +25,8 @@ void Player::setMovementSpeed(float movementSpeed) {
 }
 
 void Player::update(double time) {
-	float dx = (float)time * _movementSpeed * (input::pressed(input::RIGHT) - input::pressed(input::LEFT));
-	float dz = (float)time * _movementSpeed * (input::pressed(input::FORWARD) - input::pressed(input::BACKWARD));
+	float dx = static_cast<float>(time) * _movementSpeed * (input::pressed(input::RIGHT) - input::pressed(input::LEFT));
+	float dz = static_cast<float>(time) * _movementSpeed * (input::pressed(input::FORWARD) - input::pressed(input::BACKWARD));
 	_camera->move(glm::vec3(dx, 0.f, dz));
 
 	float mdx = static_cast<float>(input::cursorX()) - prevMX;
@@ -36,8 +36,8 @@ void Player::update(double time) {
 	if (settings::centerMouseCursor())
 		input::centerCursor();
 
-	prevMX = input::cursorX();
-	prevMY = input::cursorY();
+	prevMX = static_cast<float>(input::cursorX());
+	prevMY = static_cast<float>(input::cursorY());
 }
 
 Camera* Player::camera() const {
