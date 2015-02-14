@@ -5,7 +5,7 @@
 
 #include "TestScene.h"
 
-#include "Square.h"
+#include "Model.h"
 #include "Texture2D.h"
 
 #include <glm/glm.hpp>
@@ -15,7 +15,7 @@
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))
 
 TestScene::TestScene() {
-	texture = new Texture2D("Resources/Textures/bth_image.tga");
+	texture = new Texture2D("Resources/Models/white flower/diffuse.tga");
 	
 	vertexShader = new Shader("default_vertex.glsl", GL_VERTEX_SHADER);
 	geometryShader = new Shader("default_geometry.glsl", GL_GEOMETRY_SHADER);
@@ -27,7 +27,7 @@ TestScene::TestScene() {
 	// Texture unit 0 is for base images.
 	glUniform1i(shaderProgram->uniformLocation("baseImage"), 0);
 
-	geometry = new Square();
+	geometry = new Model("Resources/Models/white flower/white_flower.obj");
 	bindTriangleData();
 
 	player = new Player();
