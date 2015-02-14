@@ -15,13 +15,14 @@ Core (0|1|2)
 ------------
 * Deferred rendering and lighting. (TODO)
 
-Geometry (1|2|5)
+Geometry (2|2|5)
 ----------------
-* Parsing and rendering of an existing model format. (TODO)
+* Parsing and rendering of an existing model format.
 * Height-map terrain rendering, user can walk on the terrain.
 
 Texturing and lighting (0|1|3)
 ------------------------------
+* Normal mapping. (TODO)
 * Blend-mapping. (TODO)
 
 Projection (0|1|4)
