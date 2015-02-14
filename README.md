@@ -34,6 +34,7 @@ Acceleration (1|2|3)
 Miscellaneous (1|2|9)
 ---------------------
 * Particle system with billboarded particles.
+* Picking. (TODO)
 
 Libraries
 =========
