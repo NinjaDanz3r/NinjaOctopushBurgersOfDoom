@@ -1,193 +1,66 @@
 #include "Model.h"
+#include <limits>
+#include "util.h"
 
 Model::Model(const char* filename) {
-	// Vertices
-	vertexNr = 24;
+	std::ifstream modelFile;
+	modelFile.open(filename);
+	if (!modelFile.is_open()) {
+		fprintf(stderr, "Couldn't open model file %s for reading.\n", filename);
+		fflush(stderr);
+	}
+
+	std::vector<Vertex> vertices;
+	std::vector<glm::vec3> positions;
+	std::vector<glm::vec3> normals;
+	std::vector<glm::vec2> textureCoordinates;
+
+	// Parse OBJ file.
+	while (!modelFile.eof()) {
+		char c, c2;
+		modelFile >> c;
+		switch (c) {
+		case 'v':
+			modelFile >> std::noskipws >> c2 >> std::skipws;
+			switch (c2) {
+			case ' ':
+				// Position
+				positions.push_back(readVec3(modelFile));
+				break;
+			case 'n':
+				// Normal
+				normals.push_back(readVec3(modelFile));
+				break;
+			case 't':
+				// Texture coordinate
+				textureCoordinates.push_back(readVec2(modelFile));
+				break;
+			}
+			break;
+		case 'f':
+			// Face
+			vertices.push_back(readVertex(modelFile, positions, normals, textureCoordinates));
+			vertices.push_back(readVertex(modelFile, positions, normals, textureCoordinates));
+			vertices.push_back(readVertex(modelFile, positions, normals, textureCoordinates));
+			break;
+		default:
+			modelFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+	}
+
+	modelFile.close();
+
+	vertexNr = vertices.size();
 	vertexData = new Vertex[vertexNr];
+	for (unsigned int i = 0; i < vertexNr; i++) {
+		vertexData[i] = vertices[i];
+	}
 
-	// Side 1
-	vertexData[0] = {
-		0.5f, 0.5f, 0.5f,
-		0.0f, 0.0f, 1.0f,
-		1.0f, 0.0f
-	};
-	vertexData[1] = {
-		-0.5f, -0.5f, 0.5f,
-		0.0f, 0.0f, 1.0f,
-		0.0f, 1.0f
-	};
-	vertexData[2] = {
-		0.5f, -0.5f, 0.5f,
-		0.0f, 0.0f, 1.0f,
-		1.0f, 1.0f
-	};
-	vertexData[3] = {
-		-0.5f, 0.5f, 0.5f,
-		0.0f, 0.0f, 1.0f,
-		0.0f, 0.0f
-	};
-
-	// Side 2
-	vertexData[4] = {
-		-0.5f, 0.5f, -0.5f,
-		-1.0f, 0.0f, 0.0f,
-		0.0f, 0.0f
-	};
-	vertexData[5] = {
-		-0.5f, -0.5f, -0.5f,
-		-1.0f, 0.0f, 0.0f,
-		0.0f, 1.0f
-	};
-	vertexData[6] = {
-		-0.5f, -0.5f, 0.5f,
-		-1.0f, 0.0f, 0.0f,
-		1.0f, 1.0f
-	};
-	vertexData[7] = {
-		-0.5f, 0.5f, 0.5f,
-		-1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f
-	};
-
-	// Side 3
-	vertexData[8] = {
-		0.5f, 0.5f, -0.5f,
-		1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f
-	};
-	vertexData[9] = {
-		0.5f, -0.5f, -0.5f,
-		1.0f, 0.0f, 0.0f,
-		1.0f, 1.0f
-	};
-	vertexData[10] = {
-		0.5f, -0.5f, 0.5f,
-		1.0f, 0.0f, 0.0f,
-		0.0f, 1.0f
-	};
-	vertexData[11] = {
-		0.5f, 0.5f, 0.5f,
-		1.0f, 0.0f, 0.0f,
-		0.0f, 0.0f
-	};
-
-	// Side 4
-	vertexData[12] = {
-		0.5f, 0.5f, -0.5f,
-		0.0f, 0.0f, -1.0f,
-		0.0f, 1.0f
-	};
-	vertexData[13] = {
-		-0.5f, -0.5f, -0.5f,
-		0.0f, 0.0f, -1.0f,
-		1.0f, 0.0f
-	};
-	vertexData[14] = {
-		0.5f, -0.5f, -0.5f,
-		0.0f, 0.0f, -1.0f,
-		0.0f, 0.0f
-	};
-	vertexData[15] = {
-		-0.5f, 0.5f, -0.5f,
-		0.0f, 0.0f, -1.0f,
-		1.0f, 1.0f
-	};
-
-	// Side 5
-	vertexData[16] = {
-		-0.5f, -0.5f, 0.5f,
-		0.0f, -1.0f, 0.0f,
-		0.0f, 0.0f
-	};
-	vertexData[17] = {
-		0.5f, -0.5f, 0.5f,
-		0.0f, -1.0f, 0.0f,
-		1.0f, 0.0f
-	};
-	vertexData[18] = {
-		0.5f, -0.5f, -0.5f,
-		0.0f, -1.0f, 0.0f,
-		1.0f, 1.0f
-	};
-	vertexData[19] = {
-		-0.5f, -0.5f, -0.5f,
-		0.0f, -1.0f, 0.0f,
-		0.0f, 1.0f
-	};
-
-	// Side 6
-	vertexData[20] = {
-		-0.5f, 0.5f, 0.5f,
-		0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f
-	};
-	vertexData[21] = {
-		0.5f, 0.5f, 0.5f,
-		0.0f, 1.0f, 0.0f,
-		0.0f, 1.0f
-	};
-	vertexData[22] = {
-		0.5f, 0.5f, -0.5f,
-		0.0f, 1.0f, 0.0f,
-		1.0f, 1.0f
-	};
-	vertexData[23] = {
-		-0.5f, 0.5f, -0.5f,
-		0.0f, 1.0f, 0.0f,
-		1.0f, 0.0f
-	};
-
-	// Vertexindices
-	indexNr = 36;
+	indexNr = vertexNr;
 	indexData = new unsigned int[indexNr];
-
-	// Side 1
-	indexData[0] = 0;
-	indexData[1] = 1;
-	indexData[2] = 2;
-	indexData[3] = 0;
-	indexData[4] = 3;
-	indexData[5] = 1;
-
-	// Side 2
-	indexData[6] = 4;
-	indexData[7] = 6;
-	indexData[8] = 7;
-	indexData[9] = 4;
-	indexData[10] = 5;
-	indexData[11] = 6;
-
-	// Side 3
-	indexData[12] = 11;
-	indexData[13] = 9;
-	indexData[14] = 8;
-	indexData[15] = 11;
-	indexData[16] = 10;
-	indexData[17] = 9;
-
-	// Side 4
-	indexData[18] = 12;
-	indexData[19] = 13;
-	indexData[20] = 15;
-	indexData[21] = 12;
-	indexData[22] = 14;
-	indexData[23] = 13;
-
-	// Side 5
-	indexData[24] = 16;
-	indexData[25] = 19;
-	indexData[26] = 18;
-	indexData[27] = 16;
-	indexData[28] = 18;
-	indexData[29] = 17;
-
-	// Side 6
-	indexData[30] = 20;
-	indexData[31] = 22;
-	indexData[32] = 23;
-	indexData[33] = 20;
-	indexData[34] = 21;
-	indexData[35] = 22;
+	for (unsigned int i = 0; i < indexNr; i++) {
+		indexData[i] = i;
+	}
 }
 
 Model::~Model() {
@@ -209,4 +82,41 @@ unsigned int* Model::indices() const {
 
 unsigned int Model::indexCount() const {
 	return indexNr;
+}
+
+glm::vec3 Model::readVec3(std::ifstream &modelFile) {
+	glm::vec3 position;
+	modelFile >> position.x >> position.y >> position.z;
+	return position;
+}
+
+glm::vec2 Model::readVec2(std::ifstream &modelFile) {
+	glm::vec2 textureCoordinate;
+	modelFile >> textureCoordinate.x >> textureCoordinate.y;
+	return textureCoordinate;
+}
+
+Geometry::Vertex Model::readVertex(std::ifstream &modelFile, std::vector<glm::vec3> &positions, std::vector<glm::vec3> &normals, std::vector<glm::vec2> &textureCoordinates) {
+	Vertex vertex;
+	char delimiter;
+	unsigned int index;
+
+	// Position.
+	modelFile >> index;
+	vertex.x = positions[index-1].x;
+	vertex.y = positions[index-1].y;
+	vertex.z = positions[index-1].z;
+
+	// Texture coordinate.
+	modelFile >> delimiter >> index;
+	vertex.u = textureCoordinates[index - 1].x;
+	vertex.v = 1.f-textureCoordinates[index - 1].y;
+
+	// Normal.
+	modelFile >> delimiter >> index;
+	vertex.normalX = normals[index-1].x;
+	vertex.normalY = normals[index-1].y;
+	vertex.normalZ = normals[index-1].z;
+
+	return vertex;
 }

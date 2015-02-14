@@ -1,6 +1,8 @@
 #ifndef __MODEL_H__
 #define __MODEL_H__
 
+#include <fstream>
+#include <vector>
 #include "Geometry.h"
 
 /// A model loaded from an OBJ file.
@@ -40,6 +42,10 @@ public:
 	unsigned int indexCount() const;
 
 private:
+	static glm::vec3 readVec3(std::ifstream &modelFile);
+	static glm::vec2 readVec2(std::ifstream &modelFile);
+	static Vertex readVertex(std::ifstream &modelFile, std::vector<glm::vec3> &positions, std::vector<glm::vec3> &normals, std::vector<glm::vec2> &textureCoordinates);
+
 	Vertex *vertexData = nullptr;
 	unsigned int vertexNr = 0;
 

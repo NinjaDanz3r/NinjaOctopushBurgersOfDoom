@@ -15,7 +15,7 @@
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))
 
 TestScene::TestScene() {
-	texture = new Texture2D("Resources/Models/white flower/diffuse.tga");
+	texture = new Texture2D("Resources/Models/rock01/diffuse.tga");
 	
 	vertexShader = new Shader("default_vertex.glsl", GL_VERTEX_SHADER);
 	geometryShader = new Shader("default_geometry.glsl", GL_GEOMETRY_SHADER);
@@ -27,7 +27,8 @@ TestScene::TestScene() {
 	// Texture unit 0 is for base images.
 	glUniform1i(shaderProgram->uniformLocation("baseImage"), 0);
 
-	geometry = new Model("Resources/Models/white flower/white_flower.obj");
+	geometry = new Model("Resources/Models/rock01/rock_01.obj");
+	geometry->setScale(glm::vec3(0.01f, 0.01f, 0.01f));
 	bindTriangleData();
 
 	player = new Player();
