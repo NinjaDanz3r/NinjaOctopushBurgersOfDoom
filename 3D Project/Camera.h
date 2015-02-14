@@ -59,7 +59,7 @@ class Camera : public Object {
 
 		/// Get far plane.
 		/**
-		 * Default: 20.0
+		 * Default: 100.0
 		 * @return Far plane
 		 */
 		float farPlane() const;
