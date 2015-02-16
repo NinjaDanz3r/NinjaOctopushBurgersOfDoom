@@ -1,6 +1,6 @@
 /*
 Phong Lighting - Fragment Shader
-Uses blend map for diffuse texture and does not have a specular highlight.
+Uses blend map (4 channels, rgba) for diffuse texture and does not have a specular highlight.
 */
 #version 400
 in VertexData {
@@ -9,7 +9,12 @@ in VertexData {
 	vec2 tex_coords;
 } vertexIn;
 
-uniform sampler2D baseImage;
+uniform sampler2D blendMap;
+uniform sampler2D redTexture;
+uniform sampler2D greenTexture;
+uniform sampler2D blueTexture;
+uniform sampler2D alphaTexture;
+
 uniform vec4 lightPosition;
 uniform vec3 lightIntensity;
 uniform vec3 diffuseKoefficient;
@@ -28,5 +33,12 @@ vec3 ads() {
 }
 
 void main () {
-	fragment_color = texture(baseImage, vertexIn.tex_coords) * vec4(ads(), 1.0);
+	vec4 blendMap = texture(blendMap, vertexIn.tex_coords);
+	float sum = blendMap.r + blendMap.g + blendMap.b + blendMap.a;
+	vec4 diffuse = blendMap.r / sum * texture(redTexture, vertexIn.tex_coords) +
+				   blendMap.g / sum * texture(greenTexture, vertexIn.tex_coords) +
+				   blendMap.b / sum * texture(blueTexture, vertexIn.tex_coords) +
+				   blendMap.a / sum * texture(alphaTexture, vertexIn.tex_coords);
+
+	fragment_color = diffuse * vec4(ads(), 1.0);
 }

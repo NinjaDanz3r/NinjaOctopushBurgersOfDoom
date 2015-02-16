@@ -16,7 +16,12 @@
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))
 
 TerrainScene::TerrainScene() {
-	texture = new Texture2D("Resources/Textures/kaleido.tga");
+	blendMap = new Texture2D("Resources/Textures/blendmap.tga");
+	grassTexture = new Texture2D("Resources/Textures/CGTextures/grass.tga");
+	cliffTexture = new Texture2D("Resources/Textures/CGTextures/cliff.tga");
+	sandTexture = new Texture2D("Resources/Textures/CGTextures/sand.tga");
+	snowTexture = new Texture2D("Resources/Textures/CGTextures/snow.tga");
+
 	skyboxTexture = new CubeMapTexture(
 		"Resources/Textures/TropicalSunnyDay/Right.tga",
 		"Resources/Textures/TropicalSunnyDay/Left.tga", 
@@ -30,6 +35,14 @@ TerrainScene::TerrainScene() {
 	fragmentShader = new Shader("blendmap_fragment.glsl", GL_FRAGMENT_SHADER);
 	shaderProgram = new ShaderProgram({ vertexShader, geometryShader, fragmentShader });
 
+	// Set texture locations.
+	shaderProgram->use();
+	glUniform1i(shaderProgram->uniformLocation("blendMap"), 0);
+	glUniform1i(shaderProgram->uniformLocation("redTexture"), 1);
+	glUniform1i(shaderProgram->uniformLocation("greenTexture"), 2);
+	glUniform1i(shaderProgram->uniformLocation("blueTexture"), 3);
+	glUniform1i(shaderProgram->uniformLocation("alphaTexture"), 4);
+
 	geometry = new Terrain("Resources/HeightMaps/TestMapSmall.tga");
 	geometry->setPosition(0.f, -5.f, 0.f);
 	geometry->setScale(50.f, 10.f, 50.f);
@@ -42,7 +55,11 @@ TerrainScene::TerrainScene() {
 }
 
 TerrainScene::~TerrainScene() {
-	delete texture;
+	delete blendMap;
+	delete grassTexture;
+	delete cliffTexture;
+	delete sandTexture;
+	delete snowTexture;
 	
 	delete shaderProgram;
 	delete vertexShader;
@@ -75,12 +92,19 @@ void TerrainScene::render(int width, int height) {
 
 	shaderProgram->use();
 
-	// Texture unit 0 is for base images.
-	glUniform1i(shaderProgram->uniformLocation("baseImage"), 0);
+	// Blend map
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, blendMap->textureID());
 
-	// Base image texture
-	glActiveTexture(GL_TEXTURE0 + 0);
-	glBindTexture(GL_TEXTURE_2D, texture->textureID());
+	// Textures
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, grassTexture->textureID());
+	glActiveTexture(GL_TEXTURE2);
+	glBindTexture(GL_TEXTURE_2D, cliffTexture->textureID());
+	glActiveTexture(GL_TEXTURE3);
+	glBindTexture(GL_TEXTURE_2D, sandTexture->textureID());
+	glActiveTexture(GL_TEXTURE4);
+	glBindTexture(GL_TEXTURE_2D, snowTexture->textureID());
 
 	// Model matrix, unique for each model.
 	glm::mat4 model = geometry->modelMatrix();

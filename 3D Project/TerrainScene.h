@@ -45,7 +45,11 @@ class TerrainScene : public Scene {
 		Shader* fragmentShader;
 		ShaderProgram* shaderProgram;
 
-		Texture* texture;
+		Texture* blendMap;
+		Texture* grassTexture;
+		Texture* cliffTexture;
+		Texture* sandTexture;
+		Texture* snowTexture;
 		Geometry* geometry;
 		Player* player;
 
