@@ -90,6 +90,14 @@ float Terrain::getY(float x, float z) const {
 	return height * scale().y + position().y;
 }
 
+glm::vec2 Terrain::textureRepeat() const {
+	return _textureRepeat;
+}
+
+void Terrain::setTextureRepeat(glm::vec2 repeat) {
+	_textureRepeat = repeat;
+}
+
 void Terrain::generateVertices() {
 	vertexNr = width * height;
 	vertexData = new Vertex[vertexNr];

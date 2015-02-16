@@ -14,6 +14,7 @@ uniform sampler2D redTexture;
 uniform sampler2D greenTexture;
 uniform sampler2D blueTexture;
 uniform sampler2D alphaTexture;
+uniform vec2 textureRepeat;
 
 uniform vec4 lightPosition;
 uniform vec3 lightIntensity;
@@ -35,10 +36,10 @@ vec3 ads() {
 void main () {
 	vec4 blendMap = texture(blendMap, vertexIn.tex_coords);
 	float sum = blendMap.r + blendMap.g + blendMap.b + blendMap.a;
-	vec4 diffuse = blendMap.r / sum * texture(redTexture, vertexIn.tex_coords) +
-				   blendMap.g / sum * texture(greenTexture, vertexIn.tex_coords) +
-				   blendMap.b / sum * texture(blueTexture, vertexIn.tex_coords) +
-				   blendMap.a / sum * texture(alphaTexture, vertexIn.tex_coords);
+	vec4 diffuse = blendMap.r / sum * texture(redTexture, vertexIn.tex_coords * textureRepeat) +
+				   blendMap.g / sum * texture(greenTexture, vertexIn.tex_coords * textureRepeat) +
+				   blendMap.b / sum * texture(blueTexture, vertexIn.tex_coords * textureRepeat) +
+				   blendMap.a / sum * texture(alphaTexture, vertexIn.tex_coords * textureRepeat);
 
 	fragment_color = diffuse * vec4(ads(), 1.0);
 }

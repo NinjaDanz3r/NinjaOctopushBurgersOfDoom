@@ -6,7 +6,7 @@
 #include "ShaderProgram.h"
 #include "Texture.h"
 #include "CubeMapTexture.h"
-#include "Geometry.h"
+#include "Terrain.h"
 #include "Player.h"
 #include "Skybox.h"
 
@@ -50,7 +50,7 @@ class TerrainScene : public Scene {
 		Texture* cliffTexture;
 		Texture* sandTexture;
 		Texture* snowTexture;
-		Geometry* geometry;
+		Terrain* terrain;
 		Player* player;
 
 		// Skybox
