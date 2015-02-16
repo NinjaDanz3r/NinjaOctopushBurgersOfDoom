@@ -20,10 +20,10 @@ Geometry (2|2|5)
 * Parsing and rendering of an existing model format.
 * Height-map terrain rendering, user can walk on the terrain.
 
-Texturing and lighting (0|1|3)
+Texturing and lighting (1|1|3)
 ------------------------------
 * Normal mapping. (TODO)
-* Blend-mapping. (TODO)
+* Blend-mapping.
 
 Projection (0|1|4)
 ------------------
