@@ -218,6 +218,9 @@
     <None Include="normalspecularmap_fragment.glsl">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="blendmap_fragment.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

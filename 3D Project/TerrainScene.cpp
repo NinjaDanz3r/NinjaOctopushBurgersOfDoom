@@ -27,7 +27,7 @@ TerrainScene::TerrainScene() {
 
 	vertexShader = new Shader("default_vertex.glsl", GL_VERTEX_SHADER);
 	geometryShader = new Shader("default_geometry.glsl", GL_GEOMETRY_SHADER);
-	fragmentShader = new Shader("default_fragment.glsl", GL_FRAGMENT_SHADER);
+	fragmentShader = new Shader("blendmap_fragment.glsl", GL_FRAGMENT_SHADER);
 	shaderProgram = new ShaderProgram({ vertexShader, geometryShader, fragmentShader });
 
 	geometry = new Terrain("Resources/HeightMaps/TestMapSmall.tga");
