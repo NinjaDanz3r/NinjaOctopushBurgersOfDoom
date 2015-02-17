@@ -92,14 +92,14 @@ void FrameBufferObjects::begin()
 {
 	// Bind our FBO and set the viewport to the proper size
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-	/*glPushAttrib(GL_VIEWPORT_BIT);
-	glViewport(0, 0, this->width, this->height);*/
+	glPushAttrib(GL_VIEWPORT_BIT);
+	glViewport(0, 0, this->width, this->height);
 
 	// Clear the render targets
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-	glActiveTextureARB(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0);
 	glEnable(GL_TEXTURE_2D);
 
 	// Specify what to render an start acquiring

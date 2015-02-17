@@ -1,5 +1,5 @@
 /*
-Phong Lighting - Fragment Shader
+Geometry pass fragment shader (first pass)
 */
 #version 400
 in VertexData {
@@ -15,8 +15,7 @@ layout(location = 1) out vec4 positionOut;
 layout(location = 2) out vec4 normalsOut;
 
 void main() {
-	//fixa vec4.w (alpha)
-	diffuseOut = texture(tDiffuse,vertexIn.tex_coords).rbg;
-	positionOut = position;
-	normalsOut = normals;
+	diffuseOut = (texture(tDiffuse,vertexIn.tex_coords).rbg + 0;
+	positionOut = vertexIn.position + 0;
+	normalsOut = vertexIn.normal + 0;
 }

@@ -49,7 +49,6 @@ DefRenderTestScene::DefRenderTestScene() {
 	player->setMovementSpeed(1000.0f);
 	multiplerendertargets = new FrameBufferObjects(settings::displayWidth(), settings::displayHeight());
 
-	//Stämmer shaders callsen?
 	diffuseID = glGetUniformLocation(shaderProgram->uniformLocation("shaderProgram"), "tDiffuse");
 	positionID = glGetUniformLocation(shaderProgram->uniformLocation("shaderProgram"), "tPosition");
 	normalID = glGetUniformLocation(shaderProgram->uniformLocation("shaderProgram"), "tNormal");
@@ -59,7 +58,7 @@ DefRenderTestScene::~DefRenderTestScene() {
 	delete texture;
 
 	delete multiplerendertargets;
-	delete firstShaderProgram;
+	//delete firstShaderProgram;
 	delete secondShaderProgram;
 	delete shaderProgram;
 	delete vertexShader;
@@ -76,24 +75,22 @@ DefRenderTestScene::~DefRenderTestScene() {
 
 Scene::SceneEnd* DefRenderTestScene::update(double time) {
 	player->update(time);
-	geometry->rotate(1, 2, 1);
+	geometry->rotate(1, 1, 1);
 	return nullptr;
 }
 
 void DefRenderTestScene::render(int width, int height) {
-	//Nästa steg fixa render funktion för att reflektera DefferedRender + model render
-	//Sen shaders.
-	
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glViewport(0, 0, width, height);
+	//shaderProgram->use();
+	float halfHeight = height / 2.0f;
+	float halfWidth = width / 2.0f;
 
-	multiplerendertargets->begin();
+	glViewport(0, 0, width, height);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 
 	glBindVertexArray(gVertexAttribute);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, gIndexBuffer);
 
-	// Base image texture
-	glActiveTexture(GL_TEXTURE0 + 0);
-	glBindTexture(GL_TEXTURE_2D, texture->textureID());
 
 	// Model matrix, unique for each model.
 	glm::mat4 model = geometry->modelMatrix();
@@ -117,15 +114,20 @@ void DefRenderTestScene::render(int width, int height) {
 	glUniform3fv(shaderProgram->uniformLocation("lightIntensity"), 1, &lightIntensity[0]);
 	glUniform3fv(shaderProgram->uniformLocation("diffuseKoefficient"), 1, &diffuseKoefficient[0]);
 
+	multiplerendertargets->begin();
+	// Base image texture
+	glActiveTexture(GL_TEXTURE0 + 0);
+	glBindTexture(GL_TEXTURE_2D, texture->textureID());
+
 	// Draw the triangles
-	//glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
+	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
 
 	multiplerendertargets->end();
 
 	//deferredRender(width, height);
-	multiplerendertargets->showTexture(0, 512, 384, 0);
-	multiplerendertargets->showTexture(1, 512, 384, 512);
-	multiplerendertargets->showTexture(2, 512, 384, 0, 384);
+	multiplerendertargets->showTexture(0, halfWidth, halfHeight, 0,0);
+	multiplerendertargets->showTexture(1, halfWidth, halfHeight, halfWidth,0);
+	multiplerendertargets->showTexture(2, halfWidth, halfHeight, 0, halfHeight);
 }
 
 void DefRenderTestScene::bindTriangleData() {
