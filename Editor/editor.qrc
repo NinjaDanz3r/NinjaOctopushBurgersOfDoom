@@ -1,4 +1,7 @@
 <RCC>
-    <qresource prefix="Editor">
+    <qresource prefix="/Editor">
+        <file>Resources/document-new.png</file>
+        <file>Resources/document-open.png</file>
+        <file>Resources/media-floppy.png</file>
     </qresource>
 </RCC>
