@@ -8,6 +8,7 @@ Editor::Editor(QWidget *parent) : QMainWindow(parent) {
 	connect(ui.actionNew, SIGNAL(triggered()), this, SLOT(newProject()));
 	connect(ui.actionOpen, SIGNAL(triggered()), this, SLOT(openProject()));
 	connect(ui.actionSave, SIGNAL(triggered()), this, SLOT(saveProject()));
+	connect(ui.actionClose, SIGNAL(triggered()), this, SLOT(closeProject()));
 
 	connect(ui.actionImportModel, SIGNAL(triggered()), this, SLOT(importModel()));
 
@@ -18,6 +19,7 @@ Editor::~Editor() {
 	if (activeProject != nullptr)
 		delete activeProject;
 
+	deleteChildren(modelsRoot);
 	delete modelsRoot;
 }
 
@@ -27,13 +29,12 @@ void Editor::newProject() {
 		return;
 	}
 
-	if (activeProject != nullptr)
-		delete activeProject;
+	closeProject();
 
 	activeProject = new Project();
 	activeProject->filename = filename.toStdString();
 
-	enableActions();
+	enableActions(true);
 }
 
 void Editor::openProject() {
@@ -42,14 +43,13 @@ void Editor::openProject() {
 		return;
 	}
 
-	if (activeProject != nullptr)
-		delete activeProject;
+	closeProject();
 
 	activeProject = new Project();
 	activeProject->filename = filename.toStdString();
 	activeProject->load();
 
-	enableActions();
+	enableActions(true);
 
 	for (auto model : *activeProject->resources()->modelResources()) {
 		QTreeWidgetItem *treeItem = new QTreeWidgetItem();
@@ -60,6 +60,17 @@ void Editor::openProject() {
 
 void Editor::saveProject() {
 	activeProject->save();
+}
+
+void Editor::closeProject() {
+	if (activeProject != nullptr) {
+		delete activeProject;
+		activeProject = nullptr;
+	}
+
+	deleteChildren(modelsRoot);
+
+	enableActions(false);
 }
 
 void Editor::importModel() {
@@ -81,15 +92,21 @@ void Editor::importModel() {
 	modelsRoot->addChild(treeItem);
 }
 
-void Editor::enableActions() {
-	ui.actionSave->setEnabled(true);
-	ui.actionImportModel->setEnabled(true);
+void Editor::enableActions(bool enabled) {
+	ui.actionSave->setEnabled(enabled);
+	ui.actionImportModel->setEnabled(enabled);
+	ui.actionClose->setEnabled(enabled);
 }
 
 QTreeWidgetItem* Editor::addTreeRoot(QString name) {
 	QTreeWidgetItem* treeItem = new QTreeWidgetItem(ui.treeWidget);
-
 	treeItem->setText(0, name);
-	
 	return treeItem;
+}
+
+void Editor::deleteChildren(QTreeWidgetItem* item) {
+	QList<QTreeWidgetItem*> children = item->takeChildren();
+	for (auto child : children) {
+		delete child;
+	}
 }

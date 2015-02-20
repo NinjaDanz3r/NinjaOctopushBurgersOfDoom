@@ -56,6 +56,8 @@
     <addaction name="separator"/>
     <addaction name="actionSave"/>
     <addaction name="separator"/>
+    <addaction name="actionClose"/>
+    <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuImport">
@@ -138,6 +140,14 @@
    </property>
    <property name="text">
     <string>Model</string>
+   </property>
+  </action>
+  <action name="actionClose">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Close</string>
    </property>
   </action>
  </widget>

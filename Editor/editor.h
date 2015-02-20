@@ -16,12 +16,14 @@ public slots:
 	void newProject();
 	void openProject();
 	void saveProject();
+	void closeProject();
 
 	void importModel();
 
 private:
-	void enableActions();
+	void enableActions(bool enabled);
 	QTreeWidgetItem* addTreeRoot(QString name);
+	void deleteChildren(QTreeWidgetItem* item);
 
 	Ui::EditorClass ui;
 	Project* activeProject = nullptr;
