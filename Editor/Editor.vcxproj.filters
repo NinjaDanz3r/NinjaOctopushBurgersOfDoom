@@ -56,6 +56,9 @@
     <ClCompile Include="editor.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="Project.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="editor.ui">
@@ -71,6 +74,9 @@
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_editor.h">
       <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Project.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
