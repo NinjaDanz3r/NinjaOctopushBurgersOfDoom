@@ -27,6 +27,9 @@ doc-build/
 # Don't ignore OpenAL Soft release folders.
 !openal-soft-1.16.0/bin
 
+# Ignore Qt generated files
+GeneratedFiles/
+
 # Share resources (textures, etc.) through Dropbox instead
 3D Project/Resources
 
