@@ -91,4 +91,22 @@ namespace util {
 
 		return path;
 	}
+
+	void writeString(std::ofstream &file, std::string str) {
+		std::string::size_type length = str.length();
+		file.write(reinterpret_cast<const char*>(&length), sizeof(length));
+		file.write(str.c_str(), str.length());
+	}
+
+	std::string readString(std::ifstream &file) {
+		std::string::size_type length;
+		file.read(reinterpret_cast<char*>(&length), sizeof length);
+
+		char* buffer = new char[length];
+		file.read(buffer, length);
+
+		std::string str(buffer, length);
+		delete[] buffer;
+		return str;
+	}
 }

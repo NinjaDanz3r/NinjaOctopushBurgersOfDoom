@@ -2,18 +2,34 @@
 #define __PROJECT_H__
 
 #include <string>
+#include "Resources.h"
 
 /// A game project.
 class Project {
-public:
-	/// Filename of project file.
-	std::string filename;
+	public:
+		/// Constructor.
+		Project();
 
-	/// Save project to file.
-	void save();
+		/// Destructor.
+		~Project();
+	
+		/// Filename of project file.
+		std::string filename;
 
-	/// Load project from file.
-	void load();
+		/// Save project to file.
+		void save();
+
+		/// Load project from file.
+		void load();
+
+		/// Get resources.
+		/**
+		 * @return The project's resources.
+		 */
+		Resources* resources() const;
+
+	private:
+		Resources* _resources;
 };
 
 #endif

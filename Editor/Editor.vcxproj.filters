@@ -36,8 +36,20 @@
     <Filter Include="Header Files\GUI">
       <UniqueIdentifier>{3c502ee1-3c45-472c-9b1c-120a04a55ef5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Geometry">
+      <UniqueIdentifier>{b9486d8a-7884-4478-95c1-911eb4587819}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Geometry">
+      <UniqueIdentifier>{b1d079ad-89ca-4c76-b9dc-e5926324647f}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\GUI">
       <UniqueIdentifier>{fd4feb42-2b26-45c2-a7bf-7132284b9c55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Project">
+      <UniqueIdentifier>{8a158650-96cb-42d9-bb5e-ba6f8f50ba29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Project">
+      <UniqueIdentifier>{a731240d-aff8-4eea-a6f0-e3f20db968ba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -56,7 +68,19 @@
     <ClCompile Include="editor.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="..\3D Project\Model.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
     <ClCompile Include="Project.cpp">
+      <Filter>Source Files\Project</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources.cpp">
+      <Filter>Source Files\Project</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelResource.cpp">
+      <Filter>Source Files\Project</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3D Project\util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -75,7 +99,22 @@
     <ClInclude Include="GeneratedFiles\ui_editor.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\3D Project\Geometry.h">
+      <Filter>Header Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3D Project\Model.h">
+      <Filter>Header Files\Geometry</Filter>
+    </ClInclude>
     <ClInclude Include="Project.h">
+      <Filter>Header Files\Project</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources.h">
+      <Filter>Header Files\Project</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelResource.h">
+      <Filter>Header Files\Project</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3D Project\util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

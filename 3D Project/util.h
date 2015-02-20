@@ -2,6 +2,7 @@
 #define __UTIL_H__
 
 #include <string>
+#include <fstream>
 
 /// Contains various utility functions
 /**
@@ -61,6 +62,21 @@ namespace util {
 	 * @return The path
 	 */
 	std::string savePath(const char* filename);
+
+	/// Write std::string to std::ofstream.
+	/**
+	 * @param file File stream to write to.
+	 * @param string String to write.
+	 */
+	void writeString(std::ofstream &file, std::string str);
+
+	/// Read std::string from std::ifstream.
+	/**
+	 * @param file File stream to read from.
+	 * @return The string read
+	 */
+	std::string readString(std::ifstream &file);
+	 
 }
 
 #endif

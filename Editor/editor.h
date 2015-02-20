@@ -17,9 +17,16 @@ public slots:
 	void openProject();
 	void saveProject();
 
+	void importModel();
+
 private:
+	void enableActions();
+	QTreeWidgetItem* addTreeRoot(QString name);
+
 	Ui::EditorClass ui;
 	Project* activeProject = nullptr;
+
+	QTreeWidgetItem* modelsRoot;
 };
 
 #endif // EDITOR_H

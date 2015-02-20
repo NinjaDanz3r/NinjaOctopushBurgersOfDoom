@@ -60,17 +60,19 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IncludePath>..\3D Project;$(QTDIR)\include;..\glm;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>$(QTDIR)\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\3D Project;$(QTDIR)\include;..\glm;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IncludePath>..\3D Project;$(QTDIR)\include;..\glm;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>$(QTDIR)\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\3D Project;$(QTDIR)\include;..\glm;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -139,6 +141,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\3D Project\Model.cpp" />
+    <ClCompile Include="..\3D Project\util.cpp" />
     <ClCompile Include="editor.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_editor.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -159,7 +163,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ModelResource.cpp" />
     <ClCompile Include="Project.cpp" />
+    <ClCompile Include="Resources.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="editor.h">
@@ -202,8 +208,13 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\3D Project\Geometry.h" />
+    <ClInclude Include="..\3D Project\Model.h" />
+    <ClInclude Include="..\3D Project\util.h" />
     <ClInclude Include="GeneratedFiles\ui_editor.h" />
+    <ClInclude Include="ModelResource.h" />
     <ClInclude Include="Project.h" />
+    <ClInclude Include="Resources.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="editor.qrc">
