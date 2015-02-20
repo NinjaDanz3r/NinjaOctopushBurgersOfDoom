@@ -29,6 +29,7 @@ AudioScene::AudioScene() {
 	glUniform1i(shaderProgram->uniformLocation("baseImage"), 0);
 
 	geometry = new Cube();
+	geometryObject = new GeometryObject(geometry);
 	bindTriangleData();
 
 	player = new Player();
@@ -53,6 +54,7 @@ AudioScene::~AudioScene() {
 	glDeleteBuffers(1, &vertexBuffer);
 	glDeleteBuffers(1, &indexBuffer);
 
+	delete geometryObject;
 	delete geometry;
 	delete player;
 
@@ -82,7 +84,7 @@ void AudioScene::render(int width, int height) {
 	glBindTexture(GL_TEXTURE_2D, texture->textureID());
 
 	// Model matrix, unique for each model.
-	glm::mat4 model = geometry->modelMatrix();
+	glm::mat4 model = geometryObject->modelMatrix();
 
 	// Send the matrices to the shader.
 	glm::mat4 view = player->camera()->view();

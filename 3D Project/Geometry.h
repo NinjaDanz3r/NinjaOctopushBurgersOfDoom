@@ -1,13 +1,13 @@
 #ifndef __GEOMETRY_H__
 #define __GEOMETRY_H__
 
-#include "Object.h"
+#include <glm/glm.hpp>
 
 /// Interface for renderable 3D geometry.
 /**
  * Can be rendered using the default shaders.
  */
-class Geometry : public Object {
+class Geometry {
 	public:
 		/// A vertex point.
 		struct Vertex {

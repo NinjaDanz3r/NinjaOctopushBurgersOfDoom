@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AudioScene.cpp" />
+    <ClCompile Include="GeometryObject.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ParticleScene.cpp" />
     <ClCompile Include="CubeMapTexture.cpp" />
@@ -35,6 +36,7 @@
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="SoundBuffer.cpp" />
     <ClCompile Include="SoundSystem.cpp" />
+    <ClCompile Include="TerrainObject.cpp" />
     <ClCompile Include="TerrainScene.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -44,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioScene.h" />
+    <ClInclude Include="GeometryObject.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ParticleScene.h" />
     <ClInclude Include="CubeMapTexture.h" />
@@ -69,6 +72,7 @@
     <ClInclude Include="SoundBuffer.h" />
     <ClInclude Include="SoundFile.h" />
     <ClInclude Include="SoundSystem.h" />
+    <ClInclude Include="TerrainObject.h" />
     <ClInclude Include="TerrainScene.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Texture.h" />

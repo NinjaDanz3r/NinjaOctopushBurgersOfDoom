@@ -6,6 +6,7 @@
 #include "ShaderProgram.h"
 #include "Texture.h"
 #include "Geometry.h"
+#include "GeometryObject.h"
 #include "Player.h"
 
 /// %Scene used to test basic rendering technology.
@@ -47,6 +48,7 @@ class TestScene : public Scene {
 		Texture* normal;
 		Texture* specular;
 		Geometry* geometry;
+		GeometryObject* geometryObject;
 		Player* player;
 
 		// Vertex buffer.

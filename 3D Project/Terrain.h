@@ -4,7 +4,7 @@
 #include "Geometry.h"
 #include <glm/glm.hpp>
 
-/// A terrain object.
+/// A terrain mesh.
 class Terrain : public Geometry {
 public:
 	/// Create new terrain from the given height map.
@@ -43,9 +43,9 @@ public:
 	/// Gets the height of the terrain at a given location.
 	/**
 	 * If the position is outside the terrain, 0.0 is returned.
-	 * @param x X-position in the world.
-	 * @param z Z-position in the world.
-	 * @return Height of the terrain.
+	 * @param x X-position on the terrain.
+	 * @param z Z-position on the terrain.
+	 * @return Height of the terrain (0.0 - 1.0).
 	 */
 	float getY(float x, float z) const;
 

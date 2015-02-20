@@ -34,7 +34,8 @@ TestScene::TestScene() {
 	glUniform1i(shaderProgram->uniformLocation("specularMap"), 2);
 
 	geometry = new Model("Resources/Models/rock01/rock_01.obj");
-	geometry->setScale(glm::vec3(0.01f, 0.01f, 0.01f));
+	geometryObject = new GeometryObject(geometry);
+	geometryObject->setScale(glm::vec3(0.01f, 0.01f, 0.01f));
 	bindTriangleData();
 
 	player = new Player();
@@ -54,6 +55,7 @@ TestScene::~TestScene() {
 	glDeleteBuffers(1, &vertexBuffer);
 	glDeleteBuffers(1, &indexBuffer);
 
+	delete geometryObject;
 	delete geometry;
 	delete player;
 }
@@ -84,7 +86,7 @@ void TestScene::render(int width, int height) {
 	glBindTexture(GL_TEXTURE_2D, specular->textureID());
 
 	// Model matrix, unique for each model.
-	glm::mat4 model = geometry->modelMatrix();
+	glm::mat4 model = geometryObject->modelMatrix();
 
 	// Send the matrices to the shader.
 	glm::mat4 view = player->camera()->view();

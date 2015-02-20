@@ -44,8 +44,9 @@ TerrainScene::TerrainScene() {
 	glUniform1i(shaderProgram->uniformLocation("alphaTexture"), 4);
 
 	terrain = new Terrain("Resources/HeightMaps/TestMapSmall.tga");
-	terrain->setPosition(0.f, -5.f, 0.f);
-	terrain->setScale(50.f, 10.f, 50.f);
+	terrainObject = new TerrainObject(terrain);
+	terrainObject->setPosition(0.f, -5.f, 0.f);
+	terrainObject->setScale(50.f, 10.f, 50.f);
 	terrain->setTextureRepeat(glm::vec2(10.f, 10.f));
 	bindTriangleData();
 
@@ -70,6 +71,7 @@ TerrainScene::~TerrainScene() {
 	glDeleteBuffers(1, &vertexBuffer);
 	glDeleteBuffers(1, &indexBuffer);
 
+	delete terrainObject;
 	delete terrain;
 	delete player;
 	delete skybox;
@@ -79,7 +81,7 @@ TerrainScene::~TerrainScene() {
 Scene::SceneEnd* TerrainScene::update(double time) {
 	player->update(time);
 	glm::vec3 position = player->camera()->position();
-	player->camera()->setPosition(position.x, terrain->getY(position.x, position.z) + 2.f, position.z);
+	player->camera()->setPosition(position.x, terrainObject->getY(position.x, position.z) + 2.f, position.z);
 
 	SoundSystem::getInstance()->listener()->setPosition(player->camera()->position());
 	SoundSystem::getInstance()->listener()->setOrientation(player->camera()->forward(), player->camera()->up());
@@ -111,7 +113,7 @@ void TerrainScene::render(int width, int height) {
 	glUniform2fv(shaderProgram->uniformLocation("textureRepeat"), 1, &terrain->textureRepeat()[0]);
 
 	// Model matrix, unique for each model.
-	glm::mat4 model = terrain->modelMatrix();
+	glm::mat4 model = terrainObject->modelMatrix();
 
 	// Send the matrices to the shader.
 	glm::mat4 view = player->camera()->view();

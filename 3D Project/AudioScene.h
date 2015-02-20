@@ -6,6 +6,7 @@
 #include "ShaderProgram.h"
 #include "Texture.h"
 #include "Geometry.h"
+#include "GeometryObject.h"
 #include "Player.h"
 #include "WaveFile.h"
 #include "SoundBuffer.h"
@@ -48,6 +49,7 @@ class AudioScene : public Scene {
 
 		Texture* texture;
 		Geometry* geometry;
+		GeometryObject* geometryObject;
 		Player* player;
 
 		// Vertex buffer.
