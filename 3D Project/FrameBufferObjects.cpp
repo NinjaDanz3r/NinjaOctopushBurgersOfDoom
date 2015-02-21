@@ -9,7 +9,7 @@ FrameBufferObjects::FrameBufferObjects(int width, int height)
 	this->height = height;
 
 	glGenFramebuffers(1, &fbo);
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo);
+	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
 	glGenRenderbuffers(1, &depthHandle);
 	glBindRenderbuffer(GL_RENDERBUFFER, depthHandle);
@@ -87,8 +87,8 @@ GLuint FrameBufferObjects::getNormalTex() const{ return normalTex; };
 
 void FrameBufferObjects::begin()
 {
-	// Bind our FBO and set the viewport to the proper size
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo);
+	// Bind our FBO to as a Draw buffer
+	bindForWriting();
 
 	// Specify what to render an start acquiring
 	GLenum buffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
@@ -97,13 +97,38 @@ void FrameBufferObjects::begin()
 void FrameBufferObjects::end()
 {
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-	glPopAttrib();
 };
-void FrameBufferObjects::showTexture(unsigned int i, float fSizeX, float fSizeY, float x, float y) const {
-	GLuint texture = diffuseTex;
-	if (i == 1) texture = positionTex;
-	else
-	if (i == 2) texture = normalTex;
+void FrameBufferObjects::showTexture(){
 
-	//Render a quad and attach the textures + draw.
+	//Resore destination FBO to GL_DRAW_FRAMEBUFFER
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//Bind fbo as a read buffer
+	bindForReading();
+
+	GLint halfWidth = (GLint)(width / 2.0f);
+	GLint halfHeight = (GLint)(height / 2.0f);
+
+	//Diffuse
+	glReadBuffer(GL_COLOR_ATTACHMENT0);
+	glBlitFramebuffer(0, 0, width, height, 0, halfHeight, halfWidth, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+	
+	//Position
+	glReadBuffer(GL_COLOR_ATTACHMENT1);
+	glBlitFramebuffer(0, 0, width, height, 0, 0, halfWidth, halfHeight, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+
+	//Normal
+	glReadBuffer(GL_COLOR_ATTACHMENT2);
+	glBlitFramebuffer(0, 0, width, height, halfWidth, halfHeight, width, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+}
+void FrameBufferObjects::bindForWriting()
+{
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo);
+}
+
+void FrameBufferObjects::bindForReading()
+{
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, fbo);
 }

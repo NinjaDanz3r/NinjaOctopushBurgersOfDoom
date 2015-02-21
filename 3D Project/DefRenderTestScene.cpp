@@ -50,9 +50,9 @@ DefRenderTestScene::DefRenderTestScene() {
 	bindTriangleData();
 
 	//dubbelkolla.
-	diffuseID = glGetUniformLocation(shaderProgram->uniformLocation("shaderProgram"), "tDiffuse");
-	positionID = glGetUniformLocation(shaderProgram->uniformLocation("shaderProgram"), "tPosition");
-	normalID = glGetUniformLocation(shaderProgram->uniformLocation("shaderProgram"), "tNormal");
+	diffuseID = shaderProgram->uniformLocation("tDiffuse");
+	positionID = shaderProgram->uniformLocation("tPosition");
+	normalID = shaderProgram->uniformLocation("tNormal");
 }
 
 DefRenderTestScene::~DefRenderTestScene() {
@@ -86,7 +86,7 @@ void DefRenderTestScene::render(int width, int height) {
 
 	glViewport(0, 0, width, height);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
 
 	glBindVertexArray(gVertexAttribute);
@@ -117,7 +117,6 @@ void DefRenderTestScene::render(int width, int height) {
 
 	if (state == 1)
 	{
-
 		multiplerendertargets->begin();
 
 		glActiveTexture(GL_TEXTURE0 + 0);
@@ -142,9 +141,7 @@ void DefRenderTestScene::render(int width, int height) {
 
 		multiplerendertargets->end();
 
-		multiplerendertargets->showTexture(0, halfWidth, halfHeight, 0, 0);
-		multiplerendertargets->showTexture(1, halfWidth, halfHeight, halfWidth, 0);
-		multiplerendertargets->showTexture(2, halfWidth, halfHeight, 0, halfHeight);
+		multiplerendertargets->showTexture();
 	}
 	else if (state == 0)
 	{
