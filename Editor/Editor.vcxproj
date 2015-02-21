@@ -164,6 +164,7 @@
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModelResource.cpp" />
+    <ClCompile Include="OBJModel.cpp" />
     <ClCompile Include="Project.cpp" />
     <ClCompile Include="Resources.cpp" />
   </ItemGroup>
@@ -213,6 +214,7 @@
     <ClInclude Include="..\3D Project\util.h" />
     <ClInclude Include="GeneratedFiles\ui_editor.h" />
     <ClInclude Include="ModelResource.h" />
+    <ClInclude Include="OBJModel.h" />
     <ClInclude Include="Project.h" />
     <ClInclude Include="Resources.h" />
   </ItemGroup>

@@ -33,7 +33,7 @@ TestScene::TestScene() {
 	// Texture unit 0 is for specular map.
 	glUniform1i(shaderProgram->uniformLocation("specularMap"), 2);
 
-	geometry = new Model("Resources/Models/rock01/rock_01.obj");
+	geometry = new Model("Resources/Models/rock01/rock_01.obj.bin");
 	geometryObject = new GeometryObject(geometry);
 	geometryObject->setScale(glm::vec3(0.01f, 0.01f, 0.01f));
 	bindTriangleData();

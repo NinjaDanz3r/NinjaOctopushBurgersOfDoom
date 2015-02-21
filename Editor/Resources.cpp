@@ -12,7 +12,9 @@ Resources::~Resources() {
 }
 
 void Resources::save(std::ofstream &file) {
-	file << models->size();
+	std::vector<ModelResource*>::size_type size = models->size();
+	file.write(reinterpret_cast<const char*>(&size), sizeof(size));
+
 	for (auto model : *models) {
 		model->save(file);
 	}
@@ -20,7 +22,7 @@ void Resources::save(std::ofstream &file) {
 
 void Resources::load(std::ifstream &file) {
 	std::vector<ModelResource*>::size_type size;
-	file >> size;
+	file.read(reinterpret_cast<char*>(&size), sizeof(size));
 
 	for (auto i = 0; i < size; i++) {
 		models->push_back(new ModelResource(file));

@@ -3,6 +3,7 @@
 
 #include <string>
 #include <fstream>
+#include "Model.h"
 
 /// A model resource.
 class ModelResource {
@@ -34,6 +35,9 @@ class ModelResource {
 		 * @param file File stream to save to.
 		 */
 		void save(std::ofstream &file) const;
+
+	private:
+		Model* model;
 };
 
 #endif
