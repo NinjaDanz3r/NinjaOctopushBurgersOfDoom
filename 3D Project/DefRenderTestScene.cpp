@@ -15,7 +15,7 @@
 DefRenderTestScene::DefRenderTestScene() {
 
 
-	texture = new Texture2D("Resources/Textures/bth_image.tga");
+	texture = new Texture2D("Resources/Textures/kaleido.tga");
 	state = 1;
 
 	if (state == 0){
@@ -38,17 +38,18 @@ DefRenderTestScene::DefRenderTestScene() {
 
 
 	shaderProgram->use();
-
+	
 	// Texture unit 0 is for base images.
 	glUniform1i(shaderProgram->uniformLocation("baseImage"), 0);
-
-	geometry = new Cube();
-	bindTriangleData();
 
 	player = new Player();
 	player->setMovementSpeed(1000.0f);
 	multiplerendertargets = new FrameBufferObjects(settings::displayWidth(), settings::displayHeight());
 
+	geometry = new Cube();
+	bindTriangleData();
+
+	//dubbelkolla.
 	diffuseID = glGetUniformLocation(shaderProgram->uniformLocation("shaderProgram"), "tDiffuse");
 	positionID = glGetUniformLocation(shaderProgram->uniformLocation("shaderProgram"), "tPosition");
 	normalID = glGetUniformLocation(shaderProgram->uniformLocation("shaderProgram"), "tNormal");
@@ -80,12 +81,12 @@ Scene::SceneEnd* DefRenderTestScene::update(double time) {
 }
 
 void DefRenderTestScene::render(int width, int height) {
-	//shaderProgram->use();
 	float halfHeight = height / 2.0f;
 	float halfWidth = width / 2.0f;
 
 	glViewport(0, 0, width, height);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
 
 	glBindVertexArray(gVertexAttribute);
@@ -114,23 +115,49 @@ void DefRenderTestScene::render(int width, int height) {
 	glUniform3fv(shaderProgram->uniformLocation("lightIntensity"), 1, &lightIntensity[0]);
 	glUniform3fv(shaderProgram->uniformLocation("diffuseKoefficient"), 1, &diffuseKoefficient[0]);
 
-	multiplerendertargets->begin();
-	// Base image texture
-	glActiveTexture(GL_TEXTURE0 + 0);
-	glBindTexture(GL_TEXTURE_2D, texture->textureID());
+	if (state == 1)
+	{
 
-	// Draw the triangles
-	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
+		multiplerendertargets->begin();
 
-	multiplerendertargets->end();
+		glActiveTexture(GL_TEXTURE0 + 0);
+		glBindTexture(GL_TEXTURE_2D, texture->textureID());
 
+		/*glActiveTexture(GL_TEXTURE0);
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, multiplerendertargets->getDiffuseTex());
+		glUniform1i(diffuseID, 0);
+
+		glActiveTexture(GL_TEXTURE1);
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, multiplerendertargets->getPositionTex());
+		glUniform1i(positionID, 1);
+
+		glActiveTexture(GL_TEXTURE2);
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, multiplerendertargets->getNormalTex());
+		glUniform1i(normalID, 2);*/
+
+		glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
+
+		multiplerendertargets->end();
+
+		multiplerendertargets->showTexture(0, halfWidth, halfHeight, 0, 0);
+		multiplerendertargets->showTexture(1, halfWidth, halfHeight, halfWidth, 0);
+		multiplerendertargets->showTexture(2, halfWidth, halfHeight, 0, halfHeight);
+	}
+	else if (state == 0)
+	{
+		// Base image texture
+		glActiveTexture(GL_TEXTURE0 + 0);
+		glBindTexture(GL_TEXTURE_2D, texture->textureID());
+
+		glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
+	}
 	//deferredRender(width, height);
-	multiplerendertargets->showTexture(0, halfWidth, halfHeight, 0,0);
-	multiplerendertargets->showTexture(1, halfWidth, halfHeight, halfWidth,0);
-	multiplerendertargets->showTexture(2, halfWidth, halfHeight, 0, halfHeight);
 }
 
-void DefRenderTestScene::bindTriangleData() {
+void DefRenderTestScene::bindTriangleData(){
 	// Vertex buffer
 	vertexCount = geometry->vertexCount();
 	glGenBuffers(1, &gVertexBuffer);
@@ -166,24 +193,20 @@ void DefRenderTestScene::deferredRender(int width, int height){
 
 	glActiveTexture(GL_TEXTURE0);
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, fboRT->getDiffuseTex());
+	glBindTexture(GL_TEXTURE_2D, multiplerendertargets->getDiffuseTex());
 	glUniform1i(diffuseID, 0);
 
 	glActiveTexture(GL_TEXTURE1);
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, fboRT->getPositionTex());
+	glBindTexture(GL_TEXTURE_2D, multiplerendertargets->getPositionTex());
 	glUniform1i(positionID, 1);
 
 	glActiveTexture(GL_TEXTURE2);
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, fboRT->getNormalTex());
+	glBindTexture(GL_TEXTURE_2D, multiplerendertargets->getNormalTex());
 	glUniform1i(normalID, 2);
 
 	// Render the quad
-	glLoadIdentity();
-	glColor3f(1, 1, 1);
-	glTranslatef(0, 0, -1.0);
-
 	glBegin(GL_QUADS);
 	glTexCoord2f(0, 0);
 	glVertex3f(0.0f, 0.0f, 0.0f);

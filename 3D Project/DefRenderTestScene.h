@@ -59,6 +59,8 @@ private:
 	Texture* texture;
 	Cube* testCube;
 	Player* player;
+	float halfWidth;
+	float halfHeight;
 
 	// Vertex buffer
 	GLuint gVertexBuffer = 0;
@@ -68,5 +70,7 @@ private:
 	GLuint gIndexBuffer = 0;
 	unsigned int indexCount = 0;
 	int vertexCount = 0;
+
+	
 };
 #endif
