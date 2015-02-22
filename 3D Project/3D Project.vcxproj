@@ -122,11 +122,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\openal-soft-1.16.0\include;..\simpleini-141111;..\glm;..\glew-1.12.0\include;..\glfw-3.1\include;..\stb;$(IncludePath)</IncludePath>
+    <IncludePath>..\openal-soft-1.16.0\include;..\simpleini-141111;..\glm-0.9.6.3;..\glew-1.12.0\include;..\glfw-3.1\include;..\stb;$(IncludePath)</IncludePath>
     <LibraryPath>..\openal-soft-1.16.0\libs\Win32;..\glew-1.12.0\lib\Release\Win32;..\glfw-3.1\Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>..\openal-soft-1.16.0\include;..\simpleini-141111;..\glm;..\glew-1.12.0\include;..\glfw-3.1\include;..\stb;$(IncludePath)</IncludePath>
+    <IncludePath>..\openal-soft-1.16.0\include;..\simpleini-141111;..\glm-0.9.6.3;..\glew-1.12.0\include;..\glfw-3.1\include;..\stb;$(IncludePath)</IncludePath>
     <LibraryPath>..\openal-soft-1.16.0\libs\Win32;..\glew-1.12.0\lib\Release\Win32;..\glfw-3.1\Win32;$(LibraryPath)</LibraryPath>
     <LinkIncremental>
     </LinkIncremental>
