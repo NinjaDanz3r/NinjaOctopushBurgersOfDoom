@@ -18,8 +18,9 @@ class ModelResource {
 		/// Create new model resource.
 		/**
 		 * @param file File stream to load from.
+		 * @param directory Directory to load from.
 		 */
-		ModelResource(std::ifstream &file);
+		ModelResource(std::ifstream &file, std::string directory);
 
 		/// Destructor.
 		~ModelResource();
@@ -27,14 +28,12 @@ class ModelResource {
 		/// Name of the model resource.
 		std::string name;
 
-		/// Filename of model file.
-		std::string filename;
-
 		/// Save model resource to file.
 		/**
 		 * @param file File stream to save to.
+		 * @param directory Directory to save to.
 		 */
-		void save(std::ofstream &file) const;
+		void save(std::ofstream &file, std::string directory) const;
 
 	private:
 		Model* model;

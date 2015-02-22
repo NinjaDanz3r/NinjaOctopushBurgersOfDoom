@@ -12,9 +12,18 @@ class Project {
 
 		/// Destructor.
 		~Project();
-	
-		/// Filename of project file.
-		std::string filename;
+
+		/// Get filename of project file.
+		/**
+		 * @return The filename.
+		 */
+		std::string filename() const;
+
+		/// Set filename of project file.
+		/**
+		 * @param filename Filename.
+		 */
+		void setFilename(std::string filename);
 
 		/// Save project to file.
 		void save();
@@ -30,6 +39,8 @@ class Project {
 
 	private:
 		Resources* _resources;
+		std::string _filename;
+		std::string directory;
 };
 
 #endif

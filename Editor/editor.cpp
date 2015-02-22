@@ -32,7 +32,7 @@ void Editor::newProject() {
 	closeProject();
 
 	activeProject = new Project();
-	activeProject->filename = filename.toStdString();
+	activeProject->setFilename(filename.toStdString());
 
 	enableActions(true);
 }
@@ -46,7 +46,7 @@ void Editor::openProject() {
 	closeProject();
 
 	activeProject = new Project();
-	activeProject->filename = filename.toStdString();
+	activeProject->setFilename(filename.toStdString());
 	activeProject->load();
 
 	enableActions(true);

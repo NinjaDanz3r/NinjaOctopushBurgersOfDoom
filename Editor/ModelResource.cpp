@@ -4,25 +4,19 @@
 
 ModelResource::ModelResource(const std::string &name, const std::string &filename) {
 	this->name = name;
-	this->filename = filename;
-
 	model = new OBJModel(filename.c_str());
-	this->filename.append(".bin");
 }
 
-ModelResource::ModelResource(std::ifstream &file) {
+ModelResource::ModelResource(std::ifstream &file, std::string directory) {
 	name = util::readString(file);
-	filename = util::readString(file);
-
-	model = new Model(filename.c_str());
+	model = new Model((directory + '/' + name + ".bin").c_str());
 }
 
 ModelResource::~ModelResource() {
 	delete model;
 }
 
-void ModelResource::save(std::ofstream &file) const {
+void ModelResource::save(std::ofstream &file, std::string directory) const {
 	util::writeString(file, name);
-	util::writeString(file, filename);
-	model->save(filename.c_str());
+	model->save((directory + '/' + name + ".bin").c_str());
 }
