@@ -5,9 +5,17 @@
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
@@ -104,7 +112,20 @@
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
@@ -117,7 +138,13 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -125,11 +152,20 @@
     <IncludePath>..\openal-soft-1.16.0\include;..\simpleini-141111;..\glm-0.9.6.3;..\glew-1.12.0\include;..\glfw-3.1\include;..\stb;$(IncludePath)</IncludePath>
     <LibraryPath>..\openal-soft-1.16.0\libs\Win32;..\glew-1.12.0\lib\Release\Win32;..\glfw-3.1\Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>..\openal-soft-1.16.0\include;..\simpleini-141111;..\glm-0.9.6.3;..\glew-1.12.0\include;..\glfw-3.1\include;..\stb;$(IncludePath)</IncludePath>
+    <LibraryPath>..\openal-soft-1.16.0\libs\Win64;..\glew-1.12.0\lib\Release\x64;..\glfw-3.1\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>..\openal-soft-1.16.0\include;..\simpleini-141111;..\glm-0.9.6.3;..\glew-1.12.0\include;..\glfw-3.1\include;..\stb;$(IncludePath)</IncludePath>
     <LibraryPath>..\openal-soft-1.16.0\libs\Win32;..\glew-1.12.0\lib\Release\Win32;..\glfw-3.1\Win32;$(LibraryPath)</LibraryPath>
     <LinkIncremental>
     </LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>..\openal-soft-1.16.0\include;..\simpleini-141111;..\glm-0.9.6.3;..\glew-1.12.0\include;..\glfw-3.1\include;..\stb;$(IncludePath)</IncludePath>
+    <LibraryPath>..\openal-soft-1.16.0\libs\Win64;..\glew-1.12.0\lib\Release\x64;..\glfw-3.1\x64;$(LibraryPath)</LibraryPath>
+    <LinkIncremental />
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -145,6 +181,22 @@
       <Command>xcopy /y "$(SolutionDir)glfw-3.1\Win32\glfw3.dll" "$(OutDir)"
 xcopy /y "$(SolutionDir)glew-1.12.0\bin\Release\Win32\glew32.dll" "$(OutDir)"
 copy /y "$(SolutionDir)openal-soft-1.16.0\bin\Win32\soft_oal.dll" "$(OutDir)OpenAL32.dll"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glfw3dll.lib;opengl32.lib;glew32.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y "$(SolutionDir)glfw-3.1\x64\glfw3.dll" "$(OutDir)"
+xcopy /y "$(SolutionDir)glew-1.12.0\bin\Release\x64\glew32.dll" "$(OutDir)"
+copy /y "$(SolutionDir)openal-soft-1.16.0\bin\Win64\soft_oal.dll" "$(OutDir)OpenAL32.dll"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -166,6 +218,27 @@ copy /y "$(SolutionDir)openal-soft-1.16.0\bin\Win32\soft_oal.dll" "$(OutDir)Open
       <Command>xcopy /y "$(SolutionDir)glfw-3.1\Win32\glfw3.dll" "$(OutDir)"
 xcopy /y "$(SolutionDir)glew-1.12.0\bin\Release\Win32\glew32.dll" "$(OutDir)"
 copy /y "$(SolutionDir)openal-soft-1.16.0\bin\Win32\soft_oal.dll" "$(OutDir)OpenAL32.dll"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>glfw3dll.lib;opengl32.lib;glew32.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y "$(SolutionDir)glfw-3.1\x64\glfw3.dll" "$(OutDir)"
+xcopy /y "$(SolutionDir)glew-1.12.0\bin\Release\x64\glew32.dll" "$(OutDir)"
+copy /y "$(SolutionDir)openal-soft-1.16.0\bin\Win64\soft_oal.dll" "$(OutDir)OpenAL32.dll"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
