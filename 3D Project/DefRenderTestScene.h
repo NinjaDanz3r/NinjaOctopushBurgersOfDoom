@@ -23,10 +23,13 @@ public:
 
 	// Updates the scene.
 	SceneEnd* update(double time);
+	void bindGeometry(int width, int height);
+	void bindLighting();
 
 	// Renders the scene.
 	void render(int width, int height);
 	void deferredRender(int width, int height);
+	void showTex(int width, int height);
 private:
 	void bindTriangleData();
 
@@ -35,7 +38,6 @@ private:
 	GLuint normalID;
 
 	FrameBufferObjects* multiplerendertargets;
-	FrameBufferObjects* fboRT;
 
 	//Shaders
 	Geometry* geometry;
@@ -59,8 +61,8 @@ private:
 	Texture* texture;
 	Cube* testCube;
 	Player* player;
-	float halfWidth;
-	float halfHeight;
+	GLuint halfWidth;
+	GLuint halfHeight;
 
 	// Vertex buffer
 	GLuint gVertexBuffer = 0;

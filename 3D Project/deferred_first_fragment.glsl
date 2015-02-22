@@ -10,12 +10,14 @@ in VertexData {
 
 uniform sampler2D tDiffuse;
 
-layout(location = 0) out vec4 diffuseOut;
-layout(location = 1) out vec4 positionOut;
-layout(location = 2) out vec4 normalsOut;
+layout(location = 0) out vec3 diffuseOut;
+layout(location = 1) out vec3 positionOut;
+layout(location = 2) out vec3 normalsOut;
+layout(location = 3) out vec3 texCoordOut;
 
 void main() {
-	diffuseOut = vec4(texture(tDiffuse,vertexIn.tex_coords).rbg, 0);
-	positionOut = vec4(vertexIn.position, 0);
-	normalsOut = vec4(vertexIn.normal, 0);
+	diffuseOut = vec3(texture(tDiffuse,vertexIn.tex_coords).rbg);
+	positionOut = vec3(vertexIn.position);
+	normalsOut = vec3(vertexIn.normal);
+	texCoordOut = vec3(vertexIn.tex_coords, 0.0);
 }

@@ -5,39 +5,47 @@
 #include <GL/GL.h>
 #include <GL/GLU.h>
 
+#define GBUFFER_POSITION_TEXTURE_UNIT 0
+#define GBUFFER_DIFFUSE_TEXTURE_UNIT  1
+#define GBUFFER_NORMAL_TEXTURE_UNIT   2
+#define GBUFFER_TEXCOORD_TEXTURE_UNIT 3
+
 class FrameBufferObjects
 {
-public:
+public:	
+	enum GBUFFER_TEXTURE_TYPE {
+		GBUFFER_TEXTURE_TYPE_POSITION,
+		GBUFFER_TEXTURE_TYPE_DIFFUSE,
+		GBUFFER_TEXTURE_TYPE_NORMAL,
+		GBUFFER_TEXTURE_TYPE_TEXCOORD,
+		GBUFFER_NUM_TEXTURES
+	};
 	//Construct/destruct
-	FrameBufferObjects(int width, int height);
+	FrameBufferObjects();
 	~FrameBufferObjects();
 
-	void showTexture();
-	GLuint getPositionTex() const;
-	GLuint getDiffuseTex() const;
-	GLuint getNormalTex() const;
+	GLuint getPositionTex()const{ return m_textures[GBUFFER_TEXTURE_TYPE_POSITION]; } ;
+	GLuint getDiffuseTex() const{ return m_textures[GBUFFER_TEXTURE_TYPE_DIFFUSE]; };
+	GLuint getNormalTex() const{ return m_textures[GBUFFER_TEXTURE_TYPE_NORMAL]; };
+	GLuint getTexcoordTex() const{ return m_textures[GBUFFER_TEXTURE_TYPE_TEXCOORD]; };
+
 	
 	void bindForWriting();
 	void bindForReading();
+	void setReadBuffer(GBUFFER_TEXTURE_TYPE texType);
 
-	void begin();
-	void end();
+	bool begin(unsigned int width, unsigned int height);
 private:
+
+	GLuint m_textures[GBUFFER_NUM_TEXTURES];
+
 	//GL IDs
 	GLuint fbo;
-	GLuint diffuseRenderTarget;
-	GLuint normalRenderTarget;
-	GLuint positionRenderTarget;
 	GLuint depthHandle;
 
 	//FBO info
 	unsigned int width;
 	unsigned int height;
-
-	//Textures
-	unsigned int diffuseTex;
-	unsigned int positionTex;
-	unsigned int normalTex;
 };
 
 #endif
