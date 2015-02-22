@@ -27,6 +27,9 @@ doc-build/
 # Don't ignore OpenAL Soft release folders.
 !openal-soft-1.16.0/bin
 
+# Don't ignore GLFW x64 release folder.
+!glfw-3.1/x64
+
 # Ignore Qt generated files
 GeneratedFiles/
 
