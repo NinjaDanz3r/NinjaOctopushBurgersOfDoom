@@ -5,8 +5,8 @@
 
 /// Interface for renderable 3D geometry.
 /**
- * Can be rendered using the default shaders.
- */
+* Can be rendered using the default shaders.
+*/
 class Geometry {
 	public:
 		/// A vertex point.
@@ -24,26 +24,26 @@ class Geometry {
 
 		/// Get all the vertices.
 		/**
-		 * @return Array of vertices
-		 */
+		* @return Array of vertices
+		*/
 		virtual Vertex* vertices() const = 0;
 
 		/// Get the number of vertices.
 		/**
-		 * @return The number of vertices
-		 */
+		* @return The number of vertices
+		*/
 		virtual unsigned int vertexCount() const = 0;
 
 		/// Get all the vertex indices.
 		/**
-		 * @return Array of vertex indices
-		 */
+		* @return Array of vertex indices
+		*/
 		virtual unsigned int* indices() const = 0;
 
 		/// Get the number of indicies.
 		/**
-		 * @return The number of vertex indices.
-		 */
+		* @return The number of vertex indices.
+		*/
 		virtual unsigned int indexCount() const = 0;
 };
 

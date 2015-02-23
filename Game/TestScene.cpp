@@ -5,7 +5,7 @@
 
 #include "TestScene.h"
 
-#include "Model.h"
+#include <Model.h>
 #include "Texture2D.h"
 
 #include <glm/glm.hpp>

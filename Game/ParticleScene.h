@@ -5,7 +5,7 @@
 #include "Shader.h"
 #include "ShaderProgram.h"
 #include "Texture.h"
-#include "Geometry.h"
+#include <Geometry.h>
 #include "Player.h"
 #include "ParticleSystem.h"
 

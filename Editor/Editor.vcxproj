@@ -141,8 +141,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Game\Model.cpp" />
-    <ClCompile Include="..\Game\util.cpp" />
     <ClCompile Include="editor.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_editor.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -209,9 +207,6 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Game\Geometry.h" />
-    <ClInclude Include="..\Game\Model.h" />
-    <ClInclude Include="..\Game\util.h" />
     <ClInclude Include="GeneratedFiles\ui_editor.h" />
     <ClInclude Include="ModelResource.h" />
     <ClInclude Include="OBJModel.h" />

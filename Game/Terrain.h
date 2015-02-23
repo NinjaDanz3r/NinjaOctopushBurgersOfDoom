@@ -1,7 +1,7 @@
 #ifndef __TERRAIN_H__
 #define __TERRAIN_H__
 
-#include "Geometry.h"
+#include <Geometry.h>
 #include <glm/glm.hpp>
 
 /// A terrain mesh.

@@ -3,7 +3,7 @@
 
 #include <string>
 #include <fstream>
-#include "Model.h"
+#include <Model.h>
 
 /// A model resource.
 class ModelResource {

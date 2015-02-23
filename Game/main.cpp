@@ -8,7 +8,7 @@
 #include "Game.h"
 #include "settings.h"
 #include "input.h"
-#include "util.h"
+#include <util.h>
 
 #define _CRTDBG_MAP_ALLOC
 #include <crtdbg.h>

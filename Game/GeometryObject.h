@@ -2,7 +2,7 @@
 #define __GEOMETRYOBJECT_H__
 
 #include "Object.h"
-#include "Geometry.h"
+#include <Geometry.h>
 
 /// A game object with renderable Geometry.
 class GeometryObject : public Object {

@@ -1,7 +1,7 @@
 #ifndef __OBJMODEL_H__
 #define __OBJMODEL_H__
 
-#include "Model.h"
+#include <Model.h>
 
 /// A model loaded from an OBJ file.
 class OBJModel : public Model {

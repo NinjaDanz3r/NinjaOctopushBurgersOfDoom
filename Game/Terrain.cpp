@@ -1,6 +1,6 @@
 #include "Terrain.h"
 #include <stb_image.h>
-#include "util.h"
+#include <util.h>
 
 Terrain::Terrain(const char* filename) {
 	// Load height map from file

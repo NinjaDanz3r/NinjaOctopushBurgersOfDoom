@@ -1,6 +1,6 @@
 #include "SoundBuffer.h"
 #include "SoundSystem.h"
-#include "util.h"
+#include <util.h>
 
 SoundBuffer::SoundBuffer(SoundFile* soundFile) {
 	// Create audio buffer.

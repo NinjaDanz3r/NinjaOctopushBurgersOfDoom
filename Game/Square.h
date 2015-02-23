@@ -1,7 +1,7 @@
 #ifndef __SQUARE_H__
 #define __SQUARE_H__
 
-#include "Geometry.h"
+#include <Geometry.h>
 
 /// A square.
 class Square : public Geometry {

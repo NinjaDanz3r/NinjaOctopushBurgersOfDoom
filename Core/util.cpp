@@ -34,7 +34,7 @@ namespace util {
 		timeinfo = localtime(&rawtime);
 
 		strftime(buffer, 24, " - %Y-%m-%d %H:%M:%S", timeinfo);
-		
+
 		log(buffer);
 	}
 

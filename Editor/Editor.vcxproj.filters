@@ -80,12 +80,6 @@
     <ClCompile Include="OBJModel.cpp">
       <Filter>Source Files\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="..\Game\Model.cpp">
-      <Filter>Source Files\Geometry</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Game\util.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="editor.ui">
@@ -113,15 +107,6 @@
     </ClInclude>
     <ClInclude Include="OBJModel.h">
       <Filter>Header Files\Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Game\Geometry.h">
-      <Filter>Header Files\Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Game\Model.h">
-      <Filter>Header Files\Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Game\util.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

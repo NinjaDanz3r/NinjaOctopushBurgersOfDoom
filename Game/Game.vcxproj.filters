@@ -22,9 +22,6 @@
     <ClCompile Include="Skybox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="util.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="AudioScene.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
@@ -85,9 +82,6 @@
     <ClCompile Include="WaveFile.cpp">
       <Filter>Source Files\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>Source Files\Geometry</Filter>
-    </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>Source Files\Object</Filter>
     </ClCompile>
@@ -120,9 +114,6 @@
     <ClInclude Include="Skybox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="util.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Header Files\Camera</Filter>
     </ClInclude>
@@ -130,9 +121,6 @@
       <Filter>Header Files\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Cube.h">
-      <Filter>Header Files\Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="Geometry.h">
       <Filter>Header Files\Geometry</Filter>
     </ClInclude>
     <ClInclude Include="Listener.h">
@@ -188,9 +176,6 @@
     </ClInclude>
     <ClInclude Include="ParticleScene.h">
       <Filter>Header Files\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>Header Files\Geometry</Filter>
     </ClInclude>
     <ClInclude Include="Object.h">
       <Filter>Header Files\Object</Filter>

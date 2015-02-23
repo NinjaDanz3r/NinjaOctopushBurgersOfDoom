@@ -1,6 +1,7 @@
 #ifndef __MODEL_H__
 #define __MODEL_H__
 
+#include "Core.h"
 #include <fstream>
 #include <vector>
 #include "Geometry.h"
@@ -10,42 +11,42 @@ class Model : public Geometry {
 	public:
 		/// Create new model at origo.
 		/**
-		 * @param filename Filename (relative or absolute) to the model file.
-		 */
-		Model(const char* filename);
+		* @param filename Filename (relative or absolute) to the model file.
+		*/
+		CORE_EXPORT Model(const char* filename);
 
 		/// Destructor
-		virtual ~Model();
+		CORE_EXPORT virtual ~Model();
 
 		/// Get all the vertices.
 		/**
 		* @return Array of vertices
 		*/
-		Vertex* vertices() const;
+		CORE_EXPORT Vertex* vertices() const;
 
 		/// Get the number of vertices.
 		/**
 		* @return The number of vertices
 		*/
-		unsigned int vertexCount() const;
+		CORE_EXPORT unsigned int vertexCount() const;
 
 		/// Get all the vertex indices.
 		/**
 		* @return Array of vertex indices
 		*/
-		unsigned int* indices() const;
+		CORE_EXPORT unsigned int* indices() const;
 
 		/// Get the number of indicies.
 		/**
 		* @return The number of vertex indices.
 		*/
-		unsigned int indexCount() const;
+		CORE_EXPORT unsigned int indexCount() const;
 
 		/// Save model to binary file.
 		/**
-		 * @param filename Filename (relative or absolute) to the model file.
-		 */
-		void save(const char* filename) const;
+		* @param filename Filename (relative or absolute) to the model file.
+		*/
+		CORE_EXPORT void save(const char* filename) const;
 
 	protected:
 		Model() { }

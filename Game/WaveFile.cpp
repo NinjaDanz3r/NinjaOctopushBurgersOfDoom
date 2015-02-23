@@ -2,7 +2,7 @@
 
 #include <fstream>
 #include <stdio.h>
-#include "util.h"
+#include <util.h>
 
 WaveFile::WaveFile(const char* filename) {
 	std::ifstream waveFile;

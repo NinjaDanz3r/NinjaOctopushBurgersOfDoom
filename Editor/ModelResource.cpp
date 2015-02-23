@@ -1,6 +1,6 @@
 #include "ModelResource.h"
 #include "OBJModel.h"
-#include "util.h"
+#include <util.h>
 
 ModelResource::ModelResource(const std::string &name, const std::string &filename) {
 	this->name = name;

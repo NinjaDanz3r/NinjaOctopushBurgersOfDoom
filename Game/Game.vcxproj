@@ -21,7 +21,6 @@
   <ItemGroup>
     <ClCompile Include="AudioScene.cpp" />
     <ClCompile Include="GeometryObject.cpp" />
-    <ClCompile Include="Model.cpp" />
     <ClCompile Include="ParticleScene.cpp" />
     <ClCompile Include="CubeMapTexture.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -49,13 +48,11 @@
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Texture2D.cpp" />
-    <ClCompile Include="util.cpp" />
     <ClCompile Include="WaveFile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioScene.h" />
     <ClInclude Include="GeometryObject.h" />
-    <ClInclude Include="Model.h" />
     <ClInclude Include="ParticleScene.h" />
     <ClInclude Include="CubeMapTexture.h" />
     <ClInclude Include="Shader.h" />
@@ -66,7 +63,6 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="FirstPersonCamera.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="Geometry.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Listener.h" />
@@ -85,7 +81,6 @@
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Texture2D.h" />
-    <ClInclude Include="util.h" />
     <ClInclude Include="WaveFile.h" />
   </ItemGroup>
   <ItemGroup>
