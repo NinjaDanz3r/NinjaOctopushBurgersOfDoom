@@ -52,7 +52,7 @@ class Camera : public Object {
 
 		/// Get near plane.
 		/**
-		 * Default: 0.5
+		 * Default: 0.1
 		 * @return Near plane
 		 */
 		float nearPlane() const;
@@ -81,7 +81,7 @@ class Camera : public Object {
 
 	private:
 		float _fieldOfView = 45.f;
-		float zNear = 0.5f;
+		float zNear = 0.1f;
 		float zFar = 100.f;
 };
 
