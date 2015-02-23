@@ -68,9 +68,6 @@
     <ClCompile Include="editor.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\3D Project\Model.cpp">
-      <Filter>Source Files\Geometry</Filter>
-    </ClCompile>
     <ClCompile Include="Project.cpp">
       <Filter>Source Files\Project</Filter>
     </ClCompile>
@@ -80,11 +77,14 @@
     <ClCompile Include="ModelResource.cpp">
       <Filter>Source Files\Project</Filter>
     </ClCompile>
-    <ClCompile Include="..\3D Project\util.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="OBJModel.cpp">
       <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Game\Model.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Game\util.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -102,12 +102,6 @@
     <ClInclude Include="GeneratedFiles\ui_editor.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\3D Project\Geometry.h">
-      <Filter>Header Files\Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3D Project\Model.h">
-      <Filter>Header Files\Geometry</Filter>
-    </ClInclude>
     <ClInclude Include="Project.h">
       <Filter>Header Files\Project</Filter>
     </ClInclude>
@@ -117,11 +111,17 @@
     <ClInclude Include="ModelResource.h">
       <Filter>Header Files\Project</Filter>
     </ClInclude>
-    <ClInclude Include="..\3D Project\util.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="OBJModel.h">
       <Filter>Header Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Game\Geometry.h">
+      <Filter>Header Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Game\Model.h">
+      <Filter>Header Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Game\util.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

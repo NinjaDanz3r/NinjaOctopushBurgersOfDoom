@@ -100,10 +100,15 @@
     <None Include="skybox_fragment.glsl" />
     <None Include="skybox_vertex.glsl" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.vcxproj">
+      <Project>{5409fa25-9c47-43fa-bfbd-a8f849d9e7d2}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D9B72C7F-F035-4499-945B-D2A72B081EA2}</ProjectGuid>
     <RootNamespace>3DProject</RootNamespace>
-    <ProjectName>3D Project</ProjectName>
+    <ProjectName>Game</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -149,21 +154,21 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\openal-soft-1.16.0\include;..\simpleini-141111;..\glm-0.9.6.3;..\glew-1.12.0\include;..\glfw-3.1\include;..\stb;$(IncludePath)</IncludePath>
+    <IncludePath>..\openal-soft-1.16.0\include;..\simpleini-141111;..\glm-0.9.6.3;..\glew-1.12.0\include;..\glfw-3.1\include;..\stb;..\Core;$(IncludePath)</IncludePath>
     <LibraryPath>..\openal-soft-1.16.0\libs\Win32;..\glew-1.12.0\lib\Release\Win32;..\glfw-3.1\Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>..\openal-soft-1.16.0\include;..\simpleini-141111;..\glm-0.9.6.3;..\glew-1.12.0\include;..\glfw-3.1\include;..\stb;$(IncludePath)</IncludePath>
+    <IncludePath>..\openal-soft-1.16.0\include;..\simpleini-141111;..\glm-0.9.6.3;..\glew-1.12.0\include;..\glfw-3.1\include;..\stb;..\Core;$(IncludePath)</IncludePath>
     <LibraryPath>..\openal-soft-1.16.0\libs\Win64;..\glew-1.12.0\lib\Release\x64;..\glfw-3.1\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>..\openal-soft-1.16.0\include;..\simpleini-141111;..\glm-0.9.6.3;..\glew-1.12.0\include;..\glfw-3.1\include;..\stb;$(IncludePath)</IncludePath>
+    <IncludePath>..\openal-soft-1.16.0\include;..\simpleini-141111;..\glm-0.9.6.3;..\glew-1.12.0\include;..\glfw-3.1\include;..\stb;..\Core;$(IncludePath)</IncludePath>
     <LibraryPath>..\openal-soft-1.16.0\libs\Win32;..\glew-1.12.0\lib\Release\Win32;..\glfw-3.1\Win32;$(LibraryPath)</LibraryPath>
     <LinkIncremental>
     </LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>..\openal-soft-1.16.0\include;..\simpleini-141111;..\glm-0.9.6.3;..\glew-1.12.0\include;..\glfw-3.1\include;..\stb;$(IncludePath)</IncludePath>
+    <IncludePath>..\openal-soft-1.16.0\include;..\simpleini-141111;..\glm-0.9.6.3;..\glew-1.12.0\include;..\glfw-3.1\include;..\stb;..\Core;$(IncludePath)</IncludePath>
     <LibraryPath>..\openal-soft-1.16.0\libs\Win64;..\glew-1.12.0\lib\Release\x64;..\glfw-3.1\x64;$(LibraryPath)</LibraryPath>
     <LinkIncremental />
   </PropertyGroup>

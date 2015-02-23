@@ -60,19 +60,19 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>..\3D Project;$(QTDIR)\include;..\glm;$(IncludePath)</IncludePath>
+    <IncludePath>..\Game;$(QTDIR)\include;..\glm-0.9.6.3;..\Core;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>..\3D Project;$(QTDIR)\include;..\glm;$(IncludePath)</IncludePath>
+    <IncludePath>..\Game;$(QTDIR)\include;..\glm-0.9.6.3;..\Core;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>..\3D Project;$(QTDIR)\include;..\glm;$(IncludePath)</IncludePath>
+    <IncludePath>..\Game;$(QTDIR)\include;..\glm-0.9.6.3;..\Core;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>..\3D Project;$(QTDIR)\include;..\glm;$(IncludePath)</IncludePath>
+    <IncludePath>..\Game;$(QTDIR)\include;..\glm-0.9.6.3;..\Core;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -141,8 +141,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\3D Project\Model.cpp" />
-    <ClCompile Include="..\3D Project\util.cpp" />
+    <ClCompile Include="..\Game\Model.cpp" />
+    <ClCompile Include="..\Game\util.cpp" />
     <ClCompile Include="editor.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_editor.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -209,9 +209,9 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\3D Project\Geometry.h" />
-    <ClInclude Include="..\3D Project\Model.h" />
-    <ClInclude Include="..\3D Project\util.h" />
+    <ClInclude Include="..\Game\Geometry.h" />
+    <ClInclude Include="..\Game\Model.h" />
+    <ClInclude Include="..\Game\util.h" />
     <ClInclude Include="GeneratedFiles\ui_editor.h" />
     <ClInclude Include="ModelResource.h" />
     <ClInclude Include="OBJModel.h" />
@@ -237,6 +237,11 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\qrc_%(Filename).cpp;%(Outputs)</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.vcxproj">
+      <Project>{5409fa25-9c47-43fa-bfbd-a8f849d9e7d2}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
