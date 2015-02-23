@@ -32,6 +32,7 @@ public:
 	
 	void bindForWriting();
 	void bindForReading();
+	void bindForTexReading();
 	void setReadBuffer(GBUFFER_TEXTURE_TYPE texType);
 
 	bool begin(unsigned int width, unsigned int height);

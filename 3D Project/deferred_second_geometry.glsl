@@ -1,11 +1,4 @@
 /*
-Basic idea of...
+Lighting pass geometry shader (second pass) Not in use.
 */
 #version 400
-in vec2 in_tex_coords;
-
-out vec2 tex_coords;
-
-void main() {
-	tex_coords = in_tex_coords;
-}

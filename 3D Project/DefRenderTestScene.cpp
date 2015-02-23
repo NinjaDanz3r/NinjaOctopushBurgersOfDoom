@@ -33,32 +33,27 @@ DefRenderTestScene::DefRenderTestScene() {
 	}
 
 	secondVertexShader = new Shader("deferred_second_vertex.glsl", GL_VERTEX_SHADER);
-	secondGeometryShader = new Shader("deferred_second_geometry.glsl", GL_GEOMETRY_SHADER);
 	secondFragmentShader = new Shader("deferred_second_fragment.glsl", GL_FRAGMENT_SHADER);
-	secondShaderProgram = new ShaderProgram({ secondVertexShader, secondGeometryShader, secondFragmentShader });
+	secondShaderProgram = new ShaderProgram({ secondVertexShader, secondFragmentShader });
 
 	halfWidth = (GLint)(settings::displayWidth() / 2.0f);
 	halfHeight = (GLint)(settings::displayHeight() / 2.0f);
 
 	shaderProgram->use();
-	
-	// Texture unit 0 is for base images.
-	//glUniform1i(shaderProgram->uniformLocation("baseImage"), 0);
 
 	player = new Player();
 	player->setMovementSpeed(1000.0f);
 	multiplerendertargets = new FrameBufferObjects();
 
+	lightSquare = new Square();
 	geometry = new Cube();
 	bindTriangleData();
 
 	//Only need tDiffuse for the geometry call
 	diffuseID = shaderProgram->uniformLocation("tDiffuse");
-	//positionID = shaderProgram->uniformLocation("tPosition");
-	//normalID = shaderProgram->uniformLocation("tNormal");
+	glUniform1i(diffuseID, 0);
+
 	multiplerendertargets->begin(settings::displayWidth(), settings::displayHeight());
-
-
 }
 
 DefRenderTestScene::~DefRenderTestScene() {
@@ -87,6 +82,7 @@ Scene::SceneEnd* DefRenderTestScene::update(double time) {
 }
 
 void DefRenderTestScene::render(int width, int height) {
+	shaderProgram->use();
 	multiplerendertargets->bindForWriting();
 
 	glDepthMask(GL_TRUE);
@@ -105,11 +101,7 @@ void DefRenderTestScene::render(int width, int height) {
 
 	if (state == 1)
 	{
-		//glActiveTexture(GL_TEXTURE0 + 0);
-		//glBindTexture(GL_TEXTURE_2D, texture->textureID());
-
 		glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
-
 		showTex(width, height);
 	}
 	else if (state == 0)
@@ -122,7 +114,7 @@ void DefRenderTestScene::render(int width, int height) {
 	}
 	glDepthMask(GL_FALSE);
 	glDisable(GL_DEPTH_TEST);
-	//deferredRender(width, height);
+	deferredRender(width, height);
 }
 
 void DefRenderTestScene::bindTriangleData(){
@@ -155,21 +147,31 @@ void DefRenderTestScene::bindTriangleData(){
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(unsigned int), geometry->indices(), GL_STATIC_DRAW);
 	
 }
+void DefRenderTestScene::bindDeferredQuad(){
+
+}
 void DefRenderTestScene::deferredRender(int width, int height){
+	secondShaderProgram->use();
+
 	glEnable(GL_BLEND);
 	glBlendEquation(GL_FUNC_ADD);
 	glBlendFunc(GL_ONE, GL_ONE);
 
+	bindLighting(width, height);
+	//bindGeometry(width, height);
+
 	multiplerendertargets->bindForReading();
-	glClear(GL_COLOR_BUFFER_BIT);
-	bindLighting();
+	//glClear(GL_COLOR_BUFFER_BIT);
+	//glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	//glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_INT, (void*)0);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 void DefRenderTestScene::showTex(int width, int height){
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	multiplerendertargets->bindForReading();
+	multiplerendertargets->bindForTexReading();
 
 	multiplerendertargets->setReadBuffer(FrameBufferObjects::GBUFFER_TEXTURE_TYPE_POSITION);
 	glBlitFramebuffer(0, 0, width, height, 0, 0, halfWidth, halfHeight, GL_COLOR_BUFFER_BIT, GL_LINEAR);
@@ -197,14 +199,32 @@ void DefRenderTestScene::bindGeometry(int width, int height){
 	glUniformMatrix3fv(shaderProgram->uniformLocation("normalMatrix"), 1, GL_FALSE, &glm::mat3(N)[0][0]);
 	glUniformMatrix4fv(shaderProgram->uniformLocation("projectionMatrix"), 1, GL_FALSE, &player->camera()->projection(width, height)[0][0]);
 }
-void DefRenderTestScene::bindLighting(){
+void DefRenderTestScene::bindLighting(int width, int height){
 	// Light information.(not needed for geometry pass)
 	glm::mat4 view = player->camera()->view();
+	glm::mat4 model = geometry->modelMatrix();
+
 	glm::vec4 lightPosition = view * glm::vec4(-5.f, 0.f, 5.f, 1.f);
 	glm::vec3 lightIntensity(1.f, 1.f, 1.f);
 	glm::vec3 diffuseKoefficient(1.f, 1.f, 1.f);
+	glm::vec3 cameraPosition= player->camera()->position();
+	glm::vec2 screenSize(width, height);
 
-	glUniform4fv(shaderProgram->uniformLocation("lightPosition"), 1, &lightPosition[0]);
-	glUniform3fv(shaderProgram->uniformLocation("lightIntensity"), 1, &lightIntensity[0]);
-	glUniform3fv(shaderProgram->uniformLocation("diffuseKoefficient"), 1, &diffuseKoefficient[0]);
+	diffuseID = secondShaderProgram->uniformLocation("tDiffuse");
+	positionID = secondShaderProgram->uniformLocation("tPosition");
+	normalID = secondShaderProgram->uniformLocation("tNormal");
+
+	glUniform1i(positionID, FrameBufferObjects::GBUFFER_TEXTURE_TYPE_POSITION);
+	glUniform1i(diffuseID, FrameBufferObjects::GBUFFER_TEXTURE_TYPE_DIFFUSE);
+	glUniform1i(normalID, FrameBufferObjects::GBUFFER_TEXTURE_TYPE_NORMAL);
+
+	glUniformMatrix4fv(secondShaderProgram->uniformLocation("modelMatrix"), 1, GL_FALSE, &model[0][0]);
+	glUniformMatrix4fv(secondShaderProgram->uniformLocation("viewMatrix"), 1, GL_FALSE, &view[0][0]);
+	glUniformMatrix4fv(secondShaderProgram->uniformLocation("projectionMatrix"), 1, GL_FALSE, &player->camera()->projection(width, height)[0][0]);
+
+	glUniform2fv(secondShaderProgram->uniformLocation("screenSize"), 1, &screenSize[0]);
+	glUniform3fv(secondShaderProgram->uniformLocation("cameraPosition"), 1, &cameraPosition[0]);
+	glUniform4fv(secondShaderProgram->uniformLocation("lightPosition"), 1, &lightPosition[0]);
+	glUniform3fv(secondShaderProgram->uniformLocation("lightIntensity"), 1, &lightIntensity[0]);
+	glUniform3fv(secondShaderProgram->uniformLocation("diffuseKoefficient"), 1, &diffuseKoefficient[0]);
 }

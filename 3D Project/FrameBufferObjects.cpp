@@ -131,6 +131,15 @@ void FrameBufferObjects::bindForWriting()
 
 void FrameBufferObjects::bindForReading()
 {
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+
+	for (unsigned int i = 0; i < (sizeof(m_textures) / sizeof(m_textures[0])); i++) {
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, m_textures[GBUFFER_TEXTURE_TYPE_POSITION + i]);
+	}
+}
+void FrameBufferObjects::bindForTexReading()
+{
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, fbo);
 }
 void FrameBufferObjects::setReadBuffer(GBUFFER_TEXTURE_TYPE texType){

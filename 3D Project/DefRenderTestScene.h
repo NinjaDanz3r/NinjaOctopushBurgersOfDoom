@@ -24,14 +24,16 @@ public:
 	// Updates the scene.
 	SceneEnd* update(double time);
 	void bindGeometry(int width, int height);
-	void bindLighting();
+	void bindLighting(int width, int height);
+
 
 	// Renders the scene.
 	void render(int width, int height);
 	void deferredRender(int width, int height);
 	void showTex(int width, int height);
 private:
-	void bindTriangleData();
+	void bindTriangleData();	
+	void bindDeferredQuad();
 
 	GLuint diffuseID;
 	GLuint positionID;
@@ -41,6 +43,7 @@ private:
 
 	//Shaders
 	Geometry* geometry;
+	Geometry* lightSquare;
 	Shader* vertexShader;
 	Shader* geometryShader;
 	Shader* fragmentShader;
