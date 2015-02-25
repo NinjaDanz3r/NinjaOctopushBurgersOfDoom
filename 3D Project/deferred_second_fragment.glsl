@@ -37,6 +37,8 @@ void main () {
 	vec3 position = texture(tPosition, texCoord).xyz;
 	vec3 diffuse = texture(tDiffuse, texCoord).xyz;
 	vec3 normal = texture(tNormals, texCoord).xyz;
+
+	//POSITION IS STORED IN DIFFUSE, VICE VERSA, BEWARE.
 	//fragment_color = vec4(texCoord, 0.0, 1.0);
 	//fragment_color = vec4(diffuse, 1.0) * vec4(ads(normal, position), 1.0);
 	fragment_color = vec4(position, 1.0) * vec4(ads(normal, diffuse), 1.0);
