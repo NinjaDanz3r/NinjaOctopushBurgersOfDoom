@@ -88,7 +88,6 @@
     <ClCompile Include="WaveFile.cpp">
       <Filter>Source Files\Audio</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="Cube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -97,10 +96,9 @@
     </ClCompile>
     <ClCompile Include="DefRenderTestScene.cpp">
       <Filter>Source Files\Scene</Filter>
-=======
+	</ClCompile>
     <ClCompile Include="Model.cpp">
       <Filter>Source Files\Geometry</Filter>
->>>>>>> origin/master
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -191,7 +189,6 @@
     <ClInclude Include="ParticleScene.h">
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="Cube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -200,10 +197,9 @@
     </ClInclude>
     <ClInclude Include="DefRenderTestScene.h">
       <Filter>Header Files\Scene</Filter>
-=======
+	</ClInclude>
     <ClInclude Include="Model.h">
       <Filter>Header Files\Geometry</Filter>
->>>>>>> origin/master
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
