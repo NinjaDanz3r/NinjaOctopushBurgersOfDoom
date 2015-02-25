@@ -13,6 +13,9 @@
 
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))
 
+DefRenderTestScene::RenderQuad DefRenderTestScene::vertices[4] = {{ -1.f, 1.f }, { 1.f, 1.f }, { -1.f, -1.f }, { 1.f, -1.f }};
+unsigned int DefRenderTestScene::indices[6] = { 0, 1, 3, 0, 3, 2 };
+
 DefRenderTestScene::DefRenderTestScene() {
 
 
@@ -45,9 +48,10 @@ DefRenderTestScene::DefRenderTestScene() {
 	player->setMovementSpeed(1000.0f);
 	multiplerendertargets = new FrameBufferObjects();
 
-	lightSquare = new Square();
 	geometry = new Cube();
 	bindTriangleData();
+	bindDeferredQuad();
+
 
 	//Only need tDiffuse for the geometry call
 	diffuseID = shaderProgram->uniformLocation("tDiffuse");
@@ -103,6 +107,8 @@ void DefRenderTestScene::render(int width, int height) {
 	{
 		glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
 		showTex(width, height);
+		//glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+		//multiplerendertargets->bindForReading();
 	}
 	else if (state == 0)
 	{
@@ -148,6 +154,24 @@ void DefRenderTestScene::bindTriangleData(){
 	
 }
 void DefRenderTestScene::bindDeferredQuad(){
+	qVertexCount = 4;
+	glGenBuffers(1, &qVertexBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, qVertexBuffer);
+	glBufferData(GL_ARRAY_BUFFER, qVertexCount * sizeof(Geometry::Vertex), vertices, GL_STATIC_DRAW);
+
+	// Define vertex data layout
+	glGenVertexArrays(1, &qVertexAttribute);
+	glBindVertexArray(qVertexAttribute);
+	glEnableVertexAttribArray(0); //the vertex attribute object will remember its enabled attributes
+
+	GLuint vertexPos = secondShaderProgram->attributeLocation("vertex_position");
+	glVertexAttribPointer(vertexPos, 2, GL_FLOAT, GL_FALSE, sizeof(DefRenderTestScene::RenderQuad), BUFFER_OFFSET(0));
+
+	// Index buffer
+	qIndexCount = 6;
+	glGenBuffers(1, &qIndexBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, qIndexBuffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, qIndexCount * sizeof(unsigned int), indices, GL_STATIC_DRAW);
 
 }
 void DefRenderTestScene::deferredRender(int width, int height){
@@ -158,13 +182,15 @@ void DefRenderTestScene::deferredRender(int width, int height){
 	glBlendFunc(GL_ONE, GL_ONE);
 
 	bindLighting(width, height);
-	//bindGeometry(width, height);
 
-	multiplerendertargets->bindForReading();
 	//glClear(GL_COLOR_BUFFER_BIT);
 	//glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-	//glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_INT, (void*)0);
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+	glBindVertexArray(qVertexAttribute);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, qIndexBuffer);
+
+
+	glDrawElements(GL_TRIANGLES, qIndexCount, GL_UNSIGNED_INT, (void*)0);
 }
 void DefRenderTestScene::showTex(int width, int height){
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
@@ -181,9 +207,6 @@ void DefRenderTestScene::showTex(int width, int height){
 
 	multiplerendertargets->setReadBuffer(FrameBufferObjects::GBUFFER_TEXTURE_TYPE_NORMAL);
 	glBlitFramebuffer(0, 0, width, height, halfWidth, halfHeight, width, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
-
-	multiplerendertargets->setReadBuffer(FrameBufferObjects::GBUFFER_TEXTURE_TYPE_TEXCOORD);
-	glBlitFramebuffer(0, 0, width, height, halfWidth, 0, width, halfHeight, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 }
 void DefRenderTestScene::bindGeometry(int width, int height){
 	// Model matrix, unique for each model.
@@ -212,7 +235,7 @@ void DefRenderTestScene::bindLighting(int width, int height){
 
 	diffuseID = secondShaderProgram->uniformLocation("tDiffuse");
 	positionID = secondShaderProgram->uniformLocation("tPosition");
-	normalID = secondShaderProgram->uniformLocation("tNormal");
+	normalID = secondShaderProgram->uniformLocation("tNormals");
 
 	glUniform1i(positionID, FrameBufferObjects::GBUFFER_TEXTURE_TYPE_POSITION);
 	glUniform1i(diffuseID, FrameBufferObjects::GBUFFER_TEXTURE_TYPE_DIFFUSE);

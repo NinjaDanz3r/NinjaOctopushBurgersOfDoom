@@ -21,6 +21,13 @@ public:
 	// Destructor
 	~DefRenderTestScene();
 
+	struct RenderQuad {
+		//x-pos
+		float x;
+		//y-pos
+		float y;
+	};
+
 	// Updates the scene.
 	SceneEnd* update(double time);
 	void bindGeometry(int width, int height);
@@ -49,11 +56,6 @@ private:
 	Shader* fragmentShader;
 	ShaderProgram* shaderProgram;
 
-	Shader* firstVertexShader;
-	Shader* firstGeometryShader;
-	Shader* firstFragmentShader;
-	ShaderProgram* firstShaderProgram;
-
 	Shader* secondVertexShader;
 	Shader* secondGeometryShader;
 	Shader* secondFragmentShader;
@@ -75,6 +77,18 @@ private:
 	GLuint gIndexBuffer = 0;
 	unsigned int indexCount = 0;
 	int vertexCount = 0;
+
+	// Vertex buffer
+	GLuint qVertexBuffer = 0;
+	GLuint qVertexAttribute = 0;
+
+	static RenderQuad vertices[4];
+	static unsigned int indices[6];
+
+	//Index buffer
+	GLuint qIndexBuffer = 0;
+	unsigned int qIndexCount = 8;
+	int qVertexCount = 0;
 
 	
 };

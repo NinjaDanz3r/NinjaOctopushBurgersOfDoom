@@ -22,9 +22,7 @@ vec2 calculateTexCoord() {
 // Ambient, diffuse and specular lighting.
 vec3 ads(vec3 normal, vec3 position) {
 	vec3 lightDirection = normalize(vec3(lightPosition) - position);
-
-	//camerapos - position eller bara - position
-	vec3 v = normalize(vec3(cameraPosition - position));
+	vec3 v = normalize(vec3(-position));
 	vec3 r = reflect(-lightDirection, normal);
 	vec3 diffuseLight = diffuseKoefficient * max(dot(lightDirection, normal), 0.0);
 	vec3 Ks = vec3(1.0, 1.0, 1.0);
@@ -38,7 +36,8 @@ void main () {
 	vec2 texCoord = calculateTexCoord();
 	vec3 position = texture(tPosition, texCoord).xyz;
 	vec3 diffuse = texture(tDiffuse, texCoord).xyz;
-	vec3 normal = normalize(texture(tNormal, texCoord).xyz);
-	fragment_color = vec4(1, 1, 1, 1);
-	//fragment_color = vec4(diffuse, 1.0) * vec4(ads(normal, position), 1.0);
+	vec3 normal = texture(tNormals, texCoord).xyz;
+	//fragment_color = vec4(texCoord, 0.0, 1.0);
+	fragment_color = vec4(diffuse, 1.0) * vec4(ads(normal, position), 1.0);
+	//fragment_color = vec4(ads(normal, position), 1.0);
 }

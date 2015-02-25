@@ -17,7 +17,6 @@ public:
 		GBUFFER_TEXTURE_TYPE_POSITION,
 		GBUFFER_TEXTURE_TYPE_DIFFUSE,
 		GBUFFER_TEXTURE_TYPE_NORMAL,
-		GBUFFER_TEXTURE_TYPE_TEXCOORD,
 		GBUFFER_NUM_TEXTURES
 	};
 	//Construct/destruct
@@ -27,8 +26,6 @@ public:
 	GLuint getPositionTex()const{ return m_textures[GBUFFER_TEXTURE_TYPE_POSITION]; } ;
 	GLuint getDiffuseTex() const{ return m_textures[GBUFFER_TEXTURE_TYPE_DIFFUSE]; };
 	GLuint getNormalTex() const{ return m_textures[GBUFFER_TEXTURE_TYPE_NORMAL]; };
-	GLuint getTexcoordTex() const{ return m_textures[GBUFFER_TEXTURE_TYPE_TEXCOORD]; };
-
 	
 	void bindForWriting();
 	void bindForReading();
