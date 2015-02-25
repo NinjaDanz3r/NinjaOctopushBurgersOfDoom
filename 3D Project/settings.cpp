@@ -13,6 +13,7 @@ namespace settings {
 	bool _showConsole;
 	bool _logging;
 	bool _showMouseCursor;
+	bool _centerMouseCursor = true;
 	bool _showFPS;
 	bool _debugContext;
 	std::string* _startingScene;
@@ -39,6 +40,7 @@ namespace settings {
 		_showConsole = ini.GetBoolValue("Debug", "Show Console");
 		_logging = ini.GetBoolValue("Debug", "Logging");
 		_showMouseCursor = ini.GetBoolValue("Debug", "Show Mouse Cursor");
+		_centerMouseCursor = ini.GetBoolValue("Debug", "Center Mouse Cursor", true);
 		_showFPS = ini.GetBoolValue("Debug", "Show FPS", true);
 		_debugContext = ini.GetBoolValue("Debug", "Debug Context", false);
 		*_startingScene = ini.GetValue("Debug", "Starting Scene", "default");
@@ -57,6 +59,7 @@ namespace settings {
 		ini.SetBoolValue("Debug", "Show Console", _showConsole);
 		ini.SetBoolValue("Debug", "Logging", _logging);
 		ini.SetBoolValue("Debug", "Show Mouse Cursor", _showMouseCursor);
+		ini.SetBoolValue("Debug", "Center Mouse Cursor", _centerMouseCursor);
 		ini.SetBoolValue("Debug", "Show FPS", _showFPS);
 		ini.SetBoolValue("Debug", "Debug Context", _debugContext);
 		ini.SetValue("Debug", "Starting Scene", _startingScene->c_str());
@@ -140,6 +143,14 @@ namespace settings {
 
 	void setShowMouseCursor(bool show) {
 		_showMouseCursor = show;
+	}
+
+	bool centerMouseCursor() {
+		return _centerMouseCursor;
+	}
+
+	void setCenterMouseCursor(bool center) {
+		_centerMouseCursor = center;
 	}
 
 	bool showFPS() {

@@ -152,6 +152,20 @@ namespace settings {
 	 */
 	void setShowMouseCursor(bool show);
 
+	/// Get whether mouse cursor should be centered each frame.
+	/**
+	 * Necessary for good first person movement.
+	 * Default true.
+	 * @return Whether mouse cursor should be centered
+	 */
+	bool centerMouseCursor();
+
+	/// Set whether mouse cursor should be centered each frame.
+	/**
+	 * @param center Whether mouse cursor should be centered.
+	 */
+	void setCenterMouseCursor(bool center);
+
 	/// Get whether to show frames per second in window title.
 	/**
 	 * Default true.
@@ -182,13 +196,13 @@ namespace settings {
 
 	/// Get the name of the starting scene.
 	/**
-	* @return returns the name of the scene to load.
+	* @return The name of the scene to load
 	*/
 	std::string startingScene();
 
 	/// Set the name of the starting scene.
 	/**
-	* @param name of the starting scene.
+	* @param startingScene Name of the starting scene.
 	*/
 	void setStartingScene(std::string startingScene);
 }

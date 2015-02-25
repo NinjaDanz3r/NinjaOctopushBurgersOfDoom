@@ -16,7 +16,12 @@
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))
 
 TerrainScene::TerrainScene() {
-	texture = new Texture2D("Resources/Textures/kaleido.tga");
+	blendMap = new Texture2D("Resources/Textures/blendmap.tga");
+	grassTexture = new Texture2D("Resources/Textures/CGTextures/grass.tga");
+	cliffTexture = new Texture2D("Resources/Textures/CGTextures/cliff.tga");
+	sandTexture = new Texture2D("Resources/Textures/CGTextures/sand.tga");
+	snowTexture = new Texture2D("Resources/Textures/CGTextures/snow.tga");
+
 	skyboxTexture = new CubeMapTexture(
 		"Resources/Textures/TropicalSunnyDay/Right.tga",
 		"Resources/Textures/TropicalSunnyDay/Left.tga", 
@@ -27,12 +32,21 @@ TerrainScene::TerrainScene() {
 
 	vertexShader = new Shader("default_vertex.glsl", GL_VERTEX_SHADER);
 	geometryShader = new Shader("default_geometry.glsl", GL_GEOMETRY_SHADER);
-	fragmentShader = new Shader("default_fragment.glsl", GL_FRAGMENT_SHADER);
+	fragmentShader = new Shader("blendmap_fragment.glsl", GL_FRAGMENT_SHADER);
 	shaderProgram = new ShaderProgram({ vertexShader, geometryShader, fragmentShader });
 
-	geometry = new Terrain("Resources/HeightMaps/TestMapSmall.tga");
-	geometry->setPosition(0.f, -5.f, 0.f);
-	geometry->setScale(50.f, 10.f, 50.f);
+	// Set texture locations.
+	shaderProgram->use();
+	glUniform1i(shaderProgram->uniformLocation("blendMap"), 0);
+	glUniform1i(shaderProgram->uniformLocation("redTexture"), 1);
+	glUniform1i(shaderProgram->uniformLocation("greenTexture"), 2);
+	glUniform1i(shaderProgram->uniformLocation("blueTexture"), 3);
+	glUniform1i(shaderProgram->uniformLocation("alphaTexture"), 4);
+
+	terrain = new Terrain("Resources/HeightMaps/TestMapSmall.tga");
+	terrain->setPosition(0.f, -5.f, 0.f);
+	terrain->setScale(50.f, 10.f, 50.f);
+	terrain->setTextureRepeat(glm::vec2(10.f, 10.f));
 	bindTriangleData();
 
 	skybox = new Skybox(skyboxTexture);
@@ -42,7 +56,11 @@ TerrainScene::TerrainScene() {
 }
 
 TerrainScene::~TerrainScene() {
-	delete texture;
+	delete blendMap;
+	delete grassTexture;
+	delete cliffTexture;
+	delete sandTexture;
+	delete snowTexture;
 	
 	delete shaderProgram;
 	delete vertexShader;
@@ -52,7 +70,7 @@ TerrainScene::~TerrainScene() {
 	glDeleteBuffers(1, &vertexBuffer);
 	glDeleteBuffers(1, &indexBuffer);
 
-	delete geometry;
+	delete terrain;
 	delete player;
 	delete skybox;
 	delete skyboxTexture;
@@ -61,7 +79,7 @@ TerrainScene::~TerrainScene() {
 Scene::SceneEnd* TerrainScene::update(double time) {
 	player->update(time);
 	glm::vec3 position = player->camera()->position();
-	player->camera()->setPosition(position.x, dynamic_cast<Terrain*>(geometry)->getY(position.x, position.z) + 2.f, position.z);
+	player->camera()->setPosition(position.x, terrain->getY(position.x, position.z) + 2.f, position.z);
 
 	SoundSystem::getInstance()->listener()->setPosition(player->camera()->position());
 	SoundSystem::getInstance()->listener()->setOrientation(player->camera()->forward(), player->camera()->up());
@@ -75,15 +93,25 @@ void TerrainScene::render(int width, int height) {
 
 	shaderProgram->use();
 
-	// Texture unit 0 is for base images.
-	glUniform1i(shaderProgram->uniformLocation("baseImage"), 0);
+	// Blend map
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, blendMap->textureID());
 
-	// Base image texture
-	glActiveTexture(GL_TEXTURE0 + 0);
-	glBindTexture(GL_TEXTURE_2D, texture->textureID());
+	// Textures
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, grassTexture->textureID());
+	glActiveTexture(GL_TEXTURE2);
+	glBindTexture(GL_TEXTURE_2D, cliffTexture->textureID());
+	glActiveTexture(GL_TEXTURE3);
+	glBindTexture(GL_TEXTURE_2D, sandTexture->textureID());
+	glActiveTexture(GL_TEXTURE4);
+	glBindTexture(GL_TEXTURE_2D, snowTexture->textureID());
+
+	// Texture repeat
+	glUniform2fv(shaderProgram->uniformLocation("textureRepeat"), 1, &terrain->textureRepeat()[0]);
 
 	// Model matrix, unique for each model.
-	glm::mat4 model = geometry->modelMatrix();
+	glm::mat4 model = terrain->modelMatrix();
 
 	// Send the matrices to the shader.
 	glm::mat4 view = player->camera()->view();
@@ -115,10 +143,10 @@ void TerrainScene::render(int width, int height) {
 
 void TerrainScene::bindTriangleData() {
 	// Vertex buffer
-	vertexCount = geometry->vertexCount();
+	vertexCount = terrain->vertexCount();
 	glGenBuffers(1, &vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, vertexCount * sizeof(Geometry::Vertex), geometry->vertices(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertexCount * sizeof(Geometry::Vertex), terrain->vertices(), GL_STATIC_DRAW);
 
 	// Define vertex data layout
 	glGenVertexArrays(1, &vertexAttribute);
@@ -137,8 +165,8 @@ void TerrainScene::bindTriangleData() {
 	glVertexAttribPointer(vertexTexture, 2, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float) * 6));
 
 	// Index buffer
-	indexCount = geometry->indexCount();
+	indexCount = terrain->indexCount();
 	glGenBuffers(1, &indexBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(unsigned int), geometry->indices(), GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(unsigned int), terrain->indices(), GL_STATIC_DRAW);
 }

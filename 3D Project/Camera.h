@@ -59,7 +59,7 @@ class Camera : public Object {
 
 		/// Get far plane.
 		/**
-		 * Default: 20.0
+		 * Default: 100.0
 		 * @return Far plane
 		 */
 		float farPlane() const;
@@ -82,7 +82,7 @@ class Camera : public Object {
 	private:
 		float _fieldOfView = 45.f;
 		float zNear = 0.5f;
-		float zFar = 20.f;
+		float zFar = 100.f;
 };
 
 #endif
