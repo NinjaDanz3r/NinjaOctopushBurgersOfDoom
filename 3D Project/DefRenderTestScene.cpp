@@ -105,10 +105,11 @@ void DefRenderTestScene::render(int width, int height) {
 
 	if (state == 1)
 	{
+		glActiveTexture(GL_TEXTURE0 + 0);
+		glBindTexture(GL_TEXTURE_2D, texture->textureID());
 		glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
-		showTex(width, height);
-		//glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-		//multiplerendertargets->bindForReading();
+		//showTex(width, height);
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 	}
 	else if (state == 0)
 	{
@@ -182,9 +183,9 @@ void DefRenderTestScene::deferredRender(int width, int height){
 	glBlendFunc(GL_ONE, GL_ONE);
 
 	bindLighting(width, height);
+	multiplerendertargets->bindForReading();
 
-	//glClear(GL_COLOR_BUFFER_BIT);
-	//glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
 
 	glBindVertexArray(qVertexAttribute);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, qIndexBuffer);
