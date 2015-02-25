@@ -5,43 +5,58 @@
 #include <GL/GL.h>
 #include <GL/GLU.h>
 
-#define GBUFFER_POSITION_TEXTURE_UNIT 0
-#define GBUFFER_DIFFUSE_TEXTURE_UNIT  1
-#define GBUFFER_NORMAL_TEXTURE_UNIT   2
-#define GBUFFER_TEXCOORD_TEXTURE_UNIT 3
+//#define POSITION_TEXTURE 0
+//#define DIFFUSE_TEXTURE  1
+//#define NORMAL_TEXTURE  2
 
 class FrameBufferObjects
 {
 public:	
-	enum GBUFFER_TEXTURE_TYPE {
-		GBUFFER_TEXTURE_TYPE_POSITION,
-		GBUFFER_TEXTURE_TYPE_DIFFUSE,
-		GBUFFER_TEXTURE_TYPE_NORMAL,
-		GBUFFER_NUM_TEXTURES
+	/// Defines the position of each texture and the number of textures
+	enum TEXTURE_TYPE {
+		POSITION,
+		DIFFUSE,
+		NORMAL,
+		NUM_TEXTURES
 	};
-	//Construct/destruct
+	/// Constructor
 	FrameBufferObjects();
+
+	/// Destructor
+	/**
+	* Free allocated resources.
+	*/
 	~FrameBufferObjects();
 
-	GLuint getPositionTex()const{ return m_textures[GBUFFER_TEXTURE_TYPE_POSITION]; } ;
-	GLuint getDiffuseTex() const{ return m_textures[GBUFFER_TEXTURE_TYPE_DIFFUSE]; };
-	GLuint getNormalTex() const{ return m_textures[GBUFFER_TEXTURE_TYPE_NORMAL]; };
+	/// Get textures
+	GLuint getPositionTex()const{ return m_textures[POSITION]; };
+	GLuint getDiffuseTex() const{ return m_textures[DIFFUSE]; };
+	GLuint getNormalTex() const{ return m_textures[NORMAL]; };
 	
+	/// Enable fbo for writing
 	void bindForWriting();
+
+	/// Enable fbo for reading
 	void bindForReading();
+
+	/// Enable fbo for reading textures
 	void bindForTexReading();
-	void setReadBuffer(GBUFFER_TEXTURE_TYPE texType);
 
-	bool begin(unsigned int width, unsigned int height);
+	/// Set buffer to read from
+	void setReadBuffer(TEXTURE_TYPE texType);
+
+	/// Initializes fbo, depth handle and textures
+	/**
+	* @param width Width of the context.
+	* @param height Height of the context.
+	*/
+	void begin(unsigned int width, unsigned int height);
 private:
+	GLuint m_textures[NUM_TEXTURES];
 
-	GLuint m_textures[GBUFFER_NUM_TEXTURES];
-
-	//GL IDs
 	GLuint fbo;
 	GLuint depthHandle;
 
-	//FBO info
 	unsigned int width;
 	unsigned int height;
 };

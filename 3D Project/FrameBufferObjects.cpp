@@ -22,45 +22,54 @@ FrameBufferObjects::~FrameBufferObjects()
 		glDeleteTextures(1, &depthHandle);
 	}
 }
-bool FrameBufferObjects::begin(unsigned int width, unsigned int height)
+void FrameBufferObjects::begin(unsigned int width, unsigned int height)
 {
 	// Create the FBO
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
-	// Create the gbuffer textures
+	// Generate textures
 	glGenTextures((sizeof(m_textures) / sizeof(m_textures[0])), m_textures);
 	glGenTextures(1, &depthHandle);
 
-	for (unsigned int i = 0; i < (sizeof(m_textures) / sizeof(m_textures[0])); i++) {
-		glBindTexture(GL_TEXTURE_2D, m_textures[i]);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, width, height, 0, GL_RGB, GL_FLOAT, NULL);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, m_textures[i], 0);
-	}
+	//Check that internal format is supporeted by hardware
+	glBindTexture(GL_TEXTURE_2D, m_textures[POSITION]);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, width, height, 0, GL_RGB, GL_FLOAT, NULL);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_textures[POSITION], 0);
 
-	// depth
+	glBindTexture(GL_TEXTURE_2D, m_textures[DIFFUSE]);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, width, height, 0, GL_RGB, GL_FLOAT, NULL);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, m_textures[DIFFUSE], 0);
+
+	glBindTexture(GL_TEXTURE_2D, m_textures[NORMAL]);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, width, height, 0, GL_RGB, GL_FLOAT, NULL);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, m_textures[NORMAL], 0);
+
+	// Bind depthHandle
 	glBindTexture(GL_TEXTURE_2D, depthHandle);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthHandle, 0);
 
+	//Create and intialize draw buffers (output from geometry pass)
 	GLenum DrawBuffers[] = { GL_COLOR_ATTACHMENT0,
 		GL_COLOR_ATTACHMENT1,
 		GL_COLOR_ATTACHMENT2};
-
 	glDrawBuffers((sizeof(DrawBuffers) / sizeof(DrawBuffers[0])), DrawBuffers);
 
+	// Check if Framebuffer created correctly
 	GLenum Status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-
 	if (Status != GL_FRAMEBUFFER_COMPLETE) {
-		printf("FB error, status: 0x%x\n", Status);
-		return false;
+		util::log("Frame Buffer failed");
 	}
 
-	// restore default FBO
+	// Defualt framebuffer
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-	return true;
 }
 void FrameBufferObjects::bindForWriting()
 {
@@ -73,14 +82,14 @@ void FrameBufferObjects::bindForReading()
 
 	for (unsigned int i = 0; i < (sizeof(m_textures) / sizeof(m_textures[0])); i++) {
 		glActiveTexture(GL_TEXTURE0 + i);
-		glBindTexture(GL_TEXTURE_2D, m_textures[GBUFFER_TEXTURE_TYPE_POSITION + i]);
+		glBindTexture(GL_TEXTURE_2D, m_textures[POSITION + i]);
 	}
 }
 void FrameBufferObjects::bindForTexReading()
 {
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, fbo);
 }
-void FrameBufferObjects::setReadBuffer(GBUFFER_TEXTURE_TYPE texType){
+void FrameBufferObjects::setReadBuffer(TEXTURE_TYPE texType){
 	glReadBuffer(GL_COLOR_ATTACHMENT0 + texType);
 }
 

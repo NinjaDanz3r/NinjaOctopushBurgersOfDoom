@@ -230,9 +230,6 @@
     <None Include="deferred_first_geometry.glsl">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="deferred_second_geometry.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="skybox_fragment.glsl">
       <Filter>Resource Files</Filter>
     </None>
