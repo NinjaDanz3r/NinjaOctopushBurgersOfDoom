@@ -17,20 +17,17 @@ class FrameBufferObjects {
 		};
 
 		/// Constructor
-		FrameBufferObjects();
+		/**
+		* @param width Width of the context.
+		* @param height Height of the context.
+		*/
+		FrameBufferObjects(unsigned int width, unsigned int height);
 
 		/// Destructor
 		/**
 		* Free allocated resources.
 		*/
 		~FrameBufferObjects();
-
-		/// Initializes fbo, depth handle and textures
-		/**
-		* @param width Width of the context.
-		* @param height Height of the context.
-		*/
-		void begin(unsigned int width, unsigned int height);
 
 		/// Get texture.
 		/**

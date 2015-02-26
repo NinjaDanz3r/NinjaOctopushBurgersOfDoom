@@ -1,22 +1,7 @@
 #include "FrameBufferObjects.h"
 #include "util.h"
 
-FrameBufferObjects::FrameBufferObjects() {
-
-}
-
-FrameBufferObjects::~FrameBufferObjects() {
-	if (fbo != 0)
-		glDeleteFramebuffers(1, &fbo);
-
-	if (mTextures[0] != 0)
-		glDeleteTextures(NUM_TEXTURES, mTextures);
-
-	if (depthHandle != 0)
-		glDeleteTextures(1, &depthHandle);
-}
-
-void FrameBufferObjects::begin(unsigned int width, unsigned int height) {
+FrameBufferObjects::FrameBufferObjects(unsigned int width, unsigned int height) {
 	// Create the FBO
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
@@ -24,7 +9,7 @@ void FrameBufferObjects::begin(unsigned int width, unsigned int height) {
 	// Generate textures
 	glGenTextures(NUM_TEXTURES, mTextures);
 	glGenTextures(1, &depthHandle);
-	
+
 	for (unsigned int i = 0; i < NUM_TEXTURES; i++)
 		attachTexture(mTextures[i], width, height, GL_COLOR_ATTACHMENT0 + i);
 
@@ -46,6 +31,17 @@ void FrameBufferObjects::begin(unsigned int width, unsigned int height) {
 
 	// Default framebuffer
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+}
+
+FrameBufferObjects::~FrameBufferObjects() {
+	if (fbo != 0)
+		glDeleteFramebuffers(1, &fbo);
+
+	if (mTextures[0] != 0)
+		glDeleteTextures(NUM_TEXTURES, mTextures);
+
+	if (depthHandle != 0)
+		glDeleteTextures(1, &depthHandle);
 }
 
 GLuint FrameBufferObjects::texture(TEXTURE_TYPE textureType) const {

@@ -36,7 +36,7 @@ DefRenderTestScene::DefRenderTestScene() {
 
 	player = new Player();
 	player->setMovementSpeed(2.0f);
-	multipleRenderTargets = new FrameBufferObjects();
+	multipleRenderTargets = new FrameBufferObjects(settings::displayWidth(), settings::displayHeight());
 
 	geometry = new Cube();
 	geometryObject = new GeometryObject(geometry);
@@ -47,8 +47,6 @@ DefRenderTestScene::DefRenderTestScene() {
 	// Only need tDiffuse for the geometry call
 	diffuseID = shaderProgram->uniformLocation("tDiffuse");
 	glUniform1i(diffuseID, 0);
-
-	multipleRenderTargets->begin(settings::displayWidth(), settings::displayHeight());
 }
 
 DefRenderTestScene::~DefRenderTestScene() {
