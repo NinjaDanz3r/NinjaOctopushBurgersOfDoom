@@ -91,6 +91,12 @@
     <ClCompile Include="TerrainObject.cpp">
       <Filter>Source Files\Object</Filter>
     </ClCompile>
+    <ClCompile Include="DefRenderTestScene.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameBufferObjects.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -186,6 +192,12 @@
     <ClInclude Include="TerrainObject.h">
       <Filter>Header Files\Object</Filter>
     </ClInclude>
+    <ClInclude Include="DefRenderTestScene.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameBufferObjects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="default_vertex.glsl">
@@ -216,6 +228,21 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="blendmap_fragment.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="deferred_first_fragment.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="deferred_first_geometry.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="deferred_first_vertex.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="deferred_second_fragment.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="deferred_second_vertex.glsl">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

@@ -15,7 +15,7 @@ layout(location = 1) out vec3 diffuseOut;
 layout(location = 2) out vec3 normalsOut;
 
 void main() {
-	diffuseOut = vec3(texture(tDiffuse,vertexIn.tex_coords).rbg);
-	positionOut = vec3(vertexIn.position);
-	normalsOut = vec3(vertexIn.normal);
+	diffuseOut = texture(tDiffuse, vertexIn.tex_coords).rgb;
+	positionOut = vertexIn.position;
+	normalsOut = vertexIn.normal;
 }

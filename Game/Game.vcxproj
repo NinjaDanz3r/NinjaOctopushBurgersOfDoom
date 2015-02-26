@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AudioScene.cpp" />
+    <ClCompile Include="DefRenderTestScene.cpp" />
+    <ClCompile Include="FrameBufferObjects.cpp" />
     <ClCompile Include="GeometryObject.cpp" />
     <ClCompile Include="ParticleScene.cpp" />
     <ClCompile Include="CubeMapTexture.cpp" />
@@ -52,6 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioScene.h" />
+    <ClInclude Include="DefRenderTestScene.h" />
+    <ClInclude Include="FrameBufferObjects.h" />
     <ClInclude Include="GeometryObject.h" />
     <ClInclude Include="ParticleScene.h" />
     <ClInclude Include="CubeMapTexture.h" />
@@ -88,6 +92,11 @@
     <None Include="default_fragment.glsl" />
     <None Include="default_geometry.glsl" />
     <None Include="default_vertex.glsl" />
+    <None Include="deferred_first_fragment.glsl" />
+    <None Include="deferred_first_geometry.glsl" />
+    <None Include="deferred_first_vertex.glsl" />
+    <None Include="deferred_second_fragment.glsl" />
+    <None Include="deferred_second_vertex.glsl" />
     <None Include="normalspecularmap_fragment.glsl" />
     <None Include="particle_fragment.glsl" />
     <None Include="particle_geometry.glsl" />

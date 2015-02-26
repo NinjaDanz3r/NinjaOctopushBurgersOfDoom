@@ -3,7 +3,7 @@
 
 #include <GLFW\glfw3.h>
 #include "DefRenderTestScene.h"
-#include "Square.h"
+#include "Cube.h"
 #include "Texture2D.h"
 #include "settings.h"
 
@@ -13,7 +13,7 @@
 
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))
 
-DefRenderTestScene::RenderQuad DefRenderTestScene::vertices[4] = {{ -1.f, 1.f }, { 1.f, 1.f }, { -1.f, -1.f }, { 1.f, -1.f }};
+DefRenderTestScene::RenderQuad DefRenderTestScene::vertices[4] = { { -1.f, 1.f }, { 1.f, 1.f }, { -1.f, -1.f }, { 1.f, -1.f } };
 unsigned int DefRenderTestScene::indices[6] = { 0, 1, 3, 0, 3, 2 };
 
 DefRenderTestScene::DefRenderTestScene() {
@@ -35,25 +35,26 @@ DefRenderTestScene::DefRenderTestScene() {
 	shaderProgram->use();
 
 	player = new Player();
-	player->setMovementSpeed(1000.0f);
-	multiplerendertargets = new FrameBufferObjects();
+	player->setMovementSpeed(2.0f);
+	multipleRenderTargets = new FrameBufferObjects();
 
 	geometry = new Cube();
+	geometryObject = new GeometryObject(geometry);
 	bindTriangleData();
 	bindDeferredQuad();
 
 
-	//Only need tDiffuse for the geometry call
+	// Only need tDiffuse for the geometry call
 	diffuseID = shaderProgram->uniformLocation("tDiffuse");
 	glUniform1i(diffuseID, 0);
 
-	multiplerendertargets->begin(settings::displayWidth(), settings::displayHeight());
+	multipleRenderTargets->begin(settings::displayWidth(), settings::displayHeight());
 }
 
 DefRenderTestScene::~DefRenderTestScene() {
 	delete texture;
 
-	delete multiplerendertargets;
+	delete multipleRenderTargets;
 	delete secondShaderProgram;
 	delete shaderProgram;
 
@@ -71,29 +72,29 @@ DefRenderTestScene::~DefRenderTestScene() {
 	glDeleteBuffers(1, &qIndexBuffer);
 
 	delete geometry;
+	delete geometryObject;
 	delete player;
 }
 
 Scene::SceneEnd* DefRenderTestScene::update(double time) {
 	player->update(time);
-	geometry->rotate(1, 1, 1);
+	geometryObject->rotate(4.0f * static_cast<float>(time), 4.0f * static_cast<float>(time), 4.0f * static_cast<float>(time));
 	return nullptr;
 }
 
 void DefRenderTestScene::render(int width, int height) {
 	shaderProgram->use();
-	multiplerendertargets->bindForWriting();
+	multipleRenderTargets->bindForWriting();
 
 	glDepthMask(GL_TRUE);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
 
 	glViewport(0, 0, width, height);
-	
-	bindGeometry(width,height);
+
+	bindGeometry(width, height);
 
 	glBindVertexArray(gVertexAttribute);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, gIndexBuffer);
@@ -105,16 +106,13 @@ void DefRenderTestScene::render(int width, int height) {
 	glDepthMask(GL_FALSE);
 	glDisable(GL_DEPTH_TEST);
 
-	if (state == 1)
-	{
+	if (state == 1) {
 		showTex(width, height);
-	}
-	else if (state == 0)
-	{
+	} else if (state == 0) {
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 		deferredRender(width, height);
 	}
-	
+
 }
 
 void DefRenderTestScene::bindTriangleData(){
@@ -135,18 +133,19 @@ void DefRenderTestScene::bindTriangleData(){
 	glVertexAttribPointer(vertexPos, 3, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(0));
 
 	GLuint vertexNormal = shaderProgram->attributeLocation("vertex_normal");
-	glVertexAttribPointer(vertexNormal, 3, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float)* 3));
+	glVertexAttribPointer(vertexNormal, 3, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float) * 3));
 
 	GLuint vertexTexture = shaderProgram->attributeLocation("vertex_texture");
-	glVertexAttribPointer(vertexTexture, 2, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float)* 6));
+	glVertexAttribPointer(vertexTexture, 2, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float) * 6));
 
 	// Index buffer
 	indexCount = geometry->indexCount();
 	glGenBuffers(1, &gIndexBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, gIndexBuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(unsigned int), geometry->indices(), GL_STATIC_DRAW);
-	
+
 }
+
 void DefRenderTestScene::bindDeferredQuad(){
 	qVertexCount = 4;
 	glGenBuffers(1, &qVertexBuffer);
@@ -168,6 +167,7 @@ void DefRenderTestScene::bindDeferredQuad(){
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, qIndexCount * sizeof(unsigned int), indices, GL_STATIC_DRAW);
 
 }
+
 void DefRenderTestScene::deferredRender(int width, int height){
 	secondShaderProgram->use();
 
@@ -177,7 +177,7 @@ void DefRenderTestScene::deferredRender(int width, int height){
 	glBlendFunc(GL_ONE, GL_ONE);
 
 	bindLighting(width, height);
-	multiplerendertargets->bindForReading();
+	multipleRenderTargets->bindForReading();
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
@@ -187,25 +187,27 @@ void DefRenderTestScene::deferredRender(int width, int height){
 
 	glDrawElements(GL_TRIANGLES, qIndexCount, GL_UNSIGNED_INT, (void*)0);
 }
+
 void DefRenderTestScene::showTex(int width, int height){
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	multiplerendertargets->bindForTexReading();
+	multipleRenderTargets->bindForTexReading();
 
-	multiplerendertargets->setReadBuffer(FrameBufferObjects::POSITION);
+	multipleRenderTargets->setReadBuffer(FrameBufferObjects::POSITION);
 	glBlitFramebuffer(0, 0, width, height, 0, 0, halfWidth, halfHeight, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
-	multiplerendertargets->setReadBuffer(FrameBufferObjects::DIFFUSE);
+	multipleRenderTargets->setReadBuffer(FrameBufferObjects::DIFFUSE);
 	glBlitFramebuffer(0, 0, width, height, 0, halfHeight, halfWidth, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
-	multiplerendertargets->setReadBuffer(FrameBufferObjects::NORMAL);
+	multipleRenderTargets->setReadBuffer(FrameBufferObjects::NORMAL);
 	glBlitFramebuffer(0, 0, width, height, halfWidth, halfHeight, width, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 }
+
 void DefRenderTestScene::bindGeometry(int width, int height){
 	// Model matrix, unique for each model.
-	glm::mat4 model = geometry->modelMatrix();
+	glm::mat4 model = geometryObject->modelMatrix();
 
 	// Send the matrices to the shader.
 	glm::mat4 view = player->camera()->view();
@@ -217,6 +219,7 @@ void DefRenderTestScene::bindGeometry(int width, int height){
 	glUniformMatrix3fv(shaderProgram->uniformLocation("normalMatrix"), 1, GL_FALSE, &glm::mat3(N)[0][0]);
 	glUniformMatrix4fv(shaderProgram->uniformLocation("projectionMatrix"), 1, GL_FALSE, &player->camera()->projection(width, height)[0][0]);
 }
+
 void DefRenderTestScene::bindLighting(int width, int height){
 	//Bind light information for lighting pass
 	glm::mat4 view = player->camera()->view();
