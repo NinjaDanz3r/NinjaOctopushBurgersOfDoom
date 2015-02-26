@@ -24,14 +24,6 @@ class DefRenderTestScene : public Scene {
 		*/
 		~DefRenderTestScene();
 
-		/// Vertex in full screen quad
-		struct RenderQuad {
-			/// X position.
-			float x;
-			/// Y position.
-			float y;
-		};
-
 		/// Update the scene.
 		/**
 		* @param time Time since last frame (in seconds).
@@ -39,7 +31,6 @@ class DefRenderTestScene : public Scene {
 		*/
 		SceneEnd* update(double time);
 		void bindGeometry(int width, int height);
-		void bindLighting(int width, int height);
 
 
 		/// Render the geometry in the scene.
@@ -49,27 +40,9 @@ class DefRenderTestScene : public Scene {
 		*/
 		void render(int width, int height);
 
-		/// Render the lighting in the scene.
-		/**
-		* @param width Width of the context.
-		* @param height Height of the context.
-		*/
-		void deferredRender(int width, int height);
-
-		/// Render the content of diffuse, position and normal textures
-		/**
-		* @param width Width of the context.
-		* @param height Height of the context.
-		*/
-		void showTex(int width, int height);
-
 	private:
 		void bindTriangleData();
 		void bindDeferredQuad();
-
-		GLuint diffuseID;
-		GLuint positionID;
-		GLuint normalID;
 
 		FrameBufferObjects* multipleRenderTargets;
 
@@ -90,30 +63,15 @@ class DefRenderTestScene : public Scene {
 		int state; // 0 == deferred render, 1== display textures.
 		Texture* texture;
 		Player* player;
-		GLuint halfWidth;
-		GLuint halfHeight;
 
 		// Vertex buffer geometry
-		GLuint gVertexBuffer = 0;
-		GLuint gVertexAttribute = 0;
+		GLuint vertexBuffer = 0;
+		GLuint vertexAttribute = 0;
 
-		//Index buffer geometry
-		GLuint gIndexBuffer = 0;
+		// Index buffer geometry
+		GLuint indexBuffer = 0;
 		unsigned int indexCount = 0;
 		int vertexCount = 0;
-
-		// Vertex buffer lighting
-		GLuint qVertexBuffer = 0;
-		GLuint qVertexAttribute = 0;
-
-		// Full screen quad
-		static RenderQuad vertices[4];
-		static unsigned int indices[6];
-
-		// Index buffer lighting
-		GLuint qIndexBuffer = 0;
-		unsigned int qIndexCount = 0;
-		int qVertexCount = 0;
 };
 
 #endif

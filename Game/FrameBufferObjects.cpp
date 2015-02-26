@@ -1,7 +1,17 @@
 #include "FrameBufferObjects.h"
 #include "util.h"
+#include <glm/glm.hpp>
 
-FrameBufferObjects::FrameBufferObjects(unsigned int width, unsigned int height) {
+#define BUFFER_OFFSET(i) ((char *)nullptr + (i))
+
+const glm::vec2 FrameBufferObjects::vertices[4] = { { -1.f, 1.f }, { 1.f, 1.f }, { -1.f, -1.f }, { 1.f, -1.f } };
+const unsigned int FrameBufferObjects::indices[6] = { 0, 1, 3, 0, 3, 2 };
+
+FrameBufferObjects::FrameBufferObjects(ShaderProgram* shaderProgram, unsigned int width, unsigned int height) {
+	this->shaderProgram = shaderProgram;
+	this->width = width;
+	this->height = height;
+
 	// Create the FBO
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
@@ -31,6 +41,9 @@ FrameBufferObjects::FrameBufferObjects(unsigned int width, unsigned int height) 
 
 	// Default framebuffer
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+
+	shaderProgram->use();
+	bindQuad();
 }
 
 FrameBufferObjects::~FrameBufferObjects() {
@@ -42,6 +55,9 @@ FrameBufferObjects::~FrameBufferObjects() {
 
 	if (depthHandle != 0)
 		glDeleteTextures(1, &depthHandle);
+
+	glDeleteBuffers(1, &vertexBuffer);
+	glDeleteBuffers(1, &indexBuffer);
 }
 
 GLuint FrameBufferObjects::texture(TEXTURE_TYPE textureType) const {
@@ -53,7 +69,7 @@ void FrameBufferObjects::bindForWriting() {
 }
 
 void FrameBufferObjects::bindForReading() {
-	glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, fbo);
 
 	for (unsigned int i = 0; i < NUM_TEXTURES; i++) {
 		glActiveTexture(GL_TEXTURE0 + i);
@@ -69,10 +85,107 @@ void FrameBufferObjects::setReadBuffer(TEXTURE_TYPE textureType){
 	glReadBuffer(GL_COLOR_ATTACHMENT0 + textureType);
 }
 
+void FrameBufferObjects::showTextures(int width, int height) {
+	// Disable depth testing
+	GLboolean depthTest = glIsEnabled(GL_DEPTH_TEST);
+	glDisable(GL_DEPTH_TEST);
+
+	int halfWidth = width / 2;
+	int halfHeight = height / 2;
+
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	bindForTexReading();
+
+	setReadBuffer(FrameBufferObjects::POSITION);
+	glBlitFramebuffer(0, 0, width, height, 0, 0, halfWidth, halfHeight, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+
+	setReadBuffer(FrameBufferObjects::DIFFUSE);
+	glBlitFramebuffer(0, 0, width, height, 0, halfHeight, halfWidth, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+
+	setReadBuffer(FrameBufferObjects::NORMAL);
+	glBlitFramebuffer(0, 0, width, height, halfWidth, halfHeight, width, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+
+	if (depthTest)
+		glEnable(GL_DEPTH_TEST);
+}
+
+void FrameBufferObjects::render(Camera* camera, int width, int height) {
+	// Disable depth testing
+	GLboolean depthTest = glIsEnabled(GL_DEPTH_TEST);
+	glDisable(GL_DEPTH_TEST);
+
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+	shaderProgram->use();
+
+	// Blending enabled for handling multiple light sources
+	GLboolean blend = glIsEnabled(GL_BLEND);
+	glEnable(GL_BLEND);
+	glBlendEquation(GL_FUNC_ADD);
+	glBlendFunc(GL_ONE, GL_ONE);
+
+	bindLighting(camera, width, height);
+	bindForReading();
+
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	glBindVertexArray(vertexAttribute);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+
+	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
+
+	if (depthTest)
+		glEnable(GL_DEPTH_TEST);
+	if (!blend)
+		glDisable(GL_BLEND);
+}
+
 void FrameBufferObjects::attachTexture(GLuint texture, unsigned int width, unsigned int height, GLenum attachment) {
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, width, height, 0, GL_RGB, GL_FLOAT, NULL);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, attachment, GL_TEXTURE_2D, texture, 0);
+}
+
+void FrameBufferObjects::bindLighting(Camera* camera, int width, int height){
+	// Bind light information for lighting pass
+	glm::mat4 view = camera->view();
+
+	glm::vec4 lightPosition = view * glm::vec4(-5.f, 0.f, 5.f, 1.f);
+	glm::vec3 lightIntensity(1.f, 1.f, 1.f);
+	glm::vec3 diffuseKoefficient(1.f, 1.f, 1.f);
+	glm::vec2 screenSize(width, height);
+	
+	glUniform1i(shaderProgram->uniformLocation("tPosition"), FrameBufferObjects::POSITION);
+	glUniform1i(shaderProgram->uniformLocation("tDiffuse"), FrameBufferObjects::DIFFUSE);
+	glUniform1i(shaderProgram->uniformLocation("tNormals"), FrameBufferObjects::NORMAL);
+
+	glUniform2fv(shaderProgram->uniformLocation("screenSize"), 1, &screenSize[0]);
+	glUniform4fv(shaderProgram->uniformLocation("lightPosition"), 1, &lightPosition[0]);
+	glUniform3fv(shaderProgram->uniformLocation("lightIntensity"), 1, &lightIntensity[0]);
+	glUniform3fv(shaderProgram->uniformLocation("diffuseKoefficient"), 1, &diffuseKoefficient[0]);
+}
+
+void FrameBufferObjects::bindQuad() {
+	vertexCount = 4;
+	glGenBuffers(1, &vertexBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+	glBufferData(GL_ARRAY_BUFFER, vertexCount * sizeof(glm::vec2), vertices, GL_STATIC_DRAW);
+
+	// Define vertex data layout
+	glGenVertexArrays(1, &vertexAttribute);
+	glBindVertexArray(vertexAttribute);
+	glEnableVertexAttribArray(0);
+
+	GLuint vertexPos = shaderProgram->attributeLocation("vertex_position");
+	glVertexAttribPointer(vertexPos, 2, GL_FLOAT, GL_FALSE, sizeof(glm::vec2), BUFFER_OFFSET(0));
+
+	// Index buffer
+	indexCount = 6;
+	glGenBuffers(1, &indexBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(unsigned int), indices, GL_STATIC_DRAW);
 }
