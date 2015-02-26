@@ -1,6 +1,7 @@
 #ifndef __TESTSCENE_H__
 #define __TESTSCENE_H__
 
+#include "FrameBufferObjects.h"
 #include "Scene.h"
 #include "Shader.h"
 #include "ShaderProgram.h"
@@ -38,11 +39,19 @@ class TestScene : public Scene {
 	private:
 		void bindTriangleData();
 
+		FrameBufferObjects* multipleRenderTargets;
+		int state; // 0 == deferred render, 1== display textures.
+
 		// Shaders
 		Shader* vertexShader;
 		Shader* geometryShader;
 		Shader* fragmentShader;
 		ShaderProgram* shaderProgram;
+
+		// Shaders lighting pass
+		Shader* deferredVertexShader;
+		Shader* deferredFragmentShader;
+		ShaderProgram* deferredShaderProgram;
 
 		Texture* diffuse;
 		Texture* normal;

@@ -74,7 +74,7 @@ Scene::SceneEnd* DefRenderTestScene::update(double time) {
 
 void DefRenderTestScene::render(int width, int height) {
 	shaderProgram->use();
-	glUniform1i(shaderProgram->uniformLocation("tDiffuse"), 0);
+	glUniform1i(shaderProgram->uniformLocation("baseImage"), 0);
 	multipleRenderTargets->bindForWriting();
 
 	glViewport(0, 0, width, height);
