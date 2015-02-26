@@ -233,12 +233,6 @@
     <None Include="deferred_first_fragment.glsl">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="deferred_first_geometry.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="deferred_first_vertex.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="deferred_second_fragment.glsl">
       <Filter>Resource Files</Filter>
     </None>

@@ -17,8 +17,8 @@ DefRenderTestScene::DefRenderTestScene() {
 	texture = new Texture2D("Resources/Textures/kaleido.tga");
 	state = 0;
 
-	vertexShader = new Shader("deferred_first_vertex.glsl", GL_VERTEX_SHADER);
-	geometryShader = new Shader("deferred_first_geometry.glsl", GL_GEOMETRY_SHADER);
+	vertexShader = new Shader("default_vertex.glsl", GL_VERTEX_SHADER);
+	geometryShader = new Shader("default_geometry.glsl", GL_GEOMETRY_SHADER);
 	fragmentShader = new Shader("deferred_first_fragment.glsl", GL_FRAGMENT_SHADER);
 	shaderProgram = new ShaderProgram({ vertexShader, geometryShader, fragmentShader });
 
