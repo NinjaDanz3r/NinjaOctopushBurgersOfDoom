@@ -83,6 +83,7 @@ void Game::assignKeyboardBindings() {
 	input::assignKeyboard(input::BACKWARD, GLFW_KEY_S);
 	input::assignKeyboard(input::LEFT, GLFW_KEY_A);
 	input::assignKeyboard(input::RIGHT, GLFW_KEY_D);
+	input::assignKeyboard(input::CHANGE_RENDER_STATE, GLFW_KEY_F1);
 }
 
 template<typename T> Scene * createInstance() {

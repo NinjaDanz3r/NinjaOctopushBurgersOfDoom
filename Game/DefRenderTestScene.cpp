@@ -6,6 +6,7 @@
 #include "Cube.h"
 #include "Texture2D.h"
 #include "settings.h"
+#include "input.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -61,6 +62,10 @@ DefRenderTestScene::~DefRenderTestScene() {
 Scene::SceneEnd* DefRenderTestScene::update(double time) {
 	player->update(time);
 	geometryObject->rotate(4.0f * static_cast<float>(time), 4.0f * static_cast<float>(time), 4.0f * static_cast<float>(time));
+
+	if (input::triggered(input::CHANGE_RENDER_STATE))
+		state = !state;
+
 	return nullptr;
 }
 

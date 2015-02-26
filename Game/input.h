@@ -16,6 +16,7 @@ namespace input {
 		BACKWARD, ///< Backward button
 		LEFT, ///< Left button
 		RIGHT, ///< Right button
+		CHANGE_RENDER_STATE, ///< Change render state button
 		BUTTONS ///< Total number of buttons
 	};
 
