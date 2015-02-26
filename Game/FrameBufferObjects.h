@@ -25,23 +25,6 @@ class FrameBufferObjects {
 		*/
 		~FrameBufferObjects();
 
-		/// Get textures
-		GLuint getPositionTex() const{ return mTextures[POSITION]; };
-		GLuint getDiffuseTex() const{ return mTextures[DIFFUSE]; };
-		GLuint getNormalTex() const{ return mTextures[NORMAL]; };
-
-		/// Enable fbo for writing
-		void bindForWriting();
-
-		/// Enable fbo for reading
-		void bindForReading();
-
-		/// Enable fbo for reading textures
-		void bindForTexReading();
-
-		/// Set buffer to read from
-		void setReadBuffer(TEXTURE_TYPE texType);
-
 		/// Initializes fbo, depth handle and textures
 		/**
 		* @param width Width of the context.
@@ -49,7 +32,31 @@ class FrameBufferObjects {
 		*/
 		void begin(unsigned int width, unsigned int height);
 
+		/// Get texture.
+		/**
+		 * @param textureType The type of texture to get.
+		 * @return The texture identifier
+		 */
+		GLuint texture(TEXTURE_TYPE textureType) const;
+
+		/// Enable frame buffer object for writing.
+		void bindForWriting();
+
+		/// Enable frame buffer object for reading.
+		void bindForReading();
+
+		/// Enable frame buffer object for reading textures.
+		void bindForTexReading();
+
+		/// Set buffer to read from.
+		/**
+		 * @param textureType Texture type of the buffer to read from.
+		 */
+		void setReadBuffer(TEXTURE_TYPE textureType);
+
 	private:
+		static void attachTexture(GLuint texture, unsigned int width, unsigned int height, GLenum attachment);
+
 		GLuint mTextures[NUM_TEXTURES];
 
 		GLuint fbo;
