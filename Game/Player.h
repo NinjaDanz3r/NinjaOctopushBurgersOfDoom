@@ -42,6 +42,7 @@ class Player {
 
 	private:
 		Camera* _camera;
+
 		float _movementSpeed = 1.0f;
 		float prevMX, prevMY;
 };

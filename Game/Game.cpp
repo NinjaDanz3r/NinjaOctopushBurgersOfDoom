@@ -1,4 +1,7 @@
 #include "Game.h"
+#include "TestScene.h"
+#include "DefRenderTestScene.h"
+
 #include "ParticleScene.h"
 #include "TerrainScene.h"
 #include "TestScene.h"
@@ -87,16 +90,19 @@ template<typename T> Scene * createInstance() {
 }
 
 void Game::setSceneMap() {
+
+	(*sceneMap)["deferred"] = &createInstance<DefRenderTestScene>;
 	(*sceneMap)["default"] = &createInstance<TestScene>;
 	(*sceneMap)["test"] = &createInstance<TestScene>;
 	(*sceneMap)["audio"] = &createInstance<AudioScene>;
 	(*sceneMap)["particle"] = &createInstance<ParticleScene>;
 	(*sceneMap)["terrain"] = &createInstance<TerrainScene>;
+
 }
 
 void Game::setScene(const char* sceneName){
 	std::map<std::string, Scene*(*)()>::const_iterator itFound;
-	itFound = sceneMap->find(sceneName);
+	itFound = sceneMap->find(sceneName); 
 	if (itFound != sceneMap->end())
 		currentScene = (*sceneMap)[sceneName]();
 	else
