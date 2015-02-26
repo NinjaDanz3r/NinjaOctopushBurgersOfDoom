@@ -11,9 +11,9 @@ The mandatory techniques are perspective rendering, lighting, textures, three-di
 
 Apart from these, we are also aiming to implement the following techniques (implemented|mandatory|available):
 
-Core (0|1|2)
+Core (1|1|2)
 ------------
-* Deferred rendering and lighting. (TODO)
+* Deferred rendering and lighting.
 
 Geometry (2|2|5)
 ----------------
@@ -27,6 +27,7 @@ Texturing and lighting (1|1|3)
 
 Projection (0|1|4)
 ------------------
+* Shadow mapping. (TODO)
 
 Acceleration (1|2|3)
 --------------------
