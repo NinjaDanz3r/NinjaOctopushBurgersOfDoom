@@ -20,26 +20,18 @@ uniform vec4 lightPosition;
 uniform vec3 lightIntensity;
 uniform vec3 diffuseKoefficient;
 
-out vec4 fragment_color;
-
-// Ambient, diffuse and specular lighting.
-vec3 ads() {
-	vec3 n = normalize(vertexIn.normal);
-	vec3 s = normalize(vec3(lightPosition) - vertexIn.position);
-	vec3 v = normalize(vec3(-vertexIn.position));
-	vec3 r = reflect(-s, n);
-	vec3 diffuseLight = diffuseKoefficient * max(dot(s, n), 0.0);
-	vec3 Ka = vec3(0.2, 0.2, 0.2);
-	return lightIntensity * (Ka + diffuseLight);
-}
+layout(location = 0) out vec3 positionOut;
+layout(location = 1) out vec3 diffuseOut;
+layout(location = 2) out vec3 normalsOut;
 
 void main () {
 	vec4 blendMap = texture(blendMap, vertexIn.tex_coords);
 	float sum = blendMap.r + blendMap.g + blendMap.b + blendMap.a;
-	vec4 diffuse = blendMap.r / sum * texture(redTexture, vertexIn.tex_coords * textureRepeat) +
-				   blendMap.g / sum * texture(greenTexture, vertexIn.tex_coords * textureRepeat) +
-				   blendMap.b / sum * texture(blueTexture, vertexIn.tex_coords * textureRepeat) +
-				   blendMap.a / sum * texture(alphaTexture, vertexIn.tex_coords * textureRepeat);
+	diffuseOut = (blendMap.r / sum * texture(redTexture, vertexIn.tex_coords * textureRepeat) +
+				  blendMap.g / sum * texture(greenTexture, vertexIn.tex_coords * textureRepeat) +
+				  blendMap.b / sum * texture(blueTexture, vertexIn.tex_coords * textureRepeat) +
+				  blendMap.a / sum * texture(alphaTexture, vertexIn.tex_coords * textureRepeat)).rgb;
 
-	fragment_color = diffuse * vec4(ads(), 1.0);
+	positionOut = vertexIn.position;
+	normalsOut = vertexIn.normal;
 }

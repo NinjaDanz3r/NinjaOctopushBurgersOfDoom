@@ -1,6 +1,7 @@
 #ifndef __TERRAINSCENE_H__
 #define __TERRAINSCENE_H__
 
+#include "FrameBufferObjects.h"
 #include "Scene.h"
 #include "Shader.h"
 #include "ShaderProgram.h"
@@ -40,11 +41,19 @@ class TerrainScene : public Scene {
 	private:
 		void bindTriangleData();
 
+		FrameBufferObjects* multipleRenderTargets;
+		int state; // 0 == deferred render, 1== display textures.
+
 		// Shaders
 		Shader* vertexShader;
 		Shader* geometryShader;
 		Shader* fragmentShader;
 		ShaderProgram* shaderProgram;
+
+		// Shaders lighting pass
+		Shader* deferredVertexShader;
+		Shader* deferredFragmentShader;
+		ShaderProgram* deferredShaderProgram;
 
 		Texture* blendMap;
 		Texture* grassTexture;
