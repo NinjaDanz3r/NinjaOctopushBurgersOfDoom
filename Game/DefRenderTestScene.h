@@ -55,9 +55,9 @@ class DefRenderTestScene : public Scene {
 		ShaderProgram* shaderProgram;
 
 		// Shaders lighting pass
-		Shader* secondVertexShader;
-		Shader* secondFragmentShader;
-		ShaderProgram* secondShaderProgram;
+		Shader* deferredVertexShader;
+		Shader* deferredFragmentShader;
+		ShaderProgram* deferredShaderProgram;
 
 		// Misc
 		int state; // 0 == deferred render, 1== display textures.

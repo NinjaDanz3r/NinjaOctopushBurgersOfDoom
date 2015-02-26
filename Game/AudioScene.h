@@ -1,6 +1,7 @@
 #ifndef __AUDIOSCENE_H__
 #define __AUDIOSCENE_H__
 
+#include "FrameBufferObjects.h"
 #include "Scene.h"
 #include "Shader.h"
 #include "ShaderProgram.h"
@@ -41,11 +42,19 @@ class AudioScene : public Scene {
 	private:
 		void bindTriangleData();
 
+		FrameBufferObjects* multipleRenderTargets;
+		int state; // 0 == deferred render, 1== display textures.
+
 		// Shaders
 		Shader* vertexShader;
 		Shader* geometryShader;
 		Shader* fragmentShader;
 		ShaderProgram* shaderProgram;
+
+		// Shaders lighting pass
+		Shader* deferredVertexShader;
+		Shader* deferredFragmentShader;
+		ShaderProgram* deferredShaderProgram;
 
 		Texture* texture;
 		Geometry* geometry;

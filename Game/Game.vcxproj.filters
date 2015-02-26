@@ -230,13 +230,10 @@
     <None Include="blendmap_fragment.glsl">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="deferred_first_fragment.glsl">
+    <None Include="deferred_fragment.glsl">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="deferred_second_fragment.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="deferred_second_vertex.glsl">
+    <None Include="deferred_vertex.glsl">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

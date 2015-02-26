@@ -1,10 +1,13 @@
 #include <gl/glew.h>
 #include <gl/GL.h>
 
-#include <GLFW\glfw3.h>
+#include <GLFW/glfw3.h>
+
 #include "DefRenderTestScene.h"
+
 #include "Cube.h"
 #include "Texture2D.h"
+
 #include "settings.h"
 #include "input.h"
 
@@ -20,16 +23,16 @@ DefRenderTestScene::DefRenderTestScene() {
 
 	vertexShader = new Shader("default_vertex.glsl", GL_VERTEX_SHADER);
 	geometryShader = new Shader("default_geometry.glsl", GL_GEOMETRY_SHADER);
-	fragmentShader = new Shader("deferred_first_fragment.glsl", GL_FRAGMENT_SHADER);
+	fragmentShader = new Shader("default_fragment.glsl", GL_FRAGMENT_SHADER);
 	shaderProgram = new ShaderProgram({ vertexShader, geometryShader, fragmentShader });
 
-	secondVertexShader = new Shader("deferred_second_vertex.glsl", GL_VERTEX_SHADER);
-	secondFragmentShader = new Shader("deferred_second_fragment.glsl", GL_FRAGMENT_SHADER);
-	secondShaderProgram = new ShaderProgram({ secondVertexShader, secondFragmentShader });
+	deferredVertexShader = new Shader("deferred_vertex.glsl", GL_VERTEX_SHADER);
+	deferredFragmentShader = new Shader("deferred_fragment.glsl", GL_FRAGMENT_SHADER);
+	deferredShaderProgram = new ShaderProgram({ deferredVertexShader, deferredFragmentShader });
 
 	player = new Player();
 	player->setMovementSpeed(2.0f);
-	multipleRenderTargets = new FrameBufferObjects(secondShaderProgram, settings::displayWidth(), settings::displayHeight());
+	multipleRenderTargets = new FrameBufferObjects(deferredShaderProgram, settings::displayWidth(), settings::displayHeight());
 
 	geometry = new Cube();
 	geometryObject = new GeometryObject(geometry);
@@ -41,11 +44,11 @@ DefRenderTestScene::~DefRenderTestScene() {
 	delete texture;
 
 	delete multipleRenderTargets;
-	delete secondShaderProgram;
+	delete deferredShaderProgram;
 	delete shaderProgram;
 
-	delete secondVertexShader;
-	delete secondFragmentShader;
+	delete deferredVertexShader;
+	delete deferredFragmentShader;
 
 	delete vertexShader;
 	delete geometryShader;
@@ -91,7 +94,6 @@ void DefRenderTestScene::render(int width, int height) {
 	} else if (state == 0) {
 		multipleRenderTargets->render(player->camera(), width, height);
 	}
-
 }
 
 void DefRenderTestScene::bindTriangleData(){
