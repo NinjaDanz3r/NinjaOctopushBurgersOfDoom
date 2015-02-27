@@ -6,6 +6,7 @@ Lighting pass fragment shader (second pass)
 uniform sampler2D tPosition;
 uniform sampler2D tDiffuse; 
 uniform sampler2D tNormals;
+uniform sampler2D tDepth;
 uniform vec4 lightPosition;
 uniform vec3 lightIntensity;
 uniform vec3 diffuseKoefficient;
@@ -13,7 +14,7 @@ uniform vec2 screenSize;
 
 out vec4 fragment_color;
 
-//Calculate texcoord
+// Calculate texcoord
 vec2 calculateTexCoord() {
 	return gl_FragCoord.xy / screenSize;
 }
@@ -34,8 +35,9 @@ vec3 ads(vec3 normal, vec3 position) {
 void main () {
 	vec2 texCoord = calculateTexCoord();
 	vec3 position = texture(tPosition, texCoord).xyz;
-	vec3 diffuse = texture(tDiffuse, texCoord).xyz;
+	vec3 diffuse = texture(tDiffuse, texCoord).rgb;
 	vec3 normal = texture(tNormals, texCoord).xyz;
-
+	
 	fragment_color = vec4(diffuse, 1.0) * vec4(ads(normal, position), 1.0);
+	gl_FragDepth = texture(tDepth, texCoord).r;
 }

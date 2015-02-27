@@ -25,7 +25,14 @@ FrameBufferObjects::FrameBufferObjects(ShaderProgram* shaderProgram, unsigned in
 
 	// Bind depthHandle
 	glBindTexture(GL_TEXTURE_2D, depthHandle);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_DEPTH_TEXTURE_MODE, GL_INTENSITY);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
 	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthHandle, 0);
 
 	// Create and intialize draw buffers (output from geometry pass)
@@ -75,6 +82,9 @@ void FrameBufferObjects::bindForReading() {
 		glActiveTexture(GL_TEXTURE0 + i);
 		glBindTexture(GL_TEXTURE_2D, mTextures[i]);
 	}
+
+	glActiveTexture(GL_TEXTURE0 + NUM_TEXTURES);
+	glBindTexture(GL_TEXTURE_2D, depthHandle);
 }
 
 void FrameBufferObjects::bindForTexReading() {
@@ -115,7 +125,11 @@ void FrameBufferObjects::showTextures(int width, int height) {
 void FrameBufferObjects::render(Camera* camera, int width, int height) {
 	// Disable depth testing
 	GLboolean depthTest = glIsEnabled(GL_DEPTH_TEST);
-	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST);
+
+	GLint oldDepthFunctionMode;
+	glGetIntegerv(GL_DEPTH_FUNC, &oldDepthFunctionMode);
+	glDepthFunc(GL_ALWAYS);
 
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 	shaderProgram->use();
@@ -136,15 +150,17 @@ void FrameBufferObjects::render(Camera* camera, int width, int height) {
 
 	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
 
-	if (depthTest)
-		glEnable(GL_DEPTH_TEST);
+	if (!depthTest)
+		glDisable(GL_DEPTH_TEST);
 	if (!blend)
 		glDisable(GL_BLEND);
+
+	glDepthFunc(oldDepthFunctionMode);
 }
 
 void FrameBufferObjects::attachTexture(GLuint texture, unsigned int width, unsigned int height, GLenum attachment) {
 	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, width, height, 0, GL_RGB, GL_FLOAT, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, width, height, 0, GL_RGB, GL_FLOAT, nullptr);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, attachment, GL_TEXTURE_2D, texture, 0);
@@ -162,6 +178,7 @@ void FrameBufferObjects::bindLighting(Camera* camera, int width, int height){
 	glUniform1i(shaderProgram->uniformLocation("tPosition"), FrameBufferObjects::POSITION);
 	glUniform1i(shaderProgram->uniformLocation("tDiffuse"), FrameBufferObjects::DIFFUSE);
 	glUniform1i(shaderProgram->uniformLocation("tNormals"), FrameBufferObjects::NORMAL);
+	glUniform1i(shaderProgram->uniformLocation("tDepth"), FrameBufferObjects::NUM_TEXTURES);
 
 	glUniform2fv(shaderProgram->uniformLocation("screenSize"), 1, &screenSize[0]);
 	glUniform4fv(shaderProgram->uniformLocation("lightPosition"), 1, &lightPosition[0]);
