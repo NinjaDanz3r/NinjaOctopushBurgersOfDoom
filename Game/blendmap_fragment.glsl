@@ -23,6 +23,7 @@ uniform vec3 diffuseKoefficient;
 layout(location = 0) out vec3 positionOut;
 layout(location = 1) out vec3 diffuseOut;
 layout(location = 2) out vec3 normalsOut;
+layout(location = 3) out vec3 specularOut;
 
 void main () {
 	vec4 blendMap = texture(blendMap, vertexIn.tex_coords);
@@ -34,4 +35,5 @@ void main () {
 
 	positionOut = vertexIn.position;
 	normalsOut = vertexIn.normal;
+	specularOut = vec3(0.0, 0.0, 0.0);
 }

@@ -20,10 +20,11 @@ uniform vec3 diffuseKoefficient;
 layout(location = 0) out vec3 positionOut;
 layout(location = 1) out vec3 diffuseOut;
 layout(location = 2) out vec3 normalsOut;
+layout(location = 3) out vec3 specularOut;
 
 void main () {
-	vec3 Ks = texture(specularMap, vertexIn.tex_coords).rgb;
 	diffuseOut = texture(baseImage, vertexIn.tex_coords).rgb;
 	positionOut = vertexIn.position;
 	normalsOut = vertexIn.normal;
+	specularOut = texture(specularMap, vertexIn.tex_coords).rgb;
 }

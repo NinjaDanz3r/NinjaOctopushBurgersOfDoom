@@ -178,6 +178,7 @@ void FrameBufferObjects::bindLighting(Camera* camera, int width, int height){
 	glUniform1i(shaderProgram->uniformLocation("tPosition"), FrameBufferObjects::POSITION);
 	glUniform1i(shaderProgram->uniformLocation("tDiffuse"), FrameBufferObjects::DIFFUSE);
 	glUniform1i(shaderProgram->uniformLocation("tNormals"), FrameBufferObjects::NORMAL);
+	glUniform1i(shaderProgram->uniformLocation("tSpecular"), FrameBufferObjects::SPECULAR);
 	glUniform1i(shaderProgram->uniformLocation("tDepth"), FrameBufferObjects::NUM_TEXTURES);
 
 	glUniform2fv(shaderProgram->uniformLocation("screenSize"), 1, &screenSize[0]);

@@ -15,6 +15,7 @@ class FrameBufferObjects {
 			POSITION,
 			DIFFUSE,
 			NORMAL,
+			SPECULAR,
 			NUM_TEXTURES
 		};
 
