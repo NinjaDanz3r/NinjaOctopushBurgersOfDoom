@@ -146,10 +146,16 @@
     <ClInclude Include="Core.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="ModelResource.h" />
+    <ClInclude Include="Project.h" />
+    <ClInclude Include="Resources.h" />
     <ClInclude Include="util.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="ModelResource.cpp" />
+    <ClCompile Include="Project.cpp" />
+    <ClCompile Include="Resources.cpp" />
     <ClCompile Include="util.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

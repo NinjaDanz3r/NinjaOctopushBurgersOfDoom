@@ -1,10 +1,9 @@
 #include "ModelResource.h"
-#include "OBJModel.h"
-#include <util.h>
+#include "util.h"
 
-ModelResource::ModelResource(const std::string &name, const std::string &filename) {
+ModelResource::ModelResource(const std::string &name, Model* model) {
 	this->name = name;
-	model = new OBJModel(filename.c_str());
+	this->model = model;
 }
 
 ModelResource::ModelResource(std::ifstream &file, std::string directory) {

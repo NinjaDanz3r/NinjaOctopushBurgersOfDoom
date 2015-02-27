@@ -161,10 +161,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="ModelResource.cpp" />
     <ClCompile Include="OBJModel.cpp" />
-    <ClCompile Include="Project.cpp" />
-    <ClCompile Include="Resources.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="editor.h">
@@ -208,10 +205,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_editor.h" />
-    <ClInclude Include="ModelResource.h" />
     <ClInclude Include="OBJModel.h" />
-    <ClInclude Include="Project.h" />
-    <ClInclude Include="Resources.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="editor.qrc">

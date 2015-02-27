@@ -19,6 +19,12 @@
     <Filter Include="Source Files\Geometry">
       <UniqueIdentifier>{965621d8-3103-47a4-9a60-7c02f65aaad6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Project">
+      <UniqueIdentifier>{719599e1-642e-414b-9f9e-b6a8184b959a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Project">
+      <UniqueIdentifier>{1a8c839f-6afa-40fe-b435-1d0acc4d0d91}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -33,6 +39,15 @@
     <ClInclude Include="Model.h">
       <Filter>Header Files\Geometry</Filter>
     </ClInclude>
+    <ClInclude Include="Project.h">
+      <Filter>Header Files\Project</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelResource.h">
+      <Filter>Header Files\Project</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources.h">
+      <Filter>Header Files\Project</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="util.cpp">
@@ -40,6 +55,15 @@
     </ClCompile>
     <ClCompile Include="Model.cpp">
       <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelResource.cpp">
+      <Filter>Source Files\Project</Filter>
+    </ClCompile>
+    <ClCompile Include="Project.cpp">
+      <Filter>Source Files\Project</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources.cpp">
+      <Filter>Source Files\Project</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

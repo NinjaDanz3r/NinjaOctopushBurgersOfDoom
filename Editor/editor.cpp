@@ -1,4 +1,5 @@
 #include "editor.h"
+#include <OBJModel.h>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QInputDialog>
 
@@ -84,7 +85,7 @@ void Editor::importModel() {
 		return;
 	}
 
-	ModelResource* model = new ModelResource(name.toStdString(), filename.toStdString());
+	ModelResource* model = new ModelResource(name.toStdString(), new OBJModel(filename.toStdString().c_str()));
 	activeProject->resources()->modelResources()->push_back(model);
 
 	QTreeWidgetItem *treeItem = new QTreeWidgetItem();
