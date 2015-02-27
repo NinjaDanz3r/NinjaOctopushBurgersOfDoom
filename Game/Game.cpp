@@ -37,11 +37,13 @@ Game::~Game() {
 
 void Game::update() {
 	int width, height;
+	double deltaTime;
 	glfwGetFramebufferSize(window, &width, &height);
-
+	deltaTime = glfwGetTime() - lastTime;
+	lastTime = glfwGetTime();
 	input::update();
 
-	Scene::SceneEnd* status = currentScene->update(glfwGetTime() - lastTime);
+	Scene::SceneEnd* status = currentScene->update(deltaTime);
 	if (status == nullptr) {
 		currentScene->render(width, height);
 	}
@@ -57,7 +59,7 @@ void Game::update() {
 		delete status;
 	}
 
-	lastTime = glfwGetTime();
+	
 	if (settings::showFPS())
 		setWindowFPS();
 }
