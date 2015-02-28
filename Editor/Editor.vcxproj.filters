@@ -45,6 +45,12 @@
     <Filter Include="Source Files\GUI">
       <UniqueIdentifier>{fd4feb42-2b26-45c2-a7bf-7132284b9c55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Preview">
+      <UniqueIdentifier>{50ea1368-92cb-4d83-9d0e-76a660b3d50c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Preview">
+      <UniqueIdentifier>{d28c5932-4cd1-4b97-8e6c-ddd1dc8d619d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -68,6 +74,15 @@
     <ClCompile Include="convert.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_PreviewWidget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_PreviewWidget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="PreviewWidget.cpp">
+      <Filter>Source Files\Preview</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="editor.ui">
@@ -78,6 +93,9 @@
     </CustomBuild>
     <CustomBuild Include="editor.h">
       <Filter>Header Files\GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="PreviewWidget.h">
+      <Filter>Header Files\Preview</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
