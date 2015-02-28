@@ -46,12 +46,6 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Source Files\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="ShaderProgram.cpp">
-      <Filter>Source Files\Shader</Filter>
-    </ClCompile>
     <ClCompile Include="Sound.cpp">
       <Filter>Source Files\Audio</Filter>
     </ClCompile>
@@ -134,12 +128,6 @@
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Header Files\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>Header Files\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="ShaderProgram.h">
-      <Filter>Header Files\Shader</Filter>
     </ClInclude>
     <ClInclude Include="Sound.h">
       <Filter>Header Files\Audio</Filter>
@@ -250,9 +238,6 @@
     <Filter Include="Header Files\Texture">
       <UniqueIdentifier>{8c498bfd-f173-4f62-96de-54fce4ee1eda}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Shader">
-      <UniqueIdentifier>{245002b8-0f87-4fd3-a6d1-7324ff8394d6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Audio">
       <UniqueIdentifier>{f20f28df-0b06-4181-abd5-81354ebf8319}</UniqueIdentifier>
     </Filter>
@@ -264,9 +249,6 @@
     </Filter>
     <Filter Include="Source Files\Scene">
       <UniqueIdentifier>{7f0c254a-c7c6-4bff-8793-1e7a46dbec32}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Shader">
-      <UniqueIdentifier>{9bd3be60-5f3b-42a3-81f2-aadfee3d3443}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Texture">
       <UniqueIdentifier>{cbc7a3ca-dda2-4f0b-9a60-4bdc3464c263}</UniqueIdentifier>

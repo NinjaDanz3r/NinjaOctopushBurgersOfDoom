@@ -2,8 +2,8 @@
 #define __PARTICLESCENE_H__
 
 #include "Scene.h"
-#include "Shader.h"
-#include "ShaderProgram.h"
+#include <Shader.h>
+#include <ShaderProgram.h>
 #include <Texture.h>
 #include <Geometry.h>
 #include "Player.h"

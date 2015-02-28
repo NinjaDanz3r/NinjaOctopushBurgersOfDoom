@@ -5,8 +5,8 @@
 #include "Scene.h"
 #include "settings.h"
 #include "Scene.h"
-#include "Shader.h"
-#include "ShaderProgram.h"
+#include <Shader.h>
+#include <ShaderProgram.h>
 #include <Texture.h>
 #include "Geometry.h"
 #include "GeometryObject.h"

@@ -3,8 +3,8 @@
 
 #include "FrameBufferObjects.h"
 #include "Scene.h"
-#include "Shader.h"
-#include "ShaderProgram.h"
+#include <Shader.h>
+#include <ShaderProgram.h>
 #include <Texture.h>
 #include "CubeMapTexture.h"
 #include "Terrain.h"

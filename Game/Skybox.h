@@ -3,7 +3,7 @@
 
 #include "CubeMapTexture.h"
 #include "Camera.h"
-#include "ShaderProgram.h"
+#include <ShaderProgram.h>
 
 /// A skybox.
 /**
