@@ -109,4 +109,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="showTexture_vertex.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="showTexture_fragment.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>
