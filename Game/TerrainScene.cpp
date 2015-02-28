@@ -7,7 +7,7 @@
 #include "SoundSystem.h"
 
 #include "Terrain.h"
-#include "Texture2D.h"
+#include <Texture2D.h>
 
 #include "settings.h"
 #include "input.h"

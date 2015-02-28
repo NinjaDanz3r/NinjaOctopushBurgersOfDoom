@@ -7,7 +7,7 @@
 #include "Scene.h"
 #include "Shader.h"
 #include "ShaderProgram.h"
-#include "Texture.h"
+#include <Texture.h>
 #include "Geometry.h"
 #include "GeometryObject.h"
 #include "Player.h"

@@ -7,7 +7,7 @@
 #include "SoundSystem.h"
 
 #include "Cube.h"
-#include "Texture2D.h"
+#include <Texture2D.h>
 
 #include "settings.h"
 #include "input.h"

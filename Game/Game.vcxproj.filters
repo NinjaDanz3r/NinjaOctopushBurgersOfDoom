@@ -70,12 +70,6 @@
     <ClCompile Include="TerrainScene.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Source Files\Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture2D.cpp">
-      <Filter>Source Files\Texture</Filter>
-    </ClCompile>
     <ClCompile Include="TestScene.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
@@ -155,12 +149,6 @@
     </ClInclude>
     <ClInclude Include="SoundFile.h">
       <Filter>Header Files\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Header Files\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture2D.h">
-      <Filter>Header Files\Texture</Filter>
     </ClInclude>
     <ClInclude Include="TerrainScene.h">
       <Filter>Header Files\Scene</Filter>

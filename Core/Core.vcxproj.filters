@@ -25,6 +25,12 @@
     <Filter Include="Source Files\Project">
       <UniqueIdentifier>{1a8c839f-6afa-40fe-b435-1d0acc4d0d91}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Texture">
+      <UniqueIdentifier>{bd30bb70-f589-4240-a741-f7ea23526857}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Texture">
+      <UniqueIdentifier>{9ac2addc-c83c-4330-94e4-9b6c2c624dca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -48,6 +54,15 @@
     <ClInclude Include="Resources.h">
       <Filter>Header Files\Project</Filter>
     </ClInclude>
+    <ClInclude Include="TextureResource.h">
+      <Filter>Header Files\Project</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture2D.h">
+      <Filter>Header Files\Texture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="util.cpp">
@@ -64,6 +79,15 @@
     </ClCompile>
     <ClCompile Include="Resources.cpp">
       <Filter>Source Files\Project</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureResource.cpp">
+      <Filter>Source Files\Project</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture2D.cpp">
+      <Filter>Source Files\Texture</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

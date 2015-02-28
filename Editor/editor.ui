@@ -22,7 +22,16 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
+     <widget class="QOpenGLWidget" name="openGLWidget"/>
+    </item>
+    <item>
      <widget class="QTreeWidget" name="treeWidget">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="columnCount">
        <number>1</number>
       </property>
@@ -64,6 +73,8 @@
     <property name="title">
      <string>Import</string>
     </property>
+    <addaction name="actionImportTexture"/>
+    <addaction name="separator"/>
     <addaction name="actionImportModel"/>
    </widget>
    <addaction name="menuFile"/>
@@ -148,6 +159,18 @@
    </property>
    <property name="text">
     <string>Close</string>
+   </property>
+  </action>
+  <action name="actionImportTexture">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="editor.qrc">
+     <normaloff>:/Editor/Resources/media-texture.png</normaloff>:/Editor/Resources/media-texture.png</iconset>
+   </property>
+   <property name="text">
+    <string>Texture</string>
    </property>
   </action>
  </widget>

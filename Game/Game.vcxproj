@@ -48,8 +48,6 @@
     <ClCompile Include="TerrainObject.cpp" />
     <ClCompile Include="TerrainScene.cpp" />
     <ClCompile Include="TestScene.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="WaveFile.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -83,8 +81,6 @@
     <ClInclude Include="TerrainObject.h" />
     <ClInclude Include="TerrainScene.h" />
     <ClInclude Include="TestScene.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="Texture2D.h" />
     <ClInclude Include="WaveFile.h" />
   </ItemGroup>
   <ItemGroup>

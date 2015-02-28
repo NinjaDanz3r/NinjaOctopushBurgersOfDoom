@@ -2,6 +2,7 @@
 #include <OBJModel.h>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QInputDialog>
+#include "convert.h"
 
 Editor::Editor(QWidget *parent) : QMainWindow(parent) {
 	ui.setupUi(this);
@@ -12,7 +13,9 @@ Editor::Editor(QWidget *parent) : QMainWindow(parent) {
 	connect(ui.actionClose, SIGNAL(triggered()), this, SLOT(closeProject()));
 
 	connect(ui.actionImportModel, SIGNAL(triggered()), this, SLOT(importModel()));
+	connect(ui.actionImportTexture, SIGNAL(triggered()), this, SLOT(importTexture()));
 
+	texturesRoot = addTreeRoot("Textures");
 	modelsRoot = addTreeRoot("Models");
 }
 
@@ -22,6 +25,9 @@ Editor::~Editor() {
 
 	deleteChildren(modelsRoot);
 	delete modelsRoot;
+
+	deleteChildren(texturesRoot);
+	delete texturesRoot;
 }
 
 void Editor::newProject() {
@@ -52,6 +58,12 @@ void Editor::openProject() {
 
 	enableActions(true);
 
+	for (auto texture : *activeProject->resources()->textureResources()) {
+		QTreeWidgetItem *treeItem = new QTreeWidgetItem();
+		treeItem->setText(0, QString::fromStdString(texture->name));
+		texturesRoot->addChild(treeItem);
+	}
+
 	for (auto model : *activeProject->resources()->modelResources()) {
 		QTreeWidgetItem *treeItem = new QTreeWidgetItem();
 		treeItem->setText(0, QString::fromStdString(model->name));
@@ -70,6 +82,7 @@ void Editor::closeProject() {
 	}
 
 	deleteChildren(modelsRoot);
+	deleteChildren(texturesRoot);
 
 	enableActions(false);
 }
@@ -93,10 +106,32 @@ void Editor::importModel() {
 	modelsRoot->addChild(treeItem);
 }
 
+void Editor::importTexture() {
+	QString filename = QFileDialog::getOpenFileName(this, tr("Import Texture"), "", tr("Image Files (*.png *.jpg *.jpeg *.tga *.bmp);;All Files (*)"));
+	if (filename.isEmpty()) {
+		return;
+	}
+
+	QString name = QInputDialog::getText(this, tr("Enter Texture Name"), tr("Texture name:"));
+	if (name.isEmpty()) {
+		return;
+	}
+
+	convert::convertImage(filename.toStdString().c_str(), (activeProject->directory() + "/Textures/" + name.toStdString() + ".tga").c_str());
+
+	TextureResource* texture = new TextureResource(name.toStdString(), activeProject->directory());
+	activeProject->resources()->textureResources()->push_back(texture);
+
+	QTreeWidgetItem *treeItem = new QTreeWidgetItem();
+	treeItem->setText(0, name);
+	texturesRoot->addChild(treeItem);
+}
+
 void Editor::enableActions(bool enabled) {
 	ui.actionSave->setEnabled(enabled);
-	ui.actionImportModel->setEnabled(enabled);
 	ui.actionClose->setEnabled(enabled);
+	ui.actionImportModel->setEnabled(enabled);
+	ui.actionImportTexture->setEnabled(enabled);
 }
 
 QTreeWidgetItem* Editor::addTreeRoot(QString name) {

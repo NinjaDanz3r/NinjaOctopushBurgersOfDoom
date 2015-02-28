@@ -5,7 +5,7 @@
 #include "Scene.h"
 #include "Shader.h"
 #include "ShaderProgram.h"
-#include "Texture.h"
+#include <Texture.h>
 #include "CubeMapTexture.h"
 #include "Terrain.h"
 #include "TerrainObject.h"

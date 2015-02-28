@@ -15,14 +15,18 @@ std::string Project::filename() const {
 
 void Project::setFilename(std::string filename) {
 	_filename = filename;
-	directory = filename.substr(0, filename.rfind('/'));
+	_directory = filename.substr(0, filename.rfind('/'));
+}
+
+std::string Project::directory() const {
+	return _directory;
 }
 
 void Project::save() {
 	std::ofstream file;
 	file.open(_filename.c_str(), std::ios_base::binary);
 
-	_resources->save(file, directory);
+	_resources->save(file, _directory);
 
 	file.close();
 }
@@ -31,7 +35,7 @@ void Project::load() {
 	std::ifstream file;
 	file.open(_filename.c_str(), std::ios_base::binary);
 
-	_resources->load(file, directory);
+	_resources->load(file, _directory);
 
 	file.close();
 }

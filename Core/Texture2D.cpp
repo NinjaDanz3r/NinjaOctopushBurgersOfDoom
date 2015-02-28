@@ -2,7 +2,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #define STBI_ONLY_TGA
 #include <stb_image.h>
-#include <util.h>
+#include "util.h"
 
 Texture2D::Texture2D(const char* filename) {
 	glGenTextures(1, &texID);

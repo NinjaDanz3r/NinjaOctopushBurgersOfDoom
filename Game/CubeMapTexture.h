@@ -1,7 +1,7 @@
 #ifndef __CUBEMAPTEXTURE_H__
 #define __CUBEMAPTEXTURE_H__
 
-#include "Texture.h"
+#include <Texture.h>
 
 /// A cubemap texture.
 /**
