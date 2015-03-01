@@ -4,6 +4,7 @@
 #include "Core.h"
 #include <fstream>
 #include <vector>
+#include <map>
 #include "ModelResource.h"
 #include "TextureResource.h"
 
@@ -40,11 +41,11 @@ class Resources {
 		/**
 		* @return Texture resources
 		*/
-		CORE_EXPORT std::vector<TextureResource*>* textureResources() const;
+		CORE_EXPORT std::map<std::string, TextureResource*>* textureResources() const;
 
 	private:
 		std::vector<ModelResource*>* models;
-		std::vector<TextureResource*>* textures;
+		std::map<std::string, TextureResource*>* textures;
 };
 
 #endif

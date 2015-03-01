@@ -15,6 +15,8 @@ Editor::Editor(QWidget *parent) : QMainWindow(parent) {
 	connect(ui.actionImportModel, SIGNAL(triggered()), this, SLOT(importModel()));
 	connect(ui.actionImportTexture, SIGNAL(triggered()), this, SLOT(importTexture()));
 
+	connect(ui.treeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(selectionChanged()));
+
 	texturesRoot = addTreeRoot("Textures");
 	modelsRoot = addTreeRoot("Models");
 }
@@ -60,7 +62,7 @@ void Editor::openProject() {
 
 	for (auto texture : *activeProject->resources()->textureResources()) {
 		QTreeWidgetItem *treeItem = new QTreeWidgetItem();
-		treeItem->setText(0, QString::fromStdString(texture->name));
+		treeItem->setText(0, QString::fromStdString(texture.first));
 		texturesRoot->addChild(treeItem);
 	}
 
@@ -85,6 +87,9 @@ void Editor::closeProject() {
 	deleteChildren(texturesRoot);
 
 	enableActions(false);
+
+	ui.previewWidget->setPreviewTexture(nullptr);
+	ui.previewWidget->repaint();
 }
 
 void Editor::importModel() {
@@ -120,11 +125,22 @@ void Editor::importTexture() {
 	convert::convertImage(filename.toStdString().c_str(), (activeProject->directory() + "/Textures/" + name.toStdString() + ".tga").c_str());
 
 	TextureResource* texture = new TextureResource(name.toStdString(), activeProject->directory());
-	activeProject->resources()->textureResources()->push_back(texture);
+	(*activeProject->resources()->textureResources())[texture->name] = texture;
 
 	QTreeWidgetItem *treeItem = new QTreeWidgetItem();
 	treeItem->setText(0, name);
 	texturesRoot->addChild(treeItem);
+}
+
+void Editor::selectionChanged() {
+	if (ui.treeWidget->selectedItems().length() > 0) {
+		QTreeWidgetItem* selected = ui.treeWidget->selectedItems()[0];
+
+		if (selected->parent() == texturesRoot) {
+			ui.previewWidget->setPreviewTexture((*activeProject->resources()->textureResources())[selected->text(0).toStdString()]->texture());
+			ui.previewWidget->repaint();
+		}
+	}
 }
 
 void Editor::enableActions(bool enabled) {

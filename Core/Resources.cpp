@@ -3,7 +3,7 @@
 
 Resources::Resources() {
 	models = new std::vector<ModelResource*>();
-	textures = new std::vector<TextureResource*>();
+	textures = new std::map<std::string, TextureResource*>();
 }
 
 Resources::~Resources() {
@@ -13,7 +13,7 @@ Resources::~Resources() {
 	delete models;
 
 	for (auto texture : *textures) {
-		delete texture;
+		delete texture.second;
 	}
 	delete textures;
 }
@@ -26,7 +26,7 @@ void Resources::save(std::ofstream &file, std::string directory) {
 	file.write(reinterpret_cast<const char*>(&texturesSize), sizeof(texturesSize));
 
 	for (auto texture : *textures) {
-		texture->save(file);
+		texture.second->save(file);
 	}
 	
 	// Models
@@ -46,7 +46,8 @@ void Resources::load(std::ifstream &file, std::string directory) {
 	file.read(reinterpret_cast<char*>(&texturesSize), sizeof(texturesSize));
 
 	for (auto i = 0; i < texturesSize; i++) {
-		textures->push_back(new TextureResource(file, directory));
+		TextureResource* texture = new TextureResource(file, directory);
+		(*textures)[texture->name] = texture;
 	}
 
 	// Models
@@ -62,6 +63,6 @@ std::vector<ModelResource*>* Resources::modelResources() const {
 	return models;
 }
 
-std::vector<TextureResource*>* Resources::textureResources() const {
+std::map<std::string, TextureResource*>* Resources::textureResources() const {
 	return textures;
 }

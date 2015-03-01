@@ -29,6 +29,12 @@ class TextureResource {
 		/// Name of the texture resource.
 		std::string name;
 
+		/// Get texture.
+		/**
+		 * @return The texture.
+		 */
+		CORE_EXPORT Texture* texture() const;
+
 		/// Save model resource to file.
 		/**
 		* @param file File stream to save to.
@@ -36,7 +42,7 @@ class TextureResource {
 		CORE_EXPORT void save(std::ofstream &file) const;
 
 	private:
-		Texture* texture;
+		Texture* _texture;
 };
 
 #endif

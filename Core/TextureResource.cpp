@@ -4,16 +4,20 @@
 
 TextureResource::TextureResource(const std::string &name, std::string directory) {
 	this->name = name;
-	texture = new Texture2D((directory + "/Textures/" + name + ".tga").c_str());
+	_texture = new Texture2D((directory + "/Textures/" + name + ".tga").c_str());
 }
 
 TextureResource::TextureResource(std::ifstream &file, std::string directory) {
 	this->name = util::readString(file);
-	texture = new Texture2D((directory + "/Textures/" + name + ".tga").c_str());
+	_texture = new Texture2D((directory + "/Textures/" + name + ".tga").c_str());
 }
 
 TextureResource::~TextureResource() {
-	delete texture;
+	delete _texture;
+}
+
+Texture* TextureResource::texture() const {
+	return _texture;
 }
 
 void TextureResource::save(std::ofstream &file) const {

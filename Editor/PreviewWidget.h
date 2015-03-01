@@ -24,6 +24,12 @@ class PreviewWidget : public QGLWidget {
 		/// Destructor.
 		~PreviewWidget();
 
+		/// Set preview texture.
+		/**
+		 * @param texture Texture to show.
+		 */
+		void setPreviewTexture(Texture* texture);
+
 	protected:
 		void initializeGL();
 		void paintGL();
@@ -34,7 +40,7 @@ class PreviewWidget : public QGLWidget {
 		
 		int width, height;
 
-		Texture* texture;
+		Texture* texture = nullptr;
 
 		// Shaders
 		Shader* vertexShader;

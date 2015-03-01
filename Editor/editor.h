@@ -21,6 +21,8 @@ class Editor : public QMainWindow {
 		void importModel();
 		void importTexture();
 
+		void selectionChanged();
+
 	private:
 		void enableActions(bool enabled);
 		QTreeWidgetItem* addTreeRoot(QString name);

@@ -7,7 +7,7 @@
 const glm::vec2 PreviewWidget::vertices[6] = { { 1.f, 1.f }, { -1.f, 1.f }, { -1.f, -1.f }, { 1.f, 1.f }, { -1.f, -1.f }, { 1.f, -1.f } };
 
 PreviewWidget::PreviewWidget(QWidget* parent) : QGLWidget(QGLFormat(QGL::SampleBuffers), parent) {
-
+	
 }
 
 PreviewWidget::~PreviewWidget() {
@@ -16,8 +16,10 @@ PreviewWidget::~PreviewWidget() {
 	delete fragmentShader;
 
 	glDeleteBuffers(1, &vertexBuffer);
+}
 
-	delete texture;
+void PreviewWidget::setPreviewTexture(Texture* texture) {
+	this->texture = texture;
 }
 
 void PreviewWidget::initializeGL() {
@@ -30,30 +32,30 @@ void PreviewWidget::initializeGL() {
 
 	shaderProgram->use();
 	bindQuad();
-
-	texture = new Texture2D("../Game/Resources/Textures/kaleido.tga");
 }
 
 void PreviewWidget::paintGL() {
 	glViewport(0, 0, width, height);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	shaderProgram->use();
+	if (texture != nullptr) {
+		shaderProgram->use();
 
-	// Texture unit 0 is for base images.
-	glUniform1i(shaderProgram->uniformLocation("baseImage"), 0);
+		// Texture unit 0 is for base images.
+		glUniform1i(shaderProgram->uniformLocation("baseImage"), 0);
 
-	glBindVertexArray(vertexAttribute);
+		glBindVertexArray(vertexAttribute);
 
-	// Base image texture
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture->textureID());
+		// Base image texture
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, texture->textureID());
 
-	glm::vec2 screenSize(width, height);
-	glUniform2fv(shaderProgram->uniformLocation("screenSize"), 1, &screenSize[0]);
+		glm::vec2 screenSize(width, height);
+		glUniform2fv(shaderProgram->uniformLocation("screenSize"), 1, &screenSize[0]);
 
-	// Draw the triangles
-	glDrawArrays(GL_TRIANGLES, 0, 6);
+		// Draw the triangles
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+	}
 }
 
 void PreviewWidget::resizeGL(int width, int height) {
