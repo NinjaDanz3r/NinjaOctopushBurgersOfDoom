@@ -13,9 +13,19 @@ namespace settings {
 	bool _showConsole;
 	bool _logging;
 	bool _showMouseCursor;
+	bool _centerMouseCursor = true;
 	bool _showFPS;
+	bool _showCursorCoordinates;
 	bool _debugContext;
-	std::string _startingScene;
+	std::string* _startingScene;
+
+	void init() {
+		_startingScene = new std::string();
+	}
+
+	void free() {
+		delete _startingScene;
+	}
 
 	void load(const char* filename) {
 		CSimpleIniA ini;
@@ -31,9 +41,11 @@ namespace settings {
 		_showConsole = ini.GetBoolValue("Debug", "Show Console");
 		_logging = ini.GetBoolValue("Debug", "Logging");
 		_showMouseCursor = ini.GetBoolValue("Debug", "Show Mouse Cursor");
+		_centerMouseCursor = ini.GetBoolValue("Debug", "Center Mouse Cursor", true);
 		_showFPS = ini.GetBoolValue("Debug", "Show FPS", true);
+		_showCursorCoordinates = ini.GetBoolValue("Debug", "Show Cursor Coords", true);
 		_debugContext = ini.GetBoolValue("Debug", "Debug Context", false);
-		_startingScene = ini.GetValue("Debug", "Starting Scene", "default");
+		*_startingScene = ini.GetValue("Debug", "Starting Scene", "default");
 	}
 
 	void save(const char* filename) {
@@ -49,9 +61,11 @@ namespace settings {
 		ini.SetBoolValue("Debug", "Show Console", _showConsole);
 		ini.SetBoolValue("Debug", "Logging", _logging);
 		ini.SetBoolValue("Debug", "Show Mouse Cursor", _showMouseCursor);
+		ini.SetBoolValue("Debug", "Center Mouse Cursor", _centerMouseCursor);
 		ini.SetBoolValue("Debug", "Show FPS", _showFPS);
+		ini.SetBoolValue("Debug", "Show Cursor Coords", _showCursorCoordinates);
 		ini.SetBoolValue("Debug", "Debug Context", _debugContext);
-		ini.SetValue("Debug", "Starting Scene", "default");
+		ini.SetValue("Debug", "Starting Scene", _startingScene->c_str());
 		SI_Error rc = ini.SaveFile(filename);
 		if (rc < 0)
 			fputs("Couldn't save settings", stderr);
@@ -134,12 +148,28 @@ namespace settings {
 		_showMouseCursor = show;
 	}
 
+	bool centerMouseCursor() {
+		return _centerMouseCursor;
+	}
+
+	void setCenterMouseCursor(bool center) {
+		_centerMouseCursor = center;
+	}
+
 	bool showFPS() {
 		return _showFPS;
 	}
 
 	void setShowFPS(bool show) {
 		_showFPS = show;
+	}
+
+	bool showCursorCoordinates() {
+		return _showCursorCoordinates;
+	}
+
+	void setShowCursorCoordinates(bool show) {
+		_showCursorCoordinates = show;
 	}
 
 	bool debugContext() {
@@ -151,10 +181,10 @@ namespace settings {
 	}
 
 	std::string startingScene() {
-		return _startingScene;
+		return *_startingScene;
 	}
 
 	void setStartingScene(std::string startingScene) {
-		_startingScene = startingScene;
+		*_startingScene = startingScene;
 	}
 }

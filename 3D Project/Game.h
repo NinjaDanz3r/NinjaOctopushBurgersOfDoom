@@ -20,6 +20,7 @@ class Game {
 		/// Constructor
 		/**
 		 * @param window Window for which to retrieve input, etc.
+		 * @param sceneName Name of the scene to start on.
 		 */
 		Game(GLFWwindow* window, const char* sceneName);
 
@@ -34,6 +35,7 @@ class Game {
 
 	private:
 		void setWindowFPS();
+		void setWindowTitle();
 		void setSceneMap();
 		void setScene(const char*);
 		void assignKeyboardBindings();

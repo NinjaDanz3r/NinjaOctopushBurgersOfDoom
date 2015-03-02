@@ -50,6 +50,9 @@ AudioScene::~AudioScene() {
 	delete geometryShader;
 	delete fragmentShader;
 
+	glDeleteBuffers(1, &vertexBuffer);
+	glDeleteBuffers(1, &indexBuffer);
+
 	delete geometry;
 	delete player;
 

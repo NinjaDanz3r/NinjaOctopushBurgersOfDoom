@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AudioScene.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="ParticleScene.cpp" />
     <ClCompile Include="CubeMapTexture.cpp" />
     <ClCompile Include="PickingScene.cpp" />
@@ -21,7 +22,9 @@
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="Square.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="DefRenderTestScene.cpp" />
     <ClCompile Include="FirstPersonCamera.cpp" />
+    <ClCompile Include="FrameBufferObjects.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="Cube.cpp" />
@@ -44,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioScene.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="ParticleScene.h" />
     <ClInclude Include="CubeMapTexture.h" />
     <ClInclude Include="PickingScene.h" />
@@ -53,7 +57,9 @@
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="Square.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="DefRenderTestScene.h" />
     <ClInclude Include="FirstPersonCamera.h" />
+    <ClInclude Include="FrameBufferObjects.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="input.h" />
@@ -68,8 +74,6 @@
     <ClInclude Include="Sound.h" />
     <ClInclude Include="SoundBuffer.h" />
     <ClInclude Include="SoundFile.h" />
-    <ClInclude Include="SoundSystem.h" />
-    <ClInclude Include="TerrainScene.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Texture2D.h" />
@@ -77,9 +81,16 @@
     <ClInclude Include="WaveFile.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="blendmap_fragment.glsl" />
     <None Include="default_fragment.glsl" />
     <None Include="default_geometry.glsl" />
     <None Include="default_vertex.glsl" />
+    <None Include="deferred_first_geometry.glsl" />
+    <None Include="deferred_second_fragment.glsl" />
+    <None Include="deferred_second_vertex.glsl" />
+    <None Include="deferred_first_fragment.glsl" />
+    <None Include="deferred_first_vertex.glsl" />
+    <None Include="normalspecularmap_fragment.glsl" />
     <None Include="particle_fragment.glsl" />
     <None Include="particle_geometry.glsl" />
     <None Include="particle_vertex.glsl" />

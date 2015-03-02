@@ -7,6 +7,7 @@
 
 #include "Square.h"
 #include "Texture2D.h"
+#include "input.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -65,6 +66,18 @@ void PickingScene::render(int width, int height) {
 
 	// Model matrix, unique for each model.
 	glm::mat4 model = geometry->modelMatrix();
+
+	//
+	float x, y;
+	x = static_cast<float>(input::cursorX());
+	y = static_cast<float>(input::cursorY());
+	glm::mat4 proj = player->camera()->projection(width, height);
+	
+	float vx = ((2.0f*x / width) - 1.0f) / (proj[0][0]);
+	float vy = ((-2.0f*x / height) + 1.0f) / (proj[0][0]);
+
+	glm::vec3 rayOrigin(0.0f, 0.0f, 0.0f);
+	glm::vec3 rayDir(vx, vy, 1.0f);
 
 	// Send the matrices to the shader.
 	glm::mat4 view = player->camera()->view();

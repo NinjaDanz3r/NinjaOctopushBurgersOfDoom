@@ -6,24 +6,24 @@ Square::Square() {
 	vertexData = new Vertex[vertexNr];
 
 	vertexData[0] = {
-		0.5f, 0.5f, 0.0f,
-		0.0f, 0.0f, 1.0f,
-		1.0f, 0.0f
+		glm::vec3(0.5f, 0.5f, 0.0f),
+		glm::vec3(0.0f, 0.0f, 1.0f),
+		glm::vec2(1.0f, 0.0f)
 	};
 	vertexData[1] = {
-		-0.5f, -0.5f, 0.0f,
-		0.0f, 0.0f, 1.0f,
-		0.0f, 1.0f
+		glm::vec3(-0.5f, -0.5f, 0.0f),
+		glm::vec3(0.0f, 0.0f, 1.0f),
+		glm::vec2(0.0f, 1.0f)
 	};
 	vertexData[2] = {
-		0.5f, -0.5f, 0.0f,
-		0.0f, 0.0f, 1.0f,
-		1.0f, 1.0f
+		glm::vec3(0.5f, -0.5f, 0.0f),
+		glm::vec3(0.0f, 0.0f, 1.0f),
+		glm::vec2(1.0f, 1.0f)
 	};
 	vertexData[3] = {
-		-0.5f, 0.5f, 0.0f,
-		0.0f, 0.0f, 1.0f,
-		0.0f, 0.0f
+		glm::vec3(-0.5f, 0.5f, 0.0f),
+		glm::vec3(0.0f, 0.0f, 1.0f),
+		glm::vec2(0.0f, 0.0f)
 	};
 
 	// Vertexindices

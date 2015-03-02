@@ -7,6 +7,18 @@
  * Settings are stored in util::savePath("settings.ini").
  */
 namespace settings {
+	/// Initialize the settings module.
+	/**
+	* Needs to be called before all other functions.
+	*/
+	void init();
+
+	/// Free the input module.
+	/**
+	* Should not be called twice.
+	*/
+	void free();
+
 	/// Load settings from an ini file.
 	/**
 	 * Settings are given default values if file can not be found or does not contain the corresponding setting.
@@ -140,6 +152,20 @@ namespace settings {
 	 */
 	void setShowMouseCursor(bool show);
 
+	/// Get whether mouse cursor should be centered each frame.
+	/**
+	 * Necessary for good first person movement.
+	 * Default true.
+	 * @return Whether mouse cursor should be centered
+	 */
+	bool centerMouseCursor();
+
+	/// Set whether mouse cursor should be centered each frame.
+	/**
+	 * @param center Whether mouse cursor should be centered.
+	 */
+	void setCenterMouseCursor(bool center);
+
 	/// Get whether to show frames per second in window title.
 	/**
 	 * Default true.
@@ -149,9 +175,22 @@ namespace settings {
 
 	/// Set whether to show frames per second in window title.
 	/**
-	 * @param show Whether to show FPS.
+	 * @param Set whether to show FPS.
 	 */
 	void setShowFPS(bool show);
+
+	/// Get whether to show cursor X,Y in window title.
+	/**
+	* Default true.
+	* @return Whether to show cursor coordinates
+	*/
+	bool showCursorCoordinates();
+
+	/// Set whether to show frames per second in window title.
+	/**
+	* @param set Whether to show cursor coordinates.
+	*/
+	void setShowCursorCoordinates(bool show);
 
 	/// Get whether an OpenGL Debug Context should be created.
 	/**
@@ -170,13 +209,13 @@ namespace settings {
 
 	/// Get the name of the starting scene.
 	/**
-	* @return returns the name of the scene to load.
+	* @return The name of the scene to load
 	*/
 	std::string startingScene();
 
 	/// Set the name of the starting scene.
 	/**
-	* @param name of the starting scene.
+	* @param startingScene Name of the starting scene.
 	*/
 	void setStartingScene(std::string startingScene);
 }

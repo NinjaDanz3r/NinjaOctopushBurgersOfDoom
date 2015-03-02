@@ -43,7 +43,9 @@ class TestScene : public Scene {
 		Shader* fragmentShader;
 		ShaderProgram* shaderProgram;
 
-		Texture* texture;
+		Texture* diffuse;
+		Texture* normal;
+		Texture* specular;
 		Geometry* geometry;
 		Player* player;
 

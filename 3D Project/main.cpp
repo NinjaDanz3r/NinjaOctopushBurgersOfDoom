@@ -19,6 +19,7 @@
 int main() {
 	srand(static_cast<unsigned int>(time(NULL)));
 	input::init();
+	settings::init();
 	settings::load(util::savePath("settings.ini").c_str());
 
 	setupDebug();
@@ -28,7 +29,6 @@ int main() {
 	glfwMakeContextCurrent(window);
 
 	glewInit();
-	std::string test = settings::startingScene();
 	glfwSetKeyCallback(window, keyCallback);
 	if (settings::debugContext())
 		glDebugMessageCallback(debugMessageCallback, nullptr);
@@ -46,6 +46,8 @@ int main() {
 	glfwTerminate();
 
 	settings::save(util::savePath("settings.ini").c_str());
+	settings::free();
+	input::free();
 
 	util::logWithTime("Game ended");
 

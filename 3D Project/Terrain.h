@@ -49,6 +49,19 @@ public:
 	 */
 	float getY(float x, float z) const;
 
+	/// Get how many times the texture should repeat.
+	/**
+	 * Default: (1.0, 1.0)
+	 * @return How many times the texture should repeat
+	 */
+	glm::vec2 textureRepeat() const;
+
+	/// Set how many times the texture should repeat.
+	/**
+	 * @param repeat How many times the texture should repeat.
+	 */
+	void setTextureRepeat(glm::vec2 repeat);
+
 private:
 	void generateVertices();
 	void generateIndices();
@@ -66,6 +79,8 @@ private:
 	glm::vec3** normals;
 	int width;
 	int height;
+
+	glm::vec2 _textureRepeat;
 };
 
 #endif

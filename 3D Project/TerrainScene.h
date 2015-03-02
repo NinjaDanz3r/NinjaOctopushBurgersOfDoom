@@ -6,7 +6,7 @@
 #include "ShaderProgram.h"
 #include "Texture.h"
 #include "CubeMapTexture.h"
-#include "Geometry.h"
+#include "Terrain.h"
 #include "Player.h"
 #include "Skybox.h"
 
@@ -45,8 +45,12 @@ class TerrainScene : public Scene {
 		Shader* fragmentShader;
 		ShaderProgram* shaderProgram;
 
-		Texture* texture;
-		Geometry* geometry;
+		Texture* blendMap;
+		Texture* grassTexture;
+		Texture* cliffTexture;
+		Texture* sandTexture;
+		Texture* snowTexture;
+		Terrain* terrain;
 		Player* player;
 
 		// Skybox

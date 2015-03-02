@@ -12,6 +12,10 @@ Skybox::Skybox(const CubeMapTexture* texture) {
 	fragmentShader = new Shader("skybox_fragment.glsl", GL_FRAGMENT_SHADER);
 	shaderProgram = new ShaderProgram({ vertexShader, fragmentShader });
 
+	// Texture unit 0 is for base images.
+	shaderProgram->use();
+	glUniform1i(shaderProgram->uniformLocation("cubeMapTexture"), 0);
+
 	bindData();
 }
 
@@ -19,13 +23,13 @@ Skybox::~Skybox() {
 	delete shaderProgram;
 	delete vertexShader;
 	delete fragmentShader;
+
+	glDeleteBuffers(1, &vertexBuffer);
+	glDeleteBuffers(1, &indexBuffer);
 }
 
 void Skybox::render(int width, int height, const Camera* camera) {
 	shaderProgram->use();
-
-	// Texture unit 0 is for base images.
-	glUniform1i(shaderProgram->uniformLocation("cubeMapTexture"), 0);
 
 	// Since our Z is always 1.0, we need to set depth buffer to render at <= 1.0 instead of the default < 1.0.
 	GLint oldDepthFunctionMode;
@@ -33,7 +37,7 @@ void Skybox::render(int width, int height, const Camera* camera) {
 	glDepthFunc(GL_LEQUAL);
 
 	// Cube map texture.
-	glActiveTexture(GL_TEXTURE0 + 0);
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, texture->textureID());
 
 	// Set uniforms.

@@ -6,8 +6,10 @@
 Player::Player() {
 	_camera = new FirstPersonCamera();
 	_camera->setPosition(glm::vec3(0.f, 0.f, 2.f));
-	//_camera->setAngles(0.f, 0.f, 15.f);
+	
 	input::centerCursor();
+	prevMX = static_cast<float>(input::cursorX());
+	prevMY = static_cast<float>(input::cursorY());
 }
 
 Player::~Player() {
@@ -23,13 +25,19 @@ void Player::setMovementSpeed(float movementSpeed) {
 }
 
 void Player::update(double time) {
-	float dx = (float)time * _movementSpeed * (input::pressed(input::RIGHT) - input::pressed(input::LEFT));
-	float dz = (float)time * _movementSpeed * (input::pressed(input::FORWARD) - input::pressed(input::BACKWARD));
+	float dx = static_cast<float>(time) * _movementSpeed * (input::pressed(input::RIGHT) - input::pressed(input::LEFT));
+	float dz = static_cast<float>(time) * _movementSpeed * (input::pressed(input::FORWARD) - input::pressed(input::BACKWARD));
 	_camera->move(glm::vec3(dx, 0.f, dz));
 
-	_camera->rotate((float)input::cursorCenterX() * 0.2f * settings::mouseSensitivity(), (float)input::cursorCenterY() * 0.2f * settings::mouseSensitivity(), 0.f);
+	float mdx = static_cast<float>(input::cursorX()) - prevMX;
+	float mdy = static_cast<float>(input::cursorY()) - prevMY;
+	_camera->rotate(mdx * 0.2f * settings::mouseSensitivity(), mdy * 0.2f * settings::mouseSensitivity(), 0.f);
 
-	input::centerCursor();
+	if (settings::centerMouseCursor())
+		input::centerCursor();
+
+	prevMX = static_cast<float>(input::cursorX());
+	prevMY = static_cast<float>(input::cursorY());
 }
 
 Camera* Player::camera() const {

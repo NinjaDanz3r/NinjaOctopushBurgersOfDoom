@@ -90,6 +90,14 @@ float Terrain::getY(float x, float z) const {
 	return height * scale().y + position().y;
 }
 
+glm::vec2 Terrain::textureRepeat() const {
+	return _textureRepeat;
+}
+
+void Terrain::setTextureRepeat(glm::vec2 repeat) {
+	_textureRepeat = repeat;
+}
+
 void Terrain::generateVertices() {
 	vertexNr = width * height;
 	vertexData = new Vertex[vertexNr];
@@ -97,16 +105,16 @@ void Terrain::generateVertices() {
 	for (unsigned int i = 0; i < vertexNr; i++) {
 		vertexData[i] = {
 			// Position
-			static_cast<float>(i % width) / width - 0.5f,
-			heightMap[i % width][i / width],
-			static_cast<float>(i / width) / height - 0.5f,
+			glm::vec3(static_cast<float>(i % width) / width - 0.5f,
+					  heightMap[i % width][i / width],
+					  static_cast<float>(i / width) / height - 0.5f),
 			// Normal
-			normals[i % width][i / width].x,
-			normals[i % width][i / width].y,
-			normals[i % width][i / width].z,
+			glm::vec3(normals[i % width][i / width].x,
+				      normals[i % width][i / width].y,
+					  normals[i % width][i / width].z),
 			// Texture coordinates
-			static_cast<float>(i % width) / width,
-			static_cast<float>(i / width) / height
+			glm::vec2(static_cast<float>(i % width) / width,
+					  static_cast<float>(i / width) / height)
 		};
 	}
 }
