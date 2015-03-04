@@ -1,6 +1,5 @@
 #include "Game.h"
 #include "TestScene.h"
-#include "DefRenderTestScene.h"
 
 #include "ParticleScene.h"
 #include "TerrainScene.h"
@@ -93,14 +92,11 @@ template<typename T> Scene * createInstance() {
 }
 
 void Game::setSceneMap() {
-
-	(*sceneMap)["deferred"] = &createInstance<DefRenderTestScene>;
 	(*sceneMap)["default"] = &createInstance<TestScene>;
 	(*sceneMap)["test"] = &createInstance<TestScene>;
 	(*sceneMap)["audio"] = &createInstance<AudioScene>;
 	(*sceneMap)["particle"] = &createInstance<ParticleScene>;
 	(*sceneMap)["terrain"] = &createInstance<TerrainScene>;
-
 }
 
 void Game::setScene(const char* sceneName){

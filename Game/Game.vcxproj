@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AudioScene.cpp" />
-    <ClCompile Include="DefRenderTestScene.cpp" />
     <ClCompile Include="FrameBufferObjects.cpp" />
     <ClCompile Include="GeometryObject.cpp" />
     <ClCompile Include="ParticleScene.cpp" />
@@ -50,7 +49,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioScene.h" />
-    <ClInclude Include="DefRenderTestScene.h" />
     <ClInclude Include="FrameBufferObjects.h" />
     <ClInclude Include="GeometryObject.h" />
     <ClInclude Include="ParticleScene.h" />
