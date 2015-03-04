@@ -5,22 +5,40 @@
 #include <QtWidgets/QMainWindow>
 #include "ui_editor.h"
 
+/// The main window of the editor.
 class Editor : public QMainWindow {
 	Q_OBJECT
 
 	public:
-		Editor(QWidget *parent = 0);
+		/// Create window.
+		/**
+		 * @param parent Parent widget.
+		 */
+		Editor(QWidget *parent = nullptr);
+
+		/// Destructor.
 		~Editor();
 
 	public slots:
+		/// Create new project.
 		void newProject();
+
+		/// Open project.
 		void openProject();
+
+		/// Save project.
 		void saveProject();
+
+		/// Close project.
 		void closeProject();
 
+		/// Import a model.
 		void importModel();
+
+		/// Import a texture.
 		void importTexture();
 
+		/// Handle selected item in tree widget being changed.
 		void selectionChanged();
 
 	private:
