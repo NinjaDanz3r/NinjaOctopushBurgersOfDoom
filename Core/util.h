@@ -67,7 +67,7 @@ namespace util {
 	/// Write std::string to std::ofstream.
 	/**
 	* @param file File stream to write to.
-	* @param string String to write.
+	* @param str String to write.
 	*/
 	CORE_EXPORT void writeString(std::ofstream &file, std::string str);
 

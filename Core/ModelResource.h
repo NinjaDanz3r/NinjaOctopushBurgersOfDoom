@@ -12,7 +12,7 @@ class ModelResource {
 		/// Create new model resource.
 		/**
 		* @param name Name.
-		* @param filename Filename.
+		* @param model The model.
 		*/
 		CORE_EXPORT ModelResource(const std::string &name, Model* model);
 
