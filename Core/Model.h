@@ -9,7 +9,7 @@
 /// A model loaded from our own binary model format.
 class Model : public Geometry {
 	public:
-		/// Create new model at origo.
+		/// Create new model from binary file.
 		/**
 		* @param filename Filename (relative or absolute) to the model file.
 		*/

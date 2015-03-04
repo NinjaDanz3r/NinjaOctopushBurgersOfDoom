@@ -6,7 +6,7 @@
 /// A model loaded from an OBJ file.
 class OBJModel : public Model {
 	public:
-		/// Create new model at origo.
+		/// Create new model from OBJ file.
 		/**
 		* @param filename Filename (relative or absolute) to the OBJ model file.
 		*/
