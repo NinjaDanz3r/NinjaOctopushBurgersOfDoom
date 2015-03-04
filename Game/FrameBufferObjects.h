@@ -10,26 +10,27 @@
 /// Holds the frame buffers used for deferred rendering.
 class FrameBufferObjects {
 	public:
-		/// Defines the position of each texture and the number of textures.
+		/// The different buffer types.
 		enum TEXTURE_TYPE {
-			POSITION,
-			DIFFUSE,
-			NORMAL,
-			SPECULAR,
-			NUM_TEXTURES
+			POSITION, ///< Position
+			DIFFUSE, ///< Diffuse texture
+			NORMAL, ///< Normals
+			SPECULAR, ///< Specular
+			NUM_TEXTURES ///< Total number of textures (excluding depth buffer)
 		};
 
 		/// Constructor
 		/**
-		* @param width Width of the context.
-		* @param height Height of the context.
-		*/
+		 * @param shaderProgram Shader program with which to combine the different buffers into the final image.
+		 * @param width Width of the context.
+		 * @param height Height of the context.
+		 */
 		FrameBufferObjects(ShaderProgram* shaderProgram, unsigned int width, unsigned int height);
 
 		/// Destructor
 		/**
-		* Free allocated resources.
-		*/
+		 * Free allocated resources.
+		 */
 		~FrameBufferObjects();
 
 		/// Get texture.
@@ -63,7 +64,6 @@ class FrameBufferObjects {
 
 		/// Render the lighting in the scene.
 		/**
-		 * @param shaderProgram ShaderProgram to use.
 		 * @param camera Camera to use.
 		 * @param width Width of the context.
 		 * @param height Height of the context.
