@@ -5,6 +5,10 @@
 
 #include <AL/alc.h>
 
+/** @ingroup game
+ * @{
+ */
+
 /// Handles OpenAL sound.
 /**
  * There should only be one instance.
@@ -49,5 +53,7 @@ class SoundSystem {
 
 		Listener* _listener;
 };
+
+/** @} */
 
 #endif

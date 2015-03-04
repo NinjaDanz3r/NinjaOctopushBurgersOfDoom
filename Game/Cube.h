@@ -3,6 +3,10 @@
 
 #include <Geometry.h>
 
+/** @ingroup game
+ * @{
+ */
+
 /// A cube.
 class Cube : public Geometry {
 	public:
@@ -43,5 +47,7 @@ class Cube : public Geometry {
 		unsigned int* indexData = nullptr;
 		unsigned int indexNr = 0;
 };
+
+/** @} */
 
 #endif

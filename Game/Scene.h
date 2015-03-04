@@ -1,6 +1,10 @@
 #ifndef __SCENE_H__
 #define __SCENE_H__
 
+/** @ingroup game
+ * @{
+ */
+
 /// Interface for scenes in the game, eg. title screen or in-game.
 class Scene {
 	public:
@@ -59,5 +63,7 @@ class Scene {
 		 */
 		virtual void render(int width, int height) = 0;
 };
+
+/** @} */
 
 #endif

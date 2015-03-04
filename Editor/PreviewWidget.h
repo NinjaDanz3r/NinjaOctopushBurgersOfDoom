@@ -10,6 +10,10 @@
 #include <ShaderProgram.h>
 #include <Texture.h>
 
+/** @ingroup editor
+ * @{
+ */
+
 /// Widget that displays a preview of the selected resource.
 class PreviewWidget : public QGLWidget {
 	Q_OBJECT
@@ -55,5 +59,7 @@ class PreviewWidget : public QGLWidget {
 		GLuint vertexAttribute;
 		unsigned int vertexCount;
 };
+
+/** @} */
 
 #endif

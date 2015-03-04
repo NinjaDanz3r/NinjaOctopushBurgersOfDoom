@@ -12,6 +12,10 @@
 #include "GeometryObject.h"
 #include "Player.h"
 
+/** @ingroup game
+ * @{
+ */
+
 /// %Scene used to test the deferred rendering.
 class DefRenderTestScene : public Scene {
 	public:
@@ -73,5 +77,7 @@ class DefRenderTestScene : public Scene {
 		unsigned int indexCount = 0;
 		int vertexCount = 0;
 };
+
+/** @} */
 
 #endif

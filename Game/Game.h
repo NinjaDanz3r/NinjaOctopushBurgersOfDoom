@@ -11,6 +11,11 @@
 #define GLFW_DLL
 #include <GLFW/glfw3.h>
 
+/// The game.
+/** @defgroup game Game
+ * @{
+ */
+
 /// Class to handle the active Scene.
 /**
 * Class to handle the active Scene and switch between scenes (eg. level scene or menu scene) during the course of the game.
@@ -46,5 +51,7 @@ class Game {
 		double prevFPSTime = 0.0;
 		int frames = 0;
 };
+
+/** @} */
 
 #endif

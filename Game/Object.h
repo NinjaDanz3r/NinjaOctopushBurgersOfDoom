@@ -3,6 +3,10 @@
 
 #include <glm/glm.hpp>
 
+/** @ingroup game
+ * @{
+ */
+
 /// Generic class to represent an object in the game world.
 class Object {
 	public:
@@ -112,5 +116,7 @@ class Object {
 		float _verticalAngle = 0.f;
 		float _tiltAngle = 0.f;
 };
+
+/** @} */
 
 #endif

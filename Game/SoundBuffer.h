@@ -4,6 +4,10 @@
 #include "SoundFile.h"
 #include <AL\al.h>
 
+/** @ingroup game
+ * @{
+ */
+
 /// Wrapper for OpenAL buffers.
 class SoundBuffer {
 	public:
@@ -25,5 +29,7 @@ class SoundBuffer {
 	private:
 		ALuint _buffer;
 };
+
+/** @} */
 
 #endif

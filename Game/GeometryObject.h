@@ -4,6 +4,10 @@
 #include "Object.h"
 #include <Geometry.h>
 
+/** @ingroup game
+ * @{
+ */
+
 /// A game object with renderable Geometry.
 class GeometryObject : public Object {
 	public:
@@ -31,5 +35,7 @@ class GeometryObject : public Object {
 	private:
 		const Geometry* _geometry;
 };
+
+/** @} */
 
 #endif

@@ -3,6 +3,10 @@
 
 #include "Camera.h"
 
+/** @ingroup game
+ * @{
+ */
+
 /// The player character.
 /**
  * Holds a Camera object and manipulates that camera's position and rotation based on player input (first person camera).
@@ -46,5 +50,7 @@ class Player {
 		float _movementSpeed = 1.0f;
 		float prevMX, prevMY;
 };
+
+/** @} */
 
 #endif

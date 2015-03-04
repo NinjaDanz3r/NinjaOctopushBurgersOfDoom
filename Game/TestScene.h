@@ -10,6 +10,10 @@
 #include "GeometryObject.h"
 #include "Player.h"
 
+/** @ingroup game
+ * @{
+ */
+
 /// %Scene used to test basic rendering technology.
 class TestScene : public Scene {
 	public:
@@ -69,5 +73,7 @@ class TestScene : public Scene {
 		GLuint indexBuffer = 0;
 		unsigned int indexCount = 0;
 };
+
+/** @} */
 
 #endif

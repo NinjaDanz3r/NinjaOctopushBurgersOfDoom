@@ -6,6 +6,10 @@
 #include <gl/GL.h>
 #include <string>
 
+/** @ingroup core
+ * @{
+ */
+
 /// A GLSL shader.
 /**
  * Compiles and handles a GLSL shader. Shaders should be linked together into a ShaderProgram.
@@ -42,5 +46,7 @@ class Shader {
 		GLuint shader;
 		GLenum _shaderType;
 };
+
+/** @} */
 
 #endif

@@ -3,6 +3,10 @@
 
 #include <Texture.h>
 
+/** @ingroup game
+ * @{
+ */
+
 /// A cubemap texture.
 /**
  * A Cubemap %Texture is a texture composed of 6 2D images. The images are arranged in a cube-shape, hence the name. Used for skyboxes.
@@ -51,5 +55,7 @@ class CubeMapTexture : public Texture {
 
 		static GLenum targets[6];
 };
+
+/** @} */
 
 #endif

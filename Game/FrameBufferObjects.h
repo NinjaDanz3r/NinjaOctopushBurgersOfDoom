@@ -7,6 +7,10 @@
 #include "ShaderProgram.h"
 #include "Camera.h"
 
+/** @ingroup game
+ * @{
+ */
+
 /// Holds the frame buffers used for deferred rendering.
 class FrameBufferObjects {
 	public:
@@ -98,5 +102,7 @@ class FrameBufferObjects {
 		GLuint indexBuffer;
 		unsigned int indexCount;
 };
+
+/** @} */
 
 #endif

@@ -12,6 +12,10 @@
 #include "Player.h"
 #include "Skybox.h"
 
+/** @ingroup game
+ * @{
+ */
+
 /// %Scene used to test terrain (height maps).
 class TerrainScene : public Scene {
 	public:
@@ -77,5 +81,7 @@ class TerrainScene : public Scene {
 		GLuint indexBuffer = 0;
 		unsigned int indexCount = 0;
 };
+
+/** @} */
 
 #endif

@@ -3,6 +3,10 @@
 
 #include <AL/al.h>
 
+/** @ingroup game
+ * @{
+ */
+
 /// Interface for sound files of various formats.
 /**
  * Used to get raw audio data to a SoundBuffer.
@@ -37,5 +41,7 @@ class SoundFile {
 		 */
 		virtual ALsizei sampleRate() const = 0;
 };
+
+/** @} */
 
 #endif

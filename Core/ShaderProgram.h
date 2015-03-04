@@ -4,6 +4,10 @@
 #include "Shader.h"
 #include <initializer_list>
 
+/** @ingroup core
+ * @{
+ */
+
 /// A GLSL shader program.
 class ShaderProgram {
 	public:
@@ -50,5 +54,7 @@ class ShaderProgram {
 	private:
 		GLuint shaderProgram;
 };
+
+/** @} */
 
 #endif

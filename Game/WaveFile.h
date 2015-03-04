@@ -3,6 +3,10 @@
 
 #include "SoundFile.h"
 
+/** @ingroup game
+ * @{
+ */
+
 /// WAVE implementation of SoundFile.
 /**
  * Loads .wave-files.
@@ -51,5 +55,7 @@ class WaveFile : public SoundFile {
 
 		static inline ALenum toALFormat(short channels, short bitsPerSample);
 };
+
+/** @} */
 
 #endif

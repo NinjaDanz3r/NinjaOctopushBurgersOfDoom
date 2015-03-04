@@ -5,6 +5,10 @@
 #include <string>
 #include "Resources.h"
 
+/** @ingroup core
+ * @{
+ */
+
 /// A game project.
 class Project {
 	public:
@@ -16,14 +20,14 @@ class Project {
 
 		/// Get filename of project file.
 		/**
-		* @return The filename
-		*/
+		 * @return The filename
+		 */
 		CORE_EXPORT std::string filename() const;
 
 		/// Set filename of project file.
 		/**
-		* @param filename Filename.
-		*/
+		 * @param filename Filename.
+		 */
 		CORE_EXPORT void setFilename(std::string filename);
 
 		/// Get project directory.
@@ -40,8 +44,8 @@ class Project {
 
 		/// Get resources.
 		/**
-		* @return The project's resources
-		*/
+		 * @return The project's resources
+		 */
 		CORE_EXPORT Resources* resources() const;
 
 	private:
@@ -49,5 +53,7 @@ class Project {
 		std::string _filename;
 		std::string _directory;
 };
+
+/** @} */
 
 #endif

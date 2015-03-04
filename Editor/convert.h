@@ -1,6 +1,10 @@
 #ifndef __CONVERT_H__
 #define __CONVERT_H__
 
+/** @ingroup editor
+ * @{
+ */
+
 /// Contains various conversion functions.
 namespace convert {
 	/// Convert image to TGA.
@@ -12,5 +16,7 @@ namespace convert {
 	 */
 	void convertImage(const char* inName, const char* outName);
 }
+
+/** @} */
 
 #endif

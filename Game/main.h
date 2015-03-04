@@ -4,6 +4,10 @@
 #define GLFW_DLL
 #include <GLFW/glfw3.h>
 
+/** @ingroup game
+ * @{
+ */
+
 /// Main game function. Contains the main loop.
 int main();
 
@@ -57,5 +61,7 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
  * @see <a href="https://www.opengl.org/wiki/Debug_Output">OpenGL Debug Output</a>
  */
 void APIENTRY debugMessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam);
+
+/** @} */
 
 #endif

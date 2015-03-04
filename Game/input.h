@@ -4,6 +4,10 @@
 #define GLFW_DLL
 #include <GLFW/glfw3.h>
 
+/** @ingroup game
+ * @{
+ */
+
 /// Handles player input.
 /**
  * Rather than checking directly for key presses (like 'W'), keys are assigned to more general buttons (eg. 'Forward' to walk forward).
@@ -102,5 +106,7 @@ namespace input {
 	/// Centers the cursor to the middle of the window.
 	void centerCursor();
 }
+
+/** @} */
 
 #endif

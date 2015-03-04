@@ -5,6 +5,11 @@
 #include <QtWidgets/QMainWindow>
 #include "ui_editor.h"
 
+/// The editor.
+/** @defgroup editor Editor
+ * @{
+ */
+
 /// The main window of the editor.
 class Editor : public QMainWindow {
 	Q_OBJECT
@@ -52,5 +57,7 @@ class Editor : public QMainWindow {
 		QTreeWidgetItem* modelsRoot;
 		QTreeWidgetItem* texturesRoot;
 };
+
+/** @} */
 
 #endif // EDITOR_H

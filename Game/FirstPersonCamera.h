@@ -3,6 +3,10 @@
 
 #include "Camera.h"
 
+/** @ingroup game
+ * @{
+ */
+
 /// First person camera.
 /**
  * Moves relative to the forward direction and vertical angle is limited to 85 degrees.
@@ -27,5 +31,7 @@ class FirstPersonCamera : public Camera {
 		 */
 		virtual void rotate(float horizontalAngle, float verticalAngle, float tiltAngle);
 };
+
+/** @} */
 
 #endif

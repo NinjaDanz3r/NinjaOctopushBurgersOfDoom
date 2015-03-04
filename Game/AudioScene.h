@@ -13,6 +13,10 @@
 #include "SoundBuffer.h"
 #include "Sound.h"
 
+/** @ingroup game
+ * @{
+ */
+
 /// %Scene used to test 3D audio.
 class AudioScene : public Scene {
 	public:
@@ -75,5 +79,7 @@ class AudioScene : public Scene {
 		SoundBuffer* buffer;
 		Sound* sound;
 };
+
+/** @} */
 
 #endif

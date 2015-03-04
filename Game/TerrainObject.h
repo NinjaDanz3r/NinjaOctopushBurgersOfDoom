@@ -4,6 +4,10 @@
 #include "GeometryObject.h"
 #include "Terrain.h"
 
+/** @ingroup game
+ * @{
+ */
+
 /// A terrain object in the game world.
 class TerrainObject : public GeometryObject {
 	public:
@@ -31,5 +35,7 @@ class TerrainObject : public GeometryObject {
 	private:
 		const Terrain* terrain;
 };
+
+/** @} */
 
 #endif

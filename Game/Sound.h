@@ -4,6 +4,10 @@
 #include "SoundBuffer.h"
 #include <glm/glm.hpp>
 
+/** @ingroup game
+ * @{
+ */
+
 /// A sound source in the game world.
 /**
  * Represents a sound source in the game world. If its SoundBuffer is in mono, the sound will be 3D and played relative to the Listener position. If the SoundBuffer is in stereo it will not be 3D.
@@ -94,5 +98,7 @@ class Sound {
 		ALfloat _gain = 1.f;
 		ALboolean loop = AL_FALSE;
 };
+
+/** @} */
 
 #endif

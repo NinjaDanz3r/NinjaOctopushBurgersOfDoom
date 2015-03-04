@@ -6,21 +6,25 @@
 #include <fstream>
 #include "Model.h"
 
+/** @ingroup core
+ * @{
+ */
+
 /// A model resource.
 class ModelResource {
 	public:
 		/// Create new model resource.
 		/**
-		* @param name Name.
-		* @param model The model.
-		*/
+		 * @param name Name.
+		 * @param model The model.
+		 */
 		CORE_EXPORT ModelResource(const std::string &name, Model* model);
 
 		/// Create new model resource.
 		/**
-		* @param file File stream to load from.
-		* @param directory Directory to load from.
-		*/
+		 * @param file File stream to load from.
+		 * @param directory Directory to load from.
+		 */
 		CORE_EXPORT ModelResource(std::ifstream &file, std::string directory);
 
 		/// Destructor.
@@ -31,13 +35,15 @@ class ModelResource {
 
 		/// Save model resource to file.
 		/**
-		* @param file File stream to save to.
-		* @param directory Directory to save to.
-		*/
+		 * @param file File stream to save to.
+		 * @param directory Directory to save to.
+		 */
 		CORE_EXPORT void save(std::ofstream &file, std::string directory) const;
 
 	private:
 		Model* model;
 };
+
+/** @} */
 
 #endif

@@ -5,6 +5,10 @@
 #include "Camera.h"
 #include <ShaderProgram.h>
 
+/** @ingroup game
+ * @{
+ */
+
 /// A skybox.
 /**
  * A box rendered behind all other objects and which moves with the player, creating the illusion that it is infinitely far away.
@@ -62,5 +66,7 @@ class Skybox {
 		// Index buffer.
 		GLuint indexBuffer = 0;
 };
+
+/** @} */
 
 #endif

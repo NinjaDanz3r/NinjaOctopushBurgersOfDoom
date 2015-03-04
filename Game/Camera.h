@@ -4,6 +4,10 @@
 #include "Object.h"
 #include <glm/glm.hpp>
 
+/** @ingroup game
+ * @{
+ */
+
 /// A camera through which the world can be rendered.
 class Camera : public Object {
 	public:
@@ -84,5 +88,7 @@ class Camera : public Object {
 		float zNear = 0.1f;
 		float zFar = 100.f;
 };
+
+/** @} */
 
 #endif

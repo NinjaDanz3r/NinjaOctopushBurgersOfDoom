@@ -6,21 +6,25 @@
 #include <fstream>
 #include "Texture.h"
 
+/** @ingroup core
+ * @{
+ */
+
 /// A texture resource.
 class TextureResource {
 	public:
 		/// Create new texture resource.
 		/**
-		* @param name Name.
-		* @param directory Directory to load from.
-		*/
+		 * @param name Name.
+		 * @param directory Directory to load from.
+		 */
 		CORE_EXPORT TextureResource(const std::string &name, std::string directory);
 
 		/// Create new texture resource.
 		/**
-		* @param file File stream to load from.
-		* @param directory Directory to load from.
-		*/
+		 * @param file File stream to load from.
+		 * @param directory Directory to load from.
+		 */
 		CORE_EXPORT TextureResource(std::ifstream &file, std::string directory);
 
 		/// Destructor.
@@ -37,12 +41,14 @@ class TextureResource {
 
 		/// Save model resource to file.
 		/**
-		* @param file File stream to save to.
-		*/
+		 * @param file File stream to save to.
+		 */
 		CORE_EXPORT void save(std::ofstream &file) const;
 
 	private:
 		Texture* _texture;
 };
+
+/** @} */
 
 #endif

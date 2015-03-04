@@ -3,6 +3,10 @@
 
 #include <glm/glm.hpp>
 
+/** @ingroup game
+ * @{
+ */
+
 /// Wrapper for OpenAL listener.
 /**
  * 3D Sounds are played in relation to the listener's position. Does not need to be created as it is automatically created by the SoundSystem.
@@ -50,5 +54,7 @@ class Listener {
 		float _verticalAngle = 0.f;
 		float _tiltAngle = 0.f;
 };
+
+/** @} */
 
 #endif

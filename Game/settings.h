@@ -2,6 +2,10 @@
 #define __SETTINGS_H__
 #include <string>
 
+/** @ingroup game
+ * @{
+ */
+
 /// Handles various settings that the user can modify.
 /**
  * Settings are stored in util::savePath("settings.ini").
@@ -206,5 +210,7 @@ namespace settings {
 	*/
 	void setStartingScene(std::string startingScene);
 }
+
+/** @} */
 
 #endif
