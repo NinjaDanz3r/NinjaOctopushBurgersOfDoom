@@ -15,6 +15,98 @@
 
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))
 
+#define EPSILON 0.00001
+
+class AABB
+{
+public:
+	glm::vec3 v1, v2, origin;
+};
+
+class OBB
+{
+public:
+	glm::vec3 v1, v2, v3, origin, dim; //Dim: width, heigh, depth
+};
+
+//Möller-Trumbore intersection algorithm for triangles.
+bool rayVsTri(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3, glm::vec3 rayDir, glm::vec3 rayOrigin, float* distance) {
+	glm::vec3 edge1, edge2;
+	glm::vec3 P, Q, T;
+	float det, inverseDet, u, v, t;
+	
+	//Find triangle edge vectors
+	edge1 = v2 - v1;
+	edge2 = v3 - v1;
+	P = glm::cross(rayDir, edge2);
+	det = glm::dot(edge1, P);
+
+	//If determinant is near zero, ray is in the triangle plane.
+	if ((det > -EPSILON) && (det < EPSILON))
+		return false;
+	
+	inverseDet = 1.0f / det;
+	T = rayOrigin - v1;			//Distance from v1 to ray origin.
+	u = dot(T, P) *inverseDet;
+
+	//if u is outside 0..1 then the intersection is outside the triangle.
+	if ((u < 0.0f) || (u > 1.0f)) 
+		return false;
+
+	Q = cross(T, edge1);
+	v = dot(edge2, Q)*inverseDet;
+
+	//If u+v exceeds 
+	if ((v <0.0f) || (u + v > 1.0f))
+		return false;
+
+	//If all attempts to cull the ray has been passed, we have an intersection
+	if (t > EPSILON){
+		*distance = t;
+		return true;
+	}
+	return false;
+}
+
+bool rayVsOBB(OBB obb, glm::vec3 rayDir, glm::vec3 rayOrigin, float *distance) {
+	float tMin, tMax,t1,t2;
+	tMin = std::numeric_limits<float>::lowest();
+	tMax = std::numeric_limits<float>::max();
+	
+	glm::vec3 vArr[3];
+	float dArr[3];
+	vArr[0] = obb.v1; vArr[1] = obb.v2; vArr[2] = obb.v3;
+	dArr[0] = obb.dim.x / 2; dArr[1] = obb.dim.y / 2; dArr[2] = obb.dim.z / 2;
+	glm::vec3 P = obb.origin - rayOrigin;
+
+	for (int i = 0; i < 3; i++){
+		float e = glm::dot(vArr[i],P);
+		float f = glm::dot(vArr[i], rayDir);
+		if (fabs(f) > EPSILON)
+		{
+			t1 = (e + dArr[i]) / f;
+			t2 = (e - dArr[i]) / f;
+			if (t1 > t2)
+				std::swap(t1, t2);
+			if (t1 > tMin)
+				tMin = t1;
+			if (t2 < tMax)
+				tMax = t2;
+			if (tMin > tMax)
+				return false;
+			if (tMax < 0)
+				return false;
+		}
+		else if ((-e - dArr[i] > 0) || (-e + dArr[i] < 0))
+			return false;
+	}
+	if ((tMin > 0))
+		*distance = tMin;
+	else
+		*distance = tMax;
+	return;
+}
+
 PickingScene::PickingScene() {
 	texture = new Texture2D("Resources/Textures/bth_image.tga");
 
@@ -67,7 +159,7 @@ void PickingScene::render(int width, int height) {
 	// Model matrix, unique for each model.
 	glm::mat4 model = geometry->modelMatrix();
 
-	//
+	//Mouse ray.
 	float x, y;
 	x = static_cast<float>(input::cursorX());
 	y = static_cast<float>(input::cursorY());
@@ -76,8 +168,12 @@ void PickingScene::render(int width, int height) {
 	float vx = ((2.0f*x / width) - 1.0f) / (proj[0][0]);
 	float vy = ((-2.0f*x / height) + 1.0f) / (proj[0][0]);
 
-	glm::vec3 rayOrigin(0.0f, 0.0f, 0.0f);
-	glm::vec3 rayDir(vx, vy, 1.0f);
+	glm::vec4 rayOrigin(0.0f, 0.0f, 0.0f, 1.0f);
+	glm::vec4 rayDir(vx, vy, 1.0f, 0.0f);
+	//transform into local space
+	//local origin = orgin*inverse_world
+	//local rayDir = rayDir*inverse_world
+
 
 	// Send the matrices to the shader.
 	glm::mat4 view = player->camera()->view();
