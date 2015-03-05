@@ -4,7 +4,7 @@
 #include "Scene.h"
 #include "Shader.h"
 #include "ShaderProgram.h"
-#include "Texture.h"
+#include "Texture2D.h"
 #include "Geometry.h"
 #include "Player.h"
 
@@ -42,6 +42,9 @@ private:
 	Shader* geometryShader;
 	Shader* fragmentShader;
 	ShaderProgram* shaderProgram;
+	Texture* diffuse;
+	Texture* normal;
+	Texture* specular;
 
 	Texture* texture;
 	Geometry* geometry;
