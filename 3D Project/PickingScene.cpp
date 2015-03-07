@@ -99,30 +99,53 @@ void PickingScene::render(int width, int height) {
 	x = static_cast<float>(input::cursorX());
 	y = static_cast<float>(input::cursorY());
 	glm::mat4 proj = player->camera()->projection(width, height);
-	float vx = ((2.0f*x / width) - 1.0f) / (proj[0][0]);
-	float vy = ((-2.0f*x / height) + 1.0f) / (proj[0][0]);
+	//Get NDC x and y
+	float vx = ((2.0f * x) / width) - 1.0f;
+	float vy = 1.0f - ((2.0f * y) / height);
 	glm::vec4 rayOrigin(0.0f, 0.0f, 0.0f, 1.0f);
-	glm::vec4 rayDir(vx, vy, 1.0f, 0.0f);
 	
-	//transform ray and ray origin into local space
-	rayOrigin = rayOrigin*glm::inverse(N);
-	rayDir = rayDir*glm::inverse(N);
+	//transform ray into local space
+	glm::mat4 inverseModel = glm::inverse(model);
+	glm::mat4 inverseView = glm::inverse(view);
+	glm::mat4 inverseProj = glm::inverse(proj);
 	
+	//Ray in clip space
+	glm::vec4 rayClip(vx, vy, -1.0f, 0.0f);
+	
+	//Ray in view space
+	glm::vec4 rayEye = inverseProj*rayClip;
+	rayEye = glm::vec4(rayEye.x, rayEye.y, -1.0, 0.0);
+	//Ray in world space
+	rayOrigin = inverseView*(rayOrigin);
+	glm::vec4 rayWor = glm::vec4(inverseView*rayEye);
+	//ray in local space
+	rayOrigin = inverseModel*(rayOrigin);
+	glm::vec3 rayMod = glm::vec3(inverseModel*rayWor);
+	rayWor = glm::normalize(rayWor);
+
 	//Search for hits.
 	float distance;
 	bool hit = false;
-	for (int i = 0; (i<geometry->indexCount()) && (hit == false); i += 3) {
+	int passes = 0;
+	
+	for (int i = 0; (i < geometry->indexCount()) && (hit == false); i += 3) {
+		passes++;
 		int ind1, ind2, ind3;
 		ind1 = geometry->indices()[i];
 		ind2 = geometry->indices()[i+1];
 		ind3 = geometry->indices()[i+2];
 
-		Geometry::Vertex v1 = geometry->vertices()[ind1];
-		Geometry::Vertex v2 = geometry->vertices()[ind2];
-		Geometry::Vertex v3 = geometry->vertices()[ind3];
-		rayVsTri(v1.position, v2.position, v3.position, glm::vec3(rayDir), glm::vec3(rayDir), distance);
-	}
+		Geometry::Vertex vert1 = geometry->vertices()[ind1];
+		Geometry::Vertex vert2 = geometry->vertices()[ind2];
+		Geometry::Vertex vert3 = geometry->vertices()[ind3];
 
+		hit = rayVsTri(vert1.position, vert2.position, vert3.position, glm::vec3(rayMod), glm::vec3(rayOrigin), distance);
+	}
+	fprintf(stderr, "Hit: %i Distance: %f Passes:%i\n", hit, distance, passes);
+	//fprintf(stderr, "Raydir: %f %f %f\n", rayWor.x, rayWor.y, rayWor.z);
+	//fprintf(stderr, "RayO: %f %f %f\n", rayOrigin.x, rayOrigin.y, rayOrigin.z);
+	fflush(stderr);
+	
 	glUniformMatrix4fv(shaderProgram->uniformLocation("modelMatrix"), 1, GL_FALSE, &model[0][0]);
 	glUniformMatrix4fv(shaderProgram->uniformLocation("viewMatrix"), 1, GL_FALSE, &view[0][0]);
 	glUniformMatrix3fv(shaderProgram->uniformLocation("normalMatrix"), 1, GL_FALSE, &glm::mat3(N)[0][0]);
