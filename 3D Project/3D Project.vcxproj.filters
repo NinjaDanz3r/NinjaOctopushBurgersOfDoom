@@ -260,6 +260,9 @@
     <None Include="blendmap_fragment.glsl">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="picking_fragment.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

@@ -53,6 +53,11 @@ private:
 	// Vertex buffer.
 	GLuint vertexBuffer = 0;
 	GLuint vertexAttribute = 0;
+
+	GLuint hitData = 1;
+	GLuint hitAttrib = 1;
+
+	GLboolean isHit = false;
 	unsigned int vertexCount = 0;
 
 	// Index buffer.

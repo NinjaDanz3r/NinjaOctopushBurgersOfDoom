@@ -24,7 +24,7 @@ PickingScene::PickingScene() {
 
 	vertexShader = new Shader("default_vertex.glsl", GL_VERTEX_SHADER);
 	geometryShader = new Shader("default_geometry.glsl", GL_GEOMETRY_SHADER);
-	fragmentShader = new Shader("normalspecularmap_fragment.glsl", GL_FRAGMENT_SHADER);
+	fragmentShader = new Shader("picking_fragment.glsl", GL_FRAGMENT_SHADER);
 	shaderProgram = new ShaderProgram({ vertexShader, geometryShader, fragmentShader });
 
 	shaderProgram->use();
@@ -35,6 +35,7 @@ PickingScene::PickingScene() {
 	glUniform1i(shaderProgram->uniformLocation("normalMap"), 1);
 	// Texture unit 0 is for specular map.
 	glUniform1i(shaderProgram->uniformLocation("specularMap"), 2);
+	
 
 	geometry = new Model("Resources/Models/rock01/rock_01.obj");
 	geometry->setScale(glm::vec3(0.01f, 0.01f, 0.01f));
@@ -141,6 +142,8 @@ void PickingScene::render(int width, int height) {
 
 		hit = rayVsTri(vert1.position, vert2.position, vert3.position, glm::vec3(rayMod), glm::vec3(rayOrigin), distance);
 	}
+	// Hitdata
+	glUniform1i(shaderProgram->uniformLocation("isHit"), hit);
 	fprintf(stderr, "Hit: %i Distance: %f Passes:%i\n", hit, distance, passes);
 	//fprintf(stderr, "Raydir: %f %f %f\n", rayWor.x, rayWor.y, rayWor.z);
 	//fprintf(stderr, "RayO: %f %f %f\n", rayOrigin.x, rayOrigin.y, rayOrigin.z);
