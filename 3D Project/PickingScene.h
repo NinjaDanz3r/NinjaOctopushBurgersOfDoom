@@ -7,6 +7,7 @@
 #include "Texture2D.h"
 #include "Geometry.h"
 #include "Player.h"
+#include <vector>
 
 /// %Scene used to test basic rendering technology.
 class PickingScene : public Scene {
@@ -47,12 +48,16 @@ private:
 	Texture* specular;
 
 	Texture* texture;
-	Geometry* geometry;
+	std::vector<Geometry*> multiGeometry;
+	int numModels = 50;
+	//Geometry* geometry;
 	Player* player;
 
 	// Vertex buffer.
-	GLuint vertexBuffer = 0;
-	GLuint vertexAttribute = 0;
+	//GLuint vertexBuffer = 0;
+	//GLuint vertexAttribute = 0;
+	GLuint* vertexBuffers;
+	GLuint* vertexAttributes;
 
 	GLuint hitData = 1;
 	GLuint hitAttrib = 1;
@@ -61,7 +66,8 @@ private:
 	unsigned int vertexCount = 0;
 
 	// Index buffer.
-	GLuint indexBuffer = 0;
+	//GLuint indexBuffer = 0;
+	GLuint* indexBuffers;
 	unsigned int indexCount = 0;
 };
 
