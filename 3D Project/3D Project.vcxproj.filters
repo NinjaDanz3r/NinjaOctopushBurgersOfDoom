@@ -96,9 +96,12 @@
     </ClCompile>
     <ClCompile Include="DefRenderTestScene.cpp">
       <Filter>Source Files\Scene</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="Model.cpp">
       <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadowMapping.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -197,9 +200,12 @@
     </ClInclude>
     <ClInclude Include="DefRenderTestScene.h">
       <Filter>Header Files\Scene</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="Model.h">
       <Filter>Header Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowMapping.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
