@@ -173,6 +173,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="GLError.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModelPreview.cpp" />
     <ClCompile Include="OBJModel.cpp" />
@@ -222,6 +223,7 @@
   <ItemGroup>
     <ClInclude Include="convert.h" />
     <ClInclude Include="GeneratedFiles\ui_editor.h" />
+    <ClInclude Include="GLError.h" />
     <ClInclude Include="ModelPreview.h" />
     <ClInclude Include="OBJModel.h" />
     <ClInclude Include="Preview.h" />
