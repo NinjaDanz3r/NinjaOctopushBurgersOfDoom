@@ -33,6 +33,12 @@ class ModelResource {
 		/// Name of the model resource.
 		std::string name;
 
+		/// Get model.
+		/**
+		 * @return The model
+		 */
+		CORE_EXPORT Model* model() const;
+
 		/// Save model resource to file.
 		/**
 		 * @param file File stream to save to.
@@ -41,7 +47,7 @@ class ModelResource {
 		CORE_EXPORT void save(std::ofstream &file, std::string directory) const;
 
 	private:
-		Model* model;
+		Model* _model;
 };
 
 /** @} */

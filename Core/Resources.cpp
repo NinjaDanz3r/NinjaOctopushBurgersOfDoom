@@ -2,13 +2,13 @@
 #include "util.h"
 
 Resources::Resources() {
-	models = new std::vector<ModelResource*>();
+	models = new std::map<std::string, ModelResource*>();
 	textures = new std::map<std::string, TextureResource*>();
 }
 
 Resources::~Resources() {
 	for (auto model : *models) {
-		delete model;
+		delete model.second;
 	}
 	delete models;
 
@@ -20,9 +20,9 @@ Resources::~Resources() {
 
 void Resources::save(std::ofstream &file, std::string directory) {
 	// Textures
-	util::createDirectory((directory + '/' + "Textures").c_str());
+	util::createDirectory((directory + "/Textures").c_str());
 
-	std::vector<TextureResource*>::size_type texturesSize = textures->size();
+	std::map<std::string, TextureResource*>::size_type texturesSize = textures->size();
 	file.write(reinterpret_cast<const char*>(&texturesSize), sizeof(texturesSize));
 
 	for (auto texture : *textures) {
@@ -30,36 +30,37 @@ void Resources::save(std::ofstream &file, std::string directory) {
 	}
 	
 	// Models
-	util::createDirectory((directory + '/' + "Models").c_str());
+	util::createDirectory((directory + "/Models").c_str());
 
-	std::vector<ModelResource*>::size_type modelsSize = models->size();
+	std::map<std::string, ModelResource*>::size_type modelsSize = models->size();
 	file.write(reinterpret_cast<const char*>(&modelsSize), sizeof(modelsSize));
 
 	for (auto model : *models) {
-		model->save(file, directory + '/' + "Models");
+		model.second->save(file, directory + "/Models");
 	}
 }
 
 void Resources::load(std::ifstream &file, std::string directory) {
 	// Textures
-	std::vector<TextureResource*>::size_type texturesSize;
+	std::map<std::string, TextureResource*>::size_type texturesSize;
 	file.read(reinterpret_cast<char*>(&texturesSize), sizeof(texturesSize));
 
 	for (auto i = 0; i < texturesSize; i++) {
-		TextureResource* texture = new TextureResource(file, directory);
+		TextureResource* texture = new TextureResource(file, directory + "/Textures");
 		(*textures)[texture->name] = texture;
 	}
 
 	// Models
-	std::vector<ModelResource*>::size_type modelsSize;
+	std::map<std::string, ModelResource*>::size_type modelsSize;
 	file.read(reinterpret_cast<char*>(&modelsSize), sizeof(modelsSize));
 
 	for (auto i = 0; i < modelsSize; i++) {
-		models->push_back(new ModelResource(file, directory));
+		ModelResource* model = new ModelResource(file, directory + "/Models");
+		(*models)[model->name] = model;
 	}
 }
 
-std::vector<ModelResource*>* Resources::modelResources() const {
+std::map<std::string, ModelResource*>* Resources::modelResources() const {
 	return models;
 }
 

@@ -68,7 +68,7 @@ void Editor::openProject() {
 
 	for (auto model : *activeProject->resources()->modelResources()) {
 		QTreeWidgetItem *treeItem = new QTreeWidgetItem();
-		treeItem->setText(0, QString::fromStdString(model->name));
+		treeItem->setText(0, QString::fromStdString(model.first));
 		modelsRoot->addChild(treeItem);
 	}
 }
@@ -89,6 +89,7 @@ void Editor::closeProject() {
 	enableActions(false);
 
 	ui.previewWidget->texturePreview()->setTexture(nullptr);
+	ui.previewWidget->modelPreview()->setModel(nullptr);
 	ui.previewWidget->repaint();
 }
 
@@ -104,7 +105,7 @@ void Editor::importModel() {
 	}
 
 	ModelResource* model = new ModelResource(name.toStdString(), new OBJModel(filename.toStdString().c_str()));
-	activeProject->resources()->modelResources()->push_back(model);
+	(*activeProject->resources()->modelResources())[model->name] = model;
 
 	QTreeWidgetItem *treeItem = new QTreeWidgetItem();
 	treeItem->setText(0, name);
@@ -137,7 +138,12 @@ void Editor::selectionChanged() {
 		QTreeWidgetItem* selected = ui.treeWidget->selectedItems()[0];
 
 		if (selected->parent() == texturesRoot) {
+			ui.previewWidget->setPreview(ui.previewWidget->texturePreview());
 			ui.previewWidget->texturePreview()->setTexture((*activeProject->resources()->textureResources())[selected->text(0).toStdString()]->texture());
+			ui.previewWidget->repaint();
+		} else if (selected->parent() == modelsRoot) {
+			ui.previewWidget->setPreview(ui.previewWidget->modelPreview());
+			ui.previewWidget->modelPreview()->setModel((*activeProject->resources()->modelResources())[selected->text(0).toStdString()]->model());
 			ui.previewWidget->repaint();
 		}
 	}

@@ -4,12 +4,12 @@
 
 TextureResource::TextureResource(const std::string &name, std::string directory) {
 	this->name = name;
-	_texture = new Texture2D((directory + "/Textures/" + name + ".tga").c_str());
+	_texture = new Texture2D((directory + '/' + name + ".tga").c_str());
 }
 
 TextureResource::TextureResource(std::ifstream &file, std::string directory) {
 	this->name = util::readString(file);
-	_texture = new Texture2D((directory + "/Textures/" + name + ".tga").c_str());
+	_texture = new Texture2D((directory + '/' + name + ".tga").c_str());
 }
 
 TextureResource::~TextureResource() {

@@ -10,6 +10,7 @@
 #include <Texture.h>
 #include "Preview.h"
 #include "TexturePreview.h"
+#include "ModelPreview.h"
 
 /** @ingroup editor
  * @{
@@ -35,6 +36,18 @@ class PreviewWidget : public QGLWidget {
 		 */
 		TexturePreview* texturePreview() const;
 
+		/// Get model preview.
+		/**
+		* @return The model preview
+		*/
+		ModelPreview* modelPreview() const;
+
+		/// Set preview.
+		/**
+		 * @param preview The preview to use.
+		 */
+		void setPreview(Preview* preview);
+
 	protected:
 		void initializeGL();
 		void paintGL();
@@ -46,6 +59,7 @@ class PreviewWidget : public QGLWidget {
 		// Previews
 		Preview* activePreview;
 		TexturePreview* _texturePreview;
+		ModelPreview* _modelPreview;
 };
 
 /** @} */

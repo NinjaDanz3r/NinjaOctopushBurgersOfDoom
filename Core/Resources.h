@@ -39,7 +39,7 @@ class Resources {
 		/**
 		 * @return Model resources.
 		 */
-		CORE_EXPORT std::vector<ModelResource*>* modelResources() const;
+		CORE_EXPORT std::map<std::string, ModelResource*>* modelResources() const;
 
 		/// Get texture resources.
 		/**
@@ -48,7 +48,7 @@ class Resources {
 		CORE_EXPORT std::map<std::string, TextureResource*>* textureResources() const;
 
 	private:
-		std::vector<ModelResource*>* models;
+		std::map<std::string, ModelResource*>* models;
 		std::map<std::string, TextureResource*>* textures;
 };
 
