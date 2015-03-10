@@ -144,7 +144,7 @@ void TerrainScene::render(int width, int height) {
 	glUniformMatrix4fv(shaderProgram->uniformLocation("projectionMatrix"), 1, GL_FALSE, &player->camera()->projection(width, height)[0][0]);
 
 	glBindVertexArray(vertexAttribute);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, terrainObject->geometry()->vertexBuffer());
+	glBindBuffer(GL_ARRAY_BUFFER, terrainObject->geometry()->vertexBuffer());
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, terrainObject->geometry()->indexBuffer());
 
 	// Draw the triangles
