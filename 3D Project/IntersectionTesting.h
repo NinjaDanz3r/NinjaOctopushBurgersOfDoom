@@ -14,10 +14,10 @@
 class AABB
 {
 public:
-	glm::vec3 v1, v2, origin;
-	AABB(glm::vec3 _v1, glm::vec3 _v2, glm::vec3 _origin) {
-		v1 = _v1;
-		v2 = _v2;
+	glm::vec3 dim, origin; //Dim: width, height, depth
+	AABB(){};
+	AABB(glm::vec3 _dim, glm::vec3 _origin) {
+		dim = _dim;
 		origin = _origin;
 	};
 };
@@ -25,7 +25,7 @@ public:
 class OBB
 {
 public:
-	glm::vec3 v1, v2, v3, origin, dim; //Dim: width, heigh, depth
+	glm::vec3 v1, v2, v3, origin, dim; //Dim: width, height, depth
 };
 
 bool rayVsTri(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3, glm::vec3 rayDir, glm::vec3 rayOrigin, float& distance);

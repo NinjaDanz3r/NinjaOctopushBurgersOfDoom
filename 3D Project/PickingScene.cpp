@@ -148,9 +148,7 @@ void PickingScene::render(int width, int height) {
 
 		//grab camera right/up for AABB creation
 		glm::vec4 camRight, camUp;
-		camRight = glm::normalize(view*glm::vec4(1.f, 0.f, 0.f, 0.f));
-		camUp = glm::normalize(view*glm::vec4(0.f, 1.f, 0.f, 0.f));
-		AABB boundingBox(glm::vec3(camRight), glm::vec3(camUp), currGeometry->position());
+		AABB boundingBox(glm::vec3, currGeometry->position());
 
 		//Ray in world space
 		glm::vec4 rayOrigin(0.0f, 0.0f, 0.0f, 1.0f);

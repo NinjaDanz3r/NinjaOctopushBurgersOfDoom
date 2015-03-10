@@ -2,6 +2,7 @@
 #define __GEOMETRY_H__
 
 #include "Object.h"
+#include "IntersectionTesting.h"
 
 /// Interface for renderable 3D geometry.
 /**
@@ -17,6 +18,8 @@ class Geometry : public Object {
 			glm::vec3 normal;
 			/// %Texture coordinate.
 			glm::vec2 textureCoordinate;
+			//
+			AABB aabb;
 		};
 
 		/// Destructor
@@ -27,6 +30,12 @@ class Geometry : public Object {
 		 * @return Array of vertices
 		 */
 		virtual Vertex* vertices() const = 0;
+
+		/// Get local space AABB for object
+		/**
+		* Create a local space AABB for geometry object
+		*/
+		void createAabb();
 
 		/// Get the number of vertices.
 		/**

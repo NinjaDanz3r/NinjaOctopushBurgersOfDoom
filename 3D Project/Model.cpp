@@ -1,4 +1,5 @@
 #include "Model.h"
+#include "IntersectionTesting.h"
 #include <limits>
 #include "util.h"
 
