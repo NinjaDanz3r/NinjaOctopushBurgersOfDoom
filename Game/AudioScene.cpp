@@ -33,7 +33,7 @@ AudioScene::AudioScene() {
 
 	geometry = new Cube();
 	geometryObject = new GeometryObject(geometry);
-	bindTriangleData();
+	vertexAttribute = Geometry::generateVertexAttribute(shaderProgram);
 
 	player = new Player();
 	player->setMovementSpeed(2.0f);
@@ -60,9 +60,6 @@ AudioScene::~AudioScene() {
 	delete vertexShader;
 	delete geometryShader;
 	delete fragmentShader;
-
-	glDeleteBuffers(1, &vertexBuffer);
-	glDeleteBuffers(1, &indexBuffer);
 
 	delete geometryObject;
 	delete geometry;
@@ -93,7 +90,8 @@ void AudioScene::render(int width, int height) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glBindVertexArray(vertexAttribute);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, geometryObject->geometry()->vertexBuffer());
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, geometryObject->geometry()->indexBuffer());
 
 	// Texture unit 0 is for base images.
 	glUniform1i(shaderProgram->uniformLocation("baseImage"), 0);
@@ -125,41 +123,11 @@ void AudioScene::render(int width, int height) {
 	glUniform3fv(shaderProgram->uniformLocation("diffuseKoefficient"), 1, &diffuseKoefficient[0]);
 
 	// Draw the triangles
-	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
+	glDrawElements(GL_TRIANGLES, geometryObject->geometry()->indexCount(), GL_UNSIGNED_INT, (void*)0);
 
 	if (state == 1) {
 		multipleRenderTargets->showTextures(width, height);
 	} else if (state == 0) {
 		multipleRenderTargets->render(player->camera(), width, height);
 	}
-}
-
-void AudioScene::bindTriangleData() {
-	// Vertex buffer
-	vertexCount = geometry->vertexCount();
-	glGenBuffers(1, &vertexBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, vertexCount * sizeof(Geometry::Vertex), geometry->vertices(), GL_STATIC_DRAW);
-
-	// Define vertex data layout
-	glGenVertexArrays(1, &vertexAttribute);
-	glBindVertexArray(vertexAttribute);
-	glEnableVertexAttribArray(0); //the vertex attribute object will remember its enabled attributes
-	glEnableVertexAttribArray(1);
-	glEnableVertexAttribArray(2);
-
-	GLuint vertexPos = shaderProgram->attributeLocation("vertex_position");
-	glVertexAttribPointer(vertexPos, 3, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(0));
-
-	GLuint vertexNormal = shaderProgram->attributeLocation("vertex_normal");
-	glVertexAttribPointer(vertexNormal, 3, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float) * 3));
-
-	GLuint vertexTexture = shaderProgram->attributeLocation("vertex_texture");
-	glVertexAttribPointer(vertexTexture, 2, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float) * 6));
-
-	// Index buffer
-	indexCount = geometry->indexCount();
-	glGenBuffers(1, &indexBuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(unsigned int), geometry->indices(), GL_STATIC_DRAW);
 }

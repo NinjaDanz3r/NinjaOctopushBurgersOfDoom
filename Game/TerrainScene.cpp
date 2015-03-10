@@ -57,7 +57,7 @@ TerrainScene::TerrainScene() {
 	terrainObject->setPosition(0.f, -5.f, 0.f);
 	terrainObject->setScale(50.f, 10.f, 50.f);
 	terrain->setTextureRepeat(glm::vec2(10.f, 10.f));
-	bindTriangleData();
+	vertexAttribute = Geometry::generateVertexAttribute(shaderProgram);
 
 	skybox = new Skybox(skyboxTexture);
 
@@ -83,9 +83,6 @@ TerrainScene::~TerrainScene() {
 	delete vertexShader;
 	delete geometryShader;
 	delete fragmentShader;
-
-	glDeleteBuffers(1, &vertexBuffer);
-	glDeleteBuffers(1, &indexBuffer);
 
 	delete terrainObject;
 	delete terrain;
@@ -147,10 +144,11 @@ void TerrainScene::render(int width, int height) {
 	glUniformMatrix4fv(shaderProgram->uniformLocation("projectionMatrix"), 1, GL_FALSE, &player->camera()->projection(width, height)[0][0]);
 
 	glBindVertexArray(vertexAttribute);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, terrainObject->geometry()->vertexBuffer());
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, terrainObject->geometry()->indexBuffer());
 
 	// Draw the triangles
-	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
+	glDrawElements(GL_TRIANGLES, terrainObject->geometry()->indexCount(), GL_UNSIGNED_INT, (void*)0);
 
 	if (state == 1) {
 		multipleRenderTargets->showTextures(width, height);
@@ -158,34 +156,4 @@ void TerrainScene::render(int width, int height) {
 		multipleRenderTargets->render(player->camera(), width, height);
 		skybox->render(width, height, player->camera());
 	}
-}
-
-void TerrainScene::bindTriangleData() {
-	// Vertex buffer
-	vertexCount = terrain->vertexCount();
-	glGenBuffers(1, &vertexBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, vertexCount * sizeof(Geometry::Vertex), terrain->vertices(), GL_STATIC_DRAW);
-
-	// Define vertex data layout
-	glGenVertexArrays(1, &vertexAttribute);
-	glBindVertexArray(vertexAttribute);
-	glEnableVertexAttribArray(0); //the vertex attribute object will remember its enabled attributes
-	glEnableVertexAttribArray(1);
-	glEnableVertexAttribArray(2);
-
-	GLuint vertexPos = shaderProgram->attributeLocation("vertex_position");
-	glVertexAttribPointer(vertexPos, 3, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(0));
-
-	GLuint vertexNormal = shaderProgram->attributeLocation("vertex_normal");
-	glVertexAttribPointer(vertexNormal, 3, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float) * 3));
-
-	GLuint vertexTexture = shaderProgram->attributeLocation("vertex_texture");
-	glVertexAttribPointer(vertexTexture, 2, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float) * 6));
-
-	// Index buffer
-	indexCount = terrain->indexCount();
-	glGenBuffers(1, &indexBuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(unsigned int), terrain->indices(), GL_STATIC_DRAW);
 }

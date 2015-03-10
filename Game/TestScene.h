@@ -41,8 +41,6 @@ class TestScene : public Scene {
 		void render(int width, int height);
 
 	private:
-		void bindTriangleData();
-
 		FrameBufferObjects* multipleRenderTargets;
 		int state; // 0 == deferred render, 1== display textures.
 
@@ -64,14 +62,7 @@ class TestScene : public Scene {
 		GeometryObject* geometryObject;
 		Player* player;
 
-		// Vertex buffer.
-		GLuint vertexBuffer = 0;
 		GLuint vertexAttribute = 0;
-		unsigned int vertexCount = 0;
-
-		// Index buffer.
-		GLuint indexBuffer = 0;
-		unsigned int indexCount = 0;
 };
 
 /** @} */

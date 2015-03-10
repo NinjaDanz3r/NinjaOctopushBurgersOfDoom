@@ -188,6 +188,8 @@ Cube::Cube() {
 	indexData[33] = 20;
 	indexData[34] = 21;
 	indexData[35] = 22;
+
+	generateBuffers();
 }
 
 Cube::~Cube() {

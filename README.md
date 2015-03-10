@@ -44,7 +44,7 @@ Uses OpenGL, [glew](http://glew.sourceforge.net/), [GLFW](http://www.glfw.org/),
 
 License
 =======
-This project is licensed under the MIT license.
+This project is licensed under the [MIT license](LICENSE).
 
 glew is licensed under the Modified BSD License, the Mesa 3-D License, and the Khronos License. GLFW is licensed under the zlib/libpng license. OpenGL Mathematics is licensed under the Happy Bunny license. simpleini is licensed under the MIT license. stb is public domain. OpenAL Soft is licensed under the LGPL. Qt is licensed under the GPL or the LGPL.
 

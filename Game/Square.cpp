@@ -36,6 +36,8 @@ Square::Square() {
 	indexData[3] = 0;
 	indexData[4] = 3;
 	indexData[5] = 1;
+
+	generateBuffers();
 }
 
 Square::~Square() {

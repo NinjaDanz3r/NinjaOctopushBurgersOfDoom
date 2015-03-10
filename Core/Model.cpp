@@ -20,6 +20,8 @@ Model::Model(const char* filename) {
 	for (unsigned int i = 0; i < indexNr; i++) {
 		indexData[i] = i;
 	}
+
+	generateBuffers();
 }
 
 Model::~Model() {

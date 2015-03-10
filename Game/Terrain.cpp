@@ -39,6 +39,8 @@ Terrain::Terrain(const char* filename) {
 		delete[] normals[i];
 	}
 	delete[] normals;
+
+	generateBuffers();
 }
 
 Terrain::~Terrain() {
