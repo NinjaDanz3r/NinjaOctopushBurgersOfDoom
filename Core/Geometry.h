@@ -54,34 +54,23 @@ class Geometry {
 		 */
 		virtual unsigned int indexCount() const = 0;
 
-		/// Get the vertex buffer.
+		/// Get the vertex array.
 		/**
-		 * @return The vertex buffer
+		 * @return The vertex array
 		 */
-		CORE_EXPORT GLuint vertexBuffer() const;
-
-		/// Get the index buffer.
-		/**
-		 * @return The index buffer
-		 */
-		CORE_EXPORT GLuint indexBuffer() const;
-
-		/// Generate vertex array object.
-		/**
-		 * Create a vertex array object describing the standard Geometry::Vertex.
-		 * Shader program's vertex shader must take: vertex_position, vertex_normal and vertex_texture.
-		 * @param shaderProgram The ShaderProgram to create the vertex array object for.
-		 * @return Identifier for generated vertex array object
-		 */
-		CORE_EXPORT static GLuint generateVertexAttribute(ShaderProgram* shaderProgram);
+		CORE_EXPORT GLuint vertexArray() const;
 
 	protected:
 		/// Generate vertex and index buffers.
 		CORE_EXPORT void generateBuffers();
 
+		/// Generate vertex array.
+		CORE_EXPORT void generateVertexArray();
+
 	private:
-		GLuint _vertexBuffer;
-		GLuint _indexBuffer;
+		GLuint vertexBuffer;
+		GLuint indexBuffer;
+		GLuint _vertexArray;
 };
 
 /** @} */

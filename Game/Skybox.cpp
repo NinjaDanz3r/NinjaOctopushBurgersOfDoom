@@ -45,8 +45,6 @@ void Skybox::render(int width, int height, const Camera* camera) {
 	glUniformMatrix4fv(shaderProgram->uniformLocation("projectionMatrix"), 1, GL_FALSE, &camera->projection(width, height)[0][0]);
 
 	glBindVertexArray(vertexAttribute);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 
 	// Render
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)0);

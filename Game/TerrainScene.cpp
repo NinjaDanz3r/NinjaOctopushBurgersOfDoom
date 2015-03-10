@@ -57,7 +57,6 @@ TerrainScene::TerrainScene() {
 	terrainObject->setPosition(0.f, -5.f, 0.f);
 	terrainObject->setScale(50.f, 10.f, 50.f);
 	terrain->setTextureRepeat(glm::vec2(10.f, 10.f));
-	vertexAttribute = Geometry::generateVertexAttribute(shaderProgram);
 
 	skybox = new Skybox(skyboxTexture);
 
@@ -143,9 +142,7 @@ void TerrainScene::render(int width, int height) {
 	glUniformMatrix3fv(shaderProgram->uniformLocation("normalMatrix"), 1, GL_FALSE, &glm::mat3(N)[0][0]);
 	glUniformMatrix4fv(shaderProgram->uniformLocation("projectionMatrix"), 1, GL_FALSE, &player->camera()->projection(width, height)[0][0]);
 
-	glBindVertexArray(vertexAttribute);
-	glBindBuffer(GL_ARRAY_BUFFER, terrainObject->geometry()->vertexBuffer());
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, terrainObject->geometry()->indexBuffer());
+	glBindVertexArray(terrainObject->geometry()->vertexArray());
 
 	// Draw the triangles
 	glDrawElements(GL_TRIANGLES, terrainObject->geometry()->indexCount(), GL_UNSIGNED_INT, (void*)0);

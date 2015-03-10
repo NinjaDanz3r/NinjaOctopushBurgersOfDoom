@@ -3,47 +3,41 @@
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))
 
 Geometry::~Geometry() {
-	glDeleteBuffers(1, &_vertexBuffer);
-	glDeleteBuffers(1, &_indexBuffer);
+	glDeleteBuffers(1, &vertexBuffer);
+	glDeleteBuffers(1, &indexBuffer);
 }
 
-GLuint Geometry::vertexBuffer() const {
-	return _vertexBuffer;
-}
-
-GLuint Geometry::indexBuffer() const {
-	return _indexBuffer;
-}
-
-GLuint Geometry::generateVertexAttribute(ShaderProgram* shaderProgram) {
-	// Define vertex data layout
-	GLuint vertexAttribute;
-	glGenVertexArrays(1, &vertexAttribute);
-	glBindVertexArray(vertexAttribute);
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-	glEnableVertexAttribArray(2);
-
-	GLuint vertexPos = shaderProgram->attributeLocation("vertex_position");
-	glVertexAttribPointer(vertexPos, 3, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(0));
-
-	GLuint vertexNormal = shaderProgram->attributeLocation("vertex_normal");
-	glVertexAttribPointer(vertexNormal, 3, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float) * 3));
-
-	GLuint vertexTexture = shaderProgram->attributeLocation("vertex_texture");
-	glVertexAttribPointer(vertexTexture, 2, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float) * 6));
-
-	return vertexAttribute;
+GLuint Geometry::vertexArray() const {
+	return _vertexArray;
 }
 
 void Geometry::generateBuffers() {
 	// Vertex buffer
-	glGenBuffers(1, &_vertexBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+	glGenBuffers(1, &vertexBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	glBufferData(GL_ARRAY_BUFFER, vertexCount() * sizeof(Vertex), vertices(), GL_STATIC_DRAW);
 
 	// Index buffer
-	glGenBuffers(1, &_indexBuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+	glGenBuffers(1, &indexBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount() * sizeof(unsigned int), indices(), GL_STATIC_DRAW);
+}
+
+void Geometry::generateVertexArray() {
+	// Define vertex data layout
+	glGenVertexArrays(1, &_vertexArray);
+	glBindVertexArray(_vertexArray);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(0));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float) * 3));
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float) * 6));
+
+	glBindVertexArray(0);
 }

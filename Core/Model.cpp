@@ -22,6 +22,7 @@ Model::Model(const char* filename) {
 	}
 
 	generateBuffers();
+	generateVertexArray();
 }
 
 Model::~Model() {

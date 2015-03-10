@@ -38,6 +38,7 @@ Square::Square() {
 	indexData[5] = 1;
 
 	generateBuffers();
+	generateVertexArray();
 }
 
 Square::~Square() {

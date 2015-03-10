@@ -36,7 +36,6 @@ TestScene::TestScene() {
 	geometry = new Model("Resources/Models/Rock.bin");
 	geometryObject = new GeometryObject(geometry);
 	geometryObject->setScale(glm::vec3(0.01f, 0.01f, 0.01f));
-	vertexAttribute = Geometry::generateVertexAttribute(shaderProgram);
 
 	player = new Player();
 	player->setMovementSpeed(2.0f);
@@ -88,9 +87,7 @@ void TestScene::render(int width, int height) {
 	// Texture unit 0 is for specular map.
 	glUniform1i(shaderProgram->uniformLocation("specularMap"), 2);
 
-	glBindVertexArray(vertexAttribute);
-	glBindBuffer(GL_ARRAY_BUFFER, geometryObject->geometry()->vertexBuffer());
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, geometryObject->geometry()->indexBuffer());
+	glBindVertexArray(geometryObject->geometry()->vertexArray());
 
 	// Base image texture
 	glActiveTexture(GL_TEXTURE0);

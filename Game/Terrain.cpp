@@ -41,6 +41,7 @@ Terrain::Terrain(const char* filename) {
 	delete[] normals;
 
 	generateBuffers();
+	generateVertexArray();
 }
 
 Terrain::~Terrain() {

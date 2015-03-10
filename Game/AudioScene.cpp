@@ -33,7 +33,6 @@ AudioScene::AudioScene() {
 
 	geometry = new Cube();
 	geometryObject = new GeometryObject(geometry);
-	vertexAttribute = Geometry::generateVertexAttribute(shaderProgram);
 
 	player = new Player();
 	player->setMovementSpeed(2.0f);
@@ -89,9 +88,7 @@ void AudioScene::render(int width, int height) {
 	glViewport(0, 0, width, height);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glBindVertexArray(vertexAttribute);
-	glBindBuffer(GL_ARRAY_BUFFER, geometryObject->geometry()->vertexBuffer());
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, geometryObject->geometry()->indexBuffer());
+	glBindVertexArray(geometryObject->geometry()->vertexArray());
 
 	// Texture unit 0 is for base images.
 	glUniform1i(shaderProgram->uniformLocation("baseImage"), 0);

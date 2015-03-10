@@ -63,8 +63,6 @@ class AudioScene : public Scene {
 		GeometryObject* geometryObject;
 		Player* player;
 
-		GLuint vertexAttribute = 0;
-
 		// Audio
 		WaveFile* waveFile;
 		SoundBuffer* buffer;

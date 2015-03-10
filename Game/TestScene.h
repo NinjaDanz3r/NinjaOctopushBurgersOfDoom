@@ -61,8 +61,6 @@ class TestScene : public Scene {
 		Geometry* geometry;
 		GeometryObject* geometryObject;
 		Player* player;
-
-		GLuint vertexAttribute = 0;
 };
 
 /** @} */

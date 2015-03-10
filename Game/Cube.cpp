@@ -190,6 +190,7 @@ Cube::Cube() {
 	indexData[35] = 22;
 
 	generateBuffers();
+	generateVertexArray();
 }
 
 Cube::~Cube() {

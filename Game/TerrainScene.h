@@ -69,8 +69,6 @@ class TerrainScene : public Scene {
 		// Skybox
 		Skybox* skybox;
 		CubeMapTexture* skyboxTexture;
-
-		GLuint vertexAttribute = 0;
 };
 
 /** @} */
