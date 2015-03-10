@@ -6,6 +6,7 @@
 #include <Texture.h>
 #include <glm/glm.hpp>
 
+/// Previews a texture.
 class TexturePreview : public Preview {
 	public:
 		/// Create new texture preview.
