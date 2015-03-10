@@ -159,39 +159,46 @@ void PickingScene::render(int width, int height) {
 		rayWor = glm::normalize(rayWor);
 
 		//Search for hits.
-		float distance;
+		float distanceToTriangle, distanceToBox;
+		distanceToTriangle = distanceToBox = -1;
 		bool hit = false;
 		int trianglePasses = 0;
 		int boxPasses = 0;
-		if (rayVsAABB(aabb, rayMod, glm::vec3(rayOrigin)) )
+		if (rayVsAABB(aabb, rayMod, glm::vec3(rayOrigin), distanceToBox) )
 		{
-			boxPasses++;
-			for (int y = 0; (y < currGeometry->indexCount()); y += 3) {
-				trianglePasses++;
-				int ind1, ind2, ind3;
-				ind1 = currGeometry->indices()[y];
-				ind2 = currGeometry->indices()[y + 1];
-				ind3 = currGeometry->indices()[y + 2];
+			//if the distance to the box exceeds the distance to the closest triangle, 
+			//there is no way that any triangle contained inside that box will 
+			//be closer to the viewer
+			if (distanceToBox < closestDistance)
+			{
+				boxPasses++;
+				for (int y = 0; (y < currGeometry->indexCount()); y += 3) {
+					trianglePasses++;
+					int ind1, ind2, ind3;
+					ind1 = currGeometry->indices()[y];
+					ind2 = currGeometry->indices()[y + 1];
+					ind3 = currGeometry->indices()[y + 2];
 
-				Geometry::Vertex vert1 = currGeometry->vertices()[ind1];
-				Geometry::Vertex vert2 = currGeometry->vertices()[ind2];
-				Geometry::Vertex vert3 = currGeometry->vertices()[ind3];
+					Geometry::Vertex vert1 = currGeometry->vertices()[ind1];
+					Geometry::Vertex vert2 = currGeometry->vertices()[ind2];
+					Geometry::Vertex vert3 = currGeometry->vertices()[ind3];
 
-				hit = rayVsTri(vert1.position, vert2.position, vert3.position, glm::vec3(rayMod), glm::vec3(rayOrigin), distance);
-				if ((distance < closestDistance) && (hit == true))
-				{
-					closestDistance = distance;
-					closestObjectHit = i;
+					hit = rayVsTri(vert1.position, vert2.position, vert3.position, glm::vec3(rayMod), glm::vec3(rayOrigin), distanceToTriangle);
+					if ((distanceToTriangle < closestDistance) && (hit == true))
+					{
+						closestDistance = distanceToTriangle;
+						closestObjectHit = i;
+					}
+					else
+						hit = false;
 				}
-				else
-					hit = false;
 			}
-
-			fprintf(stderr, "Hit: %i Distance: %f trianglePasses:%i boxPasses:%i\n", hit, distance, trianglePasses, boxPasses );
-			//fprintf(stderr, "Raydir: %f %f %f\n", rayWor.x, rayWor.y, rayWor.z);
-			//fprintf(stderr, "RayO: %f %f %f\n", rayOrigin.x, rayOrigin.y, rayOrigin.z);
-			//fflush(stderr);
+			fprintf(stderr, "BoxPasses: %i TriPasses: %i distanceToBox%f\n", boxPasses, trianglePasses,distanceToBox);
+			fflush(stderr);
 		}
+		//fprintf(stderr, "Hit: %i DistToBox: %.2f DistTri: %.2f triPasses:%i boxPasses:%i\n", hit, distanceToBox, closestDistance, trianglePasses, boxPasses);
+		//fprintf(stderr, "Raydir: %f %f %f\n", rayWor.x, rayWor.y, rayWor.z);
+		//fprintf(stderr, "RayO: %f %f %f\n", rayOrigin.x, rayOrigin.y, rayOrigin.z);
 	}
 
 	//Drawing loop

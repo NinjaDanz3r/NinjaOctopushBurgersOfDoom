@@ -35,6 +35,6 @@ bool rayVsTri(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3, glm::vec3 rayDir, glm::v
 
 bool rayVsOBB(OBB obb, glm::vec3 rayDir, glm::vec3 rayOrigin, float& distance);
 
-bool rayVsAABB(AABB box, glm::vec3 rayDir, glm::vec3 rayOrigin);
+bool rayVsAABB(AABB box, glm::vec3 rayDir, glm::vec3 rayOrigin, float& distance);
 
 #endif

@@ -92,39 +92,34 @@ bool rayVsOBB(OBB obb, glm::vec3 rayDir, glm::vec3 rayOrigin, float& distance) {
 	return false;
 }
 
-bool rayVsAABB(AABB box, glm::vec3 rayDir, glm::vec3 rayOrigin){
-	//Create multiplicative inverse of ray.
-	glm::vec3 inverseRayDir;
-	inverseRayDir.x = (1.f / rayDir.x);
-	inverseRayDir.y = (1.f / rayDir.y);
-	inverseRayDir.z = (1.f / rayDir.z);
+bool rayVsAABB(AABB box, glm::vec3 rayDir, glm::vec3 rayOrigin, float& distance){
+	distance = -1;
+	glm::vec3 inverseRay = (1.0f / rayDir);
+	float t1, t2, t3, t4, t5, t6;
+	t1 = (box.minVertices.x - rayOrigin.x)*inverseRay.x;
+	t2 = (box.maxVertices.x - rayOrigin.x)*inverseRay.x;
+	
+	t3 = (box.minVertices.y - rayOrigin.y)*inverseRay.y;
+	t4 = (box.maxVertices.y - rayOrigin.y)*inverseRay.y;
 
-	//Create ray slopes
-	float s[6];
-	s[0] = rayDir.x * inverseRayDir.y; //YX
-	s[1] = rayDir.y * inverseRayDir.x; //XY
-	s[2] = rayDir.y * inverseRayDir.z; //ZY
-	s[3] = rayDir.z * inverseRayDir.y; //YZ
-	s[4] = rayDir.x * inverseRayDir.z; //XZ
-	s[5] = rayDir.z * inverseRayDir.x; //ZX
+	t5 = (box.minVertices.z - rayOrigin.z)*inverseRay.z;
+	t6 = (box.maxVertices.z - rayOrigin.z)*inverseRay.z;
 
-	//Precomputation
-	float c[6];
-	c[0] = rayOrigin.y - s[1] * rayOrigin.x; //XY
-	c[1] = rayOrigin.x - s[0] * rayOrigin.y; //YX
-	c[2] = rayOrigin.y - s[2] * rayOrigin.z; //ZY
-	c[3] = rayOrigin.z - s[3] * rayOrigin.y; //YZ
-	c[4] = rayOrigin.z - s[4] * rayOrigin.x; //XZ
-	c[5] = rayOrigin.x - s[5] * rayOrigin.z; //ZX
+	float tmin, tmax;
+	tmin = std::max(std::max(std::min(t1, t2), std::min(t3, t4)), std::min(t5, t6));
+	tmax = std::min(std::min(std::max(t1, t2), std::max(t3, t4)), std::max(t5, t6));
 
-	if ((rayOrigin.x > box.maxVertices.x) || (rayOrigin.y > box.maxVertices.x) || (rayOrigin.z > box.maxVertices.z)
-		|| (s[1] * box.maxVertices.x - box.minVertices.y + c[0] < 0)
-		|| (s[0] * box.maxVertices.y - box.minVertices.x + c[1] < 0)
-		|| (s[2] * box.maxVertices.z - box.minVertices.y + c[2] < 0)
-		|| (s[3] * box.maxVertices.y - box.minVertices.z + c[3] < 0)
-		|| (s[4] * box.maxVertices.x - box.minVertices.z + c[4] < 0)
-		|| (s[5] * box.maxVertices.z - box.minVertices.x + c[5] < 0))
+	if (tmax < 0)
+	{
+		distance = tmax;
 		return false;
-
+	}
+	
+	if (tmin > tmax)
+	{
+		distance = tmin;
+		return false;
+	}
+	distance = tmin;
 	return true;
 }
