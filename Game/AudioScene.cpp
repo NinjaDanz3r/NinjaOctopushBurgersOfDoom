@@ -90,7 +90,7 @@ void AudioScene::render(int width, int height) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glBindVertexArray(vertexAttribute);
-	glBindBuffer(GL_ARRAY_BUFFER, geometryObject->geometry()->vertexBuffer());
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, geometryObject->geometry()->vertexBuffer());
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, geometryObject->geometry()->indexBuffer());
 
 	// Texture unit 0 is for base images.

@@ -89,7 +89,7 @@ void TestScene::render(int width, int height) {
 	glUniform1i(shaderProgram->uniformLocation("specularMap"), 2);
 
 	glBindVertexArray(vertexAttribute);
-	glBindBuffer(GL_ARRAY_BUFFER, geometryObject->geometry()->vertexBuffer());
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, geometryObject->geometry()->vertexBuffer());
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, geometryObject->geometry()->indexBuffer());
 
 	// Base image texture
