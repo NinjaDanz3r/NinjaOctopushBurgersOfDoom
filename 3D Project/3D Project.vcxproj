@@ -20,6 +20,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Skybox.cpp" />
+    <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="Square.cpp" />
     <ClCompile Include="Camera.cpp" />

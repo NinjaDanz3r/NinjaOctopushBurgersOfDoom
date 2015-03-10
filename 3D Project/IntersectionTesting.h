@@ -14,11 +14,14 @@
 class AABB
 {
 public:
-	glm::vec3 dim, origin; //Dim: width, height, depth
+	glm::vec3 dim, origin,minVertices, maxVertices; //Dim: width, height, depth
+	//constructors
 	AABB(){};
-	AABB(glm::vec3 _dim, glm::vec3 _origin) {
+	AABB(glm::vec3 _dim, glm::vec3 _origin, glm::vec3 _minVertices, glm::vec3 _maxVertices) {
 		dim = _dim;
 		origin = _origin;
+		minVertices = _minVertices;
+		maxVertices = _maxVertices;
 	};
 };
 
@@ -32,6 +35,6 @@ bool rayVsTri(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3, glm::vec3 rayDir, glm::v
 
 bool rayVsOBB(OBB obb, glm::vec3 rayDir, glm::vec3 rayOrigin, float& distance);
 
-bool rayVsAABB(AABB Box, float x, float y);
+bool rayVsAABB(AABB box, glm::vec3 rayDir, glm::vec3 rayOrigin);
 
 #endif

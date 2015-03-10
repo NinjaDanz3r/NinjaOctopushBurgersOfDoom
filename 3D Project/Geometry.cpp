@@ -2,10 +2,11 @@
 
 void Geometry::createAabb()
 {
-	glm::vec3 minValues, maxValues;
-	Vertex* currVert = Geometry::vertices();
-	minValues = maxValues = glm::vec3(0.f, 0.f, 0.f);
-	unsigned int numVerts = Geometry::vertexCount();
+	glm::vec3 minValues, maxValues, origin, dim;
+	Vertex* currVert = vertices();
+	minValues = maxValues = origin = glm::vec3(0.f, 0.f, 0.f);
+	unsigned int numVerts = vertexCount();
+	//Find minimum bounding points
 	for (int i = 0; i < numVerts; i++)
 	{
 		if (currVert[i].position.x > maxValues.x)
@@ -23,4 +24,13 @@ void Geometry::createAabb()
 		else if (currVert[i].position.z < minValues.z)
 			minValues.z = currVert[i].position.z;
 	}
+	//Set origin
+	origin.x = (minValues.x + maxValues.x) / 2;
+	origin.y = (minValues.y + maxValues.y) / 2;
+	origin.z = (minValues.z + maxValues.z) / 2;
+	//Width
+	dim.x = maxValues.x - minValues.x;
+	dim.y = maxValues.y - minValues.y;
+	dim.z = maxValues.z - minValues.z;
+	aabb = AABB(dim, origin, minValues, maxValues);
 }

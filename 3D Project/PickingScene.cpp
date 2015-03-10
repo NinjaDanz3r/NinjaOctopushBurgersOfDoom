@@ -49,6 +49,8 @@ PickingScene::PickingScene() {
 		tempGeometry->setRotation((float)rand1, (float)rand2, (float)rand3);
 		multiGeometry.push_back(tempGeometry);
 	}
+	multiGeometry[0]->createAabb();
+	aabb = multiGeometry[0]->aabb;
 	//geometry = new Model("Resources/Models/rock01/rock_01.obj");
 	//geometry->setScale(glm::vec3(0.01f, 0.01f, 0.01f));
 	bindTriangleData();
@@ -146,10 +148,6 @@ void PickingScene::render(int width, int height) {
 		glm::mat4 MV = view * model;
 		glm::mat4 N = glm::transpose(glm::inverse(MV));
 
-		//grab camera right/up for AABB creation
-		glm::vec4 camRight, camUp;
-		AABB boundingBox(glm::vec3, currGeometry->position());
-
 		//Ray in world space
 		glm::vec4 rayOrigin(0.0f, 0.0f, 0.0f, 1.0f);
 		rayOrigin = inverseView*(rayOrigin);
@@ -163,32 +161,37 @@ void PickingScene::render(int width, int height) {
 		//Search for hits.
 		float distance;
 		bool hit = false;
-		int passes = 0;
+		int trianglePasses = 0;
+		int boxPasses = 0;
+		if (rayVsAABB(aabb, rayMod, glm::vec3(rayOrigin)) )
+		{
+			boxPasses++;
+			for (int y = 0; (y < currGeometry->indexCount()); y += 3) {
+				trianglePasses++;
+				int ind1, ind2, ind3;
+				ind1 = currGeometry->indices()[y];
+				ind2 = currGeometry->indices()[y + 1];
+				ind3 = currGeometry->indices()[y + 2];
 
-		for (int y = 0; (y < currGeometry->indexCount()); y += 3) {
-			passes++;
-			int ind1, ind2, ind3;
-			ind1 = currGeometry->indices()[y];
-			ind2 = currGeometry->indices()[y + 1];
-			ind3 = currGeometry->indices()[y + 2];
+				Geometry::Vertex vert1 = currGeometry->vertices()[ind1];
+				Geometry::Vertex vert2 = currGeometry->vertices()[ind2];
+				Geometry::Vertex vert3 = currGeometry->vertices()[ind3];
 
-			Geometry::Vertex vert1 = currGeometry->vertices()[ind1];
-			Geometry::Vertex vert2 = currGeometry->vertices()[ind2];
-			Geometry::Vertex vert3 = currGeometry->vertices()[ind3];
-
-			hit = rayVsTri(vert1.position, vert2.position, vert3.position, glm::vec3(rayMod), glm::vec3(rayOrigin), distance);
-			if ((distance < closestDistance) && (hit == true))
-			{
-				closestDistance = distance;
-				closestObjectHit = i;
+				hit = rayVsTri(vert1.position, vert2.position, vert3.position, glm::vec3(rayMod), glm::vec3(rayOrigin), distance);
+				if ((distance < closestDistance) && (hit == true))
+				{
+					closestDistance = distance;
+					closestObjectHit = i;
+				}
+				else
+					hit = false;
 			}
-			else
-				hit = false;
+
+			fprintf(stderr, "Hit: %i Distance: %f trianglePasses:%i boxPasses:%i\n", hit, distance, trianglePasses, boxPasses );
+			//fprintf(stderr, "Raydir: %f %f %f\n", rayWor.x, rayWor.y, rayWor.z);
+			//fprintf(stderr, "RayO: %f %f %f\n", rayOrigin.x, rayOrigin.y, rayOrigin.z);
+			//fflush(stderr);
 		}
-		//fprintf(stderr, "Hit: %i Distance: %f Passes:%i\n", hit, distance, passes);
-		//fprintf(stderr, "Raydir: %f %f %f\n", rayWor.x, rayWor.y, rayWor.z);
-		//fprintf(stderr, "RayO: %f %f %f\n", rayOrigin.x, rayOrigin.y, rayOrigin.z);
-		//fflush(stderr);
 	}
 
 	//Drawing loop

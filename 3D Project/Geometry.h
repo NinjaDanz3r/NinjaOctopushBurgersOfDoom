@@ -18,10 +18,7 @@ class Geometry : public Object {
 			glm::vec3 normal;
 			/// %Texture coordinate.
 			glm::vec2 textureCoordinate;
-			//
-			AABB aabb;
 		};
-
 		/// Destructor
 		virtual ~Geometry() { }
 
@@ -54,6 +51,9 @@ class Geometry : public Object {
 		 * @return The number of vertex indices.
 		 */
 		virtual unsigned int indexCount() const = 0;
+
+		//Localspace AABB for the geometry
+		AABB aabb;
 };
 
 #endif

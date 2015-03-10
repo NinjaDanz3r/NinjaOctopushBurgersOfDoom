@@ -46,6 +46,7 @@ private:
 	Texture* diffuse;
 	Texture* normal;
 	Texture* specular;
+	AABB aabb;
 
 	Texture* texture;
 	std::vector<Geometry*> multiGeometry;

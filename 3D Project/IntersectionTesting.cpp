@@ -92,6 +92,39 @@ bool rayVsOBB(OBB obb, glm::vec3 rayDir, glm::vec3 rayOrigin, float& distance) {
 	return false;
 }
 
-bool rayVsAABB(AABB Box, float x, float y){
+bool rayVsAABB(AABB box, glm::vec3 rayDir, glm::vec3 rayOrigin){
+	//Create multiplicative inverse of ray.
+	glm::vec3 inverseRayDir;
+	inverseRayDir.x = (1.f / rayDir.x);
+	inverseRayDir.y = (1.f / rayDir.y);
+	inverseRayDir.z = (1.f / rayDir.z);
+
+	//Create ray slopes
+	float s[6];
+	s[0] = rayDir.x * inverseRayDir.y; //YX
+	s[1] = rayDir.y * inverseRayDir.x; //XY
+	s[2] = rayDir.y * inverseRayDir.z; //ZY
+	s[3] = rayDir.z * inverseRayDir.y; //YZ
+	s[4] = rayDir.x * inverseRayDir.z; //XZ
+	s[5] = rayDir.z * inverseRayDir.x; //ZX
+
+	//Precomputation
+	float c[6];
+	c[0] = rayOrigin.y - s[1] * rayOrigin.x; //XY
+	c[1] = rayOrigin.x - s[0] * rayOrigin.y; //YX
+	c[2] = rayOrigin.y - s[2] * rayOrigin.z; //ZY
+	c[3] = rayOrigin.z - s[3] * rayOrigin.y; //YZ
+	c[4] = rayOrigin.z - s[4] * rayOrigin.x; //XZ
+	c[5] = rayOrigin.x - s[5] * rayOrigin.z; //ZX
+
+	if ((rayOrigin.x > box.maxVertices.x) || (rayOrigin.y > box.maxVertices.x) || (rayOrigin.z > box.maxVertices.z)
+		|| (s[1] * box.maxVertices.x - box.minVertices.y + c[0] < 0)
+		|| (s[0] * box.maxVertices.y - box.minVertices.x + c[1] < 0)
+		|| (s[2] * box.maxVertices.z - box.minVertices.y + c[2] < 0)
+		|| (s[3] * box.maxVertices.y - box.minVertices.z + c[3] < 0)
+		|| (s[4] * box.maxVertices.x - box.minVertices.z + c[4] < 0)
+		|| (s[5] * box.maxVertices.z - box.minVertices.x + c[5] < 0))
+		return false;
+
 	return true;
 }
