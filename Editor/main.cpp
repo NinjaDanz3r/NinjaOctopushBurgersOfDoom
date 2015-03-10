@@ -6,8 +6,11 @@
 
 int main(int argc, char *argv[]) {
 	freopen(util::savePath("editor_log.txt").c_str(), "a", stderr);
+	util::logWithTime("Editor started");
 	QApplication a(argc, argv);
 	Editor w;
 	w.show();
-	return a.exec();
+	int result = a.exec();
+	util::logWithTime("Editor ended");
+	return result;
 }
