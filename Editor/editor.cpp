@@ -88,7 +88,7 @@ void Editor::closeProject() {
 
 	enableActions(false);
 
-	ui.previewWidget->setPreviewTexture(nullptr);
+	ui.previewWidget->texturePreview()->setTexture(nullptr);
 	ui.previewWidget->repaint();
 }
 
@@ -137,7 +137,7 @@ void Editor::selectionChanged() {
 		QTreeWidgetItem* selected = ui.treeWidget->selectedItems()[0];
 
 		if (selected->parent() == texturesRoot) {
-			ui.previewWidget->setPreviewTexture((*activeProject->resources()->textureResources())[selected->text(0).toStdString()]->texture());
+			ui.previewWidget->texturePreview()->setTexture((*activeProject->resources()->textureResources())[selected->text(0).toStdString()]->texture());
 			ui.previewWidget->repaint();
 		}
 	}

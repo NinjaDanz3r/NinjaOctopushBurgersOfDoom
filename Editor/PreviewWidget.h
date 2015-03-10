@@ -5,10 +5,11 @@
 #include <gl/GL.h>
 
 #include <QGLWidget>
-#include <glm/glm.hpp>
 #include <Shader.h>
 #include <ShaderProgram.h>
 #include <Texture.h>
+#include "Preview.h"
+#include "TexturePreview.h"
 
 /** @ingroup editor
  * @{
@@ -28,11 +29,11 @@ class PreviewWidget : public QGLWidget {
 		/// Destructor.
 		~PreviewWidget();
 
-		/// Set preview texture.
+		/// Get texture preview.
 		/**
-		 * @param texture Texture to show.
+		 * @return The texture preview
 		 */
-		void setPreviewTexture(Texture* texture);
+		TexturePreview* texturePreview() const;
 
 	protected:
 		void initializeGL();
@@ -40,24 +41,16 @@ class PreviewWidget : public QGLWidget {
 		void resizeGL(int width, int height);
 
 	private:
-		void bindQuad();
-		
 		int width, height;
 
-		Texture* texture = nullptr;
+		// Previews
+		Preview* activePreview;
+		TexturePreview* _texturePreview;
 
 		// Shaders
 		Shader* vertexShader;
 		Shader* fragmentShader;
 		ShaderProgram* shaderProgram;
-
-		// Full screen quad.
-		static const glm::vec2 vertices[6];
-
-		// Vertex buffer
-		GLuint vertexBuffer;
-		GLuint vertexAttribute;
-		unsigned int vertexCount;
 };
 
 /** @} */

@@ -176,6 +176,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OBJModel.cpp" />
     <ClCompile Include="PreviewWidget.cpp" />
+    <ClCompile Include="TexturePreview.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="editor.h">
@@ -221,6 +222,8 @@
     <ClInclude Include="convert.h" />
     <ClInclude Include="GeneratedFiles\ui_editor.h" />
     <ClInclude Include="OBJModel.h" />
+    <ClInclude Include="Preview.h" />
+    <ClInclude Include="TexturePreview.h" />
     <CustomBuild Include="PreviewWidget.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing PreviewWidget.h...</Message>

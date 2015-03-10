@@ -83,6 +83,9 @@
     <ClCompile Include="PreviewWidget.cpp">
       <Filter>Source Files\Preview</Filter>
     </ClCompile>
+    <ClCompile Include="TexturePreview.cpp">
+      <Filter>Source Files\Preview</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="editor.ui">
@@ -107,6 +110,12 @@
     </ClInclude>
     <ClInclude Include="convert.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Preview.h">
+      <Filter>Header Files\Preview</Filter>
+    </ClInclude>
+    <ClInclude Include="TexturePreview.h">
+      <Filter>Header Files\Preview</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
