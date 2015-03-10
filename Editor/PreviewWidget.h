@@ -46,11 +46,6 @@ class PreviewWidget : public QGLWidget {
 		// Previews
 		Preview* activePreview;
 		TexturePreview* _texturePreview;
-
-		// Shaders
-		Shader* vertexShader;
-		Shader* fragmentShader;
-		ShaderProgram* shaderProgram;
 };
 
 /** @} */

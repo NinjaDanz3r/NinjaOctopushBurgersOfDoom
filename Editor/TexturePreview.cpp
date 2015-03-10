@@ -4,14 +4,20 @@
 
 const glm::vec2 TexturePreview::vertices[6] = { { 1.f, 1.f }, { -1.f, 1.f }, { -1.f, -1.f }, { 1.f, 1.f }, { -1.f, -1.f }, { 1.f, -1.f } };
 
-TexturePreview::TexturePreview(ShaderProgram* shaderProgram) {
-	this->shaderProgram = shaderProgram;
+TexturePreview::TexturePreview() {
+	vertexShader = new Shader("showTexture_vertex.glsl", GL_VERTEX_SHADER);
+	fragmentShader = new Shader("showTexture_fragment.glsl", GL_FRAGMENT_SHADER);
+	shaderProgram = new ShaderProgram({ vertexShader, fragmentShader });
 
 	shaderProgram->use();
 	bindQuad();
 }
 
 TexturePreview::~TexturePreview() {
+	delete shaderProgram;
+	delete vertexShader;
+	delete fragmentShader;
+
 	glDeleteBuffers(1, &vertexBuffer);
 }
 

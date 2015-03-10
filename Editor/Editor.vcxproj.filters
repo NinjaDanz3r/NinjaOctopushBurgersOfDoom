@@ -86,6 +86,9 @@
     <ClCompile Include="TexturePreview.cpp">
       <Filter>Source Files\Preview</Filter>
     </ClCompile>
+    <ClCompile Include="ModelPreview.cpp">
+      <Filter>Source Files\Preview</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="editor.ui">
@@ -117,12 +120,21 @@
     <ClInclude Include="TexturePreview.h">
       <Filter>Header Files\Preview</Filter>
     </ClInclude>
+    <ClInclude Include="ModelPreview.h">
+      <Filter>Header Files\Preview</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="showTexture_vertex.glsl">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="showTexture_fragment.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="showModel_vertex.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="showModel_fragment.glsl">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

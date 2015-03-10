@@ -174,6 +174,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ModelPreview.cpp" />
     <ClCompile Include="OBJModel.cpp" />
     <ClCompile Include="PreviewWidget.cpp" />
     <ClCompile Include="TexturePreview.cpp" />
@@ -221,6 +222,7 @@
   <ItemGroup>
     <ClInclude Include="convert.h" />
     <ClInclude Include="GeneratedFiles\ui_editor.h" />
+    <ClInclude Include="ModelPreview.h" />
     <ClInclude Include="OBJModel.h" />
     <ClInclude Include="Preview.h" />
     <ClInclude Include="TexturePreview.h" />
@@ -269,6 +271,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="showModel_fragment.glsl" />
+    <None Include="showModel_vertex.glsl" />
     <None Include="showTexture_fragment.glsl" />
     <None Include="showTexture_vertex.glsl" />
   </ItemGroup>

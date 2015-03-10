@@ -10,10 +10,7 @@
 class TexturePreview : public Preview {
 	public:
 		/// Create new texture preview.
-		/**
-		 * @param shaderProgram Shader program to render with.
-		 */
-		TexturePreview(ShaderProgram* shaderProgram);
+		TexturePreview();
 
 		/// Destructor.
 		~TexturePreview();
@@ -35,6 +32,10 @@ class TexturePreview : public Preview {
 		void bindQuad();
 
 		Texture* texture = nullptr;
+		
+		// Shaders
+		Shader* vertexShader;
+		Shader* fragmentShader;
 		ShaderProgram* shaderProgram;
 
 		// Full screen quad.

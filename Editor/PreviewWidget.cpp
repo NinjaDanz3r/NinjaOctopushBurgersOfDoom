@@ -7,10 +7,6 @@ PreviewWidget::PreviewWidget(QWidget* parent) : QGLWidget(QGLFormat(QGL::SampleB
 }
 
 PreviewWidget::~PreviewWidget() {
-	delete shaderProgram;
-	delete vertexShader;
-	delete fragmentShader;
-
 	delete _texturePreview;
 }
 
@@ -22,11 +18,7 @@ void PreviewWidget::initializeGL() {
 	glewInit();
 	glEnable(GL_DEPTH_TEST);
 
-	vertexShader = new Shader("showTexture_vertex.glsl", GL_VERTEX_SHADER);
-	fragmentShader = new Shader("showTexture_fragment.glsl", GL_FRAGMENT_SHADER);
-	shaderProgram = new ShaderProgram({ vertexShader, fragmentShader });
-
-	_texturePreview = new TexturePreview(shaderProgram);
+	_texturePreview = new TexturePreview();
 	activePreview = _texturePreview;
 }
 
