@@ -18,6 +18,8 @@ uniform vec3 lightIntensity;
 uniform vec3 diffuseKoefficient;
 
 uniform int isHit;
+uniform int currentlyDrawingObject;
+uniform int closestObjectHit;
 
 out vec4 fragment_color;
 
@@ -36,8 +38,8 @@ vec3 ads() {
 }
 
 void main () {
-if(isHit == 0)
-	fragment_color = texture(baseImage, vertexIn.tex_coords) * vec4(ads(), 1.0);
-	else
+if((closestObjectHit == currentlyDrawingObject))
 	fragment_color = texture(baseImage, vertexIn.tex_coords)* vec4(0.1f,1.0f,0.1f,1.0f) * vec4(ads(), 1.0);
+	else
+	fragment_color = texture(baseImage, vertexIn.tex_coords) * vec4(ads(), 1.0);
 }

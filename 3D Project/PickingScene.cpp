@@ -87,24 +87,30 @@ void PickingScene::render(int width, int height) {
 	glViewport(0, 0, width, height);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	float closestDistance = std::numeric_limits<float>::max();
+	int closestObjectHit = -1;
 
 	// Send the matrices to the shader (Per render call operations).
 	glm::mat4 view = player->camera()->view();
 	glm::mat4 proj = player->camera()->projection(width, height);
+
 	//create mouse ray
 	float x, y;
 	x = static_cast<float>(input::cursorX());
 	y = static_cast<float>(input::cursorY());
+	
 	//Get NDC x and y
 	float vx = ((2.0f * x) / width) - 1.0f;
 	float vy = 1.0f - ((2.0f * y) / height);
 	glm::mat4 inverseView = glm::inverse(view);
 	glm::mat4 inverseProj = glm::inverse(proj);
+	
 	//Ray in clip space
 	glm::vec4 rayClip(vx, vy, -1.0f, 0.0f);
+	
 	//Ray in view space
 	glm::vec4 rayEye = inverseProj*rayClip;
 	rayEye = glm::vec4(rayEye.x, rayEye.y, -1.0, 0.0);
+	//Per object ray operations continued inside per object loop.
 
 	// Base image texture
 	glActiveTexture(GL_TEXTURE0);
@@ -129,17 +135,22 @@ void PickingScene::render(int width, int height) {
 	glUniform3fv(shaderProgram->uniformLocation("lightIntensity"), 1, &lightIntensity[0]);
 	glUniform3fv(shaderProgram->uniformLocation("diffuseKoefficient"), 1, &diffuseKoefficient[0]);
 
+	//Intersection loop
 	for (int i = 0; i < numModels; i++)
 	{
-		glBindVertexArray(vertexAttributes[i]);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffers[i]);
-
-		Geometry* currGeometry = multiGeometry[i];
 		// Model matrix, unique for each model.
+		Geometry* currGeometry = multiGeometry[i];
 		glm::mat4 model = currGeometry->modelMatrix();
 
+		//Matrices for each model
 		glm::mat4 MV = view * model;
 		glm::mat4 N = glm::transpose(glm::inverse(MV));
+
+		//grab camera right/up for AABB creation
+		glm::vec4 camRight, camUp;
+		camRight = glm::normalize(view*glm::vec4(1.f, 0.f, 0.f, 0.f));
+		camUp = glm::normalize(view*glm::vec4(0.f, 1.f, 0.f, 0.f));
+		AABB boundingBox(glm::vec3(camRight), glm::vec3(camUp), currGeometry->position());
 
 		//Ray in world space
 		glm::vec4 rayOrigin(0.0f, 0.0f, 0.0f, 1.0f);
@@ -156,30 +167,51 @@ void PickingScene::render(int width, int height) {
 		bool hit = false;
 		int passes = 0;
 
-		for (int i = 0; (i < currGeometry->indexCount()) && (hit == false); i += 3) {
+		for (int y = 0; (y < currGeometry->indexCount()); y += 3) {
 			passes++;
 			int ind1, ind2, ind3;
-			ind1 = currGeometry->indices()[i];
-			ind2 = currGeometry->indices()[i + 1];
-			ind3 = currGeometry->indices()[i + 2];
+			ind1 = currGeometry->indices()[y];
+			ind2 = currGeometry->indices()[y + 1];
+			ind3 = currGeometry->indices()[y + 2];
 
 			Geometry::Vertex vert1 = currGeometry->vertices()[ind1];
 			Geometry::Vertex vert2 = currGeometry->vertices()[ind2];
 			Geometry::Vertex vert3 = currGeometry->vertices()[ind3];
 
 			hit = rayVsTri(vert1.position, vert2.position, vert3.position, glm::vec3(rayMod), glm::vec3(rayOrigin), distance);
+			if ((distance < closestDistance) && (hit == true))
+			{
+				closestDistance = distance;
+				closestObjectHit = i;
+			}
+			else
+				hit = false;
 		}
-		// Hitdata
-		glUniform1i(shaderProgram->uniformLocation("isHit"), hit);
 		//fprintf(stderr, "Hit: %i Distance: %f Passes:%i\n", hit, distance, passes);
 		//fprintf(stderr, "Raydir: %f %f %f\n", rayWor.x, rayWor.y, rayWor.z);
 		//fprintf(stderr, "RayO: %f %f %f\n", rayOrigin.x, rayOrigin.y, rayOrigin.z);
 		//fflush(stderr);
-		
+	}
+
+	//Drawing loop
+	for (int i = 0; i < numModels; i++)
+	{
+		// Pass hit to shader
+		glUniform1i(shaderProgram->uniformLocation("closestObjectHit"), closestObjectHit);
+		glUniform1i(shaderProgram->uniformLocation("currentlyDrawingObject"), i);
+
+		glBindVertexArray(vertexAttributes[i]);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffers[i]);
+		Geometry* currGeometry = multiGeometry[i];
+		// Model matrix, unique for each model.
+		glm::mat4 model = currGeometry->modelMatrix();
+
+		glm::mat4 MV = view * model;
+		glm::mat4 N = glm::transpose(glm::inverse(MV));
+
 		glUniformMatrix4fv(shaderProgram->uniformLocation("modelMatrix"), 1, GL_FALSE, &model[0][0]);
 		glUniformMatrix3fv(shaderProgram->uniformLocation("normalMatrix"), 1, GL_FALSE, &glm::mat3(N)[0][0]);
 
-		// Draw the triangles
 		glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
 	}
 }

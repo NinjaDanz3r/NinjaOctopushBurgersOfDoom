@@ -3,42 +3,50 @@
 //Möller-Trumbore intersection algorithm for triangles.
 bool rayVsTri(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3, glm::vec3 rayDir, glm::vec3 rayOrigin, float& distance) {
 	//Declaration
-	glm::vec3 edge1, edge2, P, Q, T;
+	glm::vec3 edge1, edge2, normal, P, Q, T;
 	float det, inverseDet, u, v, t;
 	distance = -1.f;
 
 	//Find triangle edge vectors
 	edge1 = v2 - v1;
 	edge2 = v3 - v1;
-	//Determinant calculation
-	P = glm::cross(rayDir, edge2);
-	det = glm::dot(edge1, P);
+	normal = glm::cross(edge1, edge2);
 
-	//If determinant is near zero, ray is in the triangle plane.
-	if ((det > -EPSILON) && (det < EPSILON))
+	//Minor optimization, cull if backface (Occurs when inside a model)
+	if (glm::dot(-rayDir, normal ) >= 0.0f)
+	{
+		//Determinant calculation
+		P = glm::cross(rayDir, edge2);
+		det = glm::dot(edge1, P);
+
+		//If determinant is near zero, ray is in the triangle plane.
+		if ((det > -EPSILON) && (det < EPSILON))
+			return false;
+		inverseDet = 1.0f / det;
+
+		T = rayOrigin - v1;			//Distance from v1 to ray origin.
+		//triangle U, V testing.
+		u = dot(T, P) *inverseDet;
+		if ((u < 0.0f) || (u > 1.0f))
+			return false;
+
+		Q = cross(T, edge1);
+
+		v = dot(rayDir, Q)*inverseDet;
+		if ((v <0.0f) || ((u + v) > 1.0f))
+			return false;
+
+		t = glm::dot(edge2, Q)*inverseDet;
+
+		//If all attempts to cull the ray has been passed, we have an intersection
+		if (t > EPSILON){
+			distance = t;
+			return true;
+		}
 		return false;
-	inverseDet = 1.0f / det;
-
-	T = rayOrigin - v1;			//Distance from v1 to ray origin.
-	//triangle U, V testing.
-	u = dot(T, P) *inverseDet;
-	if ((u < 0.0f) || (u > 1.0f))
-		return false;
-
-	Q = cross(T, edge1);
-	
-	v = dot(rayDir, Q)*inverseDet;
-	if ((v <0.0f) || ( (u + v) > 1.0f))
-		return false;
-
-	t = glm::dot(edge2, Q)*inverseDet;
-
-	//If all attempts to cull the ray has been passed, we have an intersection
-	if (t > EPSILON){
-		distance = t;
-		return true;
 	}
-	return false;
+	else
+		return false;
 }
 
 bool rayVsOBB(OBB obb, glm::vec3 rayDir, glm::vec3 rayOrigin, float& distance) {
@@ -84,27 +92,6 @@ bool rayVsOBB(OBB obb, glm::vec3 rayDir, glm::vec3 rayOrigin, float& distance) {
 	return false;
 }
 
-//
-//bool rayVsTri(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3, glm::vec3 rayDir, glm::vec3 rayOrigin, float& distance) {
-//	glm::vec3 e1 = v2 - v1;
-//	glm::vec3 e2 = v3 - v1;
-//	glm::vec3 q = glm::cross(rayDir, e2);
-//	
-//	float a = glm::dot(e1, q);
-//	if ((a > -EPSILON) && (a < EPSILON))
-//		return false;
-//	float f = 1 / a;
-//	glm::vec3 s = rayOrigin - v1;
-//	float u = f*(glm::dot(s, q));
-//	if (u < 0.0f)
-//		return false;
-//	glm::vec3 r = glm::cross(s, e1);
-//	float v = f*glm::dot(rayDir, r);
-//	if ((v < 0.0f) || ((u + v) > 1.0))
-//		return false;
-//	if (f*glm::dot(e2, r) > EPSILON){
-//		distance = (f*glm::dot(e2, r));
-//		return true;
-//	}
-//	return false;
-//}
+bool rayVsAABB(AABB Box, float x, float y){
+	return true;
+}
