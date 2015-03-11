@@ -1,7 +1,12 @@
 #ifndef __PARTICLESYSTEM_H__
 #define __PARTICLESYSTEM_H__
+
 #include <vector>
-#include <glm\glm.hpp>
+#include <glm/glm.hpp>
+#include <GL/glew.h>
+#include <ShaderProgram.h>
+#include <Texture.h>
+#include "Camera.h"
 
 /** @ingroup game
  * @{
@@ -26,24 +31,29 @@ class ParticleSystem {
 
 		/// Create a new particle system with the given properties.
 		/**
-		* @param origin Origin of the particle system.
-		* @param maxParticleCount The maximum amount of particles the particle system can hold.
-		* @param chanceToEmit How large chance to emit a particle each step (x in 1000 chance).
-		* @param maxVelocity Maximum velocity of the particles emitted.
-		* @param maxLifeTime Maximum lifetime of the particles emitted.
-		*/
-		ParticleSystem(glm::vec3 origin, int maxParticleCount, int chanceToEmit, float maxVelocity, float maxLifeTime);
+		 * @param shaderProgram ShaderProgram used to render the particles.
+		 * @param texture Texture to apply to the particles.
+		 * @param origin Origin of the particle system.
+		 * @param maxParticleCount The maximum amount of particles the particle system can hold.
+		 * @param chanceToEmit How large chance to emit a particle each step (x in 1000 chance).
+		 * @param maxVelocity Maximum velocity of the particles emitted.
+		 * @param maxLifeTime Maximum lifetime of the particles emitted.
+		 */
+		ParticleSystem(ShaderProgram* shaderProgram, Texture* texture, glm::vec3 origin, int maxParticleCount, int chanceToEmit, float maxVelocity, float maxLifeTime);
+
+		/// Destructor.
+		~ParticleSystem();
 
 		/// Get the amount of particles.
 		/**
-		* @return How many particles currently exist.
-		*/
+		 * @return How many particles currently exist.
+		 */
 		unsigned int getParticleCount();
 
 		/// Get the maximum amount of particles.
 		/**
-		* @return Maximum amount of particles.
-		*/
+		 * @return Maximum amount of particles.
+		 */
 		unsigned int getMaxParticleCount();
 
 		/// Update all the system's particles, spawn new particles etc.
@@ -52,12 +62,22 @@ class ParticleSystem {
 		 */
 		void update(double time);
 
-		/// Get the address to the dynamic array that holds the particle positions.
+		/// Render particles.
 		/**
-		* @return The address to the dynamic array that holds the particle positions
-		*/
-		ParticlePosition* getStartAddress();
+		 * @param width Width of the context.
+		 * @param height Height of the context.
+		 * @param camera Camera through which to render.
+		 */
+		void render(int width, int height, const Camera* camera);
+
 	private:
+		// Helper functions
+		void bindPointData();
+		void emitParticle();
+
+		ShaderProgram* shaderProgram;
+		Texture* texture;
+
 		std::vector<ParticlePosition> particlePositions;
 		std::vector<ParticleProperty> particleProperties;
 	
@@ -69,8 +89,10 @@ class ParticleSystem {
 		float maxVelocity;
 		int chanceToEmit;
 
-		// Helper functions
-		void emitParticle();
+		// Vertex buffer.
+		GLuint vertexBuffer = 0;
+		GLuint vertexAttribute = 0;
+		unsigned int vertexCount = 0;
 };
 
 /** @} */

@@ -5,7 +5,6 @@
 #include <Shader.h>
 #include <ShaderProgram.h>
 #include <Texture.h>
-#include <Geometry.h>
 #include "Player.h"
 #include "ParticleSystem.h"
 
@@ -40,8 +39,6 @@ class ParticleScene : public Scene {
 		void render(int width, int height);
 
 	private:
-		void bindPointData();
-
 		//Shaders
 		Shader* fragmentShader;
 		Shader* geometryShader;
@@ -51,11 +48,6 @@ class ParticleScene : public Scene {
 
 		Player* player;
 		ParticleSystem* particleSystem;
-
-		// Vertex buffer.
-		GLuint vertexBuffer = 0;
-		GLuint vertexAttribute = 0;
-		unsigned int vertexCount = 0;
 };
 
 /** @} */
