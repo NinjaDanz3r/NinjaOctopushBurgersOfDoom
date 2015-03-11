@@ -50,6 +50,17 @@ void ParticleSystem::update(double time) {
 }
 
 void ParticleSystem::render(int width, int height, const Camera* camera) {
+	// Don't write to depth buffer.
+	GLboolean depthWriting;
+	glGetBooleanv(GL_DEPTH_WRITEMASK, &depthWriting);
+	glDepthMask(GL_FALSE);
+
+	// Blending
+	GLboolean blending;
+	glGetBooleanv(GL_BLEND, &blending);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_ONE, GL_ONE);
+
 	shaderProgram->use();
 
 	glUniform1i(shaderProgram->uniformLocation("baseImage"), 0);
@@ -71,6 +82,11 @@ void ParticleSystem::render(int width, int height, const Camera* camera) {
 
 	// Draw the triangles
 	glDrawArrays(GL_POINTS, 0, getParticleCount());
+
+	// Reset state values we've changed.
+	glDepthMask(depthWriting);
+	if (!blending)
+		glDisable(GL_BLEND);
 }
 
 void ParticleSystem::bindPointData() {
