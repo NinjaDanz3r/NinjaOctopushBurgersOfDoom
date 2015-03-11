@@ -1,11 +1,8 @@
-<<<<<<< HEAD:3D Project/Model.cpp
 #include "Model.h"
 #include "IntersectionTesting.h"
 #include <limits>
 #include "util.h"
-=======
 #include "OBJModel.h"
->>>>>>> edaa9a973bdb2be48964358192670e0cb2ac0989:Editor/OBJModel.cpp
 
 OBJModel::OBJModel(const char* filename) {
 	std::ifstream modelFile;

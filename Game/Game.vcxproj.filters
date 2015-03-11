@@ -82,17 +82,11 @@
     <ClCompile Include="FrameBufferObjects.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DefRenderTestScene.cpp">
-      <Filter>Source Files\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Model.cpp">
       <Filter>Source Files\Geometry</Filter>
     </ClCompile>
     <ClCompile Include="PickingScene.cpp">
       <Filter>Source Files\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="IntersectionTesting.cpp">
-      <Filter>Source Files\Geometry</Filter>
     </ClCompile>
     <ClCompile Include="Geometry.cpp">
       <Filter>Source Files\Geometry</Filter>
@@ -176,7 +170,7 @@
     </ClInclude>
     <ClInclude Include="Cube.h">
       <Filter>Header Files</Filter>
-	 </ClInclude>
+    </ClInclude>
     <ClInclude Include="Object.h">
       <Filter>Header Files\Object</Filter>
     </ClInclude>
@@ -189,13 +183,7 @@
     <ClInclude Include="FrameBufferObjects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DefRenderTestScene.h">
-      <Filter>Header Files\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Model.h">
-      <Filter>Header Files\Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="IntersectionTesting.h">
       <Filter>Header Files\Geometry</Filter>
     </ClInclude>
   </ItemGroup>
@@ -231,8 +219,8 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="picking_fragment.glsl">
-	<Filter>Resource Files</Filter>
-	</None>
+      <Filter>Resource Files</Filter>
+    </None>
     <None Include="deferred_fragment.glsl">
       <Filter>Resource Files</Filter>
     </None>

@@ -38,8 +38,8 @@ vec3 ads() {
 }
 
 void main () {
-if((closestObjectHit == currentlyDrawingObject))
-	fragment_color = texture(baseImage, vertexIn.tex_coords)* vec4(0.1f,1.0f,0.1f,1.0f) * vec4(ads(), 1.0);
+	if((closestObjectHit == currentlyDrawingObject))
+		fragment_color = texture(baseImage, vertexIn.tex_coords)* vec4(0.1f,1.0f,0.1f,1.0f) * vec4(ads(), 1.0);
 	else
-	fragment_color = texture(baseImage, vertexIn.tex_coords) * vec4(ads(), 1.0);
+		fragment_color = texture(baseImage, vertexIn.tex_coords) * vec4(ads(), 1.0);
 }

@@ -1,11 +1,8 @@
 #ifndef __GEOMETRY_H__
 #define __GEOMETRY_H__
 
-<<<<<<< HEAD:3D Project/Geometry.h
-#include "Object.h"
-#include "IntersectionTesting.h"
-=======
 #include "Core.h"
+#include "IntersectionTesting.h"
 #include <GL/glew.h>
 #include <GL/GL.h>
 #include <glm/glm.hpp>
@@ -14,7 +11,6 @@
 /** @ingroup core
  * @{
  */
->>>>>>> edaa9a973bdb2be48964358192670e0cb2ac0989:Core/Geometry.h
 
 /// Interface for renderable 3D geometry.
 /**
@@ -44,7 +40,7 @@ class Geometry {
 		/**
 		* Create a local space AABB for geometry object
 		*/
-		void createAabb();
+		CORE_EXPORT void createAabb();
 
 		/// Get the number of vertices.
 		/**
@@ -64,8 +60,9 @@ class Geometry {
 		 */
 		virtual unsigned int indexCount() const = 0;
 
-		//Localspace AABB for the geometry
+		/// Localspace AABB for the geometry
 		AABB aabb;
+
 		/// Get the vertex array.
 		/**
 		 * @return The vertex array

@@ -20,19 +20,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AudioScene.cpp" />
-    <ClCompile Include="IntersectionTesting.cpp" />
-    <ClCompile Include="Model.cpp" />
     <ClCompile Include="ParticleScene.cpp" />
     <ClCompile Include="CubeMapTexture.cpp" />
     <ClCompile Include="PickingScene.cpp" />
-    <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="FrameBufferObjects.cpp" />
     <ClCompile Include="GeometryObject.cpp" />
-    <ClCompile Include="ParticleScene.cpp" />
-    <ClCompile Include="CubeMapTexture.cpp" />
     <ClCompile Include="Skybox.cpp" />
-    <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="Square.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -57,17 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioScene.h" />
-    <ClInclude Include="IntersectionTesting.h" />
-    <ClInclude Include="Model.h" />
     <ClInclude Include="ParticleScene.h" />
     <ClInclude Include="CubeMapTexture.h" />
     <ClInclude Include="PickingScene.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="FrameBufferObjects.h" />
     <ClInclude Include="GeometryObject.h" />
-    <ClInclude Include="ParticleScene.h" />
-    <ClInclude Include="CubeMapTexture.h" />
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="Square.h" />

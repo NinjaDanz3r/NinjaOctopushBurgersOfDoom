@@ -75,6 +75,9 @@
     <ClInclude Include="ShaderProgram.h">
       <Filter>Header Files\Shader</Filter>
     </ClInclude>
+    <ClInclude Include="IntersectionTesting.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="util.cpp">
@@ -109,6 +112,9 @@
     </ClCompile>
     <ClCompile Include="Geometry.cpp">
       <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="IntersectionTesting.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

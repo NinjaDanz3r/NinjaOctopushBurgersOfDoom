@@ -36,24 +36,23 @@ PickingScene::PickingScene() {
 	// Texture unit 0 is for specular map.
 	glUniform1i(shaderProgram->uniformLocation("specularMap"), 2);
 
+	geometry = new Model("Resources/Models/Rock.bin");
+	geometry->createAabb();
+	aabb = geometry->aabb;
+
 	for (int i = 0; i < numModels; i++){
-		Geometry* tempGeometry = new Model("Resources/Models/rock01/rock_01.obj");
+		GeometryObject* tempGeometry = new GeometryObject(geometry);
 		tempGeometry->setScale(glm::vec3(0.01f, 0.01f, 0.01f));
 		int rand1 = rand() % 21 - 10;
 		int rand2 = rand() % 21 - 10;
 		int rand3 = -10 - rand() % 10;
-		tempGeometry->setPosition(glm::vec3( (float)rand1, (float)rand2, (float)rand3) );
+		tempGeometry->setPosition(glm::vec3((float)rand1, (float)rand2, (float)rand3));
 		rand1 = rand() % 361;
 		rand2 = rand() % 361;
 		rand3 = rand() % 361;
 		tempGeometry->setRotation((float)rand1, (float)rand2, (float)rand3);
 		multiGeometry.push_back(tempGeometry);
 	}
-	multiGeometry[0]->createAabb();
-	aabb = multiGeometry[0]->aabb;
-	//geometry = new Model("Resources/Models/rock01/rock_01.obj");
-	//geometry->setScale(glm::vec3(0.01f, 0.01f, 0.01f));
-	bindTriangleData();
 
 	player = new Player();
 	player->setMovementSpeed(2.0f);
@@ -68,14 +67,13 @@ PickingScene::~PickingScene() {
 	delete vertexShader;
 	delete geometryShader;
 	delete fragmentShader;
-	for (int i = 0; i < numModels; i++)
-	{
-		glDeleteBuffers(1, &vertexBuffers[i]);
-		glDeleteBuffers(1, &indexBuffers[i]);
+
+	for (int i = 0; i < numModels; i++) {
+		delete multiGeometry[i];
 	}
+	multiGeometry.clear();
 
-
-	//delete geometry;
+	delete geometry;
 	delete player;
 }
 
@@ -138,11 +136,9 @@ void PickingScene::render(int width, int height) {
 	glUniform3fv(shaderProgram->uniformLocation("diffuseKoefficient"), 1, &diffuseKoefficient[0]);
 
 	//Intersection loop
-	for (int i = 0; i < numModels; i++)
-	{
+	for (int i = 0; i < numModels; i++) {
 		// Model matrix, unique for each model.
-		Geometry* currGeometry = multiGeometry[i];
-		glm::mat4 model = currGeometry->modelMatrix();
+		glm::mat4 model = multiGeometry[i]->modelMatrix();
 
 		//Matrices for each model
 		glm::mat4 MV = view * model;
@@ -164,50 +160,45 @@ void PickingScene::render(int width, int height) {
 		bool hit = false;
 		int trianglePasses = 0;
 		int boxPasses = 0;
-		if (rayVsAABB(aabb, rayMod, glm::vec3(rayOrigin), distanceToBox) )
-		{
+		if (rayVsAABB(aabb, rayMod, glm::vec3(rayOrigin), distanceToBox)) {
 			//if the distance to the box exceeds the distance to the closest triangle, 
 			//there is no way that any triangle contained inside that box will 
 			//be closer to the viewer
-			if (distanceToBox < closestDistance)
-			{
+			if (distanceToBox < closestDistance) {
 				boxPasses++;
-				for (int y = 0; (y < currGeometry->indexCount()); y += 3) {
+				for (unsigned int y = 0; (y < geometry->indexCount()); y += 3) {
 					trianglePasses++;
 					int ind1, ind2, ind3;
-					ind1 = currGeometry->indices()[y];
-					ind2 = currGeometry->indices()[y + 1];
-					ind3 = currGeometry->indices()[y + 2];
+					ind1 = geometry->indices()[y];
+					ind2 = geometry->indices()[y + 1];
+					ind3 = geometry->indices()[y + 2];
 
-					Geometry::Vertex vert1 = currGeometry->vertices()[ind1];
-					Geometry::Vertex vert2 = currGeometry->vertices()[ind2];
-					Geometry::Vertex vert3 = currGeometry->vertices()[ind3];
+					Geometry::Vertex vert1 = geometry->vertices()[ind1];
+					Geometry::Vertex vert2 = geometry->vertices()[ind2];
+					Geometry::Vertex vert3 = geometry->vertices()[ind3];
 
 					hit = rayVsTri(vert1.position, vert2.position, vert3.position, glm::vec3(rayMod), glm::vec3(rayOrigin), distanceToTriangle);
-					if ((distanceToTriangle < closestDistance) && (hit == true))
-					{
+					if ((distanceToTriangle < closestDistance) && (hit == true)) {
 						closestDistance = distanceToTriangle;
 						closestObjectHit = i;
-					}
-					else
+					} else {
 						hit = false;
+					}
 				}
 			}
 		}
 	}
 
-	//Drawing loop
-	for (int i = 0; i < numModels; i++)
-	{
+	glBindVertexArray(geometry->vertexArray());
+
+	// Drawing loop
+	for (int i = 0; i < numModels; i++) {
 		// Pass hit to shader
 		glUniform1i(shaderProgram->uniformLocation("closestObjectHit"), closestObjectHit);
 		glUniform1i(shaderProgram->uniformLocation("currentlyDrawingObject"), i);
 
-		glBindVertexArray(vertexAttributes[i]);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffers[i]);
-		Geometry* currGeometry = multiGeometry[i];
 		// Model matrix, unique for each model.
-		glm::mat4 model = currGeometry->modelMatrix();
+		glm::mat4 model = multiGeometry[i]->modelMatrix();
 
 		glm::mat4 MV = view * model;
 		glm::mat4 N = glm::transpose(glm::inverse(MV));
@@ -215,42 +206,6 @@ void PickingScene::render(int width, int height) {
 		glUniformMatrix4fv(shaderProgram->uniformLocation("modelMatrix"), 1, GL_FALSE, &model[0][0]);
 		glUniformMatrix3fv(shaderProgram->uniformLocation("normalMatrix"), 1, GL_FALSE, &glm::mat3(N)[0][0]);
 
-		glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
-	}
-}
-
-void PickingScene::bindTriangleData() {
-	// Vertex buffer
-	vertexBuffers = new GLuint[numModels];
-	vertexAttributes = new GLuint[numModels];
-	indexBuffers = new GLuint[numModels];
-	for (int i = 0; i < numModels; i++)
-	{
-		vertexCount = multiGeometry[i]->vertexCount();
-		glGenBuffers(1, &vertexBuffers[i]);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffers[i]);
-		glBufferData(GL_ARRAY_BUFFER, vertexCount * sizeof(Geometry::Vertex), multiGeometry[0]->vertices(), GL_STATIC_DRAW);
-
-		// Define vertex data layout
-		glGenVertexArrays(1, &vertexAttributes[i]);
-		glBindVertexArray(vertexAttributes[i]);
-		glEnableVertexAttribArray(0); //the vertex attribute object will remember its enabled attributes
-		glEnableVertexAttribArray(1);
-		glEnableVertexAttribArray(2);
-
-		GLuint vertexPos = shaderProgram->attributeLocation("vertex_position");
-		glVertexAttribPointer(vertexPos, 3, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(0));
-
-		GLuint vertexNormal = shaderProgram->attributeLocation("vertex_normal");
-		glVertexAttribPointer(vertexNormal, 3, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float) * 3));
-
-		GLuint vertexTexture = shaderProgram->attributeLocation("vertex_texture");
-		glVertexAttribPointer(vertexTexture, 2, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float) * 6));
-
-		// Index buffer
-		indexCount = multiGeometry[i]->indexCount();
-		glGenBuffers(1, &indexBuffers[i]);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffers[i]);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(unsigned int), multiGeometry[i]->indices(), GL_STATIC_DRAW);
+		glDrawElements(GL_TRIANGLES, geometry->indexCount(), GL_UNSIGNED_INT, (void*)0);
 	}
 }
