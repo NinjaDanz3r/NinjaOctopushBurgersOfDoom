@@ -19,8 +19,8 @@ ParticleScene::ParticleScene() {
 	fragmentShader = new Shader("particle_fragment.glsl", GL_FRAGMENT_SHADER);
 	shaderProgram = new ShaderProgram({ vertexShader, geometryShader, fragmentShader });
 	
-	texture = new Texture2D("Resources/Textures/kaleido.tga");
-	particleSystem = new ParticleSystem(shaderProgram, texture, glm::vec3(0.f, 0.f, -20.f), 1000, 100, 10, 1);
+	texture = new Texture2D("Resources/Textures/flame.tga");
+	particleSystem = new ParticleSystem(shaderProgram, texture, glm::vec3(0.f, 0.f, -10.f), 1000, 100, 5.f, 1.f);
 
 	player = new Player();
 	player->setMovementSpeed(2.0f);
