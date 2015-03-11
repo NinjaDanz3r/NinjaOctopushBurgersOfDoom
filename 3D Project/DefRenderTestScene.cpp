@@ -55,7 +55,7 @@ DefRenderTestScene::DefRenderTestScene() {
 	halfWidth = (GLint)(settings::displayWidth() / 2.0f);
 	halfHeight = (GLint)(settings::displayHeight() / 2.0f);
 
-	//shaderProgram->use();
+	shaderProgram->use();
 
 	player = new Player();
 	player->setMovementSpeed(1000.0f);
@@ -124,8 +124,7 @@ void DefRenderTestScene::render(int width, int height) {
 	
 	bindGeometry(width,height);
 
-	glActiveTexture(GL_TEXTURE0 + 0);
-	glBindTexture(GL_TEXTURE_2D, texture->textureID());
+	shadowShaderProgram->use();
 
 	glBindVertexArray(gVertexAttribute);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, gIndexBuffer);
@@ -134,8 +133,9 @@ void DefRenderTestScene::render(int width, int height) {
 		shadowMap->bindForWriting(cameraDirections[i].cubemapFace);
 		shadowRender(width, height, i);
 	}
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 
-	shaderProgram->use();
+	//shaderProgram->use();
 	multiplerendertargets->bindForWriting();
 	glActiveTexture(GL_TEXTURE0 + 0);
 	glBindTexture(GL_TEXTURE_2D, texture->textureID());
@@ -296,12 +296,10 @@ void DefRenderTestScene::bindLighting(int width, int height){
 	glUniform3fv(secondShaderProgram->uniformLocation("diffuseKoefficient"), 1, &diffuseKoefficient[0]);
 }
 void DefRenderTestScene::shadowRender(int width, int height, int i){
-	shadowShaderProgram->use();
-
 	glBindVertexArray(gVertexAttribute);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, gIndexBuffer);
 
-	glClear(GL_DEPTH_BUFFER_BIT);
+	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
 	// Model matrix, unique for each model.
 	glm::mat4 model = geometry->modelMatrix();
@@ -317,5 +315,4 @@ void DefRenderTestScene::shadowRender(int width, int height, int i){
 	glUniform4fv(shadowShaderProgram->uniformLocation("lightPosition"), 1, &lightPosition[0]);
  
 	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

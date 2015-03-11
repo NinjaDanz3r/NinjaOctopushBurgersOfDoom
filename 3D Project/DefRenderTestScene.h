@@ -114,14 +114,15 @@ private:
 	GLuint qVertexBuffer = 0;
 	GLuint qVertexAttribute = 0;
 
-	//Full screen quad
-	static RenderQuad vertices[4];
-	static unsigned int indices[6];
-
 	//Index buffer lighting
 	GLuint qIndexBuffer = 0;
 	unsigned int qIndexCount = 0;
 	int qVertexCount = 0;
+
+	//Full screen quad
+	static RenderQuad vertices[4];
+	static unsigned int indices[6];
+
 
 	
 };
