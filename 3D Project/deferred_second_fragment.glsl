@@ -12,16 +12,16 @@ uniform vec3 lightIntensity;
 uniform vec3 diffuseKoefficient;
 uniform vec2 screenSize;
 
-#define epsilon 0.00001;
-
 out vec4 fragment_color;
 
-// Calculate shadow, Använd nedan(när shadowmap finns)
+const float EPSILON = 0.00001;
+
+// Calculate shadow
 float calculateShadow(vec3 lightDirection) {
 	float sampleDistance = texture(tShadowMap, lightDirection).r;
 	float distance = length(lightDirection);
 
-	if (distance <= (sampleDistance + epsilon))//WHY U NO WORK.
+	if (distance <= (sampleDistance + EPSILON))
 		return 1.0;
 	else
 		return 0.5;
@@ -42,7 +42,7 @@ vec3 ads(vec3 normal, vec3 position) {
 	float shinyPower = 2000.0f;
 	vec3 Ka = vec3(0.2, 0.2, 0.2);
 	vec3 specularLight = Ks * pow(max(dot(r, v), 0.0), shinyPower);
-	return lightIntensity * (Ka + diffuseLight + specularLight);
+	return lightIntensity * (Ka + calculateShadow(lightDirection) * (diffuseLight + specularLight));
 }
 
 void main () {
