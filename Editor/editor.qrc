@@ -1,9 +1,0 @@
-<RCC>
-    <qresource prefix="/Editor">
-        <file>Resources/document-new.png</file>
-        <file>Resources/document-open.png</file>
-        <file>Resources/media-floppy.png</file>
-        <file>Resources/media-model.png</file>
-        <file>Resources/media-texture.png</file>
-    </qresource>
-</RCC>

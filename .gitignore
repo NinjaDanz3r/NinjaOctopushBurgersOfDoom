@@ -20,23 +20,15 @@ bld/
 doc-build/
 
 # Don't ignore glew release folders
-!glew-1.12.0/lib/Release
-!glew-1.12.0/lib/Release/x64
-!glew-1.12.0/bin
-!glew-1.12.0/bin/Release
-!glew-1.12.0/bin/Release/x64
+!glew-1.11.0/lib/Release
+!glew-1.11.0/bin
+!glew-1.11.0/bin/Release
 
 # Don't ignore OpenAL Soft release folders.
 !openal-soft-1.16.0/bin
 
-# Don't ignore GLFW x64 release folder.
-!glfw-3.1/x64
-
-# Ignore Qt generated files
-GeneratedFiles/
-
 # Share resources (textures, etc.) through Dropbox instead
-Game/Resources
+3D Project/Resources
 
 # Roslyn cache directories
 *.ide/
