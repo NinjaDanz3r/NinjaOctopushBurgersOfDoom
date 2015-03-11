@@ -50,16 +50,12 @@ class ParticleScene : public Scene {
 		Texture* texture;
 
 		Player* player;
-		//Particle* particle;
 		ParticleSystem* particleSystem;
+
 		// Vertex buffer.
 		GLuint vertexBuffer = 0;
 		GLuint vertexAttribute = 0;
 		unsigned int vertexCount = 0;
-
-		// Index buffer.
-		GLuint indexBuffer = 0;
-		unsigned int indexCount = 0;
 };
 
 /** @} */
