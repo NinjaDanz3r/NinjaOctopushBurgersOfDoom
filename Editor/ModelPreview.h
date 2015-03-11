@@ -10,9 +10,6 @@
 class ModelPreview : public Preview {
 	public:
 		/// Create new model preview.
-		/**
-		 * @param shaderProgram Shader program to render with.
-		 */
 		ModelPreview();
 
 		/// Destructor.
