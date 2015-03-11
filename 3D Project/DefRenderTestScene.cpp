@@ -7,6 +7,7 @@
 #include "Texture2D.h"
 #include "settings.h"
 
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
@@ -16,9 +17,31 @@
 DefRenderTestScene::RenderQuad DefRenderTestScene::vertices[4] = {{ -1.f, 1.f }, { 1.f, 1.f }, { -1.f, -1.f }, { 1.f, -1.f }};
 unsigned int DefRenderTestScene::indices[6] = { 0, 1, 3, 0, 3, 2 };
 
+struct CameraDirection
+{
+	GLenum CubemapFace;
+	glm::vec3 Target;
+	glm::vec3 Up;
+};
+
+CameraDirection gCameraDirections[6] =
+{
+	{ GL_TEXTURE_CUBE_MAP_POSITIVE_X, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f) },
+	{ GL_TEXTURE_CUBE_MAP_NEGATIVE_X, glm::vec3(-1.0f, 0.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f) },
+	{ GL_TEXTURE_CUBE_MAP_POSITIVE_Y, glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, -1.0f) },
+	{ GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f) },
+	{ GL_TEXTURE_CUBE_MAP_POSITIVE_Z, glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f) },
+	{ GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, -1.0f, 0.0f) }
+};
+
+
 DefRenderTestScene::DefRenderTestScene() {
 	texture = new Texture2D("Resources/Textures/kaleido.tga");
-	state = 0;
+	state = 1;
+
+	shadowVertexShader = new Shader("shadow_vertex.glsl", GL_VERTEX_SHADER);
+	shadowFragmentShader = new Shader("shadow_fragment.glsl", GL_FRAGMENT_SHADER);
+	shadowShaderProgram = new ShaderProgram({ shadowVertexShader, shadowFragmentShader });
 
 	vertexShader = new Shader("deferred_first_vertex.glsl", GL_VERTEX_SHADER);
 	geometryShader = new Shader("deferred_first_geometry.glsl", GL_GEOMETRY_SHADER);
@@ -37,16 +60,18 @@ DefRenderTestScene::DefRenderTestScene() {
 	player = new Player();
 	player->setMovementSpeed(1000.0f);
 	multiplerendertargets = new FrameBufferObjects();
+	shadowMap = new ShadowMapping();
 
 	geometry = new Cube();
 	bindTriangleData();
 	bindDeferredQuad();
 
 
-	//Only need tDiffuse for the geometry call
+	//Only need tDiffuse for holding the texture during geometry call.
 	diffuseID = shaderProgram->uniformLocation("tDiffuse");
 	glUniform1i(diffuseID, 0);
 
+	shadowMap->begin(settings::displayWidth(), settings::displayHeight());
 	multiplerendertargets->begin(settings::displayWidth(), settings::displayHeight());
 }
 
@@ -59,6 +84,10 @@ DefRenderTestScene::~DefRenderTestScene() {
 
 	delete secondVertexShader;
 	delete secondFragmentShader;
+
+	delete shadowShaderProgram;
+	delete shadowVertexShader;
+	delete shadowFragmentShader;
 
 	delete vertexShader;
 	delete geometryShader;
@@ -76,7 +105,7 @@ DefRenderTestScene::~DefRenderTestScene() {
 
 Scene::SceneEnd* DefRenderTestScene::update(double time) {
 	player->update(time);
-	geometry->rotate(1, 1, 1);
+	//geometry->rotate(1, 1, 1);
 	return nullptr;
 }
 
@@ -98,6 +127,16 @@ void DefRenderTestScene::render(int width, int height) {
 	glBindVertexArray(gVertexAttribute);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, gIndexBuffer);
 
+	for (unsigned int i = 0; i < 6; i++) {
+		shadowMap->bindForWriting(gCameraDirections[i].CubemapFace);
+		//Vi vill sätta kameran i ljusets position och välja att den ska titta
+		//på cubeface och re-definiera up vektorn.
+		shadowRender(width, height, i);
+	}
+
+	shadowMap->bindForReading(GL_TEXTURE3);
+	shaderProgram->use();
+	multiplerendertargets->bindForWriting();
 	glActiveTexture(GL_TEXTURE0 + 0);
 	glBindTexture(GL_TEXTURE_2D, texture->textureID());
 	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
@@ -139,6 +178,16 @@ void DefRenderTestScene::bindTriangleData(){
 
 	GLuint vertexTexture = shaderProgram->attributeLocation("vertex_texture");
 	glVertexAttribPointer(vertexTexture, 2, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float)* 6));
+
+	GLuint shadowVertexPos = shadowShaderProgram->attributeLocation("vertex_position");
+	glVertexAttribPointer(shadowVertexPos, 3, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(0));
+
+	GLuint shadowVertexNormal = shadowShaderProgram->attributeLocation("vertex_normal");
+	glVertexAttribPointer(shadowVertexNormal, 3, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float)* 3));
+
+	GLuint shadowVertexTexture = shadowShaderProgram->attributeLocation("vertex_texture");
+	glVertexAttribPointer(shadowVertexTexture, 2, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float)* 6));
+
 
 	// Index buffer
 	indexCount = geometry->indexCount();
@@ -202,6 +251,10 @@ void DefRenderTestScene::showTex(int width, int height){
 
 	multiplerendertargets->setReadBuffer(FrameBufferObjects::NORMAL);
 	glBlitFramebuffer(0, 0, width, height, halfWidth, halfHeight, width, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+
+	//multiplerendertargets->setReadBuffer(FrameBufferObjects::DEPTH);
+	//glBlitFramebuffer(0, 0, width, height, halfWidth, 0, width, halfHeight, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+
 }
 void DefRenderTestScene::bindGeometry(int width, int height){
 	// Model matrix, unique for each model.
@@ -238,4 +291,26 @@ void DefRenderTestScene::bindLighting(int width, int height){
 	glUniform4fv(secondShaderProgram->uniformLocation("lightPosition"), 1, &lightPosition[0]);
 	glUniform3fv(secondShaderProgram->uniformLocation("lightIntensity"), 1, &lightIntensity[0]);
 	glUniform3fv(secondShaderProgram->uniformLocation("diffuseKoefficient"), 1, &diffuseKoefficient[0]);
+}
+void DefRenderTestScene::shadowRender(int width, int height, int i){
+	shadowShaderProgram->use();
+	glClear(GL_DEPTH_BUFFER_BIT);
+
+	// Model matrix, unique for each model.
+	glm::mat4 model = geometry->modelMatrix();
+	glm::vec3 position = glm::vec3(-5.f, 0.f, 5.f);
+	//glm::mat4 model = glm::translate(glm::mat4(), position) * player->camera()->orientation() * glm::scale(glm::mat4(), player->camera()->scale());
+
+	// Send the matrices to the shader.
+	glm::mat4 viewMatrix = glm::lookAt(position, gCameraDirections[i].Target, gCameraDirections[i].Target);
+	glm::vec4 lightPosition = viewMatrix * glm::vec4(-5.f, 0.f, 5.f, 1.f);
+
+	glUniformMatrix4fv(shadowShaderProgram->uniformLocation("modelMatrix"), 1, GL_FALSE, &model[0][0]);
+	glUniformMatrix4fv(shadowShaderProgram->uniformLocation("viewMatrix"), 1, GL_FALSE, &viewMatrix[0][0]);
+	glUniformMatrix4fv(shadowShaderProgram->uniformLocation("projectionMatrix"), 1, GL_FALSE, &player->camera()->projection(width, height)[0][0]);
+	glUniform4fv(shadowShaderProgram->uniformLocation("lightPosition"), 1, &lightPosition[0]);
+
+	// 
+	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

@@ -11,6 +11,7 @@
 #include "Geometry.h"
 #include "Player.h"
 #include "Cube.h"
+#include "ShadowMapping.h"
 
 class DefRenderTestScene :public Scene
 {
@@ -62,6 +63,7 @@ public:
 	* @param height Height of the context.
 	*/
 	void showTex(int width, int height);
+	void shadowRender(int width, int height, int i);
 private:
 	void bindTriangleData();
 	void bindDeferredQuad();
@@ -71,6 +73,7 @@ private:
 	GLuint normalID;
 
 	FrameBufferObjects* multiplerendertargets;
+	ShadowMapping* shadowMap;
 
 	//Shaders geometry pass
 	Geometry* geometry;
@@ -83,6 +86,11 @@ private:
 	Shader* secondVertexShader;
 	Shader* secondFragmentShader;
 	ShaderProgram* secondShaderProgram;
+
+	//Shaders lighting pass
+	Shader* shadowVertexShader;
+	Shader* shadowFragmentShader;
+	ShaderProgram* shadowShaderProgram;
 
 	//Misc
 	int state; //0 == deferred render, 1== display textures.

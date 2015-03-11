@@ -50,8 +50,6 @@ void ShadowMapping::begin(unsigned int width, unsigned int height)
 	glReadBuffer(GL_NONE);
 
 	GLenum Status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-
-	GLenum Status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 	if (Status != GL_FRAMEBUFFER_COMPLETE) {
 		util::log("Shadow mapping FB failed \n");
 	}
@@ -59,16 +57,16 @@ void ShadowMapping::begin(unsigned int width, unsigned int height)
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 
-};
+}
 void ShadowMapping::bindForWriting(GLenum cubeFace)
 {
 	//What color attatchment to use.
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo);
-	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, cubeFace, shadowMap, 0);
-	glDrawBuffer(GL_COLOR_ATTACHMENT0);
-};
+	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, cubeFace, shadowMap, 0);
+	glDrawBuffer(GL_COLOR_ATTACHMENT3);
+}
 void ShadowMapping::bindForReading(GLenum texture)
 {
 	glActiveTexture(texture);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, shadowMap);
-};
+}
