@@ -1,6 +1,10 @@
 #ifndef __PREVIEW_H__
 #define __PREVIEW_H__
 
+/** @ingroup editor
+* @{
+*/
+
 /// Previews a resource.
 class Preview {
 	public:
@@ -14,5 +18,7 @@ class Preview {
 		 */
 		virtual void render(int width, int height) const = 0;
 };
+
+/** @} */
 
 #endif

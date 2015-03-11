@@ -6,6 +6,10 @@
 #include <Texture.h>
 #include <glm/glm.hpp>
 
+/** @ingroup editor
+* @{
+*/
+
 /// Previews a texture.
 class TexturePreview : public Preview {
 	public:
@@ -46,5 +50,7 @@ class TexturePreview : public Preview {
 		GLuint vertexAttribute;
 		unsigned int vertexCount;
 };
+
+/** @} */
 
 #endif

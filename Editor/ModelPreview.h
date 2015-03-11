@@ -6,6 +6,10 @@
 #include <Model.h>
 #include <glm/glm.hpp>
 
+/** @ingroup editor
+* @{
+*/
+
 /// Previews a model.
 class ModelPreview : public Preview {
 	public:
@@ -36,5 +40,7 @@ class ModelPreview : public Preview {
 		Shader* fragmentShader;
 		ShaderProgram* shaderProgram;
 };
+
+/** @} */
 
 #endif
