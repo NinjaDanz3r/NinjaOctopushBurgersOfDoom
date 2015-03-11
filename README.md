@@ -31,12 +31,13 @@ Projection (0|1|4)
 
 Acceleration (1|2|3)
 --------------------
+* View frustum culling against a quadtree. (TODO)
 * Back-face culling using geometry shader.
 
-Miscellaneous (1|2|9)
+Miscellaneous (2|2|9)
 ---------------------
 * Particle system with billboarded particles.
-* Picking. (TODO)
+* Picking.
 
 Libraries
 =========
