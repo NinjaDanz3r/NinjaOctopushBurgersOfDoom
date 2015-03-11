@@ -201,3 +201,4 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+Editor/GeneratedFiles/qrc_editor.cpp
