@@ -12,7 +12,7 @@ uniform mat4 projectionMatrix;
 
 out vec3 modelPos;
 
-void main () {dsa
+void main () {
 	vec4 pos4 = vec4(vertex_position, 1.0);
 	gl_Position =  modelMatrix * viewMatrix * projectionMatrix * pos4;
 	modelPos = (modelMatrix * pos4).xyz;

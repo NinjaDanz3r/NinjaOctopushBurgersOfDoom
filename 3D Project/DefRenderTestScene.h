@@ -68,6 +68,7 @@ private:
 	void bindTriangleData();
 	void bindDeferredQuad();
 
+	GLuint shadowID;
 	GLuint diffuseID;
 	GLuint positionID;
 	GLuint normalID;

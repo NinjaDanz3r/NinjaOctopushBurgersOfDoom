@@ -3,6 +3,7 @@ Lighting pass fragment shader (second pass)
 */
 #version 400
 
+uniform samplerCube tShadowMap;
 uniform sampler2D tPosition;
 uniform sampler2D tDiffuse; 
 uniform sampler2D tNormals;
@@ -11,7 +12,20 @@ uniform vec3 lightIntensity;
 uniform vec3 diffuseKoefficient;
 uniform vec2 screenSize;
 
+#define epsilon 0.00001;
+
 out vec4 fragment_color;
+
+// Calculate shadow, Använd nedan(när shadowmap finns)
+float calculateShadow(vec3 lightDirection) {
+	float sampleDistance = texture(tShadowMap, lightDirection).r;
+	float distance = length(lightDirection);
+
+	if (distance <= (sampleDistance + epsilon))//WHY U NO WORK.
+		return 1.0;
+	else
+		return 0.5;
+}
 
 //Calculate texcoord
 vec2 calculateTexCoord() {

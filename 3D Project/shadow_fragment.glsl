@@ -11,6 +11,6 @@ out float fragment_color;
 
 void main(){
 	vec3 lightVertex = modelPos - lightPosition;
-	float distance = lenght(lightVertex);
+	float distance = length(lightVertex);
 	fragment_color = distance;
 }

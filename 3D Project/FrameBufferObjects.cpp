@@ -74,10 +74,6 @@ void FrameBufferObjects::begin(unsigned int width, unsigned int height)
 void FrameBufferObjects::bindForWriting()
 {
 	//Create and intialize draw buffers (output from geometry pass)
-	GLenum DrawBuffers[] = { GL_COLOR_ATTACHMENT0,
-		GL_COLOR_ATTACHMENT1,
-		GL_COLOR_ATTACHMENT2 };
-	glDrawBuffers((sizeof(DrawBuffers) / sizeof(DrawBuffers[0])), DrawBuffers);
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo);
 }
 

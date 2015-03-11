@@ -19,12 +19,12 @@ unsigned int DefRenderTestScene::indices[6] = { 0, 1, 3, 0, 3, 2 };
 
 struct CameraDirection
 {
-	GLenum CubemapFace;
-	glm::vec3 Target;
-	glm::vec3 Up;
+	GLenum cubemapFace;
+	glm::vec3 target;
+	glm::vec3 up;
 };
 
-CameraDirection gCameraDirections[6] =
+CameraDirection cameraDirections[6] =
 {
 	{ GL_TEXTURE_CUBE_MAP_POSITIVE_X, glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f) },
 	{ GL_TEXTURE_CUBE_MAP_NEGATIVE_X, glm::vec3(-1.0f, 0.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f) },
@@ -37,7 +37,7 @@ CameraDirection gCameraDirections[6] =
 
 DefRenderTestScene::DefRenderTestScene() {
 	texture = new Texture2D("Resources/Textures/kaleido.tga");
-	state = 1;
+	state = 0;
 
 	shadowVertexShader = new Shader("shadow_vertex.glsl", GL_VERTEX_SHADER);
 	shadowFragmentShader = new Shader("shadow_fragment.glsl", GL_FRAGMENT_SHADER);
@@ -55,7 +55,7 @@ DefRenderTestScene::DefRenderTestScene() {
 	halfWidth = (GLint)(settings::displayWidth() / 2.0f);
 	halfHeight = (GLint)(settings::displayHeight() / 2.0f);
 
-	shaderProgram->use();
+	//shaderProgram->use();
 
 	player = new Player();
 	player->setMovementSpeed(1000.0f);
@@ -124,17 +124,17 @@ void DefRenderTestScene::render(int width, int height) {
 	
 	bindGeometry(width,height);
 
+	glActiveTexture(GL_TEXTURE0 + 0);
+	glBindTexture(GL_TEXTURE_2D, texture->textureID());
+
 	glBindVertexArray(gVertexAttribute);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, gIndexBuffer);
 
 	for (unsigned int i = 0; i < 6; i++) {
-		shadowMap->bindForWriting(gCameraDirections[i].CubemapFace);
-		//Vi vill sätta kameran i ljusets position och välja att den ska titta
-		//på cubeface och re-definiera up vektorn.
+		shadowMap->bindForWriting(cameraDirections[i].cubemapFace);
 		shadowRender(width, height, i);
 	}
 
-	shadowMap->bindForReading(GL_TEXTURE3);
 	shaderProgram->use();
 	multiplerendertargets->bindForWriting();
 	glActiveTexture(GL_TEXTURE0 + 0);
@@ -227,6 +227,7 @@ void DefRenderTestScene::deferredRender(int width, int height){
 
 	bindLighting(width, height);
 	multiplerendertargets->bindForReading();
+	shadowMap->bindForReading(GL_TEXTURE3);
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
@@ -279,6 +280,7 @@ void DefRenderTestScene::bindLighting(int width, int height){
 	glm::vec3 diffuseKoefficient(1.f, 1.f, 1.f);
 	glm::vec2 screenSize(width, height);
 
+	shadowID = secondShaderProgram->uniformLocation("tShadowMap");
 	diffuseID = secondShaderProgram->uniformLocation("tDiffuse");
 	positionID = secondShaderProgram->uniformLocation("tPosition");
 	normalID = secondShaderProgram->uniformLocation("tNormals");
@@ -286,6 +288,7 @@ void DefRenderTestScene::bindLighting(int width, int height){
 	glUniform1i(positionID, FrameBufferObjects::POSITION);
 	glUniform1i(diffuseID, FrameBufferObjects::DIFFUSE);
 	glUniform1i(normalID, FrameBufferObjects::NORMAL);
+	glUniform1i(shadowID, 3);
 
 	glUniform2fv(secondShaderProgram->uniformLocation("screenSize"), 1, &screenSize[0]);
 	glUniform4fv(secondShaderProgram->uniformLocation("lightPosition"), 1, &lightPosition[0]);
@@ -294,23 +297,25 @@ void DefRenderTestScene::bindLighting(int width, int height){
 }
 void DefRenderTestScene::shadowRender(int width, int height, int i){
 	shadowShaderProgram->use();
+
+	glBindVertexArray(gVertexAttribute);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, gIndexBuffer);
+
 	glClear(GL_DEPTH_BUFFER_BIT);
 
 	// Model matrix, unique for each model.
 	glm::mat4 model = geometry->modelMatrix();
 	glm::vec3 position = glm::vec3(-5.f, 0.f, 5.f);
-	//glm::mat4 model = glm::translate(glm::mat4(), position) * player->camera()->orientation() * glm::scale(glm::mat4(), player->camera()->scale());
 
 	// Send the matrices to the shader.
-	glm::mat4 viewMatrix = glm::lookAt(position, gCameraDirections[i].Target, gCameraDirections[i].Target);
+	glm::mat4 viewMatrix = glm::lookAt(position, cameraDirections[i].target, cameraDirections[i].up);
 	glm::vec4 lightPosition = viewMatrix * glm::vec4(-5.f, 0.f, 5.f, 1.f);
 
 	glUniformMatrix4fv(shadowShaderProgram->uniformLocation("modelMatrix"), 1, GL_FALSE, &model[0][0]);
 	glUniformMatrix4fv(shadowShaderProgram->uniformLocation("viewMatrix"), 1, GL_FALSE, &viewMatrix[0][0]);
 	glUniformMatrix4fv(shadowShaderProgram->uniformLocation("projectionMatrix"), 1, GL_FALSE, &player->camera()->projection(width, height)[0][0]);
 	glUniform4fv(shadowShaderProgram->uniformLocation("lightPosition"), 1, &lightPosition[0]);
-
-	// 
+ 
 	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
