@@ -50,7 +50,7 @@ private:
 
 	Texture* texture;
 	std::vector<Geometry*> multiGeometry;
-	int numModels = 50;
+	int numModels = 850;
 	//Geometry* geometry;
 	Player* player;
 

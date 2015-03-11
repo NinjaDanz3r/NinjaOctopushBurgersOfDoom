@@ -39,8 +39,8 @@ PickingScene::PickingScene() {
 	for (int i = 0; i < numModels; i++){
 		Geometry* tempGeometry = new Model("Resources/Models/rock01/rock_01.obj");
 		tempGeometry->setScale(glm::vec3(0.01f, 0.01f, 0.01f));
-		int rand1 = rand() % 11 - 5;
-		int rand2 = rand() % 11 - 5;
+		int rand1 = rand() % 21 - 10;
+		int rand2 = rand() % 21 - 10;
 		int rand3 = -10 - rand() % 10;
 		tempGeometry->setPosition(glm::vec3( (float)rand1, (float)rand2, (float)rand3) );
 		rand1 = rand() % 361;
@@ -193,12 +193,7 @@ void PickingScene::render(int width, int height) {
 						hit = false;
 				}
 			}
-			fprintf(stderr, "BoxPasses: %i TriPasses: %i distanceToBox%f\n", boxPasses, trianglePasses,distanceToBox);
-			fflush(stderr);
 		}
-		//fprintf(stderr, "Hit: %i DistToBox: %.2f DistTri: %.2f triPasses:%i boxPasses:%i\n", hit, distanceToBox, closestDistance, trianglePasses, boxPasses);
-		//fprintf(stderr, "Raydir: %f %f %f\n", rayWor.x, rayWor.y, rayWor.z);
-		//fprintf(stderr, "RayO: %f %f %f\n", rayOrigin.x, rayOrigin.y, rayOrigin.z);
 	}
 
 	//Drawing loop
