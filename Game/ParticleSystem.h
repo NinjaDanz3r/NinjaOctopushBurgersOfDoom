@@ -19,6 +19,8 @@ class ParticleSystem {
 		struct ParticlePosition {
 			/// Position.
 			glm::vec3 worldPos;
+			/// Alpha.
+			float alpha;
 		};
 		
 		/// A particle's properties.

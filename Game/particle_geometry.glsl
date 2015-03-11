@@ -7,6 +7,10 @@ Particle geometry shader - Creates rectangles from points and faces them towards
 layout(points) in;
 layout(triangle_strip, max_vertices=4) out;
 
+in VertexData {
+	float alpha;
+} vertexIn[1];
+
 // Uniform matrices.
 uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
@@ -14,6 +18,7 @@ uniform mat4 projectionMatrix;
 // Output
 out VertexData {
 	vec2 tex_coords;
+	float alpha;
 } vertexOut;
 
 void main() {
@@ -22,18 +27,22 @@ void main() {
 
 	gl_Position = projectionMatrix*viewMatrix*(gl_in[0].gl_Position - cameraRight + cameraUp);
 	vertexOut.tex_coords = vec2(0.0, 0.0);
+	vertexOut.alpha = vertexIn[0].alpha;
 	EmitVertex();
 
 	gl_Position = projectionMatrix*viewMatrix*(gl_in[0].gl_Position - cameraRight - cameraUp );
 	vertexOut.tex_coords = vec2(1.0,0.0);
+	vertexOut.alpha = vertexIn[0].alpha;
 	EmitVertex();
 
 	gl_Position = projectionMatrix*viewMatrix*(gl_in[0].gl_Position + cameraRight + cameraUp );
 	vertexOut.tex_coords = vec2(0.0, 1.0);
+	vertexOut.alpha = vertexIn[0].alpha;
 	EmitVertex();
 
 	gl_Position = projectionMatrix*viewMatrix*(gl_in[0].gl_Position + cameraRight - cameraUp );
 	vertexOut.tex_coords = vec2(1.0, 1.0);
+	vertexOut.alpha = vertexIn[0].alpha;
 	EmitVertex();
 
 	EndPrimitive();

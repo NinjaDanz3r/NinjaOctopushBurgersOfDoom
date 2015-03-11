@@ -40,6 +40,7 @@ void ParticleSystem::update(double time) {
 			} else {
 				particlePositions[i].worldPos += static_cast<float>(time)* particleProperties[i].velocity;
 				particleProperties[i].lifetime += static_cast<float>(time);
+				particlePositions[i].alpha = 1.f - particleProperties[i].lifetime / maxLifeTime;
 			}
 		}
 	}
@@ -59,7 +60,7 @@ void ParticleSystem::render(int width, int height, const Camera* camera) {
 	GLboolean blending;
 	glGetBooleanv(GL_BLEND, &blending);
 	glEnable(GL_BLEND);
-	glBlendFunc(GL_ONE, GL_ONE);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 
 	shaderProgram->use();
 
@@ -99,9 +100,10 @@ void ParticleSystem::bindPointData() {
 	glGenVertexArrays(1, &vertexAttribute);
 	glBindVertexArray(vertexAttribute);
 	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
 
-	GLuint vertexPos = shaderProgram->attributeLocation("vertex_position");
-	glVertexAttribPointer(vertexPos, 3, GL_FLOAT, GL_FALSE, sizeof(ParticleSystem::ParticlePosition), BUFFER_OFFSET(0));
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(ParticleSystem::ParticlePosition), BUFFER_OFFSET(0));
+	glVertexAttribPointer(1, 1, GL_FLOAT, GL_FALSE, sizeof(ParticleSystem::ParticlePosition), BUFFER_OFFSET(sizeof(float) * 3));
 }
 
 void ParticleSystem::emitParticle() {
@@ -110,6 +112,7 @@ void ParticleSystem::emitParticle() {
 		ParticleProperty newProperty;
 
 		newPosition.worldPos = particleOrigin;
+		newPosition.alpha = 1.f;
 		newProperty.lifetime = 0.f - static_cast<float>(rand() % static_cast<int>(maxLifeTime * 2));
 		newProperty.velocity.x = static_cast<float>(rand() % (2 * static_cast<int>(maxVelocity)) - static_cast<int>(maxVelocity));
 		newProperty.velocity.y = static_cast<float>(rand() % (2 * static_cast<int>(maxVelocity)) - static_cast<int>(maxVelocity));
