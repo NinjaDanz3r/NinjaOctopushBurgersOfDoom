@@ -17,23 +17,23 @@ out VertexData {
 } vertexOut;
 
 void main() {
-	vec4 cameraRight = vec4{viewMatrix[0][0], viewMatrix[1][0], viewMatrix[2][0], 0.0f};		//Right, relative to camera
-	vec4 cameraUp = vec4{viewMatrix[0][1], viewMatrix[1][1], viewMatrix[2][1], 0.0f};		//Up, relative to camera
+	vec4 cameraRight = vec4(viewMatrix[0][0], viewMatrix[1][0], viewMatrix[2][0], 0.0);		//Right, relative to camera
+	vec4 cameraUp = vec4(viewMatrix[0][1], viewMatrix[1][1], viewMatrix[2][1], 0.0);		//Up, relative to camera
 
 	gl_Position = projectionMatrix*viewMatrix*(gl_in[0].gl_Position - cameraRight + cameraUp);
-	vertexOut.tex_coord = vec2(0.0f, 0.0f);
+	vertexOut.tex_coords = vec2(0.0, 0.0);
 	EmitVertex();
 
 	gl_Position = projectionMatrix*viewMatrix*(gl_in[0].gl_Position - cameraRight - cameraUp );
-	vertexOut.tex_coord = vec2(1.0f,0.0f);
+	vertexOut.tex_coords = vec2(1.0,0.0);
 	EmitVertex();
 
 	gl_Position = projectionMatrix*viewMatrix*(gl_in[0].gl_Position + cameraRight + cameraUp );
-	vertexOut.tex_coord = vec2(0.0f, 1.0f);
+	vertexOut.tex_coords = vec2(0.0, 1.0);
 	EmitVertex();
 
 	gl_Position = projectionMatrix*viewMatrix*(gl_in[0].gl_Position + cameraRight - cameraUp );
-	vertexOut.tex_coord = vec2(1.0f, 1.0f);
+	vertexOut.tex_coords = vec2(1.0, 1.0);
 	EmitVertex();
 
 	EndPrimitive();
