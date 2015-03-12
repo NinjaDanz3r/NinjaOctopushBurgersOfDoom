@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClCompile Include="AudioScene.cpp" />
     <ClCompile Include="Datastructures.cpp" />
+    <ClCompile Include="FrustumeScene.cpp" />
+    <ClCompile Include="FrustumScene.h" />
     <ClCompile Include="ParticleScene.cpp" />
     <ClCompile Include="CubeMapTexture.cpp" />
     <ClCompile Include="PickingScene.cpp" />

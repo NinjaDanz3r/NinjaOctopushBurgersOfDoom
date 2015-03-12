@@ -6,6 +6,7 @@
 #include "TestScene.h"
 #include "AudioScene.h"
 #include "PickingScene.h"
+#include "FrustumScene.h"
 
 #include "input.h"
 #include "settings.h"
@@ -122,6 +123,7 @@ void Game::setSceneMap() {
 	(*sceneMap)["particle"] = &createInstance<ParticleScene>;
 	(*sceneMap)["terrain"] = &createInstance<TerrainScene>;
 	(*sceneMap)["picking"] = &createInstance<PickingScene>;
+	(*sceneMap)["frustum"] = &createInstance<FrustumScene>;
 }
 
 void Game::setScene(const char* sceneName){

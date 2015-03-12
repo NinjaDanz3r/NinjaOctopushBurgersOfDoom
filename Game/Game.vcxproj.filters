@@ -88,6 +88,12 @@
     <ClCompile Include="Datastructures.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FrustumScene.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="FrustumeScene.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
