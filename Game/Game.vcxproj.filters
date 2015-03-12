@@ -91,7 +91,7 @@
     <ClCompile Include="FrustumScene.h">
       <Filter>Header Files\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="FrustumeScene.cpp">
+    <ClCompile Include="FrustumScene.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
   </ItemGroup>

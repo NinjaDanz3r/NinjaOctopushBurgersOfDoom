@@ -61,7 +61,7 @@ private:
 	Texture* texture;
 	Geometry* geometry;
 	std::vector<GeometryObject*> multiGeometry;
-	int numModels = 850;
+	int numModels = 1;
 	Player* player;
 };
 

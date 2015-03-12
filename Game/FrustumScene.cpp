@@ -125,6 +125,7 @@ void FrustumScene::render(int width, int height) {
 
 	glUniformMatrix4fv(shaderProgram->uniformLocation("viewMatrix"), 1, GL_FALSE, &view[0][0]);
 	glUniformMatrix4fv(shaderProgram->uniformLocation("projectionMatrix"), 1, GL_FALSE, &player->camera()->projection(width, height)[0][0]);
+	glBindVertexArray(geometry->vertexArray());
 	// Drawing loop
 	for (int i = 0; i < numModels; i++) {
 		// Model matrix, unique for each model.
