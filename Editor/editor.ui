@@ -87,6 +87,12 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionNew"/>
+   <addaction name="actionOpen"/>
+   <addaction name="actionSave"/>
+   <addaction name="separator"/>
+   <addaction name="actionImportTexture"/>
+   <addaction name="actionImportModel"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionQuit">
@@ -152,6 +158,9 @@
    <property name="text">
     <string>Model</string>
    </property>
+   <property name="toolTip">
+    <string>Import Model</string>
+   </property>
   </action>
   <action name="actionClose">
    <property name="enabled">
@@ -171,6 +180,9 @@
    </property>
    <property name="text">
     <string>Texture</string>
+   </property>
+   <property name="toolTip">
+    <string>Import Texture</string>
    </property>
   </action>
  </widget>
