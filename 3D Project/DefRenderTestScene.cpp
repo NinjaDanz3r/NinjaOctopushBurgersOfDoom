@@ -37,6 +37,7 @@ DefRenderTestScene::DefRenderTestScene() {
 	halfWidth = (GLint)(settings::displayWidth() / 2.0f);
 	halfHeight = (GLint)(settings::displayHeight() / 2.0f);
 
+	shadowShaderProgram->use();
 	shaderProgram->use();
 
 	player = new Player();
@@ -46,8 +47,8 @@ DefRenderTestScene::DefRenderTestScene() {
 
 	geometry = new Cube();
 	bindTriangleData();
+	bindShadowGeometry();
 	bindDeferredQuad();
-
 
 	//Only need tDiffuse for holding the texture during geometry call.
 	diffuseID = shaderProgram->uniformLocation("tDiffuse");
@@ -74,6 +75,9 @@ DefRenderTestScene::~DefRenderTestScene() {
 	delete vertexShader;
 	delete geometryShader;
 	delete fragmentShader;
+
+	glDeleteBuffers(1, &shadowVertexBuffer);
+	glDeleteBuffers(1, &shadowIndexBuffer);
 
 	glDeleteBuffers(1, &gVertexBuffer);
 	glDeleteBuffers(1, &gIndexBuffer);
@@ -158,16 +162,6 @@ void DefRenderTestScene::bindTriangleData(){
 	GLuint vertexTexture = shaderProgram->attributeLocation("vertex_texture");
 	glVertexAttribPointer(vertexTexture, 2, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float)* 6));
 
-	GLuint shadowVertexPos = shadowShaderProgram->attributeLocation("vertex_position");
-	glVertexAttribPointer(shadowVertexPos, 3, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(0));
-
-	GLuint shadowVertexNormal = shadowShaderProgram->attributeLocation("vertex_normal");
-	glVertexAttribPointer(shadowVertexNormal, 3, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float)* 3));
-
-	GLuint shadowVertexTexture = shadowShaderProgram->attributeLocation("vertex_texture");
-	glVertexAttribPointer(shadowVertexTexture, 2, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float)* 6));
-
-
 	// Index buffer
 	indexCount = geometry->indexCount();
 	glGenBuffers(1, &gIndexBuffer);
@@ -204,9 +198,10 @@ void DefRenderTestScene::deferredRender(int width, int height){
 	glBlendEquation(GL_FUNC_ADD);
 	glBlendFunc(GL_ONE, GL_ONE);
 
+	shadowMap->bindForReading(GL_TEXTURE3);
 	bindLighting(width, height);
 	multiplerendertargets->bindForReading();
-	shadowMap->bindForReading(GL_TEXTURE3);
+
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
@@ -232,9 +227,10 @@ void DefRenderTestScene::showTex(int width, int height){
 	multiplerendertargets->setReadBuffer(FrameBufferObjects::NORMAL);
 	glBlitFramebuffer(0, 0, width, height, halfWidth, halfHeight, width, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
-
-	//glReadBuffer(GL_COLOR_ATTACHMENT0);
-	//glBlitFramebuffer(0, 0, width, height, halfWidth, 0, width, halfHeight, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+	shadowShaderProgram->use();
+	shadowMap->bindForReading(GL_TEXTURE3);
+	glReadBuffer(GL_DEPTH_ATTACHMENT);
+	glBlitFramebuffer(0, 0, width, height, halfWidth, 0, width, halfHeight, GL_DEPTH_BUFFER_BIT, GL_LINEAR);
 
 }
 void DefRenderTestScene::bindGeometry(int width, int height){
@@ -288,8 +284,8 @@ void DefRenderTestScene::bindLighting(int width, int height){
 	glUniform3fv(secondShaderProgram->uniformLocation("diffuseKoefficient"), 1, &diffuseKoefficient[0]);
 }
 void DefRenderTestScene::shadowRender(int width, int height){
-	glBindVertexArray(gVertexAttribute);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, gIndexBuffer);
+	glBindVertexArray(shadowVertexAttribute);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, shadowIndexBuffer);
 
 	glClear(GL_DEPTH_BUFFER_BIT);
 
@@ -301,6 +297,9 @@ void DefRenderTestScene::shadowRender(int width, int height){
 	glm::mat4 viewMatrix = glm::lookAt(position, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 	glm::mat4 perspectiveMatrix = glm::perspective(45.0f, 1.0f, 2.0f, 50.0f);
 
+	GLuint secondShadowID = shadowShaderProgram->uniformLocation("tShadowMap");
+	glUniform1i(secondShadowID, 0);
+
 	glUniformMatrix4fv(shadowShaderProgram->uniformLocation("lightmodelMatrix"), 1, GL_FALSE, &model[0][0]);
 	glUniformMatrix4fv(shadowShaderProgram->uniformLocation("lightViewMatrix"), 1, GL_FALSE, &viewMatrix[0][0]);
 	glUniformMatrix4fv(shadowShaderProgram->uniformLocation("lightProjectionMatrix"), 1, GL_FALSE, &perspectiveMatrix[0][0]);
@@ -308,4 +307,32 @@ void DefRenderTestScene::shadowRender(int width, int height){
 	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+void DefRenderTestScene::bindShadowGeometry(){
+
+	// Vertex buffer
+	glGenBuffers(1, &shadowVertexBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, shadowVertexBuffer);
+	glBufferData(GL_ARRAY_BUFFER, vertexCount * sizeof(Geometry::Vertex), geometry->vertices(), GL_STATIC_DRAW);
+
+	// Define vertex data layout
+	glGenVertexArrays(1, &shadowVertexAttribute);
+	glBindVertexArray(shadowVertexAttribute);
+	glEnableVertexAttribArray(0); //the vertex attribute object will remember its enabled attributes
+	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
+
+	GLuint shadowVertexPos = shadowShaderProgram->attributeLocation("vertex_position");
+	glVertexAttribPointer(shadowVertexPos, 3, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(0));
+
+	GLuint shadowVertexNormal = shadowShaderProgram->attributeLocation("vertex_normal");
+	glVertexAttribPointer(shadowVertexNormal, 3, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float)* 3));
+
+	GLuint shadowVertexTexture = shadowShaderProgram->attributeLocation("vertex_texture");
+	glVertexAttribPointer(shadowVertexTexture, 2, GL_FLOAT, GL_FALSE, sizeof(Geometry::Vertex), BUFFER_OFFSET(sizeof(float)* 6));
+
+	// Index buffer
+	glGenBuffers(1, &shadowIndexBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, shadowIndexBuffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(unsigned int), geometry->indices(), GL_STATIC_DRAW);
 }

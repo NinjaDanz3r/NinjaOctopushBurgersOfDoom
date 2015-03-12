@@ -13,7 +13,7 @@ uniform mat4 lightProjectionMatrix;
 out vec2 texCoord;
 
 void main () {
-	//vec3 abc = vertex_normal + vertex_texture;
+	vec3 normal = vertex_normal;
 	vec4 pos4 = vec4(vertex_position, 1.0);
 	gl_Position =  lightModelMatrix * lightViewMatrix * lightProjectionMatrix * pos4;
 	texCoord = vertex_texture;

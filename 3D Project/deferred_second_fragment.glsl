@@ -20,19 +20,18 @@ out vec4 fragment_color;
 const float EPSILON = 0.00001;
 
 // Calculate shadow
-float calculateShadow(vec4 lightspacePosition) {
-	/*vec3 projectedCoords = lightSpacePosition.xyz / lightSpacePosition.w
+float calculateShadow(vec4 lightSpacePosition) {
+	vec3 projectedCoords = lightSpacePosition.xyz / lightSpacePosition.w;
 	vec2 uvCoords;
 	uvCoords.x = 0.5 * projectedCoords.x + 0.5;
 	uvCoords.y = 0.5 * projectedCoords.y + 0.5;
 	float depth = texture(tShadowMap, uvCoords).x;
 	float uvZ = 0.5* projectedCoords.z + 0.5;
 
-	if (depth < uvZ)
+	if (depth < uvZ + EPSILON)
 		return 1.0;
 	else
-		return 0.5;*/
-	return 1.0;
+		return 0.5;
 }
 
 //Calculate texcoord

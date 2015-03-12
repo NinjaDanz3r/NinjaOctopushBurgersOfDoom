@@ -29,7 +29,7 @@ void ShadowMapping::begin(unsigned int width, unsigned int height)
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, shadowMap, 0);
 
-	// Disable writes to the color buffer
+	//Disable writes to the color buffer
 	glDrawBuffer(GL_NONE);
 
 	// Disable reads from the color buffer
@@ -40,7 +40,6 @@ void ShadowMapping::begin(unsigned int width, unsigned int height)
 		util::log("Shadow mapping FB failed \n");
 	}
 
-	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 
 }

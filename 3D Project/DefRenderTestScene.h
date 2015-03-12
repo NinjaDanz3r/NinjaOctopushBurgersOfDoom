@@ -64,6 +64,7 @@ public:
 	*/
 	void showTex(int width, int height);
 	void shadowRender(int width, int height);
+	void bindShadowGeometry();
 private:
 	void bindTriangleData();
 	void bindDeferredQuad();
@@ -96,10 +97,16 @@ private:
 	//Misc
 	int state; //0 == deferred render, 1== display textures.
 	Texture* texture;
-	Cube* testCube;
 	Player* player;
 	GLuint halfWidth;
 	GLuint halfHeight;
+
+	// Vertex buffer geometry
+	GLuint shadowVertexBuffer = 0;
+	GLuint shadowVertexAttribute = 0;
+
+	//Index buffer geometry
+	GLuint shadowIndexBuffer = 0;
 
 	// Vertex buffer geometry
 	GLuint gVertexBuffer = 0;
