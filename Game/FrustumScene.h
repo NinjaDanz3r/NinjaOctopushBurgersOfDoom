@@ -7,6 +7,7 @@
 #include "Texture2D.h"
 #include "GeometryObject.h"
 #include "Player.h"
+#include "FrameBufferObjects.h"
 #include <vector>
 
 /** @ingroup game
@@ -40,11 +41,18 @@ public:
 	void render(int width, int height);
 
 private:
+	FrameBufferObjects* multipleRenderTargets;
+	int state; // 0 == deferred render, 1== display textures.
 	// Shaders
 	Shader* vertexShader;
 	Shader* geometryShader;
 	Shader* fragmentShader;
 	ShaderProgram* shaderProgram;
+	// Shaders lighting pass
+	Shader* deferredVertexShader;
+	Shader* deferredFragmentShader;
+	ShaderProgram* deferredShaderProgram;
+
 	Texture* diffuse;
 	Texture* normal;
 	Texture* specular;

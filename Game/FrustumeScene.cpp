@@ -9,6 +9,7 @@
 #include "Texture2D.h"
 #include "input.h"
 #include "Model.h"
+#include "settings.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -17,16 +18,20 @@
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))
 
 FrustumScene::FrustumScene() {
+	state = 0;
+
 	diffuse = new Texture2D("Resources/Models/rock01/diffuse.tga");
 	normal = new Texture2D("Resources/Models/rock01/normal.tga");
 	specular = new Texture2D("Resources/Models/rock01/specular.tga");
 
 	vertexShader = new Shader("default_vertex.glsl", GL_VERTEX_SHADER);
 	geometryShader = new Shader("default_geometry.glsl", GL_GEOMETRY_SHADER);
-	fragmentShader = new Shader("default_fragment.glsl", GL_FRAGMENT_SHADER);
+	fragmentShader = new Shader("normalspecularmap_fragment.glsl", GL_FRAGMENT_SHADER);
 	shaderProgram = new ShaderProgram({ vertexShader, geometryShader, fragmentShader });
 
-	shaderProgram->use();
+	deferredVertexShader = new Shader("deferred_vertex.glsl", GL_VERTEX_SHADER);
+	deferredFragmentShader = new Shader("deferred_fragment.glsl", GL_FRAGMENT_SHADER);
+	deferredShaderProgram = new ShaderProgram({ deferredVertexShader, deferredFragmentShader });
 
 	// Texture unit 0 is for base images.
 	glUniform1i(shaderProgram->uniformLocation("baseImage"), 0);
@@ -53,6 +58,8 @@ FrustumScene::FrustumScene() {
 
 	player = new Player();
 	player->setMovementSpeed(2.0f);
+
+	multipleRenderTargets = new FrameBufferObjects(deferredShaderProgram, settings::displayWidth(), settings::displayHeight());
 }
 
 FrustumScene::~FrustumScene() {
@@ -64,6 +71,7 @@ FrustumScene::~FrustumScene() {
 	delete vertexShader;
 	delete geometryShader;
 	delete fragmentShader;
+	delete multipleRenderTargets;
 
 	for (int i = 0; i < numModels; i++) {
 		delete multiGeometry[i];
@@ -77,16 +85,26 @@ FrustumScene::~FrustumScene() {
 Scene::SceneEnd* FrustumScene::update(double time) {
 	player->update(time);
 
+	if (input::triggered(input::CHANGE_RENDER_STATE))
+		state = !state;
+
 	return nullptr;
 }
 
 void FrustumScene::render(int width, int height) {
+	multipleRenderTargets->bindForWriting();
+
 	glViewport(0, 0, width, height);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// Send the matrices to the shader (Per render call operations).
-	glm::mat4 view = player->camera()->view();
-	glm::mat4 proj = player->camera()->projection(width, height);
+	shaderProgram->use();
+
+	// Texture unit 0 is for base images.
+	glUniform1i(shaderProgram->uniformLocation("baseImage"), 0);
+	// Texture unit 1 is for normal map.
+	glUniform1i(shaderProgram->uniformLocation("normalMap"), 1);
+	// Texture unit 0 is for specular map.
+	glUniform1i(shaderProgram->uniformLocation("specularMap"), 2);
 
 	// Base image texture
 	glActiveTexture(GL_TEXTURE0);
@@ -100,19 +118,11 @@ void FrustumScene::render(int width, int height) {
 	glActiveTexture(GL_TEXTURE2);
 	glBindTexture(GL_TEXTURE_2D, specular->textureID());
 
+	// Send the matrices to the shader.
+	glm::mat4 view = player->camera()->view();
+
 	glUniformMatrix4fv(shaderProgram->uniformLocation("viewMatrix"), 1, GL_FALSE, &view[0][0]);
 	glUniformMatrix4fv(shaderProgram->uniformLocation("projectionMatrix"), 1, GL_FALSE, &player->camera()->projection(width, height)[0][0]);
-
-	// Light information.
-	glm::vec4 lightPosition = view * glm::vec4(-5.f, 0.f, 5.f, 1.f);
-	glm::vec3 lightIntensity(1.f, 1.f, 1.f);
-	glm::vec3 diffuseKoefficient(1.f, 1.f, 1.f);
-	glUniform4fv(shaderProgram->uniformLocation("lightPosition"), 1, &lightPosition[0]);
-	glUniform3fv(shaderProgram->uniformLocation("lightIntensity"), 1, &lightIntensity[0]);
-	glUniform3fv(shaderProgram->uniformLocation("diffuseKoefficient"), 1, &diffuseKoefficient[0]);
-
-	glBindVertexArray(geometry->vertexArray());
-
 	// Drawing loop
 	for (int i = 0; i < numModels; i++) {
 		// Model matrix, unique for each model.
@@ -125,5 +135,12 @@ void FrustumScene::render(int width, int height) {
 		glUniformMatrix3fv(shaderProgram->uniformLocation("normalMatrix"), 1, GL_FALSE, &glm::mat3(N)[0][0]);
 
 		glDrawElements(GL_TRIANGLES, geometry->indexCount(), GL_UNSIGNED_INT, (void*)0);
+	}
+
+	if (state == 1) {
+		multipleRenderTargets->showTextures(width, height);
+	}
+	else if (state == 0) {
+		multipleRenderTargets->render(player->camera(), width, height);
 	}
 }
