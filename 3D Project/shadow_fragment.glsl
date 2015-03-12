@@ -3,14 +3,12 @@ Shadow mapping fragment shader
 */
 #version 400
 
-in vec3 modelPos;
-
-uniform vec4 lightPosition;
+in vec3 texCoord;
 
 out float fragment_color;
 
 void main(){
-	vec3 lightVertex = modelPos - lightPosition;
-	float distance = length(lightVertex);
-	fragment_color = distance;
+	float depth = texture(tShadowMap, texCoord);
+	depth = 1.0 - (1.0 - depth) * 25.0;
+	fragment_color = vec4(depth);
 }

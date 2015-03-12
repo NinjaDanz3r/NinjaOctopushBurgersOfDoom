@@ -63,7 +63,7 @@ public:
 	* @param height Height of the context.
 	*/
 	void showTex(int width, int height);
-	void shadowRender(int width, int height, int i);
+	void shadowRender(int width, int height);
 private:
 	void bindTriangleData();
 	void bindDeferredQuad();

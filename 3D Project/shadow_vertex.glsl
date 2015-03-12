@@ -6,14 +6,15 @@ layout(location = 0) in vec3 vertex_position;
 layout(location = 1) in vec3 vertex_normal;
 layout(location = 2) in vec2 vertex_texture;
 
-uniform mat4 modelMatrix;
-uniform mat4 viewMatrix;
-uniform mat4 projectionMatrix;
+uniform mat4 lightModelMatrix;
+uniform mat4 lightViewMatrix;
+uniform mat4 lightProjectionMatrix;
 
-out vec3 modelPos;
+out vec2 texCoord;
 
 void main () {
+	//vec3 abc = vertex_normal + vertex_texture;
 	vec4 pos4 = vec4(vertex_position, 1.0);
-	gl_Position =  modelMatrix * viewMatrix * projectionMatrix * pos4;
-	modelPos = (modelMatrix * pos4).xyz;
+	gl_Position =  lightModelMatrix * lightViewMatrix * lightProjectionMatrix * pos4;
+	texCoord = vertex_texture;
 }
