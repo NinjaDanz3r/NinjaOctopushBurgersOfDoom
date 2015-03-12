@@ -8,6 +8,7 @@
 #include "GeometryObject.h"
 #include "Player.h"
 #include "FrameBufferObjects.h"
+#include "Datastructures.h"
 #include <vector>
 
 /** @ingroup game

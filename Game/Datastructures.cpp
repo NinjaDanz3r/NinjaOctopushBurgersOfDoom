@@ -6,19 +6,43 @@ QuadTree::QuadTree(glm::vec3 _origin, glm::vec2 _dim, int _depth, int _maxDepth)
 	dim = _dim;
 	depth = _depth;
 	maxDepth = _maxDepth;
+	isLeaf = false;
 
-	if (_depth == _maxDepth) //If we're at a leaf, we should populate it with objects
+	//If we're at a leaf, we should populate it with objects 
+	if (_depth == _maxDepth) {
+		isLeaf = true;
 		return;
+	}
 
 	//Precalculate some values
 	float halfWidth = dim.x / 2.f;
 	glm::vec2 newDim(halfWidth, dim.y);
-	int nextDepth = _depth++;
+	int nextDepth = depth+1;
 
-	childTree[Q1] = new QuadTree(glm::vec3(origin.x - halfWidth, origin.y + halfWidth, origin.z), newDim, nextDepth, maxDepth);
-	childTree[Q2] = new QuadTree(glm::vec3(origin.x + halfWidth, origin.y + halfWidth, origin.z), newDim, nextDepth, maxDepth);
-	childTree[Q3] = new QuadTree(glm::vec3(origin.x + halfWidth, origin.y - halfWidth, origin.z), newDim, nextDepth, maxDepth);
-	childTree[Q4] = new QuadTree(glm::vec3(origin.x - halfWidth, origin.y - halfWidth, origin.z), newDim, nextDepth, maxDepth);
+	childTree[Q1] = new QuadTree(glm::vec3(origin.x - halfWidth, origin.y, origin.z + halfWidth), newDim, nextDepth, maxDepth);
+	childTree[Q2] = new QuadTree(glm::vec3(origin.x + halfWidth, origin.y, origin.z + halfWidth), newDim, nextDepth, maxDepth);
+	childTree[Q3] = new QuadTree(glm::vec3(origin.x + halfWidth, origin.y, origin.z - halfWidth), newDim, nextDepth, maxDepth);
+	childTree[Q4] = new QuadTree(glm::vec3(origin.x - halfWidth, origin.y, origin.z - halfWidth), newDim, nextDepth, maxDepth);
+}
+
+//Prints debug information
+void QuadTree::debugTree(std::string test)
+{
+	if (depth == maxDepth)
+	{
+		fprintf(stderr, "===I'm a leaf node!\n My Data: \n");
+		fprintf(stderr, "Depth: %i\n maxDepth: %i\n Origin: %f,%f,%f\n Dimensions: Width %f Height %f\n\n", depth, maxDepth, origin.x, origin.y, origin.z, dim.x, dim.y);
+		return;
+	}
+	else
+	{
+		fprintf(stderr, "===I'm a quadrant node!\n I live at: %s\n My Data: \n", test.c_str());
+		fprintf(stderr, "Depth: %i\n maxDepth: %i\n Origin: %f,%f,%f\n Dimensions: Width %f Height %f\n\n", depth, maxDepth, origin.x, origin.y, origin.z, dim.x, dim.y);
+		childTree[Q1]->debugTree("Q1");
+		childTree[Q1]->debugTree("Q2");
+		childTree[Q1]->debugTree("Q3");
+		childTree[Q1]->debugTree("Q4");
+	}
 }
 
 //Add object to leaf node. Returns true if object was found to be within cubes.
