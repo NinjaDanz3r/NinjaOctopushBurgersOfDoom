@@ -1,9 +1,8 @@
 #include "Datastructures.h"
 
 
-QuadTree::QuadTree(glm::vec2 _origin, float _width, int _depth, int _maxDepth) {
-	origin = _origin;
-	width = _width;
+QuadTree::QuadTree(const Rectangle & _rectangle, int _depth, int _maxDepth) {
+	rectangle = _rectangle;
 	depth = _depth;
 	maxDepth = _maxDepth;
 	isLeaf = false;
@@ -15,14 +14,24 @@ QuadTree::QuadTree(glm::vec2 _origin, float _width, int _depth, int _maxDepth) {
 	}
 
 	//Precalculate some values
-	float halfWidth = width / 2.f;
+	float halfWidth = rectangle.dimensions.x / 2.f;
 	float quarterWidth = halfWidth / 2.f;
+	
+	float halfHeight = rectangle.dimensions.y / 2.f;
+	float quarterHeight = halfHeight / 2.f;
+
+	glm::vec2 quadrantDim = glm::vec2(halfWidth, halfHeight);
 	int nextDepth = depth+1;
 
-	childTree[Q1] = new QuadTree(glm::vec2(origin.x - quarterWidth, origin.y + quarterWidth), halfWidth, nextDepth, maxDepth);
-	childTree[Q2] = new QuadTree(glm::vec2(origin.x + quarterWidth, origin.y + quarterWidth), halfWidth, nextDepth, maxDepth);
-	childTree[Q3] = new QuadTree(glm::vec2(origin.x + quarterWidth, origin.y - quarterWidth), halfWidth, nextDepth, maxDepth);
-	childTree[Q4] = new QuadTree(glm::vec2(origin.x - quarterWidth, origin.y - quarterWidth), halfWidth, nextDepth, maxDepth);
+	Rectangle q1Rect(glm::vec2(rectangle.origin.x - quarterWidth, rectangle.origin.y + quarterHeight), quadrantDim);
+	Rectangle q2Rect(glm::vec2(rectangle.origin.x + quarterWidth, rectangle.origin.y + quarterHeight), quadrantDim);
+	Rectangle q3Rect(glm::vec2(rectangle.origin.x + quarterWidth, rectangle.origin.y - quarterHeight), quadrantDim);
+	Rectangle q4Rect(glm::vec2(rectangle.origin.x - quarterWidth, rectangle.origin.y - quarterHeight), quadrantDim);
+
+	childTree[Q1] = new QuadTree(q1Rect, nextDepth, maxDepth);
+	childTree[Q2] = new QuadTree(q2Rect, nextDepth, maxDepth);
+	childTree[Q3] = new QuadTree(q3Rect, nextDepth, maxDepth);
+	childTree[Q4] = new QuadTree(q4Rect, nextDepth, maxDepth);
 }
 
 //Prints debug information
@@ -31,17 +40,17 @@ void QuadTree::debugTree(std::string test)
 	if (depth == maxDepth)
 	{
 		fprintf(stderr, "===I'm a leaf node!\n My Data: \n");
-		fprintf(stderr, "Depth: %i\n maxDepth: %i\n Origin: %f,%f\n Width: %f\n\n", depth, maxDepth, origin.x, origin.y, width);
+		fprintf(stderr, "Depth: %i\n maxDepth: %i\n Origin: %f,%f\n Width: %f\n Height: %f\n\n", depth, maxDepth, rectangle.origin.x, rectangle.origin.y, rectangle.dimensions.x, rectangle.dimensions.y);
 		return;
 	}
 	else
 	{
 		fprintf(stderr, "===I'm a quadrant node!\n I live at: %s\n My Data: \n", test.c_str());
-		fprintf(stderr, "Depth: %i\n maxDepth: %i\n Origin: %f,%f\n Width: %f\n\n", depth, maxDepth, origin.x, origin.y, width);
+		fprintf(stderr, "Depth: %i\n maxDepth: %i\n Origin: %f,%f\n Width: %f\n Height: %f\n\n", depth, maxDepth, rectangle.origin.x, rectangle.origin.y, rectangle.dimensions.x, rectangle.dimensions.y);
 		childTree[Q1]->debugTree("Q1");
-		childTree[Q1]->debugTree("Q2");
-		childTree[Q1]->debugTree("Q3");
-		childTree[Q1]->debugTree("Q4");
+		childTree[Q2]->debugTree("Q2");
+		childTree[Q3]->debugTree("Q3");
+		childTree[Q4]->debugTree("Q4");
 	}
 }
 

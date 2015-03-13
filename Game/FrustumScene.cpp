@@ -55,7 +55,8 @@ FrustumScene::FrustumScene() {
 		tempGeometry->setRotation((float)rand1, (float)rand2, (float)rand3);
 		multiGeometry.push_back(tempGeometry);
 	}
-	QuadTree qTree(glm::vec2(0.f, 0.f), 20.f, 0, 2);
+	Rectangle rect(glm::vec2(0.f, 0.f), glm::vec2(40.f, 20.f));
+	QuadTree qTree(rect, 0, 2);
 	qTree.debugTree("Root");
 
 	player = new Player();
