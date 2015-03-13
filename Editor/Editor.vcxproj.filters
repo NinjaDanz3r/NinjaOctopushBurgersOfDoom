@@ -92,6 +92,9 @@
     <ClCompile Include="GLError.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="settings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="editor.ui">
@@ -127,6 +130,9 @@
       <Filter>Header Files\Preview</Filter>
     </ClInclude>
     <ClInclude Include="GLError.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="settings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
