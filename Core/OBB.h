@@ -4,6 +4,10 @@
 #include "Core.h"
 #include <glm/glm.hpp>
 
+/** @ingroup core
+* @{
+*/
+
 /// Oriented bounding box.
 /**
  * Used for intersection testing and collision detection.
@@ -25,5 +29,7 @@ class OBB {
 		/// Dimensions.
 		glm::vec3 dimensions;
 };
+
+/** @} */
 
 #endif
