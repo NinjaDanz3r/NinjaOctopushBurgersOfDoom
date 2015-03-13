@@ -32,7 +32,7 @@ class Ray {
 
 		/// Checks intersection between the ray and a Triangle.
 		/**
-		 * Uses the Möller-Trumbore intersection algorithm for triangles.
+		 * Uses the M&ouml;ller-Trumbore intersection algorithm for triangles.
 		 * @param triangle Triangle to check intersection against.
 		 * @return Distance to Triangle (or -1 if missed)
 		 */
