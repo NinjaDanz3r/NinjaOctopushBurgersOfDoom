@@ -2,7 +2,7 @@
 #define __GEOMETRY_H__
 
 #include "Core.h"
-#include "IntersectionTesting.h"
+#include "AABB.h"
 #include <GL/glew.h>
 #include <GL/GL.h>
 #include <glm/glm.hpp>
