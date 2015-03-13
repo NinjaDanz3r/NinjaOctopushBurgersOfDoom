@@ -174,11 +174,12 @@ void PickingScene::render(int width, int height) {
 					ind2 = geometry->indices()[y + 1];
 					ind3 = geometry->indices()[y + 2];
 
-					Geometry::Vertex vert1 = geometry->vertices()[ind1];
-					Geometry::Vertex vert2 = geometry->vertices()[ind2];
-					Geometry::Vertex vert3 = geometry->vertices()[ind3];
+					Triangle triangle;
+					triangle.v1 = geometry->vertices()[ind1].position;
+					triangle.v2 = geometry->vertices()[ind2].position;
+					triangle.v3 = geometry->vertices()[ind3].position;
 
-					hit = rayVsTri(vert1.position, vert2.position, vert3.position, ray, distanceToTriangle);
+					hit = rayVsTri(triangle, ray, distanceToTriangle);
 					if ((distanceToTriangle < closestDistance) && (hit == true)) {
 						closestDistance = distanceToTriangle;
 						closestObjectHit = i;

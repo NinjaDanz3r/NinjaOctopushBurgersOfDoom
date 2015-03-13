@@ -87,6 +87,9 @@
     <ClInclude Include="IntersectionTesting.h">
       <Filter>Header Files\IntersectionTesting</Filter>
     </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>Header Files\IntersectionTesting</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="util.cpp">
@@ -126,6 +129,9 @@
       <Filter>Source Files\IntersectionTesting</Filter>
     </ClCompile>
     <ClCompile Include="Ray.cpp">
+      <Filter>Source Files\IntersectionTesting</Filter>
+    </ClCompile>
+    <ClCompile Include="Triangle.cpp">
       <Filter>Source Files\IntersectionTesting</Filter>
     </ClCompile>
   </ItemGroup>

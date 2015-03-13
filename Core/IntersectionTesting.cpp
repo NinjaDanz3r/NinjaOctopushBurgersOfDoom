@@ -1,15 +1,15 @@
 #include "IntersectionTesting.h"
 
 // Möller-Trumbore intersection algorithm for triangles.
-bool rayVsTri(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3, const Ray& ray, float& distance) {
+bool rayVsTri(const Triangle& triangle, const Ray& ray, float& distance) {
 	// Declaration
 	glm::vec3 edge1, edge2, normal, P, Q, T;
 	float det, inverseDet, u, v, t;
 	distance = -1.f;
 
 	// Find triangle edge vectors
-	edge1 = v2 - v1;
-	edge2 = v3 - v1;
+	edge1 = triangle.v2 - triangle.v1;
+	edge2 = triangle.v3 - triangle.v1;
 	normal = glm::cross(edge1, edge2);
 
 	// Minor optimization, cull if backface (Occurs when inside a model)
@@ -23,8 +23,8 @@ bool rayVsTri(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3, const Ray& ray, float& d
 			return false;
 		inverseDet = 1.0f / det;
 
-		T = ray.origin - v1;			// Distance from v1 to ray origin.
-		// triangle U, V testing.
+		T = ray.origin - triangle.v1;	// Distance from v1 to ray origin.
+		// Triangle U, V testing.
 		u = dot(T, P) *inverseDet;
 		if ((u < 0.0f) || (u > 1.0f))
 			return false;
@@ -37,7 +37,7 @@ bool rayVsTri(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3, const Ray& ray, float& d
 
 		t = glm::dot(edge2, Q)*inverseDet;
 
-		// If all attempts to cull the ray has been passed, we have an intersection
+		// If all attempts to cull the ray has been passed, we have an intersection.
 		if (t > EPSILON){
 			distance = t;
 			return true;
