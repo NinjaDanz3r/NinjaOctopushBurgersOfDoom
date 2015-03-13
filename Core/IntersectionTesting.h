@@ -6,6 +6,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 #include <algorithm>
+#include "Ray.h"
 
 /** @ingroup core
 * @{
@@ -33,11 +34,11 @@ class OBB {
 		glm::vec3 v1, v2, v3, origin, dim; //Dim: width, height, depth
 };
 
-CORE_EXPORT bool rayVsTri(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3, glm::vec3 rayDir, glm::vec3 rayOrigin, float& distance);
+CORE_EXPORT bool rayVsTri(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3, const Ray& ray, float& distance);
 
-CORE_EXPORT bool rayVsOBB(OBB obb, glm::vec3 rayDir, glm::vec3 rayOrigin, float& distance);
+CORE_EXPORT bool rayVsOBB(OBB obb, const Ray& ray, float& distance);
 
-CORE_EXPORT bool rayVsAABB(AABB box, glm::vec3 rayDir, glm::vec3 rayOrigin, float& distance);
+CORE_EXPORT bool rayVsAABB(AABB box, const Ray& ray, float& distance);
 
 /** @} */
 

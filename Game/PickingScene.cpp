@@ -152,7 +152,8 @@ void PickingScene::render(int width, int height) {
 		glm::mat4 inverseModel = glm::inverse(model);
 		rayOrigin = inverseModel*(rayOrigin);
 		glm::vec3 rayMod = glm::vec3(inverseModel*rayWor);
-		rayWor = glm::normalize(rayWor);
+		rayMod = glm::normalize(rayMod);
+		Ray ray(glm::vec3(rayOrigin), rayMod);
 
 		//Search for hits.
 		float distanceToTriangle, distanceToBox;
@@ -160,7 +161,7 @@ void PickingScene::render(int width, int height) {
 		bool hit = false;
 		int trianglePasses = 0;
 		int boxPasses = 0;
-		if (rayVsAABB(aabb, rayMod, glm::vec3(rayOrigin), distanceToBox)) {
+		if (rayVsAABB(aabb, ray, distanceToBox)) {
 			//if the distance to the box exceeds the distance to the closest triangle, 
 			//there is no way that any triangle contained inside that box will 
 			//be closer to the viewer
@@ -177,7 +178,7 @@ void PickingScene::render(int width, int height) {
 					Geometry::Vertex vert2 = geometry->vertices()[ind2];
 					Geometry::Vertex vert3 = geometry->vertices()[ind3];
 
-					hit = rayVsTri(vert1.position, vert2.position, vert3.position, glm::vec3(rayMod), glm::vec3(rayOrigin), distanceToTriangle);
+					hit = rayVsTri(vert1.position, vert2.position, vert3.position, ray, distanceToTriangle);
 					if ((distanceToTriangle < closestDistance) && (hit == true)) {
 						closestDistance = distanceToTriangle;
 						closestObjectHit = i;

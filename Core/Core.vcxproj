@@ -164,6 +164,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="IntersectionTesting.h" />
+    <ClInclude Include="Ray.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Core.h" />
@@ -180,6 +181,7 @@
   <ItemGroup>
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="IntersectionTesting.cpp" />
+    <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Model.cpp" />
