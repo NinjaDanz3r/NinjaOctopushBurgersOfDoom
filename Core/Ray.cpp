@@ -90,17 +90,17 @@ float Ray::intersect(const OBB& obb) {
 	}
 }
 
-float Ray::intersect(const AABB& box) {
+float Ray::intersect(const AABB& aabb) {
 	glm::vec3 inverseRay = (1.0f / direction);
 	float t1, t2, t3, t4, t5, t6;
-	t1 = (box.minVertex.x - origin.x) * inverseRay.x;
-	t2 = (box.maxVertex.x - origin.x) * inverseRay.x;
+	t1 = (aabb.minVertex.x - origin.x) * inverseRay.x;
+	t2 = (aabb.maxVertex.x - origin.x) * inverseRay.x;
 
-	t3 = (box.minVertex.y - origin.y) * inverseRay.y;
-	t4 = (box.maxVertex.y - origin.y) * inverseRay.y;
-
-	t5 = (box.minVertex.z - origin.z) * inverseRay.z;
-	t6 = (box.maxVertex.z - origin.z) * inverseRay.z;
+	t3 = (aabb.minVertex.y - origin.y) * inverseRay.y;
+	t4 = (aabb.maxVertex.y - origin.y) * inverseRay.y;
+	
+	t5 = (aabb.minVertex.z - origin.z) * inverseRay.z;
+	t6 = (aabb.maxVertex.z - origin.z) * inverseRay.z;
 
 	float tMin, tMax;
 	tMin = std::max(std::max(std::min(t1, t2), std::min(t3, t4)), std::min(t5, t6));
