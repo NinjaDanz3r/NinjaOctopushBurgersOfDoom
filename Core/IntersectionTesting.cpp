@@ -47,7 +47,7 @@ bool rayVsTri(const Triangle& triangle, const Ray& ray, float& distance) {
 		return false;
 }
 
-bool rayVsOBB(OBB obb, const Ray& ray, float& distance) {
+bool rayVsOBB(const OBB& obb, const Ray& ray, float& distance) {
 	float tMin, tMax, t1, t2;
 	tMin = std::numeric_limits<float>::lowest();
 	tMax = std::numeric_limits<float>::max();
@@ -87,18 +87,18 @@ bool rayVsOBB(OBB obb, const Ray& ray, float& distance) {
 	return false;
 }
 
-bool rayVsAABB(AABB box, const Ray& ray, float& distance) {
+bool rayVsAABB(const AABB& box, const Ray& ray, float& distance) {
 	distance = -1;
 	glm::vec3 inverseRay = (1.0f / ray.direction);
 	float t1, t2, t3, t4, t5, t6;
-	t1 = (box.minVertices.x - ray.origin.x)*inverseRay.x;
-	t2 = (box.maxVertices.x - ray.origin.x)*inverseRay.x;
+	t1 = (box.minVertex.x - ray.origin.x)*inverseRay.x;
+	t2 = (box.maxVertex.x - ray.origin.x)*inverseRay.x;
 
-	t3 = (box.minVertices.y - ray.origin.y)*inverseRay.y;
-	t4 = (box.maxVertices.y - ray.origin.y)*inverseRay.y;
+	t3 = (box.minVertex.y - ray.origin.y)*inverseRay.y;
+	t4 = (box.maxVertex.y - ray.origin.y)*inverseRay.y;
 
-	t5 = (box.minVertices.z - ray.origin.z)*inverseRay.z;
-	t6 = (box.maxVertices.z - ray.origin.z)*inverseRay.z;
+	t5 = (box.minVertex.z - ray.origin.z)*inverseRay.z;
+	t6 = (box.maxVertex.z - ray.origin.z)*inverseRay.z;
 
 	float tmin, tmax;
 	tmin = std::max(std::max(std::min(t1, t2), std::min(t3, t4)), std::min(t5, t6));

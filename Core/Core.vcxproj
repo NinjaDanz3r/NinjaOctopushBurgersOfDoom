@@ -163,6 +163,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AABB.h" />
     <ClInclude Include="IntersectionTesting.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Shader.h" />
@@ -180,6 +181,7 @@
     <ClInclude Include="util.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AABB.cpp" />
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="IntersectionTesting.cpp" />
     <ClCompile Include="Ray.cpp" />

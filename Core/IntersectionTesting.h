@@ -8,27 +8,13 @@
 #include <algorithm>
 #include "Ray.h"
 #include "Triangle.h"
+#include "AABB.h"
 
 /** @ingroup core
 * @{
 */
 
 #define EPSILON 0.00001
-
-class AABB {
-	public:
-		glm::vec3 dim, origin, minVertices, maxVertices; //Dim: width, height, depth
-
-		//constructors
-		CORE_EXPORT AABB(){};
-
-		CORE_EXPORT AABB(glm::vec3 _dim, glm::vec3 _origin, glm::vec3 _minVertices, glm::vec3 _maxVertices) {
-			dim = _dim;
-			origin = _origin;
-			minVertices = _minVertices;
-			maxVertices = _maxVertices;
-		};
-};
 
 class OBB {
 	public:
@@ -37,9 +23,9 @@ class OBB {
 
 CORE_EXPORT bool rayVsTri(const Triangle& triangle, const Ray& ray, float& distance);
 
-CORE_EXPORT bool rayVsOBB(OBB obb, const Ray& ray, float& distance);
+CORE_EXPORT bool rayVsOBB(const OBB& obb, const Ray& ray, float& distance);
 
-CORE_EXPORT bool rayVsAABB(AABB box, const Ray& ray, float& distance);
+CORE_EXPORT bool rayVsAABB(const AABB& box, const Ray& ray, float& distance);
 
 /** @} */
 
