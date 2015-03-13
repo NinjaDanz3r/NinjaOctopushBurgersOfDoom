@@ -93,6 +93,9 @@
     <ClInclude Include="AABB.h">
       <Filter>Header Files\IntersectionTesting</Filter>
     </ClInclude>
+    <ClInclude Include="OBB.h">
+      <Filter>Header Files\IntersectionTesting</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="util.cpp">

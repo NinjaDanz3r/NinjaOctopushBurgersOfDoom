@@ -9,17 +9,13 @@
 #include "Ray.h"
 #include "Triangle.h"
 #include "AABB.h"
+#include "OBB.h"
 
 /** @ingroup core
 * @{
 */
 
 #define EPSILON 0.00001
-
-class OBB {
-	public:
-		glm::vec3 v1, v2, v3, origin, dim; //Dim: width, height, depth
-};
 
 CORE_EXPORT bool rayVsTri(const Triangle& triangle, const Ray& ray, float& distance);
 

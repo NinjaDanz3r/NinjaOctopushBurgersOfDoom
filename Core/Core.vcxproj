@@ -165,6 +165,7 @@
   <ItemGroup>
     <ClInclude Include="AABB.h" />
     <ClInclude Include="IntersectionTesting.h" />
+    <ClInclude Include="OBB.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderProgram.h" />

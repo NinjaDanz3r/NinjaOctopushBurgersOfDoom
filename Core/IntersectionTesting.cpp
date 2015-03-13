@@ -52,10 +52,8 @@ bool rayVsOBB(const OBB& obb, const Ray& ray, float& distance) {
 	tMin = std::numeric_limits<float>::lowest();
 	tMax = std::numeric_limits<float>::max();
 
-	glm::vec3 vArr[3];
-	float dArr[3];
-	vArr[0] = obb.v1; vArr[1] = obb.v2; vArr[2] = obb.v3;
-	dArr[0] = obb.dim.x / 2; dArr[1] = obb.dim.y / 2; dArr[2] = obb.dim.z / 2;
+	glm::vec3 vArr[3] = { obb.e1, obb.e2, obb.e3 };
+	float dArr[3] = { obb.dimensions.x / 2, obb.dimensions.y / 2, obb.dimensions.z / 2 };
 	glm::vec3 P = obb.origin - ray.origin;
 
 	for (int i = 0; i < 3; i++){
@@ -74,8 +72,9 @@ bool rayVsOBB(const OBB& obb, const Ray& ray, float& distance) {
 				return false;
 			if (tMax < 0)
 				return false;
-		} else if ((-e - dArr[i] > 0) || (-e + dArr[i] < 0))
+		} else if ((-e - dArr[i] > 0) || (-e + dArr[i] < 0)) {
 			return false;
+		}
 	}
 	if ((tMin > 0)) {
 		distance = tMin;
@@ -84,7 +83,6 @@ bool rayVsOBB(const OBB& obb, const Ray& ray, float& distance) {
 		distance = tMax;
 		return true;
 	}
-	return false;
 }
 
 bool rayVsAABB(const AABB& box, const Ray& ray, float& distance) {
