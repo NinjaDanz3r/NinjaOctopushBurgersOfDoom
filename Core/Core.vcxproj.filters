@@ -93,6 +93,9 @@
     <ClInclude Include="OBB.h">
       <Filter>Header Files\IntersectionTesting</Filter>
     </ClInclude>
+    <ClInclude Include="Rectangle.h">
+      <Filter>Header Files\IntersectionTesting</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="util.cpp">
@@ -135,6 +138,9 @@
       <Filter>Source Files\IntersectionTesting</Filter>
     </ClCompile>
     <ClCompile Include="AABB.cpp">
+      <Filter>Source Files\IntersectionTesting</Filter>
+    </ClCompile>
+    <ClCompile Include="Rectangle.cpp">
       <Filter>Source Files\IntersectionTesting</Filter>
     </ClCompile>
   </ItemGroup>

@@ -166,6 +166,7 @@
     <ClInclude Include="AABB.h" />
     <ClInclude Include="OBB.h" />
     <ClInclude Include="Ray.h" />
+    <ClInclude Include="Rectangle.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Core.h" />
@@ -184,6 +185,7 @@
     <ClCompile Include="AABB.cpp" />
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="Ray.cpp" />
+    <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Model.cpp" />
