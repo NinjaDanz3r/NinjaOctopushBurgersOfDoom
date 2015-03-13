@@ -13,14 +13,14 @@
 namespace settings {
 	/// Initialize the settings module.
 	/**
-	* Needs to be called before all other functions.
-	*/
+	 * Needs to be called before all other functions.
+	 */
 	void init();
 
 	/// Free the input module.
 	/**
-	* Should not be called twice.
-	*/
+	 * Should not be called twice.
+	 */
 	void free();
 
 	/// Load settings from an ini file.
@@ -179,7 +179,7 @@ namespace settings {
 
 	/// Set whether to show frames per second in window title.
 	/**
-	 * @param Set whether to show FPS.
+	 * @param show whether to show FPS.
 	 */
 	void setShowFPS(bool show);
 
@@ -192,7 +192,7 @@ namespace settings {
 
 	/// Set whether to show frames per second in window title.
 	/**
-	* @param set Whether to show cursor coordinates.
+	* @param show Whether to show cursor coordinates.
 	*/
 	void setShowCursorCoordinates(bool show);
 
@@ -219,8 +219,8 @@ namespace settings {
 
 	/// Set the name of the starting scene.
 	/**
-	* @param startingScene Name of the starting scene.
-	*/
+	 * @param startingScene Name of the starting scene.
+	 */
 	void setStartingScene(std::string startingScene);
 }
 

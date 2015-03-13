@@ -4,7 +4,9 @@
 #include <GLFW\glfw3.h>
 
 #include "PickingScene.h"
-#include "IntersectionTesting.h"
+#include <Ray.h>
+#include <Triangle.h>
+#include <AABB.h>
 
 #include "Square.h"
 #include "Texture2D.h"
@@ -86,17 +88,14 @@ Scene::SceneEnd* PickingScene::update(double time) {
 void PickingScene::render(int width, int height) {
 	glViewport(0, 0, width, height);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	float closestDistance = std::numeric_limits<float>::max();
-	int closestObjectHit = -1;
 
 	// Send the matrices to the shader (Per render call operations).
 	glm::mat4 view = player->camera()->view();
 	glm::mat4 proj = player->camera()->projection(width, height);
 
 	//create mouse ray
-	float x, y;
-	x = static_cast<float>(input::cursorX());
-	y = static_cast<float>(input::cursorY());
+	float x = static_cast<float>(input::cursorX());
+	float y = static_cast<float>(input::cursorY());
 	
 	//Get NDC x and y
 	float vx = ((2.0f * x) / width) - 1.0f;
@@ -135,54 +134,50 @@ void PickingScene::render(int width, int height) {
 	glUniform3fv(shaderProgram->uniformLocation("lightIntensity"), 1, &lightIntensity[0]);
 	glUniform3fv(shaderProgram->uniformLocation("diffuseKoefficient"), 1, &diffuseKoefficient[0]);
 
-	//Intersection loop
+	// Intersection loop
+	float closestDistance = std::numeric_limits<float>::max();
+	int closestObjectHit = -1;
 	for (int i = 0; i < numModels; i++) {
 		// Model matrix, unique for each model.
 		glm::mat4 model = multiGeometry[i]->modelMatrix();
 
-		//Matrices for each model
+		// Matrices for each model
 		glm::mat4 MV = view * model;
 		glm::mat4 N = glm::transpose(glm::inverse(MV));
 
-		//Ray in world space
+		// Ray in world space
 		glm::vec4 rayOrigin(0.0f, 0.0f, 0.0f, 1.0f);
-		rayOrigin = inverseView*(rayOrigin);
-		glm::vec4 rayWor = glm::vec4(inverseView*rayEye);
-		//ray in local space
+		rayOrigin = inverseView * rayOrigin;
+		glm::vec4 rayWor = glm::vec4(inverseView * rayEye);
+
+		// Ray in local space
 		glm::mat4 inverseModel = glm::inverse(model);
-		rayOrigin = inverseModel*(rayOrigin);
-		glm::vec3 rayMod = glm::vec3(inverseModel*rayWor);
-		rayWor = glm::normalize(rayWor);
+		rayOrigin = inverseModel * rayOrigin;
+		glm::vec3 rayMod = glm::vec3(inverseModel * rayWor);
+		rayMod = glm::normalize(rayMod);
+		Ray ray(glm::vec3(rayOrigin), rayMod);
 
-		//Search for hits.
-		float distanceToTriangle, distanceToBox;
-		distanceToTriangle = distanceToBox = -1;
-		bool hit = false;
-		int trianglePasses = 0;
-		int boxPasses = 0;
-		if (rayVsAABB(aabb, rayMod, glm::vec3(rayOrigin), distanceToBox)) {
-			//if the distance to the box exceeds the distance to the closest triangle, 
-			//there is no way that any triangle contained inside that box will 
-			//be closer to the viewer
+		// Search for hits.
+		float distanceToBox = ray.intersect(aabb);
+		if (distanceToBox > 0.f) {
+			// If the distance to the box exceeds the distance to the closest triangle, 
+			// there is no way that any triangle contained inside that box will 
+			// be closer to the viewer.
 			if (distanceToBox < closestDistance) {
-				boxPasses++;
 				for (unsigned int y = 0; (y < geometry->indexCount()); y += 3) {
-					trianglePasses++;
-					int ind1, ind2, ind3;
-					ind1 = geometry->indices()[y];
-					ind2 = geometry->indices()[y + 1];
-					ind3 = geometry->indices()[y + 2];
+					unsigned int ind1 = geometry->indices()[y];
+					unsigned int ind2 = geometry->indices()[y + 1];
+					unsigned int ind3 = geometry->indices()[y + 2];
 
-					Geometry::Vertex vert1 = geometry->vertices()[ind1];
-					Geometry::Vertex vert2 = geometry->vertices()[ind2];
-					Geometry::Vertex vert3 = geometry->vertices()[ind3];
+					Triangle triangle;
+					triangle.v1 = geometry->vertices()[ind1].position;
+					triangle.v2 = geometry->vertices()[ind2].position;
+					triangle.v3 = geometry->vertices()[ind3].position;
 
-					hit = rayVsTri(vert1.position, vert2.position, vert3.position, glm::vec3(rayMod), glm::vec3(rayOrigin), distanceToTriangle);
-					if ((distanceToTriangle < closestDistance) && (hit == true)) {
+					float distanceToTriangle = ray.intersect(triangle);
+					if ((distanceToTriangle > 0.f) && (distanceToTriangle < closestDistance)) {
 						closestDistance = distanceToTriangle;
 						closestObjectHit = i;
-					} else {
-						hit = false;
 					}
 				}
 			}

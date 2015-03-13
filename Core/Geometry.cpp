@@ -14,7 +14,7 @@ void Geometry::createAabb() {
 	unsigned int numVerts = vertexCount();
 
 	// Find minimum bounding points
-	for (int i = 0; i < numVerts; i++) {
+	for (unsigned int i = 0; i < numVerts; i++) {
 		if (currVert[i].position.x > maxValues.x)
 			maxValues.x = currVert[i].position.x;
 		else if (currVert[i].position.x < minValues.x)
