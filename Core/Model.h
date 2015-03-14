@@ -13,6 +13,8 @@
 
 /// A model loaded from our own binary model format.
 class Model;
+class Geometry;
+class Rectangle2D;
 
 class Model : public Geometry {
 	public:

@@ -3,7 +3,7 @@
 #include "GeometryObject.h"
 #include <vector>
 #include <glm/glm.hpp>
-#include "Rectangle.h"
+#include "Rectangle2D.h"
 
 class QuadTree;
 
@@ -19,7 +19,7 @@ enum Directions
 class QuadTree
 {
 	public:
-		QuadTree(const Rectangle & _rect, int _depth, int _maxDepth);
+		QuadTree(const Rectangle2D & _rect, int _depth, int _maxDepth);
 		~QuadTree();
 		bool addObject(GeometryObject* object); //returns true if object was added.
 		bool containsObject(GeometryObject* object);
@@ -30,7 +30,7 @@ class QuadTree
 		//glm::vec2 dimensions;
 		//float width; //Width of cubes
 		//float height; //"Height" of cubes
-		Rectangle rectangle;
+		Rectangle2D rectangle;
 
 		QuadTree* childTree[4];
 		

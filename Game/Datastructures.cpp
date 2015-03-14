@@ -23,10 +23,10 @@ QuadTree::QuadTree(const Rectangle & _rectangle, int _depth, int _maxDepth) {
 	glm::vec2 quadrantDim = glm::vec2(halfWidth, halfHeight);
 	int nextDepth = depth+1;
 
-	Rectangle q1Rect(glm::vec2(rectangle.origin.x - quarterWidth, rectangle.origin.y + quarterHeight), quadrantDim);
-	Rectangle q2Rect(glm::vec2(rectangle.origin.x + quarterWidth, rectangle.origin.y + quarterHeight), quadrantDim);
-	Rectangle q3Rect(glm::vec2(rectangle.origin.x + quarterWidth, rectangle.origin.y - quarterHeight), quadrantDim);
-	Rectangle q4Rect(glm::vec2(rectangle.origin.x - quarterWidth, rectangle.origin.y - quarterHeight), quadrantDim);
+	Rectangle2D q1Rect(glm::vec2(rectangle.origin.x - quarterWidth, rectangle.origin.y + quarterHeight), quadrantDim);
+	Rectangle2D q2Rect(glm::vec2(rectangle.origin.x + quarterWidth, rectangle.origin.y + quarterHeight), quadrantDim);
+	Rectangle2D q3Rect(glm::vec2(rectangle.origin.x + quarterWidth, rectangle.origin.y - quarterHeight), quadrantDim);
+	Rectangle2D q4Rect(glm::vec2(rectangle.origin.x - quarterWidth, rectangle.origin.y - quarterHeight), quadrantDim);
 
 	childTree[Q1] = new QuadTree(q1Rect, nextDepth, maxDepth);
 	childTree[Q2] = new QuadTree(q2Rect, nextDepth, maxDepth);
