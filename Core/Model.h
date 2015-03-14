@@ -5,7 +5,6 @@
 #include <fstream>
 #include <vector>
 #include "Geometry.h"
-#include "Rectangle2D.h"
 
 /** @ingroup core
  * @{
