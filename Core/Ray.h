@@ -36,21 +36,21 @@ class Ray {
 		 * @param triangle Triangle to check intersection against.
 		 * @return Distance to Triangle (or -1 if missed)
 		 */
-		CORE_EXPORT float intersect(const Triangle& triangle);
+		CORE_EXPORT float intersect(const Triangle& triangle) const;
 
 		/// Checks intersection between the ray and an OBB.
 		/**
 		 * @param obb OBB to check intersection against.
 		 * @return Distance to OBB (or -1 if missed)
 		 */
-		CORE_EXPORT float intersect(const OBB& obb);
+		CORE_EXPORT float intersect(const OBB& obb) const;
 
 		/// Checks intersection between the ray and an AABB.
 		/**
 		 * @param aabb AABB to check intersection against.
 		 * @return Distance to AABB (or -1 if missed)
 		 */
-		CORE_EXPORT float intersect(const AABB& aabb);
+		CORE_EXPORT float intersect(const AABB& aabb) const;
 };
 
 /** @} */
