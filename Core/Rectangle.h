@@ -13,6 +13,8 @@
 /**
  * Used for view frustum culling.
  */
+class Rectangle;
+
 class Rectangle {
 	public:
 		/// Origin.
@@ -27,7 +29,11 @@ class Rectangle {
 		 * @param dimensions Dimensions.
 		 */
 		CORE_EXPORT Rectangle(const glm::vec2& origin = { 0.f, 0.f }, const glm::vec2& dimensions = { 0.f, 0.f });
-		CORE_EXPORT Rectangle(Model object, glm::mat4 matrix);
+		CORE_EXPORT Rectangle(const Model & object, glm::mat4 matrix);
+
+		//Intersection testing
+		bool overlaps(const Rectangle & otherRect);
+		bool contains(const Rectangle & otherRect);
 };
 
 /** @} */

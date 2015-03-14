@@ -63,7 +63,8 @@ class Geometry {
 
 		/// Localspace AABB for the geometry
 		AABB aabb;
-		// Worldsapce rectangle
+
+		//Rectangle rectangle
 		Rectangle rect;
 
 		/// Get the vertex array.

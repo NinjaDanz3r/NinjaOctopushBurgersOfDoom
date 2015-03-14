@@ -5,12 +5,15 @@
 #include <fstream>
 #include <vector>
 #include "Geometry.h"
+#include "Rectangle.h"
 
 /** @ingroup core
  * @{
  */
 
 /// A model loaded from our own binary model format.
+class Model;
+
 class Model : public Geometry {
 	public:
 		/// Create new model from binary file.
