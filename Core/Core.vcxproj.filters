@@ -143,5 +143,8 @@
     <ClCompile Include="Rectangle.cpp">
       <Filter>Source Files\IntersectionTesting</Filter>
     </ClCompile>
+    <ClCompile Include="OBB.cpp">
+      <Filter>Source Files\IntersectionTesting</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
