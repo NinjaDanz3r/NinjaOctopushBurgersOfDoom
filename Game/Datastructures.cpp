@@ -1,7 +1,7 @@
 #include "Datastructures.h"
 
 
-QuadTree::QuadTree(const Rectangle & _rectangle, int _depth, int _maxDepth) {
+QuadTree::QuadTree(const Rectangle2D & _rectangle, int _depth, int _maxDepth) {
 	rectangle = _rectangle;
 	depth = _depth;
 	maxDepth = _maxDepth;

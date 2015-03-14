@@ -66,7 +66,7 @@ class Geometry {
 		AABB aabb;
 
 		//Rectangle rectangle
-		Rectangle2D rect;
+		//Rectangle2D rect;
 
 		/// Get the vertex array.
 		/**
