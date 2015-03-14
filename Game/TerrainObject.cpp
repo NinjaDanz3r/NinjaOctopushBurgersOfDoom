@@ -1,4 +1,5 @@
 #include "TerrainObject.h"
+#include "Terrain.h"
 
 TerrainObject::TerrainObject(const Terrain* terrain) : GeometryObject(terrain) {
 	this->terrain = terrain;

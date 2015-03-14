@@ -10,6 +10,8 @@
 #include "input.h"
 #include "Model.h"
 #include "settings.h"
+#include "Camera.h"
+
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>

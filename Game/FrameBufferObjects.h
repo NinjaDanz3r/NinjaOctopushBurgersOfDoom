@@ -2,10 +2,10 @@
 #define __FRAMEBUFFEROBJECTS_H__
 
 #include <GL/glew.h>
-#include <GL/GL.h>
-#include <GL/GLU.h>
-#include "ShaderProgram.h"
-#include "Camera.h"
+#include <glm/glm.hpp>
+
+class ShaderProgram;
+class Camera;
 
 /** @ingroup game
  * @{

@@ -1,16 +1,17 @@
 #ifndef __TERRAINSCENE_H__
 #define __TERRAINSCENE_H__
 
-#include "FrameBufferObjects.h"
 #include "Scene.h"
-#include <Shader.h>
-#include <ShaderProgram.h>
-#include <Texture.h>
-#include "CubeMapTexture.h"
-#include "Terrain.h"
-#include "TerrainObject.h"
-#include "Player.h"
-#include "Skybox.h"
+
+class FrameBufferObjects;
+class Shader;
+class ShaderProgram;
+class Texture;
+class Terrain;
+class TerrainObject;
+class Player;
+class Skybox;
+class CubeMapTexture;
 
 /** @ingroup game
  * @{

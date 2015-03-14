@@ -1,5 +1,3 @@
-#include <GL/glew.h>
-
 #if defined(_WIN32) || defined(WIN32)
 #include <windows.h>
 #endif

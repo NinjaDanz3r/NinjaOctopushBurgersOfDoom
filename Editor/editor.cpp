@@ -1,8 +1,14 @@
 #include "editor.h"
-#include <OBJModel.h>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QInputDialog>
+
+#include <OBJModel.h>
+#include <Project.h>
 #include "convert.h"
+#include "ModelResource.h"
+#include "TextureResource.h"
+#include "TexturePreview.h"
+#include "ModelPreview.h"
 
 Editor::Editor(QWidget *parent) : QMainWindow(parent) {
 	ui.setupUi(this);

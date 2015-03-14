@@ -1,8 +1,7 @@
 #ifndef __INPUT_H__
 #define __INPUT_H__
 
-#define GLFW_DLL
-#include <GLFW/glfw3.h>
+struct GLFWwindow;
 
 /** @ingroup game
  * @{

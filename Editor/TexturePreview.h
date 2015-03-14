@@ -2,13 +2,16 @@
 #define __TEXTUREPREVIEW_H__
 
 #include "Preview.h"
-#include <ShaderProgram.h>
-#include <Texture.h>
+#include <gl/glew.h>
 #include <glm/glm.hpp>
 
+class Texture;
+class Shader;
+class ShaderProgram;
+
 /** @ingroup editor
-* @{
-*/
+ * @{
+ */
 
 /// Previews a texture.
 class TexturePreview : public Preview {

@@ -1,4 +1,5 @@
 #include "ShaderProgram.h"
+#include "Shader.h"
 
 ShaderProgram::ShaderProgram(std::initializer_list<const Shader*> shaders) {
 	shaderProgram = glCreateProgram();

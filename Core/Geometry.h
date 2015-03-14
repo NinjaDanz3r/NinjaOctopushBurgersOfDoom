@@ -4,10 +4,7 @@
 #include "Core.h"
 #include "AABB.h"
 #include <GL/glew.h>
-#include <GL/GL.h>
 #include <glm/glm.hpp>
-#include "ShaderProgram.h"
-//#include "Rectangle2D.h"
 
 class Geometry;
 /** @ingroup core

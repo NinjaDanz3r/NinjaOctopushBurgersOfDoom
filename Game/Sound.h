@@ -1,8 +1,10 @@
 #ifndef __SOUND_H__
 #define __SOUND_H__
 
-#include "SoundBuffer.h"
 #include <glm/glm.hpp>
+#include <AL/al.h>
+
+class SoundBuffer;
 
 /** @ingroup game
  * @{

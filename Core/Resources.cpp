@@ -1,4 +1,6 @@
 #include "Resources.h"
+#include "ModelResource.h"
+#include "TextureResource.h"
 #include "util.h"
 
 Resources::Resources() {

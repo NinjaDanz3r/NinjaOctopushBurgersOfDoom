@@ -6,8 +6,8 @@
 #include <glm/glm.hpp>
 
 /** @ingroup core
-* @{
-*/
+ * @{
+ */
 
 /// Oriented bounding box.
 /**

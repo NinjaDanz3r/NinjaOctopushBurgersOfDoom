@@ -3,13 +3,14 @@
 
 #include "Core.h"
 #include <glm/glm.hpp>
-#include "Triangle.h"
-#include "AABB.h"
-#include "OBB.h"
+
+class Triangle;
+class OBB;
+class AABB;
 
 /** @ingroup core
-* @{
-*/
+ * @{
+ */
 
 /// A ray.
 /**

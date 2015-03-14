@@ -2,13 +2,15 @@
 #define __MODELPREVIEW_H__
 
 #include "Preview.h"
-#include <ShaderProgram.h>
-#include <Model.h>
 #include <glm/glm.hpp>
 
+class Model;
+class Shader;
+class ShaderProgram;
+
 /** @ingroup editor
-* @{
-*/
+ * @{
+ */
 
 /// Previews a model.
 class ModelPreview : public Preview {

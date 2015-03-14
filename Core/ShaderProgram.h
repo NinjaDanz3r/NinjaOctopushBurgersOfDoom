@@ -1,8 +1,11 @@
 #ifndef __SHADERPROGRAM_H__
 #define __SHADERPROGRAM_H__
 
-#include "Shader.h"
+#include "Core.h"
+#include <gl/glew.h>
 #include <initializer_list>
+
+class Shader;
 
 /** @ingroup core
  * @{

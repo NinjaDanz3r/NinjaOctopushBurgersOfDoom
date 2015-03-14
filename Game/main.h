@@ -1,6 +1,8 @@
 #ifndef __MAIN_H__
 #define __MAIN_H__
 
+#include <GL/glew.h>
+
 #define GLFW_DLL
 #include <GLFW/glfw3.h>
 

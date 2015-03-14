@@ -1,17 +1,16 @@
+#include "ParticleScene.h"
+
 #include <gl/glew.h>
 #include <gl/GL.h>
 
-#include <GLFW\glfw3.h>
-
 #include <Texture2D.h>
 
-#include "ParticleScene.h"
-
-#include "Square.h"
+#include <Shader.h>
+#include <ShaderProgram.h>
+#include "Player.h"
+#include "ParticleSystem.h"
 
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/transform.hpp>
 
 ParticleScene::ParticleScene() {
 	vertexShader = new Shader("particle_vertex.glsl", GL_VERTEX_SHADER);

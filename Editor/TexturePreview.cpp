@@ -1,4 +1,7 @@
 #include "TexturePreview.h"
+#include <Shader.h>
+#include <ShaderProgram.h>
+#include <Texture.h>
 
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))
 

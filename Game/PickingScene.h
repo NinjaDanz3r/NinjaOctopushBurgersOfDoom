@@ -2,12 +2,17 @@
 #define __PICKINGSCENE_H__
 
 #include "Scene.h"
-#include "Shader.h"
-#include "ShaderProgram.h"
-#include "Texture2D.h"
-#include "GeometryObject.h"
-#include "Player.h"
+#include <gl/glew.h>
+#include <AABB.h>
 #include <vector>
+
+class Shader;
+class ShaderProgram;
+class Texture;
+class AABB;
+class Geometry;
+class GeometryObject;
+class Player;
 
 /** @ingroup game
 * @{

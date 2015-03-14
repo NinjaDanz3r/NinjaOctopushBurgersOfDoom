@@ -1,10 +1,11 @@
 #ifndef __SETTINGS_H__
 #define __SETTINGS_H__
+
 #include <string>
 
 /** @ingroup editor
-* @{
-*/
+ * @{
+ */
 
 /// Handles various settings that the user can modify.
 /**

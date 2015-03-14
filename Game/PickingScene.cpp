@@ -1,17 +1,19 @@
-#include <gl/glew.h>
-#include <gl/GL.h>
-
-#include <GLFW\glfw3.h>
-
 #include "PickingScene.h"
+
+#include "Shader.h"
+#include "ShaderProgram.h"
+#include "GeometryObject.h"
+#include <AABB.h>
+#include "Player.h"
+
 #include <Ray.h>
 #include <Triangle.h>
-#include <AABB.h>
 
 #include "Square.h"
 #include "Texture2D.h"
 #include "input.h"
 #include "Model.h"
+#include "Camera.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>

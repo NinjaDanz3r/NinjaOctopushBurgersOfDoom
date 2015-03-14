@@ -1,15 +1,20 @@
+#include "TestScene.h"
 #include <gl/glew.h>
 #include <gl/GL.h>
 
-#include <GLFW\glfw3.h>
-
-#include "TestScene.h"
+#include "FrameBufferObjects.h"
 
 #include <Model.h>
+#include "GeometryObject.h"
 #include <Texture2D.h>
 
 #include "settings.h"
 #include "input.h"
+
+#include <Shader.h>
+#include <ShaderProgram.h>
+#include "Camera.h"
+#include "Player.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>

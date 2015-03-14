@@ -2,15 +2,11 @@
 #define __PREVIEWWIDGET_H__
 
 #include <gl/glew.h>
-#include <gl/GL.h>
-
 #include <QGLWidget>
-#include <Shader.h>
-#include <ShaderProgram.h>
-#include <Texture.h>
-#include "Preview.h"
-#include "TexturePreview.h"
-#include "ModelPreview.h"
+
+class Preview;
+class TexturePreview;
+class ModelPreview;
 
 /** @ingroup editor
  * @{

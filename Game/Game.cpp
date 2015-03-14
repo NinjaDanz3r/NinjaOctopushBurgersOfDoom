@@ -11,6 +11,12 @@
 #include "input.h"
 #include "settings.h"
 
+#include "Scene.h"
+#include "SoundSystem.h"
+
+#define GLFW_DLL
+#include <GLFW/glfw3.h>
+
 #include <stdio.h>
 
 static std::map<std::string, Scene*(*)()>* sceneMap;

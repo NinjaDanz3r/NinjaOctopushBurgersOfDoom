@@ -2,11 +2,12 @@
 #define __PARTICLESCENE_H__
 
 #include "Scene.h"
-#include <Shader.h>
-#include <ShaderProgram.h>
-#include <Texture.h>
-#include "Player.h"
-#include "ParticleSystem.h"
+
+class Shader;
+class ShaderProgram;
+class Texture;
+class Player;
+class ParticleSystem;
 
 /** @ingroup game
  * @{
