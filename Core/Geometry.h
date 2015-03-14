@@ -7,9 +7,9 @@
 #include <GL/GL.h>
 #include <glm/glm.hpp>
 #include "ShaderProgram.h"
-#include "Rectangle2D.h"
+//#include "Rectangle2D.h"
 
-class Rectangle2D;
+class Geometry;
 /** @ingroup core
  * @{
  */

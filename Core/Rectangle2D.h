@@ -2,11 +2,10 @@
 #define __RECTANGLE_H__
 
 #include "Core.h"
-#include "Model.h"
+//#include "Model.h"
 #include <glm/glm.hpp>
 
 class Frustum;
-class Model;
 class Rectangle2D;
 /** @ingroup core
  * @{
@@ -31,7 +30,7 @@ class Rectangle2D {
 		 */
 		CORE_EXPORT Rectangle2D(const glm::vec2& origin = { 0.f, 0.f }, const glm::vec2& dimensions = { 0.f, 0.f });
 		
-		CORE_EXPORT Rectangle2D::Rectangle2D(const Model & model, glm::mat4 matrix);
+		//CORE_EXPORT Rectangle2D::Rectangle2D(const Model & model, glm::mat4 matrix);
 
 		/// Check collision between rectangle and a Frustum.
 		/**
