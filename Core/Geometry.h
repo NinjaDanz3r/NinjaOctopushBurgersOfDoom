@@ -7,8 +7,9 @@
 #include <GL/GL.h>
 #include <glm/glm.hpp>
 #include "ShaderProgram.h"
-#include "Rectangle.h"
+#include "Rectangle2D.h"
 
+class Rectangle2D;
 /** @ingroup core
  * @{
  */
@@ -65,7 +66,7 @@ class Geometry {
 		AABB aabb;
 
 		//Rectangle rectangle
-		Rectangle rect;
+		Rectangle2D rect;
 
 		/// Get the vertex array.
 		/**
