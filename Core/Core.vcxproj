@@ -164,9 +164,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AABB.h" />
+    <ClInclude Include="Frustum.h" />
     <ClInclude Include="OBB.h" />
     <ClInclude Include="Ray.h" />
-    <ClInclude Include="Rectangle.h" />
+    <ClInclude Include="Rectangle2D.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Core.h" />
@@ -183,10 +184,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AABB.cpp" />
+    <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="OBB.cpp" />
     <ClCompile Include="Ray.cpp" />
-    <ClCompile Include="Rectangle.cpp" />
+    <ClCompile Include="Rectangle2D.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Model.cpp" />

@@ -32,9 +32,9 @@ void Geometry::createAabb() {
 	}
 
 	// Set origin
-	origin.x = (minValues.x + maxValues.x) / 2;
-	origin.y = (minValues.y + maxValues.y) / 2;
-	origin.z = (minValues.z + maxValues.z) / 2;
+	origin.x = (minValues.x + maxValues.x) / 2.f;
+	origin.y = (minValues.y + maxValues.y) / 2.f;
+	origin.z = (minValues.z + maxValues.z) / 2.f;
 
 	// Width
 	dim.x = maxValues.x - minValues.x;

@@ -39,7 +39,6 @@ class Game {
 		void update();
 
 	private:
-		void setWindowFPS();
 		void setWindowTitle();
 		void setSceneMap();
 		void setScene(const char*);
