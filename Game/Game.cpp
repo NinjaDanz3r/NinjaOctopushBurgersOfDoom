@@ -62,9 +62,6 @@ void Game::update() {
 	}
 
 	setWindowTitle();
-
-	//if (settings::showFPS() || settings::showCursorCoordinates)
-	//	setWindowFPS();
 }
 
 void Game::setWindowTitle()
@@ -80,21 +77,6 @@ void Game::setWindowTitle()
 			len += sprintf(title + len, "[FPS: %i] - ", frames);
 		if (settings::showCursorCoordinates())
 			len += sprintf(title + len, "[CursorXY: %.f %.f] - ", input::cursorX(), input::cursorY());
-
-		glfwSetWindowTitle(window, title);
-
-		frames = 0;
-		prevFPSTime += 1.0;
-	}
-}
-
-void Game::setWindowFPS() {
-	frames++;
-
-	if (glfwGetTime() - prevFPSTime >= 1.0) {
-		char title[256];
-		title[255] = '\0';
-		sprintf(title, "Super Awesome 3D Project - [FPS: %i] - [CursorsXY: %.f , %.f]", frames, input::cursorX() , input::cursorY() );
 
 		glfwSetWindowTitle(window, title);
 
