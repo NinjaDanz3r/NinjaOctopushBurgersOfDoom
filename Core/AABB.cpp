@@ -1,4 +1,6 @@
 #include "AABB.h"
+#include "Frustum.h"
+#include "Rectangle2D.h"
 #include <limits>
 
 AABB::AABB(const glm::vec3& dimensions, const glm::vec3& origin, const glm::vec3& minVertex, const glm::vec3& maxVertex) {
@@ -8,7 +10,7 @@ AABB::AABB(const glm::vec3& dimensions, const glm::vec3& origin, const glm::vec3
 	this->maxVertex = maxVertex;
 }
 
-AABB::AABB(const Rectangle& rectangle) {
+AABB::AABB(const Rectangle2D& rectangle) {
 	this->dimensions = glm::vec3(rectangle.dimensions.x, std::numeric_limits<float>::max(), rectangle.dimensions.y);
 	this->origin = glm::vec3(rectangle.origin.x, 0.f, rectangle.origin.y);
 	this->minVertex = glm::vec3(rectangle.origin.x - rectangle.dimensions.x / 2.f, std::numeric_limits<float>::lowest() / 2.f, rectangle.origin.y - rectangle.dimensions.y / 2.f);

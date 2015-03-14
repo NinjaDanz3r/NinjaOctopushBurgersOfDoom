@@ -3,14 +3,13 @@
 
 #include "Core.h"
 #include <glm/glm.hpp>
-#include "Frustum.h"
-#include "Rectangle.h"
-
-/** @ingroup core
-* @{
-*/
 
 class Frustum;
+class Rectangle2D;
+
+/** @ingroup core
+ * @{
+ */
 
 /// An axis-aligned bounding box.
 /**
@@ -41,11 +40,11 @@ class AABB {
 
 		/// Create new axis-aligned bounding box.
 		/**
-		 * Create infinitely high axis-aligned bounding box from a Rectangle.
+		 * Create infinitely high axis-aligned bounding box from a 2D rectangle.
 		 * Useful for frustum culling.
 		 * @param rectangle The rectangle.
 		 */
-		CORE_EXPORT AABB(const Rectangle& rectangle);
+		CORE_EXPORT AABB(const Rectangle2D& rectangle);
 
 		/// Check collision between AABB and a frustum.
 		/**

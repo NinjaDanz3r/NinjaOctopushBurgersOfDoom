@@ -1,4 +1,6 @@
 #include "Frustum.h"
+#include "AABB.h"
+#include "Rectangle2D.h"
 
 Frustum::Frustum(const glm::mat4& matrix) {
 	// Left clipping plane
@@ -65,6 +67,10 @@ bool Frustum::collide(const AABB& aabb) const {
 			return false;
 	}
 	return true;
+}
+
+bool Frustum::collide(const Rectangle2D& rectangle) const {
+	return collide(AABB(rectangle));
 }
 
 float Frustum::distanceToPoint(const glm::vec4& plane, const glm::vec3& point) {

@@ -93,10 +93,10 @@
     <ClInclude Include="OBB.h">
       <Filter>Header Files\IntersectionTesting</Filter>
     </ClInclude>
-    <ClInclude Include="Rectangle.h">
+    <ClInclude Include="Frustum.h">
       <Filter>Header Files\IntersectionTesting</Filter>
     </ClInclude>
-    <ClInclude Include="Frustum.h">
+    <ClInclude Include="Rectangle2D.h">
       <Filter>Header Files\IntersectionTesting</Filter>
     </ClInclude>
   </ItemGroup>
@@ -143,10 +143,10 @@
     <ClCompile Include="AABB.cpp">
       <Filter>Source Files\IntersectionTesting</Filter>
     </ClCompile>
-    <ClCompile Include="Rectangle.cpp">
+    <ClCompile Include="Frustum.cpp">
       <Filter>Source Files\IntersectionTesting</Filter>
     </ClCompile>
-    <ClCompile Include="Frustum.cpp">
+    <ClCompile Include="Rectangle2D.cpp">
       <Filter>Source Files\IntersectionTesting</Filter>
     </ClCompile>
   </ItemGroup>
