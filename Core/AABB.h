@@ -4,6 +4,7 @@
 #include "Core.h"
 #include <glm/glm.hpp>
 #include "Frustum.h"
+#include "Rectangle.h"
 
 /** @ingroup core
 * @{
@@ -37,6 +38,14 @@ class AABB {
 		 * @param maxVertex Max vertex.
 		 */
 		CORE_EXPORT AABB(const glm::vec3& dimensions = { 0.f, 0.f, 0.f }, const glm::vec3& origin = { 0.f, 0.f, 0.f }, const glm::vec3& minVertex = { 0.f, 0.f, 0.f }, const glm::vec3& maxVertex = { 0.f, 0.f, 0.f });
+
+		/// Create new axis-aligned bounding box.
+		/**
+		 * Create infinitely high axis-aligned bounding box from a Rectangle.
+		 * Useful for frustum culling.
+		 * @param rectangle The rectangle.
+		 */
+		CORE_EXPORT AABB(const Rectangle& rectangle);
 
 		/// Check collision between AABB and a frustum.
 		/**
