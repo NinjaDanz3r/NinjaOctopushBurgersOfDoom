@@ -13,7 +13,7 @@ void Geometry::createAabb() {
 	minValues = maxValues = origin = glm::vec3(0.f, 0.f, 0.f);
 	unsigned int numVerts = vertexCount();
 
-	// Find minimum bounding points
+	// Find minimum/maximum bounding points
 	for (unsigned int i = 0; i < numVerts; i++) {
 		if (currVert[i].position.x > maxValues.x)
 			maxValues.x = currVert[i].position.x;

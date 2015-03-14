@@ -2,6 +2,7 @@
 #define __OBB_H__
 
 #include "Core.h"
+#include "AABB.h"
 #include <glm/glm.hpp>
 
 /** @ingroup core
@@ -14,6 +15,9 @@
  */
 class OBB {
 	public:
+		//OBB from AABB constructor
+		OBB(AABB aabb, glm::mat4 matrix);
+
 		/// First base vector.
 		glm::vec3 e1;
 

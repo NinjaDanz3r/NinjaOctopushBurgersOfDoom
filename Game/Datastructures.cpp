@@ -70,7 +70,7 @@ bool QuadTree::addObject(GeometryObject* object) {
 			return childTree[Q3]->addObject(object);
 		if (childTree[Q4]->containsObject(object))
 			return childTree[Q4]->addObject(object);
-		return false; //Object was not found to be within one of the cubes, return false.
+		return false; //Object was not found to be within one of the rectangles, return false.
 	}
 }
 
@@ -79,11 +79,11 @@ bool QuadTree::addObject(GeometryObject* object) {
 //Check if object origin is within bounds.
 bool QuadTree::containsObject(GeometryObject* object) {
 	glm::vec3 pos = object->position();
-	return	true;/*(
-				(pos.x < (origin.x + dim.x) && pos.x > (origin.x - dim.x)) &&
-				(pos.z < (origin.z + dim.x) && pos.z > (origin.z - dim.x)) &&
-				(pos.y > (origin.y + dim.y) && pos.y < (origin.y - dim.y))
-			);*/
+	return	(
+				//TODO: Foreach point (8) in minimum obb containing object
+				(pos.x < (rectangle.origin.x + (rectangle.dimensions.x) / 2.f) && pos.x > (rectangle.origin.x - (rectangle.dimensions.x) / 2.f)) &&
+				(pos.z < (rectangle.origin.y + (rectangle.dimensions.y) / 2.f) && pos.z < (rectangle.origin.y - (rectangle.dimensions.y) / 2.f))
+		);
 }
 
 QuadTree::~QuadTree() {

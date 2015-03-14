@@ -7,6 +7,7 @@
 #include <GL/GL.h>
 #include <glm/glm.hpp>
 #include "ShaderProgram.h"
+#include "Rectangle.h"
 
 /** @ingroup core
  * @{
@@ -62,6 +63,8 @@ class Geometry {
 
 		/// Localspace AABB for the geometry
 		AABB aabb;
+		// Worldsapce rectangle
+		Rectangle rect;
 
 		/// Get the vertex array.
 		/**
