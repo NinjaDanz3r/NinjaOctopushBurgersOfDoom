@@ -9,6 +9,8 @@
 * @{
 */
 
+class AABB;
+
 /// A viewing frustum.
 /**
  * Used for frustum culling.
