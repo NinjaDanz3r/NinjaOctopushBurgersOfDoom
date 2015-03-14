@@ -1,6 +1,8 @@
 #include "FrameBufferObjects.h"
-#include "util.h"
-#include <glm/glm.hpp>
+
+#include <util.h>
+#include <ShaderProgram.h>
+#include "Camera.h"
 
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))
 

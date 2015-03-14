@@ -2,7 +2,7 @@
 #define __SOUNDBUFFER_H__
 
 #include "SoundFile.h"
-#include <AL\al.h>
+#include <AL/al.h>
 
 /** @ingroup game
  * @{

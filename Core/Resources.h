@@ -5,8 +5,9 @@
 #include <fstream>
 #include <vector>
 #include <map>
-#include "ModelResource.h"
-#include "TextureResource.h"
+
+class ModelResource;
+class TextureResource;
 
 /** @ingroup core
  * @{

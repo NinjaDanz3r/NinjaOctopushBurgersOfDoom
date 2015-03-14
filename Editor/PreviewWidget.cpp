@@ -1,4 +1,7 @@
 #include "PreviewWidget.h"
+#include "Preview.h"
+#include "TexturePreview.h"
+#include "ModelPreview.h"
 
 #include <Texture2D.h>
 

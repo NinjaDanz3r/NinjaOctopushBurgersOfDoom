@@ -1,16 +1,27 @@
+#include "AudioScene.h"
 #include <gl/glew.h>
 #include <gl/GL.h>
 
-#include <GLFW/glfw3.h>
+#include "FrameBufferObjects.h"
 
-#include "AudioScene.h"
-#include "SoundSystem.h"
-
+#include <Geometry.h>
+#include "GeometryObject.h"
 #include "Cube.h"
 #include <Texture2D.h>
 
 #include "settings.h"
 #include "input.h"
+
+#include <Shader.h>
+#include <ShaderProgram.h>
+#include "Camera.h"
+#include "Player.h"
+
+#include "SoundSystem.h"
+#include "Listener.h"
+#include "WaveFile.h"
+#include "SoundBuffer.h"
+#include "Sound.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>

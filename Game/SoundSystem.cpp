@@ -1,5 +1,6 @@
 #include "SoundSystem.h"
 #include <util.h>
+#include "Listener.h"
 
 #include <AL/al.h>
 

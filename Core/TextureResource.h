@@ -4,7 +4,8 @@
 #include "Core.h"
 #include <string>
 #include <fstream>
-#include "Texture.h"
+
+class Texture;
 
 /** @ingroup core
  * @{

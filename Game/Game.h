@@ -2,14 +2,11 @@
 #define __GAME_H__
 
 #include <gl/glew.h>
-#include <gl/GL.h>
 #include <map>
 
-#include "Scene.h"
-#include "SoundSystem.h"
-
-#define GLFW_DLL
-#include <GLFW/glfw3.h>
+struct GLFWwindow;
+class SoundSystem;
+class Scene;
 
 /// The game.
 /** @defgroup game Game

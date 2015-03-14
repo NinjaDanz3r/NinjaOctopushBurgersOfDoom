@@ -4,9 +4,10 @@
 #include <vector>
 #include <glm/glm.hpp>
 #include <GL/glew.h>
-#include <ShaderProgram.h>
-#include <Texture.h>
-#include "Camera.h"
+
+class ShaderProgram;
+class Texture;
+class Camera;
 
 /** @ingroup game
  * @{

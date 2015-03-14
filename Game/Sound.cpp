@@ -1,5 +1,6 @@
 #include "Sound.h"
 
+#include "SoundBuffer.h"
 #include <AL/alc.h>
 #include "SoundSystem.h"
 

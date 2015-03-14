@@ -1,16 +1,24 @@
+#include "TerrainScene.h"
 #include <gl/glew.h>
 #include <gl/GL.h>
 
-#include <GLFW/glfw3.h>
-
-#include "TerrainScene.h"
+#include "FrameBufferObjects.h"
 #include "SoundSystem.h"
+#include "Listener.h"
 
 #include "Terrain.h"
+#include "TerrainObject.h"
+#include "Skybox.h"
 #include <Texture2D.h>
+#include "CubeMapTexture.h"
 
 #include "settings.h"
 #include "input.h"
+
+#include <Shader.h>
+#include <ShaderProgram.h>
+#include "Camera.h"
+#include "Player.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>

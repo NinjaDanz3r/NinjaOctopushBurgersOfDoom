@@ -2,7 +2,8 @@
 #define __GEOMETRYOBJECT_H__
 
 #include "Object.h"
-#include <Geometry.h>
+
+class Geometry;
 
 /** @ingroup game
  * @{

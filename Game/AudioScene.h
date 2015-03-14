@@ -1,17 +1,18 @@
 #ifndef __AUDIOSCENE_H__
 #define __AUDIOSCENE_H__
 
-#include "FrameBufferObjects.h"
 #include "Scene.h"
-#include <Shader.h>
-#include <ShaderProgram.h>
-#include <Texture.h>
-#include <Geometry.h>
-#include "GeometryObject.h"
-#include "Player.h"
-#include "WaveFile.h"
-#include "SoundBuffer.h"
-#include "Sound.h"
+
+class Shader;
+class ShaderProgram;
+class Texture;
+class Geometry;
+class GeometryObject;
+class Player;
+class FrameBufferObjects;
+class WaveFile;
+class SoundBuffer;
+class Sound;
 
 /** @ingroup game
  * @{

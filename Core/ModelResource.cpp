@@ -1,4 +1,5 @@
 #include "ModelResource.h"
+#include "Model.h"
 #include "util.h"
 
 ModelResource::ModelResource(const std::string &name, Model* model) {

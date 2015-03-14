@@ -1,9 +1,10 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
-#include <Project.h>
 #include <QtWidgets/QMainWindow>
 #include "ui_editor.h"
+
+class Project;
 
 /// The editor.
 /** @defgroup editor Editor

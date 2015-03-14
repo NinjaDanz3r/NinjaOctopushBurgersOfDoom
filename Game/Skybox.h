@@ -1,9 +1,12 @@
 #ifndef __SKYBOX_H__
 #define __SKYBOX_H__
 
-#include "CubeMapTexture.h"
-#include "Camera.h"
-#include <ShaderProgram.h>
+#include <GL/glew.h>
+
+class CubeMapTexture;
+class Shader;
+class ShaderProgram;
+class Camera;
 
 /** @ingroup game
  * @{

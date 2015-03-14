@@ -1,9 +1,9 @@
 #ifndef __SOUNDSYSTEM_H__
 #define __SOUNDSYSTEM_H__
 
-#include "Listener.h"
-
 #include <AL/alc.h>
+
+class Listener;
 
 /** @ingroup game
  * @{

@@ -1,14 +1,15 @@
 #ifndef __TESTSCENE_H__
 #define __TESTSCENE_H__
 
-#include "FrameBufferObjects.h"
 #include "Scene.h"
-#include <Shader.h>
-#include <ShaderProgram.h>
-#include <Texture.h>
-#include <Geometry.h>
-#include "GeometryObject.h"
-#include "Player.h"
+
+class FrameBufferObjects;
+class Shader;
+class ShaderProgram;
+class Texture;
+class Geometry;
+class GeometryObject;
+class Player;
 
 /** @ingroup game
  * @{

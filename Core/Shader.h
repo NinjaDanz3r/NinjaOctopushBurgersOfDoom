@@ -3,7 +3,6 @@
 
 #include "Core.h"
 #include <gl/glew.h>
-#include <gl/GL.h>
 #include <string>
 
 /** @ingroup core

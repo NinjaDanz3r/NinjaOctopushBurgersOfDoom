@@ -2,7 +2,8 @@
 #define __TERRAINOBJECT_H__
 
 #include "GeometryObject.h"
-#include "Terrain.h"
+
+class Terrain;
 
 /** @ingroup game
  * @{

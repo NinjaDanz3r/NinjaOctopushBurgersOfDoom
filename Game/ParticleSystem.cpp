@@ -1,4 +1,7 @@
 #include "ParticleSystem.h"
+#include <ShaderProgram.h>
+#include <Texture.h>
+#include "Camera.h"
 #include <vector>
 
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))

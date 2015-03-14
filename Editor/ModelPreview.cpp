@@ -1,4 +1,7 @@
 #include "ModelPreview.h"
+#include <Shader.h>
+#include <ShaderProgram.h>
+#include <Model.h>
 
 ModelPreview::ModelPreview() {
 	vertexShader = new Shader("showModel_vertex.glsl", GL_VERTEX_SHADER);

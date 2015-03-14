@@ -5,8 +5,8 @@
 #include <glm/glm.hpp>
 
 /** @ingroup core
-* @{
-*/
+ * @{
+ */
 
 /// A triangle.
 /**

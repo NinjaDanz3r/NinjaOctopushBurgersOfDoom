@@ -4,7 +4,8 @@
 #include "Core.h"
 #include <string>
 #include <fstream>
-#include "Model.h"
+
+class Model;
 
 /** @ingroup core
  * @{
