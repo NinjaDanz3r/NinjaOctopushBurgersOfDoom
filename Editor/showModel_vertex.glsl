@@ -5,9 +5,13 @@ Simple pass-through vertex shader - Vertex Shader
 layout(location = 0) in vec3 vertex_position;
 layout(location = 1) in vec3 vertex_normal;
 layout(location = 2) in vec2 vertex_texture;
+layout(location = 3) in vec3 vertex_tangent;
+layout(location = 4) in vec3 vertex_bitangent;
 
 void main () {
 	vec3 n = vertex_normal;
 	vec2 t = vertex_texture;
+	vec3 tangent = vertex_tangent;
+	vec3 bitangent = vertex_bitangent;
 	gl_Position = vec4(vertex_position * 0.01, 1.0);
 }
