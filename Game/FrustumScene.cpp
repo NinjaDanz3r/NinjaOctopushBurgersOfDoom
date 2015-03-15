@@ -60,7 +60,10 @@ FrustumScene::FrustumScene() {
 		tempGeometry->setRotation((float)rand1, (float)rand2, (float)rand3);
 		multiGeometry.push_back(tempGeometry);
 	}
-	//Rectangle2D rect(glm::vec2(0.f, 0.f), glm::vec2(40.f, 20.f));
+	Rectangle2D rect1(glm::vec2(0.f, 0.f), glm::vec2(10.f, 10.f));
+	Rectangle2D rect2(glm::vec2(-50.f, 50.f), glm::vec2(10.f, 10.f));
+	bool test = rect1.overlaps(rect2);
+	fprintf(stderr, "rect Hit: %i", test);
 	//QuadTree qTree(rect, 0, 2);
 	//qTree.debugTree("Root");
 

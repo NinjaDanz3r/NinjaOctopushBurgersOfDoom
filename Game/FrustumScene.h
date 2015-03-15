@@ -3,6 +3,7 @@
 
 #include "Scene.h"
 #include <vector>
+#include <Rectangle2D.h>
 
 class Shader;
 class ShaderProgram;

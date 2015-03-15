@@ -45,8 +45,8 @@ Rectangle2D::Rectangle2D(const Geometry & geometry, glm::mat4 matrix)
 
 
 bool Rectangle2D::overlaps(const Rectangle2D & otherRect){
-	glm::vec2 verts1[2];
-	glm::vec2 verts2[2];
+	float rect1MinX, rect1MinY,rect1MaxX, rect1MaxY;
+	float rect2MinX, rect2MinY, rect2MaxX, rect2MaxY;
 
 	float dimX, dimY;
 
@@ -54,21 +54,22 @@ bool Rectangle2D::overlaps(const Rectangle2D & otherRect){
 	dimY = dimensions.y / 2;
 
 	//Points we will use in order to create triangles
-	verts1[0] = glm::vec2(origin.x + dimX, origin.y + dimY); //Upper right corner
-	verts1[1] = glm::vec2(origin.x - dimX, origin.y - dimY); //Lower left corner
+	rect1MaxX = origin.x + dimX;
+	rect1MaxY = origin.y + dimY; //Upper right corner
+
+	rect1MinX = origin.x - dimX;
+	rect1MinY = origin.y - dimY; //Lower left corner
 
 	dimX = otherRect.dimensions.x / 2;
 	dimY = otherRect.dimensions.y / 2;
 
 	//Points we are going to test
-	verts2[0] = glm::vec2(otherRect.origin.x + dimX, otherRect.origin.y + dimY); //Upper right corner
-	verts2[1] = glm::vec2(otherRect.origin.x - dimX, otherRect.origin.y - dimY); //Lower left corner
+	rect2MaxX = otherRect.origin.x + dimX;
+	rect2MaxY = otherRect.origin.y + dimY; //Upper right corner
+
+	rect2MinX = otherRect.origin.x - dimX;
+	rect2MinY = otherRect.origin.y - dimY; //Lower left corner
 
 	//if all conditions are true, then there is no overlap since the rectangle 2 is entirely outside of rectangle 1
-	return (
-		(verts1[1].x < verts2[0].x) &&	//Rectangle 1 left to the left of rectangle 2 right edge
-		(verts1[0].x > verts2[1].x) &&	//Rectangle 1 right to the left of rectangle 2 left edge
-		(verts1[0].y < verts2[1].y) &&	//Rectangle 1 top above of rectangle 2 bottom edge
-		(verts1[1].y > verts2[0].y)		//Rectangle 1 bottom below of rectangle 2 top edge
-		);
+	return !(rect1MinX > rect2MaxX || rect1MaxX < rect2MinX || rect1MinY > rect2MaxY || rect1MaxY < rect1MinY);
 }
