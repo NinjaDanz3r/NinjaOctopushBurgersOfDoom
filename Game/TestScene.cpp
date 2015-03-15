@@ -26,7 +26,7 @@ TestScene::TestScene() {
 	state = 0;
 
 	diffuse = new Texture2D("Resources/Models/rock01/diffuse.tga");
-	normal = new Texture2D("Resources/Textures/normaltest.tga");
+	normal = new Texture2D("Resources/Models/rock01/normal.tga");
 	specular = new Texture2D("Resources/Models/rock01/specular.tga");
 	
 	vertexShader = new Shader("default_vertex.glsl", GL_VERTEX_SHADER);

@@ -28,9 +28,9 @@ vec3 calculateNormal(vec3 normal, vec3 tangent, vec3 mapNormal) {
     vec3 t = normalize(tangent);
     t = normalize(t - dot(t, n) * n);
     vec3 b = cross(t, n);
-    vec3 mn = 2.0 * mapNormal - vec3(1.0, 1.0, 1.0);
+    vec3 mn = normalize(2.0 * mapNormal - vec3(1.0, 1.0, 1.0));
     mat3 TBN = mat3(t, b, n);
-    return normalize(TBN * mn);
+    return TBN * mn;
 }
 
 void main () {
