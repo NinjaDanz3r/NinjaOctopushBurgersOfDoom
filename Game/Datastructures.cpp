@@ -75,15 +75,20 @@ bool QuadTree::addObject(GeometryObject* object, Rectangle2D rect) {
 }
 
 void QuadTree::getObjects(Frustum & frustum, std::map<GeometryObject*, GeometryObject*> & GeometryMap) {
-	if (depth == maxDepth && !objects.empty())
-	{
-		for (GeometryObject* obj : objects)
+
+	if (depth == maxDepth) {
+		if (!objects.empty())
+		{
+			for (GeometryObject* obj : objects)
 				GeometryMap[obj] = obj;
+		}
+		return;
 	}
-	else
-	{
-		if (frustum.collide(rectangle))
-			getObjects(frustum, GeometryMap);
+	else if(frustum.collide(rectangle)){
+			childTree[Q1]->getObjects(frustum, GeometryMap);
+			childTree[Q2]->getObjects(frustum, GeometryMap);
+			childTree[Q3]->getObjects(frustum, GeometryMap);
+			childTree[Q4]->getObjects(frustum, GeometryMap);
 	}
 }
 

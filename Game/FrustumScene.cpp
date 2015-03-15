@@ -134,7 +134,7 @@ void FrustumScene::render(int width, int height) {
 
 	// Send the matrices to the shader.
 	glm::mat4 view = player->camera()->view();
-	frustum = new Frustum(player->camera()->view() * player->camera()->projection(width, height)[0][0]);
+	frustum = new Frustum(player->camera()->projection(width, height)[0][0] * player->camera()->view());
 
 	qTree->getObjects(*frustum, geometryMap);
 	glUniformMatrix4fv(shaderProgram->uniformLocation("viewMatrix"), 1, GL_FALSE, &view[0][0]);
