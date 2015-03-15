@@ -16,9 +16,11 @@ Terrain::Terrain(const char* filename) {
 	// Convert height map to float.
 	heightMap = new float*[width];
 	normals = new glm::vec3*[width];
+	tangents = new glm::vec3*[width];
 	for (int i = 0; i < width; i++) {
 		heightMap[i] = new float[height];
 		normals[i] = new glm::vec3[height];
+		tangents[i] = new glm::vec3[height];
 	}
 
 	for (int x = 0; x < width; x++) {
@@ -37,8 +39,10 @@ Terrain::Terrain(const char* filename) {
 
 	for (int i = 0; i < width; i++) {
 		delete[] normals[i];
+		delete[] tangents[i];
 	}
 	delete[] normals;
+	delete[] tangents;
 
 	generateBuffers();
 	generateVertexArray();
@@ -188,6 +192,7 @@ void Terrain::calculateNormals() {
 			if (y == 0 || y == height - 1)
 				sy *= 2.f;
 
+			tangents[x][y] = glm::normalize(glm::vec3(2.f, sx, 0.f));
 			normals[x][y] = glm::normalize(glm::vec3(-width * sx, 2.f, -height * sy));
 		}
 	}
