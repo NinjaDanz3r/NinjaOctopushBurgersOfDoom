@@ -11,7 +11,6 @@
 #include "input.h"
 #include "settings.h"
 
-#include "Scene.h"
 #include "SoundSystem.h"
 
 #define GLFW_DLL

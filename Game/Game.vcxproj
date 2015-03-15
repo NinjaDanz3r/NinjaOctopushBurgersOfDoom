@@ -22,7 +22,6 @@
     <ClCompile Include="AudioScene.cpp" />
     <ClCompile Include="Datastructures.cpp" />
     <ClCompile Include="FrustumScene.cpp" />
-    <ClCompile Include="FrustumScene.h" />
     <ClCompile Include="ParticleScene.cpp" />
     <ClCompile Include="CubeMapTexture.cpp" />
     <ClCompile Include="PickingScene.cpp" />
@@ -55,6 +54,7 @@
     <ClInclude Include="AudioScene.h" />
     <ClInclude Include="Datastructures.h" />
     <ClInclude Include="ParticleScene.h" />
+    <ClInclude Include="FrustumScene.h" />
     <ClInclude Include="CubeMapTexture.h" />
     <ClInclude Include="PickingScene.h" />
     <ClInclude Include="FrameBufferObjects.h" />
