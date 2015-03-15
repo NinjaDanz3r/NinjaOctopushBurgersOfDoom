@@ -4,6 +4,8 @@
 #include <vector>
 #include <glm/glm.hpp>
 #include "Rectangle2D.h"
+#include <Frustum.h>
+#include <map>
 
 class QuadTree;
 
@@ -21,8 +23,8 @@ class QuadTree
 	public:
 		QuadTree(const Rectangle2D & _rect, int _depth, int _maxDepth);
 		~QuadTree();
-		bool addObject(GeometryObject* object); //returns true if object was added.
-		bool containsObject(GeometryObject* object);
+		bool addObject(GeometryObject* object, Rectangle2D rect); //returns true if object was added.
+		void getObjects(Frustum & frustum, std::map<GeometryObject*, GeometryObject*>& GeometryMap);
 		void debugTree(std::string test);
 	private:
 

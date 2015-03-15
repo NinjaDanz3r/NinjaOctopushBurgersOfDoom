@@ -50,22 +50,22 @@ FrustumScene::FrustumScene() {
 	for (int i = 0; i < numModels; i++){
 		GeometryObject* tempGeometry = new GeometryObject(geometry);
 		tempGeometry->setScale(glm::vec3(0.01f, 0.01f, 0.01f));
-		int rand1 = rand() % 21 - 10;
-		int rand2 = rand() % 21 - 10;
-		int rand3 = -10 - rand() % 10;
+		int rand1 = rand() % 1;
+		int rand2 = rand() % 1;
+		int rand3 = rand() % 1;
 		tempGeometry->setPosition(glm::vec3((float)rand1, (float)rand2, (float)rand3));
 		rand1 = rand() % 361;
 		rand2 = rand() % 361;
 		rand3 = rand() % 361;
 		tempGeometry->setRotation((float)rand1, (float)rand2, (float)rand3);
 		multiGeometry.push_back(tempGeometry);
+
+		Rectangle2D* tempRectangle = new Rectangle2D(*tempGeometry->geometry(), tempGeometry->modelMatrix());
+		multiRectangle.push_back(tempRectangle);
 	}
-	Rectangle2D rect1(glm::vec2(0.f, 0.f), glm::vec2(10.f, 10.f));
-	Rectangle2D rect2(glm::vec2(-50.f, 50.f), glm::vec2(10.f, 10.f));
-	bool test = rect1.overlaps(rect2);
-	fprintf(stderr, "rect Hit: %i", test);
-	//QuadTree qTree(rect, 0, 2);
-	//qTree.debugTree("Root");
+
+	Rectangle2D rect(glm::vec2(0.f, 0.f), glm::vec2(20.f, 20.f));
+	qTree = new QuadTree(rect, 0, 2);
 
 	player = new Player();
 	player->setMovementSpeed(2.0f);
@@ -86,8 +86,11 @@ FrustumScene::~FrustumScene() {
 
 	for (int i = 0; i < numModels; i++) {
 		delete multiGeometry[i];
+		delete multiRectangle[i];
 	}
+
 	multiGeometry.clear();
+	multiRectangle.clear();
 
 	delete geometry;
 	delete player;
@@ -131,14 +134,17 @@ void FrustumScene::render(int width, int height) {
 
 	// Send the matrices to the shader.
 	glm::mat4 view = player->camera()->view();
+	frustum = new Frustum(player->camera()->view() * player->camera()->projection(width, height)[0][0]);
 
+	qTree->getObjects(*frustum, geometryMap);
 	glUniformMatrix4fv(shaderProgram->uniformLocation("viewMatrix"), 1, GL_FALSE, &view[0][0]);
 	glUniformMatrix4fv(shaderProgram->uniformLocation("projectionMatrix"), 1, GL_FALSE, &player->camera()->projection(width, height)[0][0]);
 	glBindVertexArray(geometry->vertexArray());
 	// Drawing loop
-	for (int i = 0; i < numModels; i++) {
+	typedef std::map<GeometryObject*, GeometryObject*>::iterator it_type;
+	for (it_type iterator = geometryMap.begin(); iterator != geometryMap.end(); iterator++) {
 		// Model matrix, unique for each model.
-		glm::mat4 model = multiGeometry[i]->modelMatrix();
+		glm::mat4 model = iterator->second->modelMatrix();
 
 		glm::mat4 MV = view * model;
 		glm::mat4 N = glm::transpose(glm::inverse(MV));

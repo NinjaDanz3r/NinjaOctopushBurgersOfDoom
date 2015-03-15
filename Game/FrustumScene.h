@@ -4,6 +4,8 @@
 #include "Scene.h"
 #include <vector>
 #include <Rectangle2D.h>
+#include "Datastructures.h"
+#include <Frustum.h>
 
 class Shader;
 class ShaderProgram;
@@ -62,8 +64,14 @@ class FrustumScene : public Scene {
 
 		Texture* texture;
 		Geometry* geometry;
+		QuadTree* qTree;
+
+		Frustum* frustum;
+		std::map<GeometryObject*, GeometryObject*> geometryMap;
+
 		std::vector<GeometryObject*> multiGeometry;
-		int numModels = 1;
+		std::vector<Rectangle2D*>  multiRectangle;
+		int numModels = 100;
 		Player* player;
 };
 

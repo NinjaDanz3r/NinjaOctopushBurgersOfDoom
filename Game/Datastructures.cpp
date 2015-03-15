@@ -55,35 +55,36 @@ void QuadTree::debugTree(std::string test)
 }
 
 //Add object to leaf node. Returns true if object was found to be within cubes.
-bool QuadTree::addObject(GeometryObject* object) {
+bool QuadTree::addObject(GeometryObject* object, Rectangle2D rect) {
 	if (depth == maxDepth){
 		objects.push_back(object);
 		return true;
 	}
 	else
 	{
-		if (childTree[Q1]->containsObject(object))
-			return childTree[Q1]->addObject(object);
-		if (childTree[Q2]->containsObject(object))
-			return childTree[Q2]->addObject(object);
-		if (childTree[Q3]->containsObject(object))
-			return childTree[Q3]->addObject(object);
-		if (childTree[Q4]->containsObject(object))
-			return childTree[Q4]->addObject(object);
+		if (childTree[Q1]->rectangle.overlaps(rect))
+			return childTree[Q1]->addObject(object, rect);
+		if (childTree[Q2]->rectangle.overlaps(rect))
+			return childTree[Q2]->addObject(object, rect);
+		if (childTree[Q3]->rectangle.overlaps(rect))
+			return childTree[Q3]->addObject(object, rect);
+		if (childTree[Q4]->rectangle.overlaps(rect))
+			return childTree[Q4]->addObject(object, rect);
 		return false; //Object was not found to be within one of the rectangles, return false.
 	}
 }
 
-
-
-//Check if object origin is within bounds.
-bool QuadTree::containsObject(GeometryObject* object) {
-	glm::vec3 pos = object->position();
-	return	(
-				//TODO: Foreach point (8) in minimum obb containing object
-				(pos.x < (rectangle.origin.x + (rectangle.dimensions.x) / 2.f) && pos.x > (rectangle.origin.x - (rectangle.dimensions.x) / 2.f)) &&
-				(pos.z < (rectangle.origin.y + (rectangle.dimensions.y) / 2.f) && pos.z < (rectangle.origin.y - (rectangle.dimensions.y) / 2.f))
-		);
+void QuadTree::getObjects(Frustum & frustum, std::map<GeometryObject*, GeometryObject*> & GeometryMap) {
+	if (depth == maxDepth && !objects.empty())
+	{
+		for (GeometryObject* obj : objects)
+				GeometryMap[obj] = obj;
+	}
+	else
+	{
+		if (frustum.collide(rectangle))
+			getObjects(frustum, GeometryMap);
+	}
 }
 
 QuadTree::~QuadTree() {
