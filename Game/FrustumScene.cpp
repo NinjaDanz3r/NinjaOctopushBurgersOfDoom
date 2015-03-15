@@ -1,9 +1,6 @@
-#include <gl/glew.h>
-#include <gl/GL.h>
-
-#include <GLFW\glfw3.h>
-
 #include "FrustumScene.h"
+
+#include <gl/glew.h>
 
 #include "Square.h"
 #include "Texture2D.h"
@@ -11,6 +8,13 @@
 #include "Model.h"
 #include "settings.h"
 #include "Camera.h"
+
+#include "Shader.h"
+#include "ShaderProgram.h"
+#include "GeometryObject.h"
+#include "Player.h"
+#include "FrameBufferObjects.h"
+#include "Datastructures.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>

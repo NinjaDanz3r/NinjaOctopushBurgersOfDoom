@@ -2,14 +2,15 @@
 #define __FRUSTUMSCENE_H__
 
 #include "Scene.h"
-#include "Shader.h"
-#include "ShaderProgram.h"
-#include "Texture2D.h"
-#include "GeometryObject.h"
-#include "Player.h"
-#include "FrameBufferObjects.h"
-#include "Datastructures.h"
 #include <vector>
+
+class Shader;
+class ShaderProgram;
+class FrameBufferObjects;
+class Texture;
+class Geometry;
+class GeometryObject;
+class Player;
 
 /** @ingroup game
 * @{
