@@ -4,7 +4,7 @@
 
 #include "FrameBufferObjects.h"
 
-#include "Square.h"
+#include "Cube.h"
 #include "GeometryObject.h"
 #include <Texture2D.h>
 
@@ -38,7 +38,7 @@ TestScene::TestScene() {
 	deferredFragmentShader = new Shader("deferred_fragment.glsl", GL_FRAGMENT_SHADER);
 	deferredShaderProgram = new ShaderProgram({ deferredVertexShader, deferredFragmentShader });
 
-	geometry = new Square();
+	geometry = new Cube();
 	geometryObject = new GeometryObject(geometry);
 
 	player = new Player();
