@@ -47,12 +47,15 @@ FrustumScene::FrustumScene() {
 
 	geometry = new Model("Resources/Models/Rock.bin");
 
+	Rectangle2D rect(glm::vec2(0.f, 0.f), glm::vec2(20.f, 20.f));
+	qTree = new QuadTree(rect, 0, 2);
+
 	for (int i = 0; i < numModels; i++){
 		GeometryObject* tempGeometry = new GeometryObject(geometry);
 		tempGeometry->setScale(glm::vec3(0.01f, 0.01f, 0.01f));
-		int rand1 = rand() % 1;
-		int rand2 = rand() % 1;
-		int rand3 = rand() % 1;
+		int rand1 = rand() % 21 - 10;
+		int rand2 = rand() % 21 - 10;
+		int rand3 = rand() % 21 - 10;
 		tempGeometry->setPosition(glm::vec3((float)rand1, (float)rand2, (float)rand3));
 		rand1 = rand() % 361;
 		rand2 = rand() % 361;
@@ -62,10 +65,8 @@ FrustumScene::FrustumScene() {
 
 		Rectangle2D* tempRectangle = new Rectangle2D(*tempGeometry->geometry(), tempGeometry->modelMatrix());
 		multiRectangle.push_back(tempRectangle);
+		qTree->addObject(tempGeometry, *tempRectangle);
 	}
-
-	Rectangle2D rect(glm::vec2(0.f, 0.f), glm::vec2(20.f, 20.f));
-	qTree = new QuadTree(rect, 0, 2);
 
 	player = new Player();
 	player->setMovementSpeed(2.0f);
