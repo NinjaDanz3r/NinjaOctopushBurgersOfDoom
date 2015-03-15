@@ -109,13 +109,13 @@ void Terrain::generateVertices() {
 			glm::vec3(static_cast<float>(i % width) / width - 0.5f,
 					  heightMap[i % width][i / width],
 					  static_cast<float>(i / width) / height - 0.5f),
+			// Texture coordinates
+			glm::vec2(static_cast<float>(i % width) / width,
+					  static_cast<float>(i / width) / height),
 			// Normal
 			glm::vec3(normals[i % width][i / width].x,
 				      normals[i % width][i / width].y,
-					  normals[i % width][i / width].z),
-			// Texture coordinates
-			glm::vec2(static_cast<float>(i % width) / width,
-					  static_cast<float>(i / width) / height)
+					  normals[i % width][i / width].z)
 		};
 	}
 }
