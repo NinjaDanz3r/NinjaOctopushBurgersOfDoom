@@ -26,8 +26,6 @@ class Geometry {
 			glm::vec2 textureCoordinate;
 			/// Tangent vector.
 			glm::vec3 tangent;
-			/// Bitangent vector.
-			glm::vec3 bitangent;
 		};
 		/// Destructor
 		CORE_EXPORT virtual ~Geometry();
