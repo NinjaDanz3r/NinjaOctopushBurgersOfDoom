@@ -88,9 +88,6 @@
     <ClCompile Include="Datastructures.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FrustumScene.h">
-      <Filter>Header Files\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="FrustumScene.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
@@ -185,6 +182,9 @@
     </ClInclude>
     <ClInclude Include="FrameBufferObjects.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FrustumScene.h">
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Datastructures.h">
       <Filter>Header Files</Filter>
