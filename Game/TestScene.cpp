@@ -4,7 +4,7 @@
 
 #include "FrameBufferObjects.h"
 
-#include <Model.h>
+#include "Square.h"
 #include "GeometryObject.h"
 #include <Texture2D.h>
 
@@ -38,9 +38,8 @@ TestScene::TestScene() {
 	deferredFragmentShader = new Shader("deferred_fragment.glsl", GL_FRAGMENT_SHADER);
 	deferredShaderProgram = new ShaderProgram({ deferredVertexShader, deferredFragmentShader });
 
-	geometry = new Model("Resources/Models/Rock.bin");
+	geometry = new Square();
 	geometryObject = new GeometryObject(geometry);
-	geometryObject->setScale(glm::vec3(0.01f, 0.01f, 0.01f));
 
 	player = new Player();
 	player->setMovementSpeed(2.0f);
