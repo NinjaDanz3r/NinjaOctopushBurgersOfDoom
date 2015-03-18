@@ -29,27 +29,12 @@ class DefRenderTestScene : public Scene {
 		*/
 		~DefRenderTestScene();
 
-		/// Vertex in full screen quad
-		struct RenderQuad {
-			//x-pos
-			float x;
-			//y-pos
-			float y;
-		};
-
-		struct ShadowBox {
-			glm::vec3 position;
-		};
-
 		/// Update the scene.
 		/**
 		* @param time Time since last frame (in seconds).
 		* @return SceneEnd-struct defining what to do next. nullptr if nothing should be done
 		*/
 		SceneEnd* update(double time);
-		//void bindGeometry(int width, int height, Geometry* geometry);
-		//void bindLighting(int width, int height);
-
 
 		/// Render the geometry in the scene.
 		/**
@@ -58,31 +43,11 @@ class DefRenderTestScene : public Scene {
 		*/
 		void render(int width, int height);
 
-		/// Render the lighting in the scene.
-		/**
-		* @param width Width of the context.
-		* @param height Height of the context.
-		*/
-		//void deferredRender(int width, int height);
-
-		/// Render the content of diffuse, position and normal textures
-		/**
-		* @param width Width of the context.
-		* @param height Height of the context.
-		*/
-		//void showTex(int width, int height);
-		//void shadowRender(int width, int height);
-		//void bindShadowGeometry();
-
 	private:
-		GLuint shadowID;
-		GLuint diffuseID;
-		GLuint positionID;
-		GLuint normalID;
+
 
 		FrameBufferObjects* multipleRenderTargets;
 		ShadowMapping* shadowMap;
-		ShadowBox *verticesShadowBox;
 
 		Geometry* geometry;
 		GeometryObject* geometryObject;
