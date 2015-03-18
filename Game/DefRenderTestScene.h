@@ -44,7 +44,7 @@ class DefRenderTestScene : public Scene {
 		void render(int width, int height);
 
 	private:
-
+		void renderShadows(int width, int height);
 
 		FrameBufferObjects* multipleRenderTargets;
 		ShadowMapping* shadowMap;

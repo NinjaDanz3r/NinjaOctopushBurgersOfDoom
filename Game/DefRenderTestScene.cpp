@@ -85,10 +85,57 @@ Scene::SceneEnd* DefRenderTestScene::update(double time) {
 }
 
 void DefRenderTestScene::render(int width, int height) {
+	multipleRenderTargets->bindForWriting();
+
 	glViewport(0, 0, width, height);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	shaderProgram->use();
+
+	// Texture unit 0 is for base images.
+	glUniform1i(shaderProgram->uniformLocation("baseImage"), 0);
+
+	glBindVertexArray(geometryObject->geometry()->vertexArray());
+
+	// Base image texture
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture->textureID());
+
+	// Model matrix, unique for each model.
+	glm::mat4 model = geometryObject->modelMatrix();
+
+	// Send the matrices to the shader.
+	glm::mat4 view = player->camera()->view();
+	glm::mat4 MV = view * model;
+	glm::mat4 N = glm::transpose(glm::inverse(MV));
+
+	glUniformMatrix4fv(shaderProgram->uniformLocation("modelMatrix"), 1, GL_FALSE, &model[0][0]);
+	glUniformMatrix4fv(shaderProgram->uniformLocation("viewMatrix"), 1, GL_FALSE, &view[0][0]);
+	glUniformMatrix3fv(shaderProgram->uniformLocation("normalMatrix"), 1, GL_FALSE, &glm::mat3(N)[0][0]);
+	glUniformMatrix4fv(shaderProgram->uniformLocation("projectionMatrix"), 1, GL_FALSE, &player->camera()->projection(width, height)[0][0]);
+
+	// Draw the triangles
+	glDrawElements(GL_TRIANGLES, geometryObject->geometry()->indexCount(), GL_UNSIGNED_INT, (void*)0);
+
+	// Model matrix, unique for each model.
+	model = geometryGround->modelMatrix();
+	glUniformMatrix4fv(shadowShaderProgram->uniformLocation("modelMatrix"), 1, GL_FALSE, &model[0][0]);
+
+	// Draw the triangles
+	glDrawElements(GL_TRIANGLES, geometryObject->geometry()->indexCount(), GL_UNSIGNED_INT, (void*)0);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	renderShadows(width, height);
+
+	multipleRenderTargets->render(player->camera(), width, height);
+}
+
+void DefRenderTestScene::renderShadows(int width, int height) {
+	shadowMap->bindForWriting();
 	shadowShaderProgram->use();
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glBindVertexArray(geometryObject->geometry()->vertexArray());
 
@@ -110,9 +157,11 @@ void DefRenderTestScene::render(int width, int height) {
 	// Model matrix, unique for each model.
 	model = geometryGround->modelMatrix();
 	glUniformMatrix4fv(shadowShaderProgram->uniformLocation("lightModelMatrix"), 1, GL_FALSE, &model[0][0]);
-	
+
 	// Draw the triangles
 	glDrawElements(GL_TRIANGLES, geometryObject->geometry()->indexCount(), GL_UNSIGNED_INT, (void*)0);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 /*void DefRenderTestScene::render(int width, int height) {
@@ -183,29 +232,5 @@ void DefRenderTestScene::deferredRender(int width, int height){
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, qIndexBuffer);
 
 	glDrawElements(GL_TRIANGLES, qIndexCount, GL_UNSIGNED_INT, (void*)0);
-}
-
-void DefRenderTestScene::shadowRender(int width, int height){
-	glBindVertexArray(shadowVertexAttribute);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, shadowIndexBuffer);
-
-	glClear(GL_DEPTH_BUFFER_BIT);
-
-	// Model matrix, unique for each model.
-	glm::mat4 model = geometryObject->modelMatrix();
-	glm::vec3 position = glm::vec3(0.f, 3.f, 3.f);
-
-	// Send the matrices to the shader.
-	glm::mat4 viewMatrix = glm::lookAt(position, geometryObject->position(), glm::vec3(0, 1, 0));
-	glm::mat4 perspectiveMatrix = glm::perspective(45.0f, 1.0f, 2.0f, 50.0f);
-
-	glUniformMatrix4fv(shadowShaderProgram->uniformLocation("lightmodelMatrix"), 1, GL_FALSE, &model[0][0]);
-	glUniformMatrix4fv(shadowShaderProgram->uniformLocation("lightViewMatrix"), 1, GL_FALSE, &viewMatrix[0][0]);
-	glUniformMatrix4fv(shadowShaderProgram->uniformLocation("lightProjectionMatrix"), 1, GL_FALSE, &perspectiveMatrix[0][0]);
-
-	//Render main geometry 
-	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 */
