@@ -37,6 +37,8 @@ GeneratedFiles/
 
 # Share resources (textures, etc.) through Dropbox instead
 Game/Resources
+# Old directory
+3D Project/Resources
 
 # Roslyn cache directories
 *.ide/
