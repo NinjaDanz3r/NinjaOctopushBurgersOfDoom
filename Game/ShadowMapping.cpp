@@ -1,19 +1,7 @@
 #include "ShadowMapping.h"
-#include "util.h"
+#include <util.h>
 
-
-ShadowMapping::ShadowMapping()
-{
-	fbo = 0;
-	shadowMap = 0;
-}
-ShadowMapping::~ShadowMapping()
-{
-	glDeleteFramebuffers(1, &fbo);
-	glDeleteTextures(1, &shadowMap);
-}
-void ShadowMapping::begin(unsigned int width, unsigned int height)
-{
+ShadowMapping::ShadowMapping(unsigned int width, unsigned int height) {
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
@@ -39,16 +27,18 @@ void ShadowMapping::begin(unsigned int width, unsigned int height)
 	if (Status != GL_FRAMEBUFFER_COMPLETE) {
 		util::log("Shadow mapping FB failed \n");
 	}
-
-
-
 }
-void ShadowMapping::bindForWriting()
-{
+
+ShadowMapping::~ShadowMapping() {
+	glDeleteFramebuffers(1, &fbo);
+	glDeleteTextures(1, &shadowMap);
+}
+
+void ShadowMapping::bindForWriting() {
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 }
-void ShadowMapping::bindForReading(GLenum texture)
-{
+
+void ShadowMapping::bindForReading(GLenum texture) {
 	glActiveTexture(texture);
 	glBindTexture(GL_TEXTURE_2D, shadowMap);
 }

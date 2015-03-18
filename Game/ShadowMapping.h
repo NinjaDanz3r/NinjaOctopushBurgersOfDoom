@@ -3,17 +3,17 @@
 
 #include<GL/glew.h>
 
-class ShadowMapping
-{
-public:
-	ShadowMapping();
-	~ShadowMapping();
+class ShadowMapping {
+	public:
+		ShadowMapping(unsigned int width, unsigned int height);
+		~ShadowMapping();
 
-	void begin(unsigned int width, unsigned int height);
-	void bindForWriting();
-	void bindForReading(GLenum texture);
-private:
-	GLuint fbo;
-	GLuint shadowMap;
+		void bindForWriting();
+		void bindForReading(GLenum texture);
+
+	private:
+		GLuint fbo;
+		GLuint shadowMap;
 };
+
 #endif

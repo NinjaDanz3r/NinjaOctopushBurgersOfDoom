@@ -49,8 +49,7 @@ DefRenderTestScene::DefRenderTestScene() {
 
 	multipleRenderTargets = new FrameBufferObjects(deferredShaderProgram, settings::displayWidth(), settings::displayHeight());
 
-	shadowMap = new ShadowMapping();
-	shadowMap->begin(settings::displayWidth(), settings::displayHeight());
+	shadowMap = new ShadowMapping(settings::displayWidth(), settings::displayHeight());
 }
 
 DefRenderTestScene::~DefRenderTestScene() {
