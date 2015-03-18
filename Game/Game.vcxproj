@@ -20,9 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AudioScene.cpp" />
+    <ClCompile Include="DefRenderTestScene.cpp" />
     <ClCompile Include="ParticleScene.cpp" />
     <ClCompile Include="CubeMapTexture.cpp" />
-    <ClCompile Include="Plane.cpp" />
     <ClCompile Include="ShadowMapping.cpp" />
     <ClCompile Include="PickingScene.cpp" />
     <ClCompile Include="FrameBufferObjects.cpp" />
@@ -52,9 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioScene.h" />
+    <ClInclude Include="DefRenderTestScene.h" />
     <ClInclude Include="ParticleScene.h" />
     <ClInclude Include="CubeMapTexture.h" />
-    <ClInclude Include="Plane.h" />
     <ClInclude Include="ShadowMapping.h" />
     <ClInclude Include="PickingScene.h" />
     <ClInclude Include="FrameBufferObjects.h" />

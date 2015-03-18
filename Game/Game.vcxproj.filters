@@ -82,14 +82,13 @@
     <ClCompile Include="FrameBufferObjects.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DefRenderTestScene.cpp">
-      <Filter>Source Files\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="ShadowMapping.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Plane.cpp" />
     <ClCompile Include="PickingScene.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="DefRenderTestScene.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
   </ItemGroup>
@@ -184,13 +183,12 @@
     <ClInclude Include="FrameBufferObjects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DefRenderTestScene.h">
-      <Filter>Header Files\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="ShadowMapping.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Plane.h" />
+    <ClInclude Include="DefRenderTestScene.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="default_vertex.glsl">
