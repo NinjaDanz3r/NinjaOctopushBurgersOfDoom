@@ -1,11 +1,18 @@
-#include <gl/glew.h>
-#include <gl/GL.h>
-
-#include <GLFW\glfw3.h>
 #include "DefRenderTestScene.h"
-#include "Square.h"
+
+#include <gl/glew.h>
+
 #include "Texture2D.h"
 #include "settings.h"
+
+#include "Shader.h"
+#include "ShaderProgram.h"
+
+#include "Player.h"
+#include "Geometry.h"
+#include "Square.h"
+#include "Cube.h"
+#include "ShadowMapping.h"
 
 
 #include <glm/glm.hpp>
