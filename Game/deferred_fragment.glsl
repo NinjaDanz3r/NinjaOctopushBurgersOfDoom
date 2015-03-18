@@ -3,7 +3,7 @@ Lighting pass fragment shader (second pass)
 */
 #version 400
 
-uniform sampler2DShadow tShadowMap;
+//uniform sampler2DShadow tShadowMap;
 uniform sampler2D tPosition;
 uniform sampler2D tDiffuse; 
 uniform sampler2D tNormals;
@@ -25,12 +25,12 @@ out vec4 fragment_color;
 const float EPSILON = 0.00001;
 
 // Calculate shadow
-float calculateShadow(vec4 lightSpacePosition) {
+/*float calculateShadow(vec4 lightSpacePosition) {
     vec4 shadowCoord= UVtransformMatrix * lightSpacePosition;
     float visibility = texture( tShadowMap, vec3(shadowCoord.xy,(shadowCoord.z)/shadowCoord.w));
     //return 1.0;
     return visibility;
-}
+}*/
 
 //Calculate texcoord
 vec2 calculateTexCoord() {
@@ -48,8 +48,8 @@ vec3 ads(vec3 normal, vec3 position, vec3 specular) {
 	float shinyPower = 2000.0f;
 	vec3 Ka = vec3(0.2, 0.2, 0.2);
 	vec3 specularLight = specular * pow(max(dot(r, v), 0.0), shinyPower);
-	//return lightIntensity * (Ka + diffuseLight + specularLight);
-    return vec3(calculateShadow(lightSpacePos), 0.0, 0.0);
+	return lightIntensity * (Ka + diffuseLight + specularLight);
+    //return vec3(calculateShadow(lightSpacePos), 0.0, 0.0);
 }
 
 void main () {
