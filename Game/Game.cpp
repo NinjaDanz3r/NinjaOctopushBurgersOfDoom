@@ -6,11 +6,11 @@
 #include "TestScene.h"
 #include "AudioScene.h"
 #include "PickingScene.h"
+#include "DefRenderTestScene.h"
 
 #include "input.h"
 #include "settings.h"
 
-#include "Scene.h"
 #include "SoundSystem.h"
 
 #define GLFW_DLL
@@ -106,6 +106,7 @@ template<typename T> Scene * createInstance() {
 void Game::setSceneMap() {
 	(*sceneMap)["default"] = &createInstance<TestScene>;
 	(*sceneMap)["test"] = &createInstance<TestScene>;
+	(*sceneMap)["deferred"] = &createInstance<DefRenderTestScene>;
 	(*sceneMap)["audio"] = &createInstance<AudioScene>;
 	(*sceneMap)["particle"] = &createInstance<ParticleScene>;
 	(*sceneMap)["terrain"] = &createInstance<TerrainScene>;
