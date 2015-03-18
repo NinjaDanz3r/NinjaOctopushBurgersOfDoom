@@ -2,18 +2,19 @@
 
 #include <gl/glew.h>
 
-#include "Texture2D.h"
+#include <Texture2D.h>
 #include "settings.h"
 
-#include "Shader.h"
-#include "ShaderProgram.h"
+#include <Shader.h>
+#include <ShaderProgram.h>
 
 #include "Player.h"
-#include "Geometry.h"
+#include "Camera.h"
+#include <Geometry.h>
+#include "GeometryObject.h"
 #include "Square.h"
 #include "Cube.h"
 #include "ShadowMapping.h"
-
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -46,12 +47,13 @@ DefRenderTestScene::DefRenderTestScene() {
 
 	player = new Player();
 	player->setMovementSpeed(100.0f);
-	multiplerendertargets = new FrameBufferObjects();
+	multiplerendertargets = new FrameBufferObjects(secondShaderProgram, settings::displayWidth(), settings::displayHeight());
 	shadowMap = new ShadowMapping();
 
 	geometryGround = new Cube();
-	geometryGround->setScale(5.0, 5.0, 5.0);
-	geometryGround->setPosition(0.5, -3.0, -2.0);
+	geometryGroundObject = new GeometryObject(geometryGround);
+	geometryGroundObject->setScale(5.0, 5.0, 5.0);
+	geometryGroundObject->setPosition(0.5, -3.0, -2.0);
 
 	geometry = new Cube();
 	bindTriangleData();
@@ -100,7 +102,6 @@ DefRenderTestScene::DefRenderTestScene() {
 	//glUniform1i(diffuseID, 0);
 
 	shadowMap->begin(settings::displayWidth(), settings::displayHeight());
-	multiplerendertargets->begin(settings::displayWidth(), settings::displayHeight());
 }
 
 DefRenderTestScene::~DefRenderTestScene() {
@@ -152,7 +153,7 @@ void DefRenderTestScene::render(int width, int height) {
 	
 	//bindGeometry(width,height,geometry);
 	// Model matrix, unique for each model.
-	glm::mat4 model = geometry->modelMatrix();
+	glm::mat4 model = geometryObject->modelMatrix();
 
 	glUniformMatrix4fv(shaderProgram->uniformLocation("modelMatrix"), 1, GL_FALSE, &model[0][0]);
 
@@ -285,9 +286,9 @@ void DefRenderTestScene::showTex(int width, int height){
 	glBlitFramebuffer(0, 0, width, height, halfWidth, 0, width, halfHeight, GL_DEPTH_BUFFER_BIT, GL_LINEAR);
 
 }
-void DefRenderTestScene::bindGeometry(int width, int height,Geometry* geometry){
+void DefRenderTestScene::bindGeometry(int width, int height, Geometry* geometry){
 	// Model matrix, unique for each model.
-	glm::mat4 model = geometry->modelMatrix();
+	glm::mat4 model = geometryObject->modelMatrix();
 
 	// Send the matrices to the shader.
 	glm::mat4 view = player->camera()->view();
@@ -309,7 +310,7 @@ void DefRenderTestScene::bindLighting(int width, int height){
 	glm::vec2 screenSize(width, height);
 
 	// Model matrix, unique for each model.
-	glm::mat4 model = geometry->modelMatrix();
+	glm::mat4 model = geometryObject->modelMatrix();
 	glm::vec3 position = glm::vec3(0.f, 0.f, 3.f);
 	glm::mat4 UVMatrix(
 		0.5, 0.0, 0.0, 0.0,
@@ -321,7 +322,7 @@ void DefRenderTestScene::bindLighting(int width, int height){
 	glm::mat4 viewInverse = glm::inverse(view);
 
 	// Send the matrices to the shader.
-	glm::mat4 viewMatrix = glm::lookAt(position, geometry->position() , glm::vec3(0, 1, 0));
+	glm::mat4 viewMatrix = glm::lookAt(position, geometryObject->position() , glm::vec3(0, 1, 0));
 	glm::mat4 perspectiveMatrix = glm::perspective(180.0f, static_cast<float>(width) / height, 0.5f, 1000.0f);
 
 	shadowID = secondShaderProgram->uniformLocation("tShadowMap");
@@ -352,11 +353,11 @@ void DefRenderTestScene::shadowRender(int width, int height){
 	glClear(GL_DEPTH_BUFFER_BIT);
 
 	// Model matrix, unique for each model.
-	glm::mat4 model = geometry->modelMatrix();
+	glm::mat4 model = geometryObject->modelMatrix();
 	glm::vec3 position = glm::vec3(0.f, 3.f, 3.f);
 
 	// Send the matrices to the shader.
-	glm::mat4 viewMatrix = glm::lookAt(position, geometry->position(), glm::vec3(0, 1, 0));
+	glm::mat4 viewMatrix = glm::lookAt(position, geometryObject->position(), glm::vec3(0, 1, 0));
 	glm::mat4 perspectiveMatrix = glm::perspective(45.0f, 1.0f, 2.0f, 50.0f);
 
 	glUniformMatrix4fv(shadowShaderProgram->uniformLocation("lightmodelMatrix"), 1, GL_FALSE, &model[0][0]);

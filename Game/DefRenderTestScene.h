@@ -7,6 +7,7 @@
 class FrameBufferObjects;
 class ShadowMapping;
 class Geometry;
+class GeometryObject;
 class Shader;
 class ShaderProgram;
 class Texture;
@@ -72,6 +73,7 @@ class DefRenderTestScene : public Scene {
 		void showTex(int width, int height);
 		void shadowRender(int width, int height);
 		void bindShadowGeometry();
+
 	private:
 		void bindTriangleData();
 		void bindDeferredQuad();
@@ -88,7 +90,9 @@ class DefRenderTestScene : public Scene {
 
 		// Shaders geometry pass
 		Geometry* geometryGround;
+		GeometryObject* geometryGroundObject;
 		Geometry* geometry;
+		GeometryObject* geometryObject;
 		Shader* vertexShader;
 		Shader* geometryShader;
 		Shader* fragmentShader;
