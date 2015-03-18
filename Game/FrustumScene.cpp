@@ -1,6 +1,7 @@
 #include "FrustumScene.h"
 
 #include <gl/glew.h>
+#include <string>
 
 #include "Square.h"
 #include "Texture2D.h"
@@ -22,6 +23,8 @@
 #include <glm/gtx/transform.hpp>
 
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))
+
+std::string Game::additionalData;
 
 FrustumScene::FrustumScene() {
 	state = 0;
@@ -48,27 +51,27 @@ FrustumScene::FrustumScene() {
 
 	geometry = new Model("Resources/Models/Rock.bin");
 
-	Rectangle2D rect(glm::vec2(0.f, 0.f), glm::vec2(20.f, 20.f));
+	Rectangle2D rect(glm::vec2(0.f, 0.f), glm::vec2(20.0f, 20.0f));
 	qTree = new QuadTree(rect, 0, 2);
-
+	int modelsInTree = 0;
 	for (int i = 0; i < numModels; i++){
 		GeometryObject* tempGeometry = new GeometryObject(geometry);
 		tempGeometry->setScale(glm::vec3(0.01f, 0.01f, 0.01f));
-		int rand1 = rand() % 21 - 10;
-		int rand2 = rand() % 21 - 10;
-		int rand3 = rand() % 21 - 10;
+		int rand1 = rand() % 41 - 20;
+		int rand2 = rand() % 41 - 20;
+		int rand3 = rand() % 41 - 20;
 		tempGeometry->setPosition(glm::vec3((float)rand1, (float)rand2, (float)rand3));
 		rand1 = rand() % 361;
 		rand2 = rand() % 361;
 		rand3 = rand() % 361;
 		tempGeometry->setRotation((float)rand1, (float)rand2, (float)rand3);
-		multiGeometry.push_back(tempGeometry);
 
 		Rectangle2D* tempRectangle = new Rectangle2D(*tempGeometry->geometry(), tempGeometry->modelMatrix());
 		multiRectangle.push_back(tempRectangle);
-		qTree->addObject(tempGeometry, *tempRectangle);
+		
+		if (qTree->addObject(tempGeometry, *tempRectangle))
+			modelsInTree++;
 	}
-
 	player = new Player();
 	player->setMovementSpeed(2.0f);
 
@@ -87,11 +90,8 @@ FrustumScene::~FrustumScene() {
 	delete multipleRenderTargets;
 
 	for (int i = 0; i < numModels; i++) {
-		delete multiGeometry[i];
 		delete multiRectangle[i];
 	}
-
-	multiGeometry.clear();
 	multiRectangle.clear();
 
 	delete geometry;
@@ -109,7 +109,6 @@ Scene::SceneEnd* FrustumScene::update(double time) {
 
 void FrustumScene::render(int width, int height) {
 	multipleRenderTargets->bindForWriting();
-	Game::additionalData = "TJO!";
 	glViewport(0, 0, width, height);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -142,8 +141,10 @@ void FrustumScene::render(int width, int height) {
 	glUniformMatrix4fv(shaderProgram->uniformLocation("projectionMatrix"), 1, GL_FALSE, &player->camera()->projection(width, height)[0][0]);
 	glBindVertexArray(geometry->vertexArray());
 	// Drawing loop
+	int objectsRendered = 0;
 	typedef std::map<GeometryObject*, GeometryObject*>::iterator it_type;
 	for (it_type iterator = geometryMap.begin(); iterator != geometryMap.end(); iterator++) {
+		objectsRendered++;
 		// Model matrix, unique for each model.
 		glm::mat4 model = iterator->second->modelMatrix();
 
@@ -155,6 +156,7 @@ void FrustumScene::render(int width, int height) {
 
 		glDrawElements(GL_TRIANGLES, geometry->indexCount(), GL_UNSIGNED_INT, (void*)0);
 	}
+	Game::additionalData = std::to_string(objectsRendered);
 
 	if (state == 1) {
 		multipleRenderTargets->showTextures(width, height);

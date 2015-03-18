@@ -95,7 +95,7 @@ void PickingScene::render(int width, int height) {
 	glm::mat4 view = player->camera()->view();
 	glm::mat4 proj = player->camera()->projection(width, height);
 
-	//create mouse ray
+	//create mouse ray (Viewport X and Y)
 	float x = static_cast<float>(input::cursorX());
 	float y = static_cast<float>(input::cursorY());
 	

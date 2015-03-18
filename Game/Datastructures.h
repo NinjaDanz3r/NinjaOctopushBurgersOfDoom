@@ -26,6 +26,7 @@ class QuadTree
 		bool addObject(GeometryObject* object, Rectangle2D rect); //returns true if object was added.
 		void getObjects(Frustum & frustum, std::map<GeometryObject*, GeometryObject*>& GeometryMap);
 		void debugTree(std::string test);
+		unsigned int getNumberOfObjects();
 	private:
 
 		//glm::vec2 origin; //X, Y worldpos origin.
@@ -38,7 +39,6 @@ class QuadTree
 		
 		unsigned int depth;
 		unsigned int maxDepth;
-
 		std::vector < GeometryObject* > objects;
 		bool isLeaf;
 };

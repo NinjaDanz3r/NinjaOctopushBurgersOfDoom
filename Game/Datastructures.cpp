@@ -34,6 +34,7 @@ QuadTree::QuadTree(const Rectangle2D & _rectangle, int _depth, int _maxDepth) {
 	childTree[Q4] = new QuadTree(q4Rect, nextDepth, maxDepth);
 }
 
+
 //Prints debug information
 void QuadTree::debugTree(std::string test)
 {
@@ -56,20 +57,32 @@ void QuadTree::debugTree(std::string test)
 
 //Add object to leaf node. Returns true if object was found to be within cubes.
 bool QuadTree::addObject(GeometryObject* object, Rectangle2D rect) {
-	if (depth == maxDepth){
+	if (depth == maxDepth && this->rectangle.overlaps(rect)){
+		fprintf(stderr,"\nModel added.\n");
+		fprintf(stderr, "This rectangle: X%f,Y%f\nDimensions: X%f,Y%f\n", rectangle.origin.x, rectangle.origin.y, rectangle.dimensions.x, rectangle.dimensions.y);
+		fprintf(stderr, "Other rectangle: X%f,Y%f\nDimensions: X%f,Y%f\n", rect.origin.x, rect.origin.y, rect.dimensions.x, rect.dimensions.y);
+		fflush(stderr);
 		objects.push_back(object);
 		return true;
 	}
 	else
 	{
 		if (childTree[Q1]->rectangle.overlaps(rect))
+		{
 			return childTree[Q1]->addObject(object, rect);
+		}
 		if (childTree[Q2]->rectangle.overlaps(rect))
+		{
 			return childTree[Q2]->addObject(object, rect);
+		}
 		if (childTree[Q3]->rectangle.overlaps(rect))
+		{
 			return childTree[Q3]->addObject(object, rect);
+		}
 		if (childTree[Q4]->rectangle.overlaps(rect))
+		{
 			return childTree[Q4]->addObject(object, rect);
+		}
 		return false; //Object was not found to be within one of the rectangles, return false.
 	}
 }

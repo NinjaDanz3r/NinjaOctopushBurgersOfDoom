@@ -14,12 +14,13 @@ Rectangle2D::Rectangle2D(const Geometry & geometry, glm::mat4 matrix)
 {
 	glm::vec2 minValues, maxValues;
 	Geometry::Vertex* currVert = geometry.vertices();
-	minValues = maxValues = origin = glm::vec2(0.f, 0.f);
+	origin = glm::vec2(0.f, 0.f);
 	unsigned int numVerts = geometry.vertexCount();
 
 	for (unsigned int i = 0; i < numVerts; i++) {
-		currVert[i].position = glm::vec3(matrix*glm::vec4(currVert[i].position, 0.f));
+		currVert[i].position = glm::vec3(matrix*glm::vec4(currVert[i].position, 1.f));
 	}
+	minValues = maxValues = glm::vec2(currVert[0].position);
 
 	//Get minimum rectangle from vertices, same principle as for minimum AABB
 	for (unsigned int i = 0; i < numVerts; i++) {
@@ -65,11 +66,11 @@ bool Rectangle2D::overlaps(const Rectangle2D & otherRect){
 
 	//Points we are going to test
 	rect2MaxX = otherRect.origin.x + dimX;
-	rect2MaxY = otherRect.origin.y + dimY; //Upper right corner
+	rect2MaxY = otherRect.origin.y + dimY; //Upper left corner
 
 	rect2MinX = otherRect.origin.x - dimX;
-	rect2MinY = otherRect.origin.y - dimY; //Lower left corner
+	rect2MinY = otherRect.origin.y - dimY; //Lower right corner
 
-	//if all conditions are true, then there is no overlap since the rectangle 2 is entirely outside of rectangle 1
-	return !(rect1MinX > rect2MaxX || rect1MaxX < rect2MinX || rect1MinY > rect2MaxY || rect1MaxY < rect1MinY);
+	//If both are true, there is no overlap
+	return  (!(rect1MinY > rect2MaxY || rect1MaxY < rect2MinY) && !(rect1MinX > rect2MaxX || rect1MaxX < rect2MinX));
 }
