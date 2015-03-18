@@ -11,41 +11,43 @@ The mandatory techniques are perspective rendering, lighting, textures, three-di
 
 Apart from these, we are also aiming to implement the following techniques (implemented|mandatory|available):
 
-Core (0|1|2)
+Core (1|1|2)
 ------------
-* Deferred rendering and lighting. (TODO)
+* Deferred rendering and lighting.
 
 Geometry (2|2|5)
 ----------------
 * Parsing and rendering of an existing model format.
 * Height-map terrain rendering, user can walk on the terrain.
 
-Texturing and lighting (1|1|3)
+Texturing and lighting (2|1|3)
 ------------------------------
-* Normal mapping. (TODO)
+* Normal mapping.
 * Blend-mapping.
 
 Projection (0|1|4)
 ------------------
+* Shadow mapping. (TODO)
 
 Acceleration (1|2|3)
 --------------------
+* View frustum culling against a quadtree. (TODO)
 * Back-face culling using geometry shader.
 
-Miscellaneous (1|2|9)
+Miscellaneous (2|2|9)
 ---------------------
 * Particle system with billboarded particles.
-* Picking. (TODO)
+* Picking.
 
 Libraries
 =========
-Uses OpenGL, [glew](http://glew.sourceforge.net/), [GLFW](http://www.glfw.org/), [OpenGL Mathematics](http://glm.g-truc.net/0.9.6/index.html), [simpleini](https://github.com/brofield/simpleini),  [stb](https://github.com/nothings/stb) and [OpenAL Soft](http://kcat.strangesoft.net/openal.html).
+Uses OpenGL, [glew](http://glew.sourceforge.net/), [GLFW](http://www.glfw.org/), [OpenGL Mathematics](http://glm.g-truc.net/0.9.6/index.html), [simpleini](https://github.com/brofield/simpleini),  [stb](https://github.com/nothings/stb), [OpenAL Soft](http://kcat.strangesoft.net/openal.html) and [Qt](http://qt-project.org/).
 
 License
 =======
-This project is licensed under the MIT license.
+This project is licensed under the [MIT license](LICENSE).
 
-glew is licensed under the Modified BSD License, the Mesa 3-D License, and the Khronos License. GLFW is licensed under the zlib/libpng license. OpenGL Mathematics is licensed under the Happy Bunny license. simpleini is licensed under the MIT license. stb is public domain. OpenAL Soft is licensed under the LGPL.
+glew is licensed under the Modified BSD License, the Mesa 3-D License, and the Khronos License. GLFW is licensed under the zlib/libpng license. OpenGL Mathematics is licensed under the Happy Bunny license. simpleini is licensed under the MIT license. stb is public domain. OpenAL Soft is licensed under the LGPL. Qt is licensed under the GPL or the LGPL.
 
 Resources
 =========
