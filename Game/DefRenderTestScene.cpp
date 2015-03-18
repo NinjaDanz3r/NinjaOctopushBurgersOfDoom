@@ -33,22 +33,19 @@ DefRenderTestScene::DefRenderTestScene() {
 	shadowFragmentShader = new Shader("shadow_fragment.glsl", GL_FRAGMENT_SHADER);
 	shadowShaderProgram = new ShaderProgram({ shadowVertexShader, shadowFragmentShader });
 
-	vertexShader = new Shader("deferred_first_vertex.glsl", GL_VERTEX_SHADER);
-	geometryShader = new Shader("deferred_first_geometry.glsl", GL_GEOMETRY_SHADER);
-	fragmentShader = new Shader("deferred_first_fragment.glsl", GL_FRAGMENT_SHADER);
+	vertexShader = new Shader("default_vertex.glsl", GL_VERTEX_SHADER);
+	geometryShader = new Shader("default_geometry.glsl", GL_GEOMETRY_SHADER);
+	fragmentShader = new Shader("default_fragment.glsl", GL_FRAGMENT_SHADER);
 	shaderProgram = new ShaderProgram({ vertexShader, geometryShader, fragmentShader });
 
-	secondVertexShader = new Shader("deferred_second_vertex.glsl", GL_VERTEX_SHADER);
-	secondFragmentShader = new Shader("deferred_second_fragment.glsl", GL_FRAGMENT_SHADER);
-	secondShaderProgram = new ShaderProgram({ secondVertexShader, secondFragmentShader });
-
-	halfWidth = (GLint)(settings::displayWidth() / 2.0f);
-	halfHeight = (GLint)(settings::displayHeight() / 2.0f);
+	deferredVertexShader = new Shader("deferred_vertex.glsl", GL_VERTEX_SHADER);
+	deferredFragmentShader = new Shader("deferred_fragment.glsl", GL_FRAGMENT_SHADER);
+	deferredShaderProgram = new ShaderProgram({ deferredVertexShader, deferredFragmentShader });
 
 	player = new Player();
-	player->setMovementSpeed(100.0f);
-	multiplerendertargets = new FrameBufferObjects(secondShaderProgram, settings::displayWidth(), settings::displayHeight());
-	shadowMap = new ShadowMapping();
+	player->setMovementSpeed(2.0f);
+	multiplerendertargets = new FrameBufferObjects(deferredShaderProgram, settings::displayWidth(), settings::displayHeight());
+	//shadowMap = new ShadowMapping();
 
 	geometryGround = new Cube();
 	geometryGroundObject = new GeometryObject(geometryGround);
@@ -56,7 +53,7 @@ DefRenderTestScene::DefRenderTestScene() {
 	geometryGroundObject->setPosition(0.5, -3.0, -2.0);
 
 	geometry = new Cube();
-	bindTriangleData();
+	/*bindTriangleData();
 	verticesShadowBox = new ShadowBox[vertexCount];
 	verticesShadowBox[0].position = glm::vec3(0.5f, 0.5f, 0.5f);
 	verticesShadowBox[1].position = glm::vec3(-0.5f, -0.5f, 0.5f);
@@ -94,25 +91,25 @@ DefRenderTestScene::DefRenderTestScene() {
 	verticesShadowBox[23].position = glm::vec3(-0.5f, 0.5f, -0.5f);
 	bindShadowGeometry();
 	bindDeferredQuad();
-	bindGroundGeometry();
+	bindGroundGeometry();*/
 
 	//shaderProgram->use();
 	//Only need tDiffuse for holding the texture during geometry call.
 	//diffuseID = shaderProgram->uniformLocation("tDiffuse");
 	//glUniform1i(diffuseID, 0);
 
-	shadowMap->begin(settings::displayWidth(), settings::displayHeight());
+	//shadowMap->begin(settings::displayWidth(), settings::displayHeight());
 }
 
 DefRenderTestScene::~DefRenderTestScene() {
 	delete texture;
 
 	delete multiplerendertargets;
-	delete secondShaderProgram;
+	delete deferredShaderProgram;
 	delete shaderProgram;
 
-	delete secondVertexShader;
-	delete secondFragmentShader;
+	delete deferredVertexShader;
+	delete deferredFragmentShader;
 
 	delete shadowShaderProgram;
 	delete shadowVertexShader;
@@ -121,15 +118,6 @@ DefRenderTestScene::~DefRenderTestScene() {
 	delete vertexShader;
 	delete geometryShader;
 	delete fragmentShader;
-
-	glDeleteBuffers(1, &shadowVertexBuffer);
-	glDeleteBuffers(1, &shadowIndexBuffer);
-
-	glDeleteBuffers(1, &gVertexBuffer);
-	glDeleteBuffers(1, &gIndexBuffer);
-
-	glDeleteBuffers(1, &qVertexBuffer);
-	glDeleteBuffers(1, &qIndexBuffer);
 
 	delete geometry;
 	delete player;
@@ -162,7 +150,7 @@ void DefRenderTestScene::render(int width, int height) {
 
 	//shadowMap->bindForWriting();
 	//glDrawBuffer(GL_NONE);
-	shadowRender(width, height);
+	//shadowRender(width, height);
 
 	/*shaderProgram->use();	
 	glBindVertexArray(gVertexAttribute);
@@ -193,7 +181,7 @@ void DefRenderTestScene::render(int width, int height) {
 	
 }
 
-void DefRenderTestScene::bindTriangleData(){
+/*void DefRenderTestScene::bindTriangleData(){
 	// Vertex buffer
 	vertexCount = geometry->vertexCount();
 	glGenBuffers(1, &gVertexBuffer);
@@ -243,9 +231,9 @@ void DefRenderTestScene::bindDeferredQuad(){
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, qIndexBuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, qIndexCount * sizeof(unsigned int), indices, GL_STATIC_DRAW);
 
-}
-void DefRenderTestScene::deferredRender(int width, int height){
-	secondShaderProgram->use();
+}*/
+/*void DefRenderTestScene::deferredRender(int width, int height){
+	deferredShaderProgram->use();
 
 	//Blending enabled for handling multiple light sources
 	//glEnable(GL_BLEND);
@@ -253,7 +241,7 @@ void DefRenderTestScene::deferredRender(int width, int height){
 	//glBlendFunc(GL_ONE, GL_ONE);
 
 	shadowMap->bindForReading(GL_TEXTURE3);
-	bindLighting(width, height);
+	//bindLighting(width, height);
 	multiplerendertargets->bindForReading();
 
 
@@ -263,8 +251,8 @@ void DefRenderTestScene::deferredRender(int width, int height){
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, qIndexBuffer);
 
 	glDrawElements(GL_TRIANGLES, qIndexCount, GL_UNSIGNED_INT, (void*)0);
-}
-void DefRenderTestScene::showTex(int width, int height){
+}*/
+/*void DefRenderTestScene::showTex(int width, int height){
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -285,8 +273,8 @@ void DefRenderTestScene::showTex(int width, int height){
 	glReadBuffer(GL_DEPTH_ATTACHMENT);
 	glBlitFramebuffer(0, 0, width, height, halfWidth, 0, width, halfHeight, GL_DEPTH_BUFFER_BIT, GL_LINEAR);
 
-}
-void DefRenderTestScene::bindGeometry(int width, int height, Geometry* geometry){
+}*/
+/*void DefRenderTestScene::bindGeometry(int width, int height, Geometry* geometry){
 	// Model matrix, unique for each model.
 	glm::mat4 model = geometryObject->modelMatrix();
 
@@ -299,8 +287,8 @@ void DefRenderTestScene::bindGeometry(int width, int height, Geometry* geometry)
 	glUniformMatrix4fv(shaderProgram->uniformLocation("viewMatrix"), 1, GL_FALSE, &view[0][0]);
 	glUniformMatrix3fv(shaderProgram->uniformLocation("normalMatrix"), 1, GL_FALSE, &glm::mat3(N)[0][0]);
 	glUniformMatrix4fv(shaderProgram->uniformLocation("projectionMatrix"), 1, GL_FALSE, &player->camera()->projection(width, height)[0][0]);
-}
-void DefRenderTestScene::bindLighting(int width, int height){
+}*/
+/*void DefRenderTestScene::bindLighting(int width, int height){
 	//Bind light information for lighting pass
 	glm::mat4 view = player->camera()->view();
 
@@ -345,8 +333,8 @@ void DefRenderTestScene::bindLighting(int width, int height){
 	glUniform4fv(secondShaderProgram->uniformLocation("lightPosition"), 1, &lightPosition[0]);
 	glUniform3fv(secondShaderProgram->uniformLocation("lightIntensity"), 1, &lightIntensity[0]);
 	glUniform3fv(secondShaderProgram->uniformLocation("diffuseKoefficient"), 1, &diffuseKoefficient[0]);
-}
-void DefRenderTestScene::shadowRender(int width, int height){
+}*/
+/*void DefRenderTestScene::shadowRender(int width, int height){
 	glBindVertexArray(shadowVertexAttribute);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, shadowIndexBuffer);
 
@@ -388,8 +376,8 @@ void DefRenderTestScene::bindShadowGeometry(){
 	glGenBuffers(1, &shadowIndexBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, shadowIndexBuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(unsigned int), geometry->indices(), GL_STATIC_DRAW);
-}
-void DefRenderTestScene::bindGroundGeometry(){
+}*/
+/*void DefRenderTestScene::bindGroundGeometry(){
 	vertexCount = geometryGround->vertexCount();
 	glGenBuffers(1, &groundVertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, groundVertexBuffer);
@@ -417,4 +405,4 @@ void DefRenderTestScene::bindGroundGeometry(){
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, gIndexBuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(unsigned int), geometry->indices(), GL_STATIC_DRAW);
 
-}
+}*/

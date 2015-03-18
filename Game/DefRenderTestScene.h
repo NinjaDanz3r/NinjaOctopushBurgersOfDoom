@@ -47,8 +47,8 @@ class DefRenderTestScene : public Scene {
 		* @return SceneEnd-struct defining what to do next. nullptr if nothing should be done
 		*/
 		SceneEnd* update(double time);
-		void bindGeometry(int width, int height, Geometry* geometry);
-		void bindLighting(int width, int height);
+		//void bindGeometry(int width, int height, Geometry* geometry);
+		//void bindLighting(int width, int height);
 
 
 		/// Render the geometry in the scene.
@@ -63,21 +63,21 @@ class DefRenderTestScene : public Scene {
 		* @param width Width of the context.
 		* @param height Height of the context.
 		*/
-		void deferredRender(int width, int height);
+		//void deferredRender(int width, int height);
 
 		/// Render the content of diffuse, position and normal textures
 		/**
 		* @param width Width of the context.
 		* @param height Height of the context.
 		*/
-		void showTex(int width, int height);
-		void shadowRender(int width, int height);
-		void bindShadowGeometry();
+		//void showTex(int width, int height);
+		//void shadowRender(int width, int height);
+		//void bindShadowGeometry();
 
 	private:
-		void bindTriangleData();
+		/*void bindTriangleData();
 		void bindDeferredQuad();
-		void bindGroundGeometry();
+		void bindGroundGeometry();*/
 
 		GLuint shadowID;
 		GLuint diffuseID;
@@ -99,11 +99,11 @@ class DefRenderTestScene : public Scene {
 		ShaderProgram* shaderProgram;
 
 		// Shaders lighting pass
-		Shader* secondVertexShader;
-		Shader* secondFragmentShader;
-		ShaderProgram* secondShaderProgram;
+		Shader* deferredVertexShader;
+		Shader* deferredFragmentShader;
+		ShaderProgram* deferredShaderProgram;
 
-		// Shaders lighting pass
+		// Shaders shadows pass
 		Shader* shadowVertexShader;
 		Shader* shadowFragmentShader;
 		ShaderProgram* shadowShaderProgram;
@@ -112,8 +112,6 @@ class DefRenderTestScene : public Scene {
 		int state; //0 == deferred render, 1== display textures.
 		Texture* texture;
 		Player* player;
-		GLuint halfWidth;
-		GLuint halfHeight;
 
 		// Vertex buffer geometry
 		GLuint groundVertexBuffer = 0;
