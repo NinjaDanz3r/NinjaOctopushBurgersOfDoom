@@ -75,24 +75,20 @@ class DefRenderTestScene : public Scene {
 		//void bindShadowGeometry();
 
 	private:
-		/*void bindTriangleData();
-		void bindDeferredQuad();
-		void bindGroundGeometry();*/
-
 		GLuint shadowID;
 		GLuint diffuseID;
 		GLuint positionID;
 		GLuint normalID;
 
-		FrameBufferObjects* multiplerendertargets;
+		FrameBufferObjects* multipleRenderTargets;
 		ShadowMapping* shadowMap;
 		ShadowBox *verticesShadowBox;
 
-		// Shaders geometry pass
-		Geometry* geometryGround;
-		GeometryObject* geometryGroundObject;
 		Geometry* geometry;
 		GeometryObject* geometryObject;
+		GeometryObject* geometryGround;
+
+		// Shaders geometry pass
 		Shader* vertexShader;
 		Shader* geometryShader;
 		Shader* fragmentShader;
@@ -112,38 +108,5 @@ class DefRenderTestScene : public Scene {
 		int state; //0 == deferred render, 1== display textures.
 		Texture* texture;
 		Player* player;
-
-		// Vertex buffer geometry
-		GLuint groundVertexBuffer = 0;
-		GLuint groundVertexAttribute = 0;
-
-		// Vertex buffer shadow geometry
-		GLuint shadowVertexBuffer = 0;
-		GLuint shadowVertexAttribute = 0;
-
-		//Index buffer geometry
-		GLuint shadowIndexBuffer = 0;
-
-		// Vertex buffer geometry
-		GLuint gVertexBuffer = 0;
-		GLuint gVertexAttribute = 0;
-
-		//Index buffer geometry
-		GLuint gIndexBuffer = 0;
-		unsigned int indexCount = 0;
-		int vertexCount = 0;
-
-		// Vertex buffer lighting
-		GLuint qVertexBuffer = 0;
-		GLuint qVertexAttribute = 0;
-
-		// Index buffer lighting
-		GLuint qIndexBuffer = 0;
-		unsigned int qIndexCount = 0;
-		int qVertexCount = 0;
-
-		// Full screen quad
-		static RenderQuad vertices[4];
-		static unsigned int indices[6];
 };
 #endif
