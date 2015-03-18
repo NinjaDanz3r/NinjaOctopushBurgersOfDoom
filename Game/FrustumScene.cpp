@@ -15,6 +15,7 @@
 #include "Player.h"
 #include "FrameBufferObjects.h"
 #include "Datastructures.h"
+#include "Game.h";
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -108,7 +109,7 @@ Scene::SceneEnd* FrustumScene::update(double time) {
 
 void FrustumScene::render(int width, int height) {
 	multipleRenderTargets->bindForWriting();
-
+	Game::additionalData = "TJO!";
 	glViewport(0, 0, width, height);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -136,7 +137,6 @@ void FrustumScene::render(int width, int height) {
 	// Send the matrices to the shader.
 	glm::mat4 view = player->camera()->view();
 	frustum = new Frustum(player->camera()->projection(width, height)[0][0] * player->camera()->view());
-
 	qTree->getObjects(*frustum, geometryMap);
 	glUniformMatrix4fv(shaderProgram->uniformLocation("viewMatrix"), 1, GL_FALSE, &view[0][0]);
 	glUniformMatrix4fv(shaderProgram->uniformLocation("projectionMatrix"), 1, GL_FALSE, &player->camera()->projection(width, height)[0][0]);

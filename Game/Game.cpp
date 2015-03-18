@@ -66,9 +66,9 @@ void Game::update() {
 
 		delete status;
 	}
-
 	setWindowTitle();
 }
+
 
 void Game::setWindowTitle()
 {
@@ -83,6 +83,7 @@ void Game::setWindowTitle()
 			len += sprintf(title + len, "[FPS: %i] - ", frames);
 		if (settings::showCursorCoordinates())
 			len += sprintf(title + len, "[CursorXY: %.f %.f] - ", input::cursorX(), input::cursorY());
+		len += sprintf(title + len, "%s", additionalData.c_str());
 
 		glfwSetWindowTitle(window, title);
 

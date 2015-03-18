@@ -35,10 +35,12 @@ class Game {
 		 */
 		void update();
 
+		static std::string additionalData;
 	private:
 		void setWindowTitle();
 		void setSceneMap();
 		void setScene(const char*);
+
 		void assignKeyboardBindings();
 
 		GLFWwindow* window;
