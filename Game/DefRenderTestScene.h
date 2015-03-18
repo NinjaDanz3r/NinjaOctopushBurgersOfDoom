@@ -105,7 +105,6 @@ class DefRenderTestScene : public Scene {
 		ShaderProgram* shadowShaderProgram;
 
 		// Misc
-		int state; //0 == deferred render, 1== display textures.
 		Texture* texture;
 		Player* player;
 };

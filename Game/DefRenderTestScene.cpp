@@ -23,8 +23,6 @@
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))
 
 DefRenderTestScene::DefRenderTestScene() {
-	state = 0;
-
 	texture = new Texture2D("Resources/Textures/kaleido.tga");
 
 	shadowVertexShader = new Shader("shadow_vertex.glsl", GL_VERTEX_SHADER);
@@ -118,35 +116,7 @@ void DefRenderTestScene::render(int width, int height) {
 	glDrawElements(GL_TRIANGLES, geometryObject->geometry()->indexCount(), GL_UNSIGNED_INT, (void*)0);
 }
 
-/*DefRenderTestScene::~DefRenderTestScene() {
-	delete texture;
-
-	delete multiplerendertargets;
-	delete deferredShaderProgram;
-	delete shaderProgram;
-
-	delete deferredVertexShader;
-	delete deferredFragmentShader;
-
-	delete shadowShaderProgram;
-	delete shadowVertexShader;
-	delete shadowFragmentShader;
-
-	delete vertexShader;
-	delete geometryShader;
-	delete fragmentShader;
-
-	delete geometry;
-	delete player;
-}
-
-Scene::SceneEnd* DefRenderTestScene::update(double time) {
-	player->update(time);
-	//geometry->rotate(1, 1, 1);
-	return nullptr;
-}
-
-void DefRenderTestScene::render(int width, int height) {
+/*void DefRenderTestScene::render(int width, int height) {
 	shadowShaderProgram->use();
 	//multiplerendertargets->bindForWriting();
 
