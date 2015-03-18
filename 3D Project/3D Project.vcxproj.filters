@@ -103,6 +103,7 @@
     <ClCompile Include="ShadowMapping.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Plane.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -207,6 +208,7 @@
     <ClInclude Include="ShadowMapping.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Plane.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="default_vertex.glsl">

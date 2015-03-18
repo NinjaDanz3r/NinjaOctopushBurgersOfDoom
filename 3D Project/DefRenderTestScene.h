@@ -32,6 +32,9 @@ public:
 		//y-pos
 		float y;
 	};
+	struct ShadowBox {
+		glm::vec3 position;
+	};
 
 	/// Update the scene.
 	/**
@@ -39,7 +42,7 @@ public:
 	* @return SceneEnd-struct defining what to do next. nullptr if nothing should be done
 	*/
 	SceneEnd* update(double time);
-	void bindGeometry(int width, int height);
+	void bindGeometry(int width, int height, Geometry* geometry);
 	void bindLighting(int width, int height);
 
 
@@ -68,6 +71,7 @@ public:
 private:
 	void bindTriangleData();
 	void bindDeferredQuad();
+	void bindGroundGeometry();
 
 	GLuint shadowID;
 	GLuint diffuseID;
@@ -76,8 +80,10 @@ private:
 
 	FrameBufferObjects* multiplerendertargets;
 	ShadowMapping* shadowMap;
+	ShadowBox *verticesShadowBox;
 
 	//Shaders geometry pass
+	Geometry* geometryGround;
 	Geometry* geometry;
 	Shader* vertexShader;
 	Shader* geometryShader;
@@ -102,6 +108,10 @@ private:
 	GLuint halfHeight;
 
 	// Vertex buffer geometry
+	GLuint groundVertexBuffer = 0;
+	GLuint groundVertexAttribute = 0;
+
+	// Vertex buffer shadow geometry
 	GLuint shadowVertexBuffer = 0;
 	GLuint shadowVertexAttribute = 0;
 

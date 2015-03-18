@@ -3,14 +3,10 @@ Shadow mapping fragment shader
 */
 #version 400
 
-in vec2 texCoord;
-
-uniform sampler2D tShadowMap;
-
-out vec4 fragment_color;
+//layout(location = 0) out float fragment_depth;
+layout(location = 0) out vec4 fragment_color;
 
 void main(){
-	float depth = texture(tShadowMap, texCoord).x;
-	depth = 1.0 - (1.0 - depth) * 25.0;
-	fragment_color = vec4(depth);
+	float fragment_depth = gl_FragCoord.z;
+	fragment_color = vec4(fragment_depth, 1.0,0.0,1.0);
 }

@@ -15,6 +15,7 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ParticleScene.cpp" />
     <ClCompile Include="CubeMapTexture.cpp" />
+    <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="ShadowMapping.cpp" />
@@ -50,6 +51,7 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="ParticleScene.h" />
     <ClInclude Include="CubeMapTexture.h" />
+    <ClInclude Include="Plane.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="ShadowMapping.h" />
