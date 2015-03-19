@@ -13,12 +13,13 @@ bool Rectangle2D::collide(const Frustum& frustum) const {
 Rectangle2D::Rectangle2D(const Geometry & geometry, glm::mat4 matrix)
 {
 	glm::vec2 minValues, maxValues;
-	Geometry::Vertex* currVert = geometry.vertices();
-	origin = glm::vec2(0.f, 0.f);
+	Geometry::Vertex* Vert = geometry.vertices();
 	unsigned int numVerts = geometry.vertexCount();
+	Geometry::Vertex* currVert = new Geometry::Vertex[numVerts];
+	origin = glm::vec2(0.f, 0.f);
 
 	for (unsigned int i = 0; i < numVerts; i++) {
-		currVert[i].position = glm::vec3(matrix*glm::vec4(currVert[i].position, 1.f));
+		currVert[i].position = glm::vec3(matrix*glm::vec4(Vert[i].position, 1.f));
 	}
 	minValues = maxValues = glm::vec2(currVert[0].position.x, currVert[0].position.z);
 

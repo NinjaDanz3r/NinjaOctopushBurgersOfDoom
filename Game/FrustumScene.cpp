@@ -16,7 +16,7 @@
 #include "Player.h"
 #include "FrameBufferObjects.h"
 #include "Datastructures.h"
-#include "Game.h";
+#include "Game.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -41,13 +41,6 @@ FrustumScene::FrustumScene() {
 	deferredVertexShader = new Shader("deferred_vertex.glsl", GL_VERTEX_SHADER);
 	deferredFragmentShader = new Shader("deferred_fragment.glsl", GL_FRAGMENT_SHADER);
 	deferredShaderProgram = new ShaderProgram({ deferredVertexShader, deferredFragmentShader });
-
-	// Texture unit 0 is for base images.
-	glUniform1i(shaderProgram->uniformLocation("baseImage"), 0);
-	// Texture unit 1 is for normal map.
-	glUniform1i(shaderProgram->uniformLocation("normalMap"), 1);
-	// Texture unit 0 is for specular map.
-	glUniform1i(shaderProgram->uniformLocation("specularMap"), 2);
 
 	geometry = new Model("Resources/Models/Rock.bin");
 
@@ -88,6 +81,9 @@ FrustumScene::~FrustumScene() {
 	delete geometryShader;
 	delete fragmentShader;
 	delete multipleRenderTargets;
+	delete deferredShaderProgram;
+	delete deferredVertexShader;
+	delete deferredFragmentShader;
 
 	for (int i = 0; i < numModels; i++) {
 		delete multiRectangle[i];
