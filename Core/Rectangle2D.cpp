@@ -20,7 +20,7 @@ Rectangle2D::Rectangle2D(const Geometry & geometry, glm::mat4 matrix)
 	for (unsigned int i = 0; i < numVerts; i++) {
 		currVert[i].position = glm::vec3(matrix*glm::vec4(currVert[i].position, 1.f));
 	}
-	minValues = maxValues = glm::vec2(currVert[0].position);
+	minValues = maxValues = glm::vec2(currVert[0].position.x, currVert[0].position.z);
 
 	//Get minimum rectangle from vertices, same principle as for minimum AABB
 	for (unsigned int i = 0; i < numVerts; i++) {
@@ -41,7 +41,6 @@ Rectangle2D::Rectangle2D(const Geometry & geometry, glm::mat4 matrix)
 	// Width
 	dimensions.x = maxValues.x - minValues.x;
 	dimensions.y = maxValues.y - minValues.y;
-
 }
 
 
