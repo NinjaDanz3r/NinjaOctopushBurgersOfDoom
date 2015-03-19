@@ -153,6 +153,7 @@ void FrustumScene::render(int width, int height) {
 		glDrawElements(GL_TRIANGLES, geometry->indexCount(), GL_UNSIGNED_INT, (void*)0);
 	}
 	Game::additionalData = std::to_string(objectsRendered);
+	geometryMap.clear();
 
 	if (state == 1) {
 		multipleRenderTargets->showTextures(width, height);

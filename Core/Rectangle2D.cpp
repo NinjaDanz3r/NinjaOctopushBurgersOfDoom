@@ -10,40 +10,35 @@ bool Rectangle2D::collide(const Frustum& frustum) const {
 	return frustum.collide(*this);
 }
 
-Rectangle2D::Rectangle2D(const Geometry & geometry, glm::mat4 matrix)
-{
+Rectangle2D::Rectangle2D(const Geometry & geometry, const glm::mat4& matrix) {
 	glm::vec2 minValues, maxValues;
-	Geometry::Vertex* Vert = geometry.vertices();
-	unsigned int numVerts = geometry.vertexCount();
-	Geometry::Vertex* currVert = new Geometry::Vertex[numVerts];
-	origin = glm::vec2(0.f, 0.f);
+	glm::vec3* currVert = new glm::vec3[geometry.vertexCount()];
 
-	for (unsigned int i = 0; i < numVerts; i++) {
-		currVert[i].position = glm::vec3(matrix*glm::vec4(Vert[i].position, 1.f));
+	for (unsigned int i = 0; i < geometry.vertexCount(); i++) {
+		currVert[i] = glm::vec3(matrix*glm::vec4(geometry.vertices()[i].position, 1.f));
 	}
-	minValues = maxValues = glm::vec2(currVert[0].position.x, currVert[0].position.z);
+	minValues = maxValues = glm::vec2(currVert[0].x, currVert[0].z);
 
-	//Get minimum rectangle from vertices, same principle as for minimum AABB
-	for (unsigned int i = 0; i < numVerts; i++) {
-		if (currVert[i].position.x > maxValues.x)
-			maxValues.x = currVert[i].position.x;
-		else if (currVert[i].position.x < minValues.x)
-			minValues.x = currVert[i].position.x;
-		if (currVert[i].position.z > maxValues.y)
-			maxValues.y = currVert[i].position.z;
-		else if (currVert[i].position.z < minValues.y)
-			minValues.y = currVert[i].position.z;
+	// Get minimum rectangle from vertices, same principle as for minimum AABB
+	for (unsigned int i = 0; i < geometry.vertexCount(); i++) {
+		if (currVert[i].x > maxValues.x)
+			maxValues.x = currVert[i].x;
+		else if (currVert[i].x < minValues.x)
+			minValues.x = currVert[i].x;
+		if (currVert[i].z > maxValues.y)
+			maxValues.y = currVert[i].z;
+		else if (currVert[i].z < minValues.y)
+			minValues.y = currVert[i].z;
 	}
 
 	// Set origin
-	origin.x = (minValues.x + maxValues.x) / 2;
-	origin.y = (minValues.y + maxValues.y) / 2;
+	origin.x = (minValues.x + maxValues.x) / 2.f;
+	origin.y = (minValues.y + maxValues.y) / 2.f;
 
-	// Width
+	// Dimensions
 	dimensions.x = maxValues.x - minValues.x;
 	dimensions.y = maxValues.y - minValues.y;
 }
-
 
 bool Rectangle2D::overlaps(const Rectangle2D & otherRect){
 	float rect1MinX, rect1MinY,rect1MaxX, rect1MaxY;
