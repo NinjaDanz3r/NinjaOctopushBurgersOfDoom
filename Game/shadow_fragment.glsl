@@ -3,10 +3,9 @@ Shadow mapping fragment shader
 */
 #version 400
 
-layout(location = 0) out float fragment_depth;
-//layout(location = 0) out vec4 fragment_color;
+//layout(location = 0) out float fragment_depth;
+layout(location = 0) out vec4 fragment_color;
 
 void main(){
-	//fragment_color = vec4(gl_FragCoord.z, gl_FragCoord.z, gl_FragCoord.z, 1.0);
-	fragment_depth = gl_FragCoord.z;
+	fragment_color = vec4(gl_FragCoord.z, gl_FragCoord.z, gl_FragCoord.z, 1.0);
 }

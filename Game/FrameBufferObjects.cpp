@@ -172,11 +172,11 @@ void FrameBufferObjects::bindLighting(Camera* camera, int width, int height){
 	// Bind light information for lighting pass
 	glm::mat4 view = camera->view();
 
-	glm::vec4 lightPosition = view * glm::vec4(0.f, 3.f, 3.f, 1.f);
+	glm::vec4 lightPosition = view * glm::vec4(-5.f, 0.f, 5.f, 1.f);
 	glm::vec3 lightIntensity(1.f, 1.f, 1.f);
 	glm::vec3 diffuseKoefficient(1.f, 1.f, 1.f);
 	glm::vec2 screenSize(width, height);
-
+	
 	glUniform1i(shaderProgram->uniformLocation("tPosition"), FrameBufferObjects::POSITION);
 	glUniform1i(shaderProgram->uniformLocation("tDiffuse"), FrameBufferObjects::DIFFUSE);
 	glUniform1i(shaderProgram->uniformLocation("tNormals"), FrameBufferObjects::NORMAL);
