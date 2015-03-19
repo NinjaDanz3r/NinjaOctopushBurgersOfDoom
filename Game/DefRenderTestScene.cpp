@@ -80,7 +80,6 @@ DefRenderTestScene::~DefRenderTestScene() {
 
 Scene::SceneEnd* DefRenderTestScene::update(double time) {
 	player->update(time);
-
 	return nullptr;
 }
 
@@ -119,7 +118,7 @@ void DefRenderTestScene::render(int width, int height) {
 
 	// Model matrix, unique for each model.
 	model = geometryGround->modelMatrix();
-	glUniformMatrix4fv(shadowShaderProgram->uniformLocation("modelMatrix"), 1, GL_FALSE, &model[0][0]);
+	glUniformMatrix4fv(shaderProgram->uniformLocation("modelMatrix"), 1, GL_FALSE, &model[0][0]);
 
 	// Draw the triangles
 	glDrawElements(GL_TRIANGLES, geometryObject->geometry()->indexCount(), GL_UNSIGNED_INT, (void*)0);
@@ -127,7 +126,26 @@ void DefRenderTestScene::render(int width, int height) {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	renderShadows(width, height);
+	deferredShaderProgram->use();
+	glm::mat4 uVTransformMatrix(
+		0.5, 0.0, 0.0, 0.0,
+		0.0, 0.5, 0.0, 0.0,
+		0.0, 0.0, 0.5, 0.0,
+		0.5, 0.5, 0.5, 1.0
+		);
+	// Send the matrices to the shader.
+	glm::vec3 position = glm::vec3(0.f, 3.f, 3.f);
+	glm::mat4 viewMatrix = glm::lookAt(position, geometryObject->position(), glm::vec3(0, 1, 0));
+	glm::mat4 perspectiveMatrix = glm::perspective(45.0f, 1.0f, 2.0f, 50.0f);
+	glm::mat4 viewInverse = glm::inverse(view);
 
+	glUniformMatrix4fv(deferredShaderProgram->uniformLocation("lightViewMatrix"), 1, GL_FALSE, &viewMatrix[0][0]);
+	glUniformMatrix4fv(deferredShaderProgram->uniformLocation("lightProjectionMatrix"), 1, GL_FALSE, &perspectiveMatrix[0][0]);
+	glUniformMatrix4fv(deferredShaderProgram->uniformLocation("inverseViewMatrix"), 1, GL_FALSE, &viewInverse[0][0]);
+	glUniformMatrix4fv(deferredShaderProgram->uniformLocation("UVtransformMatrix"), 1, GL_FALSE, &uVTransformMatrix[0][0]);
+
+	glUniform1i(deferredShaderProgram->uniformLocation("tShadowMap"), FrameBufferObjects::NUM_TEXTURES + 1);
+	shadowMap->bindForReading(GL_TEXTURE0 + FrameBufferObjects::NUM_TEXTURES + 1);
 	multipleRenderTargets->render(player->camera(), width, height);
 }
 
