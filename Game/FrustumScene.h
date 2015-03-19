@@ -70,7 +70,6 @@ class FrustumScene : public Scene {
 		std::map<GeometryObject*, GeometryObject*> geometryMap;
 
 		std::vector<GeometryObject*> multiGeometry;
-		std::vector<Rectangle2D*>  multiRectangle;
 		int numModels = 100;
 		Player* player;
 };

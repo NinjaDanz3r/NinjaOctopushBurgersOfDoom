@@ -38,6 +38,7 @@ Rectangle2D::Rectangle2D(const Geometry & geometry, const glm::mat4& matrix) {
 	// Dimensions
 	dimensions.x = maxValues.x - minValues.x;
 	dimensions.y = maxValues.y - minValues.y;
+	delete[] currVert;
 }
 
 bool Rectangle2D::overlaps(const Rectangle2D & otherRect){

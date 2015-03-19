@@ -11,10 +11,10 @@ AABB::AABB(const glm::vec3& dimensions, const glm::vec3& origin, const glm::vec3
 }
 
 AABB::AABB(const Rectangle2D& rectangle) {
-	this->dimensions = glm::vec3(rectangle.dimensions.x, std::numeric_limits<float>::max(), rectangle.dimensions.y);
+	this->dimensions = glm::vec3(rectangle.dimensions.x, 40, rectangle.dimensions.y);
 	this->origin = glm::vec3(rectangle.origin.x, 0.f, rectangle.origin.y);
-	this->minVertex = glm::vec3(rectangle.origin.x - rectangle.dimensions.x / 2.f, std::numeric_limits<float>::lowest() / 2.f, rectangle.origin.y - rectangle.dimensions.y / 2.f);
-	this->maxVertex = glm::vec3(rectangle.origin.x + rectangle.dimensions.x / 2.f, std::numeric_limits<float>::max() / 2.f, rectangle.origin.y + rectangle.dimensions.y / 2.f);
+	this->minVertex = glm::vec3(rectangle.origin.x - rectangle.dimensions.x / 2.f, -20, rectangle.origin.y - rectangle.dimensions.y / 2.f);
+	this->maxVertex = glm::vec3(rectangle.origin.x + rectangle.dimensions.x / 2.f, 20, rectangle.origin.y + rectangle.dimensions.y / 2.f);
 }
 
 bool AABB::collide(const Frustum& frustum) const {

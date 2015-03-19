@@ -44,9 +44,8 @@ FrustumScene::FrustumScene() {
 
 	geometry = new Model("Resources/Models/Rock.bin");
 	geometry->createAabb();
-	Rectangle2D rect(glm::vec2(0.f, 0.f), glm::vec2(20.0f, 20.0f));
+	Rectangle2D rect(glm::vec2(0.f, 0.f), glm::vec2(40.0f, 40.0f));
 	qTree = new QuadTree(rect, 0, 3); 
-	qTree->debugTree("Root");
 	int modelsInTree = 0;
 	for (int i = 0; i < numModels; i++){
 		GeometryObject* tempGeometry = new GeometryObject(geometry);
@@ -60,12 +59,13 @@ FrustumScene::FrustumScene() {
 		rand3 = rand() % 361;
 		tempGeometry->setRotation((float)rand1, (float)rand2, (float)rand3);
 
-		Rectangle2D* tempRectangle = new Rectangle2D(*tempGeometry->geometry(), tempGeometry->modelMatrix());
-		multiRectangle.push_back(tempRectangle);
+		Rectangle2D tempRectangle = Rectangle2D(*tempGeometry->geometry(), tempGeometry->modelMatrix());
 		multiGeometry.push_back(tempGeometry);
 		
-		if (qTree->addObject(tempGeometry, *tempRectangle))
+		if (qTree->addObject(tempGeometry, tempRectangle))
 			modelsInTree++;
+		else
+			delete tempGeometry;
 	}
 
 	player = new Player();
@@ -83,15 +83,16 @@ FrustumScene::~FrustumScene() {
 	delete vertexShader;
 	delete geometryShader;
 	delete fragmentShader;
+
 	delete multipleRenderTargets;
 	delete deferredShaderProgram;
 	delete deferredVertexShader;
 	delete deferredFragmentShader;
 
-	for (int i = 0; i < numModels; i++) {
-		delete multiRectangle[i];
-	}
-	multiRectangle.clear();
+	delete qTree;
+	for (GeometryObject* obj : multiGeometry)
+		delete obj;
+	multiGeometry.clear();
 
 	delete geometry;
 	delete player;
@@ -134,13 +135,14 @@ void FrustumScene::render(int width, int height) {
 
 	// Send the matrices to the shader.
 	glm::mat4 view = player->camera()->view();
-	frustum = new Frustum(player->camera()->projection(width, height) * player->camera()->view());
-	qTree->getObjects(*frustum, geometryMap);
+
 	glUniformMatrix4fv(shaderProgram->uniformLocation("viewMatrix"), 1, GL_FALSE, &view[0][0]);
 	glUniformMatrix4fv(shaderProgram->uniformLocation("projectionMatrix"), 1, GL_FALSE, &player->camera()->projection(width, height)[0][0]);
 	glBindVertexArray(geometry->vertexArray());
 	// Drawing loop
 	int objectsRendered = 0;
+	frustum = new Frustum(player->camera()->projection(width, height) * player->camera()->view());
+	qTree->getObjects(*frustum, geometryMap);
 	typedef std::map<GeometryObject*, GeometryObject*>::iterator it_type;
 	for (it_type iterator = geometryMap.begin(); iterator != geometryMap.end(); iterator++) {
 		objectsRendered++;
@@ -156,8 +158,26 @@ void FrustumScene::render(int width, int height) {
 		glDrawElements(GL_TRIANGLES, geometry->indexCount(), GL_UNSIGNED_INT, (void*)0);
 	}
 	Game::additionalData = std::to_string(objectsRendered);
-
 	geometryMap.clear();
+
+	//Frustum culling against AABB's
+	//for (int i = 0; i < numModels; i++)
+	//{
+	//	glm::mat4 model = multiGeometry[i]->modelMatrix();
+	//	frustum = new Frustum(player->camera()->projection(width, height)[0][0] * player->camera()->view() * glm::inverse(model));
+	//	if (frustum->collide(geometry->aabb))
+	//	{
+	//		objectsRendered++;
+
+	//		glm::mat4 MV = view * model;
+	//		glm::mat4 N = glm::transpose(glm::inverse(MV));
+
+	//		glUniformMatrix4fv(shaderProgram->uniformLocation("modelMatrix"), 1, GL_FALSE, &model[0][0]);
+	//		glUniformMatrix3fv(shaderProgram->uniformLocation("normalMatrix"), 1, GL_FALSE, &glm::mat3(N)[0][0]);
+
+	//		glDrawElements(GL_TRIANGLES, geometry->indexCount(), GL_UNSIGNED_INT, (void*)0);
+	//	}
+	//}
 
 	if (state == 1) {
 		multipleRenderTargets->showTextures(width, height);
@@ -165,4 +185,5 @@ void FrustumScene::render(int width, int height) {
 	else if (state == 0) {
 		multipleRenderTargets->render(player->camera(), width, height);
 	}
+	delete frustum;
 }
