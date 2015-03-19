@@ -134,46 +134,27 @@ void FrustumScene::render(int width, int height) {
 
 	// Send the matrices to the shader.
 	glm::mat4 view = player->camera()->view();
-	//frustum = new Frustum(player->camera()->projection(width, height)[0][0] * player->camera()->view());
-	//qTree->getObjects(*frustum, geometryMap);
+	frustum = new Frustum(player->camera()->projection(width, height) * player->camera()->view());
+	qTree->getObjects(*frustum, geometryMap);
 	glUniformMatrix4fv(shaderProgram->uniformLocation("viewMatrix"), 1, GL_FALSE, &view[0][0]);
 	glUniformMatrix4fv(shaderProgram->uniformLocation("projectionMatrix"), 1, GL_FALSE, &player->camera()->projection(width, height)[0][0]);
 	glBindVertexArray(geometry->vertexArray());
 	// Drawing loop
 	int objectsRendered = 0;
 	typedef std::map<GeometryObject*, GeometryObject*>::iterator it_type;
-	//for (it_type iterator = geometryMap.begin(); iterator != geometryMap.end(); iterator++) {
-	//	objectsRendered++;
-	//	// Model matrix, unique for each model.
-	//	glm::mat4 model = iterator->second->modelMatrix();
+	for (it_type iterator = geometryMap.begin(); iterator != geometryMap.end(); iterator++) {
+		objectsRendered++;
+		// Model matrix, unique for each model.
+		glm::mat4 model = iterator->second->modelMatrix();
 
-	//	glm::mat4 MV = view * model;
-	//	glm::mat4 N = glm::transpose(glm::inverse(MV));
+		glm::mat4 MV = view * model;
+		glm::mat4 N = glm::transpose(glm::inverse(MV));
 
-	//	glUniformMatrix4fv(shaderProgram->uniformLocation("modelMatrix"), 1, GL_FALSE, &model[0][0]);
-	//	glUniformMatrix3fv(shaderProgram->uniformLocation("normalMatrix"), 1, GL_FALSE, &glm::mat3(N)[0][0]);
+		glUniformMatrix4fv(shaderProgram->uniformLocation("modelMatrix"), 1, GL_FALSE, &model[0][0]);
+		glUniformMatrix3fv(shaderProgram->uniformLocation("normalMatrix"), 1, GL_FALSE, &glm::mat3(N)[0][0]);
 
-	//	glDrawElements(GL_TRIANGLES, geometry->indexCount(), GL_UNSIGNED_INT, (void*)0);
-	//}
-
-	for (int i = 0; i < numModels; i++)
-	{
-		glm::mat4 model = multiGeometry[i]->modelMatrix();
-		frustum = new Frustum(player->camera()->projection(width, height)[0][0] * player->camera()->view() * glm::inverse(model));
-		if (frustum->collide(geometry->aabb))
-		{
-			objectsRendered++;
-
-			glm::mat4 MV = view * model;
-			glm::mat4 N = glm::transpose(glm::inverse(MV));
-
-			glUniformMatrix4fv(shaderProgram->uniformLocation("modelMatrix"), 1, GL_FALSE, &model[0][0]);
-			glUniformMatrix3fv(shaderProgram->uniformLocation("normalMatrix"), 1, GL_FALSE, &glm::mat3(N)[0][0]);
-			
-			glDrawElements(GL_TRIANGLES, geometry->indexCount(), GL_UNSIGNED_INT, (void*)0);
-		}
+		glDrawElements(GL_TRIANGLES, geometry->indexCount(), GL_UNSIGNED_INT, (void*)0);
 	}
-
 	Game::additionalData = std::to_string(objectsRendered);
 
 	geometryMap.clear();

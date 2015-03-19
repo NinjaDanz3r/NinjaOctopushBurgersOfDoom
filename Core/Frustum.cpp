@@ -1,43 +1,44 @@
 #include "Frustum.h"
 #include "AABB.h"
 #include "Rectangle2D.h"
+#include <glm/gtc/matrix_access.hpp>
 
 Frustum::Frustum(const glm::mat4& matrix) {
 	// Left clipping plane
-	planes[0].x = matrix[0][3] + matrix[0][0];
-	planes[0].y = matrix[1][3] + matrix[1][0];
-	planes[0].z = matrix[2][3] + matrix[2][0];
-	planes[0].w = matrix[3][3] + matrix[3][0];
+	planes[0].x = glm::row(matrix, 3).x + glm::row(matrix, 0).x;
+	planes[0].y = glm::row(matrix, 3).y + glm::row(matrix, 0).y;
+	planes[0].z = glm::row(matrix, 3).z + glm::row(matrix, 0).z;
+	planes[0].w = glm::row(matrix, 3).w + glm::row(matrix, 0).w;
 
 	// Right clipping plane
-	planes[1].x = matrix[0][3] - matrix[0][0];
-	planes[1].y = matrix[1][3] - matrix[1][0];
-	planes[1].z = matrix[2][3] - matrix[2][0];
-	planes[1].w = matrix[3][3] - matrix[3][0];
+	planes[1].x = glm::row(matrix, 3).x - glm::row(matrix, 0).x;
+	planes[1].y = glm::row(matrix, 3).y - glm::row(matrix, 0).y;
+	planes[1].z = glm::row(matrix, 3).z - glm::row(matrix, 0).z;
+	planes[1].w = glm::row(matrix, 3).w - glm::row(matrix, 0).w;
 
 	// Top clipping plane
-	planes[2].x = matrix[0][3] - matrix[0][1];
-	planes[2].y = matrix[1][3] - matrix[1][1];
-	planes[2].z = matrix[2][3] - matrix[2][1];
-	planes[2].w = matrix[3][3] - matrix[3][1];
+	planes[2].x = glm::row(matrix, 3).x - glm::row(matrix, 1).x;
+	planes[2].y = glm::row(matrix, 3).y - glm::row(matrix, 1).y;
+	planes[2].z = glm::row(matrix, 3).z - glm::row(matrix, 1).z;
+	planes[2].w = glm::row(matrix, 3).w - glm::row(matrix, 1).w;
 
 	// Bottom clipping plane
-	planes[3].x = matrix[0][3] + matrix[0][1];
-	planes[3].y = matrix[1][3] + matrix[1][1];
-	planes[3].z = matrix[2][3] + matrix[2][1];
-	planes[3].w = matrix[3][3] + matrix[3][1];
+	planes[3].x = glm::row(matrix, 3).x + glm::row(matrix, 1).x;
+	planes[3].y = glm::row(matrix, 3).y + glm::row(matrix, 1).y;
+	planes[3].z = glm::row(matrix, 3).z + glm::row(matrix, 1).z;
+	planes[3].w = glm::row(matrix, 3).w + glm::row(matrix, 1).w;
 
 	// Near clipping plane
-	planes[4].x = matrix[0][3] + matrix[0][2];
-	planes[4].y = matrix[1][3] + matrix[1][2];
-	planes[4].z = matrix[2][3] + matrix[2][2];
-	planes[4].w = matrix[3][3] + matrix[3][2];
+	planes[4].x = glm::row(matrix, 3).x + glm::row(matrix, 2).x;
+	planes[4].y = glm::row(matrix, 3).y + glm::row(matrix, 2).y;
+	planes[4].z = glm::row(matrix, 3).z + glm::row(matrix, 2).z;
+	planes[4].w = glm::row(matrix, 3).w + glm::row(matrix, 2).w;
 
 	// Far clipping plane
-	planes[5].x = matrix[0][3] - matrix[0][2];
-	planes[5].y = matrix[1][3] - matrix[1][2];
-	planes[5].z = matrix[2][3] - matrix[2][2];
-	planes[5].w = matrix[3][3] - matrix[3][2];
+	planes[5].x = glm::row(matrix, 3).x - glm::row(matrix, 2).x;
+	planes[5].y = glm::row(matrix, 3).y - glm::row(matrix, 2).y;
+	planes[5].z = glm::row(matrix, 3).z - glm::row(matrix, 2).z;
+	planes[5].w = glm::row(matrix, 3).w - glm::row(matrix, 2).w;
 }
 
 bool Frustum::collide(const AABB& aabb) const {
@@ -72,19 +73,6 @@ bool Frustum::collide(const AABB& aabb) const {
 bool Frustum::collide(const Rectangle2D& rectangle) const {
 	return collide(AABB(rectangle));
 }
-
-//bool Frustum::collide(const Rectangle2D& rectangle) const {
-//	glm::vec2 vertices[4];
-//	vertices[0] = rectangle.origin + rectangle.dimensions.x / 2; //Max X
-//	vertices[1] = rectangle.origin + rectangle.dimensions.y / 2; //Max Y
-//	vertices[2] = rectangle.origin + rectangle.dimensions.x / 2; //Min X
-//	vertices[3] = rectangle.origin + rectangle.dimensions.y / 2; //Min Y
-//	for (int plane = 0; plane < 4; plane++)
-//	{
-//		if (distance)
-//	}
-//
-//}
 
 float Frustum::distanceToPoint(const glm::vec4& plane, const glm::vec3& point) {
 	return plane.x * point.x + plane.y * point.y + plane.z * point.z + plane.w;
