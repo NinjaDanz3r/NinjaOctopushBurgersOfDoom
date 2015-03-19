@@ -92,7 +92,7 @@ bool QuadTree::addObject(GeometryObject* object, Rectangle2D rect) {
 
 void QuadTree::getObjects(Frustum & frustum, std::map<GeometryObject*, GeometryObject*> & GeometryMap) {
 
-	if (depth == maxDepth) {
+	if ( (depth == maxDepth) && (frustum.collide(rectangle)) ){
 		if (!objects.empty())
 		{
 			for (GeometryObject* obj : objects)

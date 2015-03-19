@@ -73,6 +73,19 @@ bool Frustum::collide(const Rectangle2D& rectangle) const {
 	return collide(AABB(rectangle));
 }
 
+//bool Frustum::collide(const Rectangle2D& rectangle) const {
+//	glm::vec2 vertices[4];
+//	vertices[0] = rectangle.origin + rectangle.dimensions.x / 2; //Max X
+//	vertices[1] = rectangle.origin + rectangle.dimensions.y / 2; //Max Y
+//	vertices[2] = rectangle.origin + rectangle.dimensions.x / 2; //Min X
+//	vertices[3] = rectangle.origin + rectangle.dimensions.y / 2; //Min Y
+//	for (int plane = 0; plane < 4; plane++)
+//	{
+//		if (distance)
+//	}
+//
+//}
+
 float Frustum::distanceToPoint(const glm::vec4& plane, const glm::vec3& point) {
 	return plane.x * point.x + plane.y * point.y + plane.z * point.z + plane.w;
 }
