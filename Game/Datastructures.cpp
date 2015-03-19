@@ -107,7 +107,13 @@ void QuadTree::getObjects(Frustum & frustum, std::map<GeometryObject*, GeometryO
 
 QuadTree::~QuadTree() {
 	if (depth == maxDepth)
+	{
+		if (!objects.empty())
+			for (GeometryObject* obj : objects)
+				delete obj;
+		objects.clear();
 		return;
+	}
 	else {
 		delete childTree[Q1];
 		delete childTree[Q2];
