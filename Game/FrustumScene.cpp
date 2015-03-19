@@ -166,6 +166,7 @@ void FrustumScene::render(int width, int height) {
 			glDrawElements(GL_TRIANGLES, geometry->indexCount(), GL_UNSIGNED_INT, (void*)0);
 			objectsRendered++;
 		}
+		delete frustum;
 	}
 	Game::additionalData = std::to_string(objectsRendered);
 	geometryMap.clear();
@@ -176,5 +177,4 @@ void FrustumScene::render(int width, int height) {
 	else if (state == 0) {
 		multipleRenderTargets->render(player->camera(), width, height);
 	}
-	delete frustum;
 }
