@@ -9,6 +9,7 @@ layout(triangle_strip, max_vertices=3) out;
 
 in VertexData {
 	vec3 normal;
+	vec3 tangent;
 	vec2 tex_coords;
 } vertexIn[3];
 
@@ -22,6 +23,7 @@ uniform mat4 projectionMatrix;
 out VertexData {
     vec3 position;
 	vec3 normal;
+	vec3 tangent;
 	vec2 tex_coords;
 } vertexOut;
 
@@ -37,6 +39,7 @@ void main() {
 			// Copy attributes
 			vertexOut.position = vec3(viewMatrix * modelMatrix * gl_in[i].gl_Position);
 			vertexOut.normal =  normalize(normalMatrix * vertexIn[i].normal);
+			vertexOut.tangent = normalize(normalMatrix * vertexIn[i].tangent);
 			vertexOut.tex_coords = vertexIn[i].tex_coords;
 			gl_Position = projectionMatrix * vec4(vertexOut.position, 1.0);
 		

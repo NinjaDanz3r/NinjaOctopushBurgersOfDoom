@@ -40,7 +40,7 @@ TestScene::TestScene() {
 
 	geometry = new Model("Resources/Models/Rock.bin");
 	geometryObject = new GeometryObject(geometry);
-	geometryObject->setScale(glm::vec3(0.01f, 0.01f, 0.01f));
+	geometryObject->setScale(0.01f, 0.01f, 0.01f);
 
 	player = new Player();
 	player->setMovementSpeed(2.0f);

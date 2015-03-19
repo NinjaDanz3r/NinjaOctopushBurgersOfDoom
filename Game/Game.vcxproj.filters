@@ -89,6 +89,11 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FrustumScene.cpp">
+	</ClCompile>
+    <ClCompile Include="ShadowMapping.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DefRenderTestScene.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
   </ItemGroup>
@@ -188,6 +193,12 @@
     </ClInclude>
     <ClInclude Include="Datastructures.h">
       <Filter>Header Files</Filter>
+	</ClInclude>
+    <ClInclude Include="ShadowMapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DefRenderTestScene.h">
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +239,12 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="deferred_vertex.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shadow_vertex.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shadow_fragment.glsl">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

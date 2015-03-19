@@ -21,10 +21,12 @@ class Geometry {
 		struct Vertex {
 			/// Position.
 			glm::vec3 position;
-			/// Normal.
-			glm::vec3 normal;
 			/// %Texture coordinate.
 			glm::vec2 textureCoordinate;
+			/// Normal.
+			glm::vec3 normal;
+			/// Tangent vector.
+			glm::vec3 tangent;
 		};
 		/// Destructor
 		CORE_EXPORT virtual ~Geometry();

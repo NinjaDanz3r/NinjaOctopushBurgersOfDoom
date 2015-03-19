@@ -22,8 +22,10 @@
     <ClCompile Include="AudioScene.cpp" />
     <ClCompile Include="Datastructures.cpp" />
     <ClCompile Include="FrustumScene.cpp" />
+    <ClCompile Include="DefRenderTestScene.cpp" />
     <ClCompile Include="ParticleScene.cpp" />
     <ClCompile Include="CubeMapTexture.cpp" />
+    <ClCompile Include="ShadowMapping.cpp" />
     <ClCompile Include="PickingScene.cpp" />
     <ClCompile Include="FrameBufferObjects.cpp" />
     <ClCompile Include="GeometryObject.cpp" />
@@ -53,9 +55,11 @@
   <ItemGroup>
     <ClInclude Include="AudioScene.h" />
     <ClInclude Include="Datastructures.h" />
+    <ClInclude Include="DefRenderTestScene.h" />
     <ClInclude Include="ParticleScene.h" />
     <ClInclude Include="FrustumScene.h" />
     <ClInclude Include="CubeMapTexture.h" />
+    <ClInclude Include="ShadowMapping.h" />
     <ClInclude Include="PickingScene.h" />
     <ClInclude Include="FrameBufferObjects.h" />
     <ClInclude Include="GeometryObject.h" />
@@ -94,6 +98,8 @@
     <None Include="particle_fragment.glsl" />
     <None Include="particle_geometry.glsl" />
     <None Include="particle_vertex.glsl" />
+    <None Include="shadow_fragment.glsl" />
+    <None Include="shadow_vertex.glsl" />
     <None Include="picking_fragment.glsl" />
     <None Include="skybox_fragment.glsl" />
     <None Include="skybox_vertex.glsl" />

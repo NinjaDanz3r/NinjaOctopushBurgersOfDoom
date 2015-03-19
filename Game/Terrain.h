@@ -81,6 +81,7 @@ class Terrain : public Geometry {
 
 		float** heightMap;
 		glm::vec3** normals;
+		glm::vec3** tangents;
 		int width;
 		int height;
 

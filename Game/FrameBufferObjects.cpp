@@ -32,8 +32,8 @@ FrameBufferObjects::FrameBufferObjects(ShaderProgram* shaderProgram, unsigned in
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_DEPTH_TEXTURE_MODE, GL_INTENSITY);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
 	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthHandle, 0);
 
@@ -172,11 +172,11 @@ void FrameBufferObjects::bindLighting(Camera* camera, int width, int height){
 	// Bind light information for lighting pass
 	glm::mat4 view = camera->view();
 
-	glm::vec4 lightPosition = view * glm::vec4(-5.f, 0.f, 5.f, 1.f);
+	glm::vec4 lightPosition = view * glm::vec4(0.f, 3.f, 3.f, 1.f);
 	glm::vec3 lightIntensity(1.f, 1.f, 1.f);
 	glm::vec3 diffuseKoefficient(1.f, 1.f, 1.f);
 	glm::vec2 screenSize(width, height);
-	
+
 	glUniform1i(shaderProgram->uniformLocation("tPosition"), FrameBufferObjects::POSITION);
 	glUniform1i(shaderProgram->uniformLocation("tDiffuse"), FrameBufferObjects::DIFFUSE);
 	glUniform1i(shaderProgram->uniformLocation("tNormals"), FrameBufferObjects::NORMAL);

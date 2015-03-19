@@ -7,6 +7,7 @@
 #include "AudioScene.h"
 #include "PickingScene.h"
 #include "FrustumScene.h"
+#include "DefRenderTestScene.h"
 
 #include "input.h"
 #include "settings.h"
@@ -107,6 +108,7 @@ template<typename T> Scene * createInstance() {
 void Game::setSceneMap() {
 	(*sceneMap)["default"] = &createInstance<TestScene>;
 	(*sceneMap)["test"] = &createInstance<TestScene>;
+	(*sceneMap)["deferred"] = &createInstance<DefRenderTestScene>;
 	(*sceneMap)["audio"] = &createInstance<AudioScene>;
 	(*sceneMap)["particle"] = &createInstance<ParticleScene>;
 	(*sceneMap)["terrain"] = &createInstance<TerrainScene>;

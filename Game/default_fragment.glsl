@@ -5,6 +5,7 @@ Geometry pass fragment shader (first pass)
 in VertexData {
 	vec3 position;
 	vec3 normal;
+	vec3 tangent;
 	vec2 tex_coords;
 } vertexIn;
 
