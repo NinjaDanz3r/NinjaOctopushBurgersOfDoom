@@ -5,10 +5,23 @@
 
 class ShadowMapping {
 	public:
+		/// Constructor
+		/**
+		* @param width Width of the context.
+		* @param height Height of the context.
+		*/
 		ShadowMapping(unsigned int width, unsigned int height);
+		
+		/// Destructor
+		/**
+		* Free allocated resources.
+		*/
 		~ShadowMapping();
 
+		/// Enable frame buffer object for writing.
 		void bindForWriting();
+
+		/// Enable frame buffer object for reading.
 		void bindForReading(GLenum texture);
 
 	private:
