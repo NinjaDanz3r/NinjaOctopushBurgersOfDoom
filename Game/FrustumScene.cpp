@@ -45,7 +45,8 @@ FrustumScene::FrustumScene() {
 	geometry = new Model("Resources/Models/Rock.bin");
 
 	Rectangle2D rect(glm::vec2(0.f, 0.f), glm::vec2(20.0f, 20.0f));
-	qTree = new QuadTree(rect, 0, 2);
+	qTree = new QuadTree(rect, 0, 6); 
+	qTree->debugTree("Root");
 	int modelsInTree = 0;
 	for (int i = 0; i < numModels; i++){
 		GeometryObject* tempGeometry = new GeometryObject(geometry);
