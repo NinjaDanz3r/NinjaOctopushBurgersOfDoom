@@ -3,19 +3,19 @@
 #include <gl/glew.h>
 #include <string>
 
-#include "Square.h"
 #include "Texture2D.h"
 #include "input.h"
-#include "Model.h"
+#include <Model.h>
 #include "settings.h"
 #include "Camera.h"
 
-#include "Shader.h"
-#include "ShaderProgram.h"
+#include <Shader.h>
+#include <ShaderProgram.h>
 #include "GeometryObject.h"
 #include "Player.h"
 #include "FrameBufferObjects.h"
 #include "QuadTree.h"
+#include <Rectangle2D.h>
 #include "Game.h"
 
 #include <glm/glm.hpp>

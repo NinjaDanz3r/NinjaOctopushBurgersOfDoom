@@ -3,9 +3,8 @@
 
 #include "Scene.h"
 #include <vector>
-#include <Rectangle2D.h>
-#include "QuadTree.h"
 #include <Frustum.h>
+#include <map>
 
 class Shader;
 class ShaderProgram;
@@ -14,6 +13,7 @@ class Texture;
 class Geometry;
 class GeometryObject;
 class Player;
+class QuadTree;
 
 /** @ingroup game
 * @{
