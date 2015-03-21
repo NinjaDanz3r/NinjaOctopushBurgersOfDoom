@@ -15,7 +15,7 @@
 #include "GeometryObject.h"
 #include "Player.h"
 #include "FrameBufferObjects.h"
-#include "Datastructures.h"
+#include "QuadTree.h"
 #include "Game.h"
 
 #include <glm/glm.hpp>

@@ -1,4 +1,4 @@
-#include "Datastructures.h"
+#include "QuadTree.h"
 
 
 QuadTree::QuadTree(const Rectangle2D & _rectangle, int _depth, int _maxDepth) {

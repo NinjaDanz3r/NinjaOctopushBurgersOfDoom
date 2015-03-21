@@ -4,7 +4,7 @@
 #include "Scene.h"
 #include <vector>
 #include <Rectangle2D.h>
-#include "Datastructures.h"
+#include "QuadTree.h"
 #include <Frustum.h>
 
 class Shader;
