@@ -35,7 +35,9 @@ class Game {
 		 */
 		void update();
 
+		/// Additional data to display in window title.
 		static std::string additionalData;
+
 	private:
 		void setWindowTitle();
 		void setSceneMap();
