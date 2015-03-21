@@ -25,7 +25,7 @@
     <ClCompile Include="DefRenderTestScene.cpp" />
     <ClCompile Include="ParticleScene.cpp" />
     <ClCompile Include="CubeMapTexture.cpp" />
-    <ClCompile Include="ShadowMapping.cpp" />
+    <ClCompile Include="ShadowMap.cpp" />
     <ClCompile Include="PickingScene.cpp" />
     <ClCompile Include="FrameBufferObjects.cpp" />
     <ClCompile Include="GeometryObject.cpp" />
@@ -59,7 +59,7 @@
     <ClInclude Include="ParticleScene.h" />
     <ClInclude Include="FrustumScene.h" />
     <ClInclude Include="CubeMapTexture.h" />
-    <ClInclude Include="ShadowMapping.h" />
+    <ClInclude Include="ShadowMap.h" />
     <ClInclude Include="PickingScene.h" />
     <ClInclude Include="FrameBufferObjects.h" />
     <ClInclude Include="GeometryObject.h" />
