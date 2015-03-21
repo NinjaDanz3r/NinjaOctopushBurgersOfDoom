@@ -1,7 +1,7 @@
-#include "ShadowMapping.h"
+#include "ShadowMap.h"
 #include <util.h>
 
-ShadowMapping::ShadowMapping(unsigned int width, unsigned int height) {
+ShadowMap::ShadowMap(unsigned int width, unsigned int height) {
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
@@ -30,16 +30,16 @@ ShadowMapping::ShadowMapping(unsigned int width, unsigned int height) {
 	}
 }
 
-ShadowMapping::~ShadowMapping() {
+ShadowMap::~ShadowMap() {
 	glDeleteFramebuffers(1, &fbo);
 	glDeleteTextures(1, &shadowMap);
 }
 
-void ShadowMapping::bindForWriting() {
+void ShadowMap::bindForWriting() {
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 }
 
-void ShadowMapping::bindForReading(GLenum texture) {
+void ShadowMap::bindForReading(GLenum texture) {
 	glActiveTexture(texture);
 	glBindTexture(GL_TEXTURE_2D, shadowMap);
 }

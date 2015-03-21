@@ -1,22 +1,22 @@
-#ifndef __SHADOWMAPPING_H__
-#define __SHADOWMAPPING_H__
+#ifndef __SHADOWMAP_H__
+#define __SHADOWMAP_H__
 
-#include<GL/glew.h>
+#include <GL/glew.h>
 
-class ShadowMapping {
+class ShadowMap {
 	public:
 		/// Constructor
 		/**
 		* @param width Width of the context.
 		* @param height Height of the context.
 		*/
-		ShadowMapping(unsigned int width, unsigned int height);
+		ShadowMap(unsigned int width, unsigned int height);
 		
 		/// Destructor
 		/**
 		* Free allocated resources.
 		*/
-		~ShadowMapping();
+		~ShadowMap();
 
 		/// Enable frame buffer object for writing.
 		void bindForWriting();
