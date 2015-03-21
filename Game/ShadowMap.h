@@ -3,9 +3,10 @@
 
 #include <GL/glew.h>
 
+/// Shadow map.
 class ShadowMap {
 	public:
-		/// Constructor
+		/// Create shadow map.
 		/**
 		* @param width Width of the context.
 		* @param height Height of the context.
@@ -14,14 +15,17 @@ class ShadowMap {
 		
 		/// Destructor
 		/**
-		* Free allocated resources.
-		*/
+		 * Free allocated resources.
+		 */
 		~ShadowMap();
 
 		/// Enable frame buffer object for writing.
 		void bindForWriting();
 
 		/// Enable frame buffer object for reading.
+		/**
+		 * @param texture Texture to set up for reading.
+		 */
 		void bindForReading(GLenum texture);
 
 	private:
