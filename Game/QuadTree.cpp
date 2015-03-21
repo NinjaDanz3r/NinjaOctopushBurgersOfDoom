@@ -3,13 +3,17 @@
 #include <Frustum.h>
 #include <glm/glm.hpp>
 
-QuadTree::QuadTree(const Rectangle2D & _rectangle, int _depth, int _maxDepth) {
-	rectangle = _rectangle;
-	depth = _depth;
-	maxDepth = _maxDepth;
+QuadTree::QuadTree(const Rectangle2D & rectangle, int maxDepth) : QuadTree(rectangle, 0, maxDepth) {
+
+}
+
+QuadTree::QuadTree(const Rectangle2D & rectangle, int depth, int maxDepth) {
+	this->rectangle = rectangle;
+	this->depth = depth;
+	this->maxDepth = maxDepth;
 
 	// If we're at a leaf, we should populate it with objects 
-	if (_depth == _maxDepth) {
+	if (depth == maxDepth) {
 		isLeaf = true;
 	} else {
 		// Precalculate some values
@@ -34,33 +38,6 @@ QuadTree::QuadTree(const Rectangle2D & _rectangle, int _depth, int _maxDepth) {
 	}
 }
 
-void QuadTree::addObject(GeometryObject* object, Rectangle2D rect) {
-	if (depth == maxDepth){
-		objects.push_back(object);
-	} else {
-		if (childTree[Q1]->rectangle.overlaps(rect))
-			childTree[Q1]->addObject(object, rect);
-		if (childTree[Q2]->rectangle.overlaps(rect))
-			childTree[Q2]->addObject(object, rect);
-		if (childTree[Q3]->rectangle.overlaps(rect))
-			childTree[Q3]->addObject(object, rect);
-		if (childTree[Q4]->rectangle.overlaps(rect))
-			childTree[Q4]->addObject(object, rect);
-	}
-}
-
-void QuadTree::getObjects(Frustum & frustum, std::map<GeometryObject*, GeometryObject*> & GeometryMap) {
-	if ((depth == maxDepth) && frustum.collide(rectangle)) {
-		for (GeometryObject* obj : objects)
-			GeometryMap[obj] = obj;
-	} else if (frustum.collide(rectangle)) {
-			childTree[Q1]->getObjects(frustum, GeometryMap);
-			childTree[Q2]->getObjects(frustum, GeometryMap);
-			childTree[Q3]->getObjects(frustum, GeometryMap);
-			childTree[Q4]->getObjects(frustum, GeometryMap);
-	}
-}
-
 QuadTree::~QuadTree() {
 	if (depth == maxDepth) {
 		objects.clear();
@@ -69,5 +46,32 @@ QuadTree::~QuadTree() {
 		delete childTree[Q2];
 		delete childTree[Q3];
 		delete childTree[Q4];
+	}
+}
+
+void QuadTree::addObject(GeometryObject* object, Rectangle2D rectangle) {
+	if (depth == maxDepth){
+		objects.push_back(object);
+	} else {
+		if (childTree[Q1]->rectangle.overlaps(rectangle))
+			childTree[Q1]->addObject(object, rectangle);
+		if (childTree[Q2]->rectangle.overlaps(rectangle))
+			childTree[Q2]->addObject(object, rectangle);
+		if (childTree[Q3]->rectangle.overlaps(rectangle))
+			childTree[Q3]->addObject(object, rectangle);
+		if (childTree[Q4]->rectangle.overlaps(rectangle))
+			childTree[Q4]->addObject(object, rectangle);
+	}
+}
+
+void QuadTree::getObjects(Frustum& frustum, std::map<GeometryObject*, GeometryObject*>& geometryMap) {
+	if ((depth == maxDepth) && frustum.collide(rectangle)) {
+		for (GeometryObject* obj : objects)
+			geometryMap[obj] = obj;
+	} else if (frustum.collide(rectangle)) {
+			childTree[Q1]->getObjects(frustum, geometryMap);
+			childTree[Q2]->getObjects(frustum, geometryMap);
+			childTree[Q3]->getObjects(frustum, geometryMap);
+			childTree[Q4]->getObjects(frustum, geometryMap);
 	}
 }
