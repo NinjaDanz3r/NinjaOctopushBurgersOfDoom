@@ -52,6 +52,7 @@ class FrustumScene : public Scene {
 		Shader* geometryShader;
 		Shader* fragmentShader;
 		ShaderProgram* shaderProgram;
+
 		// Shaders lighting pass
 		Shader* deferredVertexShader;
 		Shader* deferredFragmentShader;
@@ -61,14 +62,13 @@ class FrustumScene : public Scene {
 		Texture* normal;
 		Texture* specular;
 
-		Texture* texture;
 		Geometry* geometry;
-		QuadTree* qTree;
+		QuadTree* quadTree;
 
 		std::map<GeometryObject*, GeometryObject*> geometryMap;
 
 		std::vector<GeometryObject*> multiGeometry;
-		int numModels = 100;
+		const int numModels = 100;
 		Player* player;
 };
 

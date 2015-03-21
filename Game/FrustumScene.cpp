@@ -44,7 +44,7 @@ FrustumScene::FrustumScene() {
 	geometry = new Model("Resources/Models/Rock.bin");
 	geometry->createAabb();
 	Rectangle2D rect(glm::vec2(0.f, 0.f), glm::vec2(40.0f, 40.0f));
-	qTree = new QuadTree(rect, 3); 
+	quadTree = new QuadTree(rect, 3); 
 	
 	for (int i = 0; i < numModels; i++){
 		GeometryObject* tempGeometry = new GeometryObject(geometry);
@@ -60,7 +60,7 @@ FrustumScene::FrustumScene() {
 
 		Rectangle2D tempRectangle = Rectangle2D(*tempGeometry->geometry(), tempGeometry->modelMatrix());
 		multiGeometry.push_back(tempGeometry);
-		qTree->addObject(tempGeometry, tempRectangle);
+		quadTree->addObject(tempGeometry, tempRectangle);
 	}
 
 	player = new Player();
@@ -84,7 +84,7 @@ FrustumScene::~FrustumScene() {
 	delete deferredVertexShader;
 	delete deferredFragmentShader;
 
-	delete qTree;
+	delete quadTree;
 	for (GeometryObject* obj : multiGeometry)
 		delete obj;
 	multiGeometry.clear();
@@ -140,7 +140,7 @@ void FrustumScene::render(int width, int height) {
 	
 	//Frustum in world space
 	Frustum* frustum = new Frustum(player->camera()->projection(width, height) * player->camera()->view());
-	qTree->getObjects(*frustum, geometryMap);
+	quadTree->getObjects(*frustum, geometryMap);
 	delete frustum;
 
 	for (auto iterator : geometryMap) {
