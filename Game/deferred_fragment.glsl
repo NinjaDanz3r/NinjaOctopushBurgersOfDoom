@@ -22,14 +22,9 @@ uniform vec2 screenSize;
 
 out vec4 fragment_color;
 
-
-
 const float EPSILON = 0.05;
 
-// Calculate shadow
-float calculateShadow(vec4 lightSpacePosition) {
-
-vec2 poisson[15] = vec2[](
+const vec2 poisson[15] = vec2[](
 	vec2( 0.3717325, 0.1279892),
 	vec2(0.4879754, -0.3658713),
 	vec2(0.794171, 0.3522189),
@@ -47,18 +42,20 @@ vec2 poisson[15] = vec2[](
 	vec2(-0.8517231, 0.4333114)
 );
 
-    vec4 shadowCoord= UVtransformMatrix * lightSpacePosition;
+// Calculate shadow
+float calculateShadow(vec4 lightSpacePosition) {
+    vec4 shadowCoord = UVtransformMatrix * lightSpacePosition;
 
 	float visibility = 1.0;
-	for (int i=0;i<10;i++){
-		if ( texture( tShadowMap, (shadowCoord.xy/shadowCoord.w) + poisson[i]/300.0 ).z  <  (shadowCoord.z-EPSILON)/shadowCoord.w ){
-			visibility-=1.0/12.0;
+	for (int i = 0; i < 10; i++){
+		if (texture(tShadowMap, (shadowCoord.xy / shadowCoord.w) + poisson[i] / 300.0).z < (shadowCoord.z - EPSILON) / shadowCoord.w){
+			visibility -= 1.0/12.0;
 		 }
 	}
     return visibility;
 }
 
-//Calculate texcoord
+// Calculate texcoord
 vec2 calculateTexCoord() {
 	return gl_FragCoord.xy / screenSize;
 }
