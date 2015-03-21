@@ -1,5 +1,8 @@
 #include "QuadTree.h"
 
+#include <Frustum.h>
+#include <glm/glm.hpp>
+
 QuadTree::QuadTree(const Rectangle2D & _rectangle, int _depth, int _maxDepth) {
 	rectangle = _rectangle;
 	depth = _depth;

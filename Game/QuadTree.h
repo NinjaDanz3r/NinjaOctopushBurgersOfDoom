@@ -1,14 +1,13 @@
 #ifndef __QUADTREE_H__
 #define __QUADTREE_H__
 
-#include "GeometryObject.h"
+#include <Rectangle2D.h>
 #include <vector>
-#include <glm/glm.hpp>
-#include "Rectangle2D.h"
-#include <Frustum.h>
 #include <map>
 
 class QuadTree;
+class GeometryObject;
+class Frustum;
 
 //Enum to make spatial relations more intuitive.
 enum Directions
@@ -25,7 +24,7 @@ class QuadTree
 		QuadTree(const Rectangle2D & _rect, int _depth, int _maxDepth);
 		~QuadTree();
 		void addObject(GeometryObject* object, Rectangle2D rect);
-		void getObjects(Frustum & frustum, std::map<GeometryObject*, GeometryObject*>& GeometryMap);
+		void getObjects(Frustum& frustum, std::map<GeometryObject*, GeometryObject*>& GeometryMap);
 		unsigned int getNumberOfObjects();
 
 	private:
