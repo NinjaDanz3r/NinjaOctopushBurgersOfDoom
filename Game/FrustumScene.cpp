@@ -15,6 +15,7 @@
 #include "Player.h"
 #include "FrameBufferObjects.h"
 #include "QuadTree.h"
+#include <Frustum.h>
 #include <Rectangle2D.h>
 #include "Game.h"
 
@@ -23,8 +24,6 @@
 #include <glm/gtx/transform.hpp>
 
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))
-
-std::string Game::additionalData;
 
 FrustumScene::FrustumScene() {
 	state = 0;
@@ -46,7 +45,7 @@ FrustumScene::FrustumScene() {
 	geometry->createAabb();
 	Rectangle2D rect(glm::vec2(0.f, 0.f), glm::vec2(40.0f, 40.0f));
 	qTree = new QuadTree(rect, 0, 3); 
-	int modelsInTree = 0;
+	
 	for (int i = 0; i < numModels; i++){
 		GeometryObject* tempGeometry = new GeometryObject(geometry);
 		tempGeometry->setScale(glm::vec3(0.01f, 0.01f, 0.01f));
@@ -61,11 +60,7 @@ FrustumScene::FrustumScene() {
 
 		Rectangle2D tempRectangle = Rectangle2D(*tempGeometry->geometry(), tempGeometry->modelMatrix());
 		multiGeometry.push_back(tempGeometry);
-		
-		if (qTree->addObject(tempGeometry, tempRectangle))
-			modelsInTree++;
-		else
-			delete tempGeometry;
+		qTree->addObject(tempGeometry, tempRectangle);
 	}
 
 	player = new Player();
@@ -144,19 +139,17 @@ void FrustumScene::render(int width, int height) {
 	int objectsRendered = 0;
 	
 	//Frustum in world space
-	frustum = new Frustum(player->camera()->projection(width, height) * player->camera()->view());
+	Frustum* frustum = new Frustum(player->camera()->projection(width, height) * player->camera()->view());
 	qTree->getObjects(*frustum, geometryMap);
 	delete frustum;
 
-	typedef std::map<GeometryObject*, GeometryObject*>::iterator it_type;
-	for (it_type iterator = geometryMap.begin(); iterator != geometryMap.end(); iterator++) {
-		
+	for (auto iterator : geometryMap) {
 		// Model matrix, unique for each model.
-		glm::mat4 model = iterator->second->modelMatrix();
-		//Frustum local to objects
+		glm::mat4 model = iterator.second->modelMatrix();
+
+		// Frustum local to objects
 		frustum = new Frustum(player->camera()->projection(width, height) * player->camera()->view() * model);
-		if (frustum->collide(geometry->aabb))
-		{
+		if (frustum->collide(geometry->aabb)) {
 			glm::mat4 MV = view * model;
 			glm::mat4 N = glm::transpose(glm::inverse(MV));
 
@@ -173,8 +166,7 @@ void FrustumScene::render(int width, int height) {
 
 	if (state == 1) {
 		multipleRenderTargets->showTextures(width, height);
-	}
-	else if (state == 0) {
+	} else if (state == 0) {
 		multipleRenderTargets->render(player->camera(), width, height);
 	}
 }

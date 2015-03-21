@@ -20,6 +20,7 @@
 #include <stdio.h>
 
 static std::map<std::string, Scene*(*)()>* sceneMap;
+std::string Game::additionalData;
 
 Game::Game(GLFWwindow* window, const char* sceneName) {
 	this->window = window;

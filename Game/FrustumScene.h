@@ -3,7 +3,6 @@
 
 #include "Scene.h"
 #include <vector>
-#include <Frustum.h>
 #include <map>
 
 class Shader;
@@ -66,7 +65,6 @@ class FrustumScene : public Scene {
 		Geometry* geometry;
 		QuadTree* qTree;
 
-		Frustum* frustum;
 		std::map<GeometryObject*, GeometryObject*> geometryMap;
 
 		std::vector<GeometryObject*> multiGeometry;

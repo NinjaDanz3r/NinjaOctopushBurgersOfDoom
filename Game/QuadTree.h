@@ -1,5 +1,6 @@
-#ifndef __DATASTRUCTURES_H__
-#define __DATASTRUCTURES_H__
+#ifndef __QUADTREE_H__
+#define __QUADTREE_H__
+
 #include "GeometryObject.h"
 #include <vector>
 #include <glm/glm.hpp>
@@ -23,25 +24,19 @@ class QuadTree
 	public:
 		QuadTree(const Rectangle2D & _rect, int _depth, int _maxDepth);
 		~QuadTree();
-		bool addObject(GeometryObject* object, Rectangle2D rect); //returns true if object was added.
+		void addObject(GeometryObject* object, Rectangle2D rect);
 		void getObjects(Frustum & frustum, std::map<GeometryObject*, GeometryObject*>& GeometryMap);
-		void debugTree(std::string test);
 		unsigned int getNumberOfObjects();
-	private:
 
-		//glm::vec2 origin; //X, Y worldpos origin.
-		//glm::vec2 dimensions;
-		//float width; //Width of cubes
-		//float height; //"Height" of cubes
+	private:
 		Rectangle2D rectangle;
 
 		QuadTree* childTree[4];
 		
 		unsigned int depth;
 		unsigned int maxDepth;
-		std::vector < GeometryObject* > objects;
+		std::vector<GeometryObject*> objects;
 		bool isLeaf;
 };
-
 
 #endif
