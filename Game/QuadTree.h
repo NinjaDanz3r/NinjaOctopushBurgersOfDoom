@@ -9,17 +9,7 @@ class QuadTree;
 class GeometryObject;
 class Frustum;
 
-//Enum to make spatial relations more intuitive.
-enum Directions
-{
-	Q1 = 0, //First quadrant, northwest
-	Q2,		//Second quadrant, northeast
-	Q3,		//Third quadrant, southeast
-	Q4		//Fourth quadrant, southwest
-};
-
-class QuadTree
-{
+class QuadTree {
 	public:
 		QuadTree(const Rectangle2D & _rect, int _depth, int _maxDepth);
 		~QuadTree();
@@ -28,6 +18,14 @@ class QuadTree
 		unsigned int getNumberOfObjects();
 
 	private:
+		// Enum to make spatial relations more intuitive.
+		enum Directions {
+			Q1 = 0, // First quadrant, northwest
+			Q2,		// Second quadrant, northeast
+			Q3,		// Third quadrant, southeast
+			Q4		// Fourth quadrant, southwest
+		};
+
 		Rectangle2D rectangle;
 
 		QuadTree* childTree[4];
