@@ -30,7 +30,12 @@ class Rectangle2D {
 		 */
 		CORE_EXPORT Rectangle2D(const glm::vec2& origin = { 0.f, 0.f }, const glm::vec2& dimensions = { 0.f, 0.f });
 		
-		CORE_EXPORT Rectangle2D::Rectangle2D(const Geometry & geometry, const glm::mat4& matrix);
+		/// Create rectangle from geometry.
+		/**
+		 * @param geometry Geometry to encapsulate.
+		 * @param matrix Transformation matrix to transform geometry with.
+		 */
+		CORE_EXPORT Rectangle2D::Rectangle2D(const Geometry& geometry, const glm::mat4& matrix);
 
 		/// Check collision between rectangle and a Frustum.
 		/**
@@ -39,12 +44,12 @@ class Rectangle2D {
 		*/
 		CORE_EXPORT bool collide(const Frustum& frustum) const;
 
-		/// Check collision between rectangle and a Frustum.
+		/// Check collision between rectangle and another rectangle.
 		/**
-		* @param rectangle2D The rectangle to check overlap against
+		* @param other The rectangle to check overlap against
 		* @return Whether there was an overlap
 		*/
-		CORE_EXPORT bool overlaps(const Rectangle2D & otherRect);
+		CORE_EXPORT bool overlaps(const Rectangle2D& other);
 };
 
 /** @} */

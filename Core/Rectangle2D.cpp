@@ -41,7 +41,7 @@ Rectangle2D::Rectangle2D(const Geometry & geometry, const glm::mat4& matrix) {
 	delete[] currVert;
 }
 
-bool Rectangle2D::overlaps(const Rectangle2D & otherRect){
+bool Rectangle2D::overlaps(const Rectangle2D & other){
 	float rect1MinX, rect1MinY,rect1MaxX, rect1MaxY;
 	float rect2MinX, rect2MinY, rect2MaxX, rect2MaxY;
 
@@ -57,15 +57,15 @@ bool Rectangle2D::overlaps(const Rectangle2D & otherRect){
 	rect1MinX = origin.x - dimX;
 	rect1MinY = origin.y - dimY; //Lower left corner
 
-	dimX = otherRect.dimensions.x / 2;
-	dimY = otherRect.dimensions.y / 2;
+	dimX = other.dimensions.x / 2;
+	dimY = other.dimensions.y / 2;
 
 	//Points we are going to test
-	rect2MaxX = otherRect.origin.x + dimX;
-	rect2MaxY = otherRect.origin.y + dimY; //Upper left corner
+	rect2MaxX = other.origin.x + dimX;
+	rect2MaxY = other.origin.y + dimY; //Upper left corner
 
-	rect2MinX = otherRect.origin.x - dimX;
-	rect2MinY = otherRect.origin.y - dimY; //Lower right corner
+	rect2MinX = other.origin.x - dimX;
+	rect2MinY = other.origin.y - dimY; //Lower right corner
 
 	//If both are true, there is no overlap
 	return  (!(rect1MinY > rect2MaxY || rect1MaxY < rect2MinY) && !(rect1MinX > rect2MaxX || rect1MaxX < rect2MinX));

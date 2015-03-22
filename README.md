@@ -25,13 +25,13 @@ Texturing and lighting (2|1|3)
 * Normal mapping.
 * Blend-mapping.
 
-Projection (0|1|4)
+Projection (1|1|4)
 ------------------
-* Shadow mapping. (TODO)
+* Shadow mapping.
 
-Acceleration (1|2|3)
+Acceleration (2|2|3)
 --------------------
-* View frustum culling against a quadtree. (TODO)
+* View frustum culling against a quadtree.
 * Back-face culling using geometry shader.
 
 Miscellaneous (2|2|9)
@@ -51,7 +51,7 @@ glew is licensed under the Modified BSD License, the Mesa 3-D License, and the K
 
 Resources
 =========
-The resources (textures, models, etc.) for this project are available separately and under a separate license (all rights reserved). You can download them [here](https://www.dropbox.com/sh/be6nx0qehx18kef/AABQPizx1kvYIurCqlS8N6uga?dl=1). Extract them to 3D Project/Resources.
+The resources (textures, models, etc.) for this project are available separately and under a separate license (all rights reserved). You can download them [here](https://www.dropbox.com/sh/be6nx0qehx18kef/AABQPizx1kvYIurCqlS8N6uga?dl=1). Extract them to Game/Resources.
 
 Contributing
 ============

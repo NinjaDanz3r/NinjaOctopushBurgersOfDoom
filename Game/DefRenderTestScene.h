@@ -5,7 +5,7 @@
 #include "Scene.h"
 
 class FrameBufferObjects;
-class ShadowMapping;
+class ShadowMap;
 class Geometry;
 class GeometryObject;
 class Shader;
@@ -47,7 +47,7 @@ class DefRenderTestScene : public Scene {
 		void renderShadows(int width, int height);
 
 		FrameBufferObjects* multipleRenderTargets;
-		ShadowMapping* shadowMap;
+		ShadowMap* shadowMap;
 
 		Geometry* geometry;
 		GeometryObject* geometryObject;

@@ -14,7 +14,7 @@
 #include "GeometryObject.h"
 #include "Square.h"
 #include "Cube.h"
-#include "ShadowMapping.h"
+#include "ShadowMap.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -49,7 +49,7 @@ DefRenderTestScene::DefRenderTestScene() {
 
 	multipleRenderTargets = new FrameBufferObjects(deferredShaderProgram, settings::displayWidth(), settings::displayHeight());
 
-	shadowMap = new ShadowMapping(settings::displayWidth(), settings::displayHeight());
+	shadowMap = new ShadowMap(settings::displayWidth(), settings::displayHeight());
 }
 
 DefRenderTestScene::~DefRenderTestScene() {

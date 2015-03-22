@@ -10,9 +10,9 @@
  * @{
  */
 
-/// A model loaded from our own binary model format.
 class Model;
 
+/// A model loaded from our own binary model format.
 class Model : public Geometry {
 	public:
 		/// Create new model from binary file.
