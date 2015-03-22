@@ -97,6 +97,19 @@ Scene::SceneEnd* MorphScene::update(double time) {
 	if (input::triggered(input::CHANGE_RENDER_STATE))
 		state = !state;
 
+	if (direction == true) {
+		if (t < 1.f)
+			t += 0.3*time;
+		else
+			direction = false;
+	}
+	else if (direction == false){
+		if (t > 0.f)
+			t -= 0.3*time;
+		else
+			direction = true;
+	}
+
 	return nullptr;
 }
 
@@ -117,18 +130,6 @@ void MorphScene::render(int width, int height) {
 
 	glBindVertexArray(geometryObject->geometry()->vertexArray());
 
-	if (direction == true) {
-		if (t < 1.f)
-			t += 0.0001f*time;
-		else
-			direction = false;
-	}
-	else if (direction == false){
-		if (t > 0.f)
-			t -= 0.0001f;
-		else
-			direction = true;
-	}
 	//T value, used for interpolation
 	glUniform1f(shaderProgram->uniformLocation("tValue"), t);
 
