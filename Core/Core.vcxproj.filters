@@ -99,6 +99,9 @@
     <ClInclude Include="Rectangle2D.h">
       <Filter>Header Files\IntersectionTesting</Filter>
     </ClInclude>
+    <ClInclude Include="SceneResource.h">
+      <Filter>Header Files\Project</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="util.cpp">
@@ -151,6 +154,9 @@
     </ClCompile>
     <ClCompile Include="OBB.cpp">
       <Filter>Source Files\IntersectionTesting</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneResource.cpp">
+      <Filter>Source Files\Project</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

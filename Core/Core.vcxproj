@@ -168,6 +168,7 @@
     <ClInclude Include="OBB.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Rectangle2D.h" />
+    <ClInclude Include="SceneResource.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Core.h" />
@@ -189,6 +190,7 @@
     <ClCompile Include="OBB.cpp" />
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Rectangle2D.cpp" />
+    <ClCompile Include="SceneResource.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Model.cpp" />
