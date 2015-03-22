@@ -131,7 +131,7 @@ void Editor::importTexture() {
 
 	convert::convertImage(filename.toStdString().c_str(), (activeProject->directory() + "/Textures/" + name.toStdString() + ".tga").c_str());
 
-	TextureResource* texture = new TextureResource(name.toStdString(), activeProject->directory());
+	TextureResource* texture = new TextureResource(name.toStdString(), activeProject->directory() + "/Textures");
 	(*activeProject->resources()->textureResources())[texture->name] = texture;
 
 	QTreeWidgetItem *treeItem = new QTreeWidgetItem();
