@@ -7,6 +7,7 @@
 #include "convert.h"
 #include "ModelResource.h"
 #include "TextureResource.h"
+#include "SceneResource.h"
 #include "TexturePreview.h"
 #include "ModelPreview.h"
 
@@ -20,11 +21,13 @@ Editor::Editor(QWidget *parent) : QMainWindow(parent) {
 
 	connect(ui.actionImportModel, SIGNAL(triggered()), this, SLOT(importModel()));
 	connect(ui.actionImportTexture, SIGNAL(triggered()), this, SLOT(importTexture()));
+	connect(ui.actionNew_Scene, SIGNAL(triggered()), this, SLOT(newScene()));
 
 	connect(ui.treeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(selectionChanged()));
 
 	texturesRoot = addTreeRoot("Textures");
 	modelsRoot = addTreeRoot("Models");
+	scenesRoot = addTreeRoot("Scenes");
 }
 
 Editor::~Editor() {
@@ -36,6 +39,9 @@ Editor::~Editor() {
 
 	deleteChildren(texturesRoot);
 	delete texturesRoot;
+
+	deleteChildren(scenesRoot);
+	delete scenesRoot;
 }
 
 void Editor::newProject() {
@@ -139,6 +145,20 @@ void Editor::importTexture() {
 	texturesRoot->addChild(treeItem);
 }
 
+void Editor::newScene() {
+	QString name = QInputDialog::getText(this, tr("Enter Scene Name"), tr("Scene name:"));
+	if (name.isEmpty()) {
+		return;
+	}
+
+	SceneResource* scene = new SceneResource(name.toStdString());
+	(*activeProject->resources()->sceneResources())[scene->name] = scene;
+
+	QTreeWidgetItem *treeItem = new QTreeWidgetItem();
+	treeItem->setText(0, name);
+	scenesRoot->addChild(treeItem);
+}
+
 void Editor::selectionChanged() {
 	if (ui.treeWidget->selectedItems().length() > 0) {
 		QTreeWidgetItem* selected = ui.treeWidget->selectedItems()[0];
@@ -160,6 +180,7 @@ void Editor::enableActions(bool enabled) {
 	ui.actionClose->setEnabled(enabled);
 	ui.actionImportModel->setEnabled(enabled);
 	ui.actionImportTexture->setEnabled(enabled);
+	ui.actionNew_Scene->setEnabled(enabled);
 }
 
 QTreeWidgetItem* Editor::addTreeRoot(QString name) {

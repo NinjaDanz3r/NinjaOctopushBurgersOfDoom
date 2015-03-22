@@ -77,8 +77,15 @@
     <addaction name="separator"/>
     <addaction name="actionImportModel"/>
    </widget>
+   <widget class="QMenu" name="menuScenes">
+    <property name="title">
+     <string>Scenes</string>
+    </property>
+    <addaction name="actionNew_Scene"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuImport"/>
+   <addaction name="menuScenes"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -93,6 +100,8 @@
    <addaction name="separator"/>
    <addaction name="actionImportTexture"/>
    <addaction name="actionImportModel"/>
+   <addaction name="separator"/>
+   <addaction name="actionNew_Scene"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionQuit">
@@ -183,6 +192,18 @@
    </property>
    <property name="toolTip">
     <string>Import Texture</string>
+   </property>
+  </action>
+  <action name="actionNew_Scene">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="editor.qrc">
+     <normaloff>:/Editor/Resources/media-scene.png</normaloff>:/Editor/Resources/media-scene.png</iconset>
+   </property>
+   <property name="text">
+    <string>New Scene</string>
    </property>
   </action>
  </widget>

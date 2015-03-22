@@ -44,6 +44,9 @@ class Editor : public QMainWindow {
 		/// Import a texture.
 		void importTexture();
 
+		/// Create new scene.
+		void newScene();
+
 		/// Handle selected item in tree widget being changed.
 		void selectionChanged();
 
@@ -57,6 +60,7 @@ class Editor : public QMainWindow {
 
 		QTreeWidgetItem* modelsRoot;
 		QTreeWidgetItem* texturesRoot;
+		QTreeWidgetItem* scenesRoot;
 };
 
 /** @} */
