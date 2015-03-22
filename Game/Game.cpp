@@ -7,6 +7,7 @@
 #include "AudioScene.h"
 #include "PickingScene.h"
 #include "FrustumScene.h"
+#include "MorphScene.h"
 #include "DefRenderTestScene.h"
 
 #include "input.h"
@@ -114,6 +115,7 @@ void Game::setSceneMap() {
 	(*sceneMap)["terrain"] = &createInstance<TerrainScene>;
 	(*sceneMap)["picking"] = &createInstance<PickingScene>;
 	(*sceneMap)["frustum"] = &createInstance<FrustumScene>;
+	(*sceneMap)["morph"] = &createInstance<MorphScene>;
 }
 
 void Game::setScene(const char* sceneName){
