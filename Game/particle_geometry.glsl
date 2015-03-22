@@ -15,6 +15,9 @@ in VertexData {
 uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
 
+// Uniform camera position
+uniform vec3 cameraPosition;
+
 // Output
 out VertexData {
 	vec2 tex_coords;
@@ -26,7 +29,7 @@ void main() {
 	vec4 cameraUp = vec4(viewMatrix[0][1], viewMatrix[1][1], viewMatrix[2][1], 0.0);
 
 	//vector from camera to point, cameras position extracted from view matrix
-	vec4 look = -vec4(viewMatrix[3][0], viewMatrix[3][1], viewMatrix[3][2], viewMatrix[3][3]) - vec4(gl_in[0].gl_Position.xyz, 1.0);
+	vec4 look = vec4(cameraPosition, 1.f) - vec4(gl_in[0].gl_Position.xyz, 1.0);
 
 	//Particle right vector = camera up x look
 	vec4 right = normalize(vec4(cross(cameraUp.xyz, look.xyz), 0.0));
