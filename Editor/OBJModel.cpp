@@ -82,6 +82,9 @@ OBJModel::OBJModel(const char* filename) {
 	for (unsigned int i = 0; i < indexNr; i++) {
 		indexData[i] = i;
 	}
+
+	generateBuffers();
+	generateVertexArray();
 }
 
 glm::vec3 OBJModel::readVec3(std::ifstream& modelFile) {
