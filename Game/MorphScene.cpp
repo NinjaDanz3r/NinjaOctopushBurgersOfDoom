@@ -100,13 +100,13 @@ Scene::SceneEnd* MorphScene::update(double time) {
 
 	if (direction == true) {
 		if (t < 1.f)
-			t += 0.3*time;
+			t += (0.3f)*time;
 		else
 			direction = false;
 	}
 	else if (direction == false){
 		if (t > 0.f)
-			t -= 0.3*time;
+			t -= (0.3f)*time;
 		else
 			direction = true;
 	}
