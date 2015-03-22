@@ -46,6 +46,7 @@ MorphScene::MorphScene() {
 	targetPositions = new glm::vec3[geometryObject->geometry()->vertexCount()];
 	glm::mat4 targetScaleRotation = glm::scale(glm::vec3(0.1f, 0.1f, 0.1f))*glm::rotate(90.f, glm::vec3(0.f, 1.f, 0.f));
 
+	//Create target positions for lerping
 	for (unsigned int i = 0; i < geometryObject->geometry()->vertexCount(); i++) {
 		targetPositions[i] = glm::vec3(targetScaleRotation*glm::vec4(geometryObject->geometry()->vertices()[i].position, 1.f));
 	}
