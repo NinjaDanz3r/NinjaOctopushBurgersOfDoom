@@ -24,7 +24,6 @@
     <ClCompile Include="FrustumScene.cpp" />
     <ClCompile Include="DefRenderTestScene.cpp" />
     <ClCompile Include="MorphScene.cpp" />
-    <ClCompile Include="MorphScene.h" />
     <ClCompile Include="ParticleScene.cpp" />
     <ClCompile Include="CubeMapTexture.cpp" />
     <ClCompile Include="ShadowMap.cpp" />
@@ -55,6 +54,7 @@
     <ClCompile Include="WaveFile.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MorphScene.h" />
     <ClInclude Include="AudioScene.h" />
     <ClInclude Include="QuadTree.h" />
     <ClInclude Include="DefRenderTestScene.h" />
