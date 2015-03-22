@@ -207,6 +207,7 @@
     <ClInclude Include="ProjectScene.h">
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="default_vertex.glsl">
@@ -301,5 +302,11 @@
     <Filter Include="Source Files\Object">
       <UniqueIdentifier>{46193bb1-c1d2-4050-8477-49f885af62d8}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Game.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon.ico" />
   </ItemGroup>
 </Project>

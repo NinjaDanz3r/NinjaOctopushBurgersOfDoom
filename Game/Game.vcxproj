@@ -61,6 +61,7 @@
     <ClInclude Include="ParticleScene.h" />
     <ClInclude Include="FrustumScene.h" />
     <ClInclude Include="CubeMapTexture.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="ShadowMap.h" />
     <ClInclude Include="PickingScene.h" />
     <ClInclude Include="FrameBufferObjects.h" />
@@ -110,6 +111,12 @@
     <ProjectReference Include="..\Core\Core.vcxproj">
       <Project>{5409fa25-9c47-43fa-bfbd-a8f849d9e7d2}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Game.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon.ico" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D9B72C7F-F035-4499-945B-D2A72B081EA2}</ProjectGuid>

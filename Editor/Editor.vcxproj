@@ -228,6 +228,7 @@
     <ClInclude Include="ModelPreview.h" />
     <ClInclude Include="OBJModel.h" />
     <ClInclude Include="Preview.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="settings.h" />
     <ClInclude Include="TexturePreview.h" />
     <CustomBuild Include="PreviewWidget.h">
@@ -279,6 +280,12 @@
     <None Include="showModel_vertex.glsl" />
     <None Include="showTexture_fragment.glsl" />
     <None Include="showTexture_vertex.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Editor.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
