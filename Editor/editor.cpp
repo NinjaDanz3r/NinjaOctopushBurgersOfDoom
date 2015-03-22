@@ -103,6 +103,8 @@ void Editor::closeProject() {
 	ui.previewWidget->texturePreview()->setTexture(nullptr);
 	ui.previewWidget->modelPreview()->setModel(nullptr);
 	ui.previewWidget->repaint();
+
+	ui.stackedWidget->setCurrentIndex(EMPTY_PAGE);
 }
 
 void Editor::importModel() {
@@ -171,6 +173,8 @@ void Editor::selectionChanged() {
 			ui.previewWidget->setPreview(ui.previewWidget->modelPreview());
 			ui.previewWidget->modelPreview()->setModel((*activeProject->resources()->modelResources())[selected->text(0).toStdString()]->model());
 			ui.previewWidget->repaint();
+		} else if (selected->parent() == scenesRoot) {
+			ui.stackedWidget->setCurrentIndex(SCENE_PAGE);
 		}
 	}
 }

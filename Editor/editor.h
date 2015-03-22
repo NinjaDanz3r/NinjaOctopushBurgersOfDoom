@@ -51,6 +51,12 @@ class Editor : public QMainWindow {
 		void selectionChanged();
 
 	private:
+		// Stacked widget indexes.
+		enum WidgetIndex {
+			EMPTY_PAGE,
+			SCENE_PAGE
+		};
+
 		void enableActions(bool enabled);
 		QTreeWidgetItem* addTreeRoot(QString name);
 		void deleteChildren(QTreeWidgetItem* item);
