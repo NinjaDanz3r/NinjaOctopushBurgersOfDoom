@@ -97,6 +97,12 @@
     <ClCompile Include="FrustumScene.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="MorphScene.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="MorphScene.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -246,6 +252,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="shadow_fragment.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="morph_vertex.glsl">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

@@ -23,6 +23,8 @@
     <ClCompile Include="Datastructures.cpp" />
     <ClCompile Include="FrustumScene.cpp" />
     <ClCompile Include="DefRenderTestScene.cpp" />
+    <ClCompile Include="MorphScene.cpp" />
+    <ClCompile Include="MorphScene.h" />
     <ClCompile Include="ParticleScene.cpp" />
     <ClCompile Include="CubeMapTexture.cpp" />
     <ClCompile Include="ShadowMapping.cpp" />
@@ -94,6 +96,7 @@
     <None Include="default_vertex.glsl" />
     <None Include="deferred_fragment.glsl" />
     <None Include="deferred_vertex.glsl" />
+    <None Include="morph_vertex.glsl" />
     <None Include="normalspecularmap_fragment.glsl" />
     <None Include="particle_fragment.glsl" />
     <None Include="particle_geometry.glsl" />

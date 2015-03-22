@@ -119,7 +119,7 @@ void MorphScene::render(int width, int height) {
 
 	if (direction == true) {
 		if (t < 1.f)
-			t += 0.0001f;
+			t += 0.0001f*time;
 		else
 			direction = false;
 	}
