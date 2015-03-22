@@ -44,6 +44,9 @@ ProjectScene::ProjectScene() {
 	player = new Player();
 	player->setMovementSpeed(2.0f);
 	multipleRenderTargets = new FrameBufferObjects(deferredShaderProgram, settings::displayWidth(), settings::displayHeight());
+
+	project.setFilename("Resources/Game.proj");
+	project.load();
 }
 
 ProjectScene::~ProjectScene() {

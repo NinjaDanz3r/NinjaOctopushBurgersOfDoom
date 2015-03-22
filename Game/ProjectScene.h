@@ -2,6 +2,7 @@
 #define __PROJECTSCENE_H__
 
 #include "Scene.h"
+#include <Project.h>
 
 class FrameBufferObjects;
 class Shader;
@@ -42,6 +43,8 @@ public:
 	void render(int width, int height);
 
 private:
+	Project project;
+
 	FrameBufferObjects* multipleRenderTargets;
 	int state; // 0 == deferred render, 1== display textures.
 
