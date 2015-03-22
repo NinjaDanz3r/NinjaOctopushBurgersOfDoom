@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AudioScene.cpp" />
+    <ClCompile Include="ProjectScene.cpp" />
     <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="FrustumScene.cpp" />
     <ClCompile Include="DefRenderTestScene.cpp" />
@@ -54,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioScene.h" />
+    <ClInclude Include="ProjectScene.h" />
     <ClInclude Include="QuadTree.h" />
     <ClInclude Include="DefRenderTestScene.h" />
     <ClInclude Include="ParticleScene.h" />

@@ -8,6 +8,7 @@
 #include "PickingScene.h"
 #include "FrustumScene.h"
 #include "DefRenderTestScene.h"
+#include "ProjectScene.h"
 
 #include "input.h"
 #include "settings.h"
@@ -115,6 +116,7 @@ void Game::setSceneMap() {
 	(*sceneMap)["terrain"] = &createInstance<TerrainScene>;
 	(*sceneMap)["picking"] = &createInstance<PickingScene>;
 	(*sceneMap)["frustum"] = &createInstance<FrustumScene>;
+	(*sceneMap)["project"] = &createInstance<ProjectScene>;
 }
 
 void Game::setScene(const char* sceneName){

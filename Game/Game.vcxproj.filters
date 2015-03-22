@@ -97,6 +97,9 @@
     <ClCompile Include="ShadowMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ProjectScene.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -200,6 +203,9 @@
     </ClInclude>
     <ClInclude Include="ShadowMap.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectScene.h">
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,4 @@
-#include "TestScene.h"
+#include "ProjectScene.h"
 #include <gl/glew.h>
 
 #include "FrameBufferObjects.h"
@@ -21,13 +21,13 @@
 
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))
 
-TestScene::TestScene() {
+ProjectScene::ProjectScene() {
 	state = 0;
 
 	diffuse = new Texture2D("Resources/Models/rock01/diffuse.tga");
 	normal = new Texture2D("Resources/Models/rock01/normal.tga");
 	specular = new Texture2D("Resources/Models/rock01/specular.tga");
-	
+
 	vertexShader = new Shader("default_vertex.glsl", GL_VERTEX_SHADER);
 	geometryShader = new Shader("default_geometry.glsl", GL_GEOMETRY_SHADER);
 	fragmentShader = new Shader("normalspecularmap_fragment.glsl", GL_FRAGMENT_SHADER);
@@ -46,11 +46,11 @@ TestScene::TestScene() {
 	multipleRenderTargets = new FrameBufferObjects(deferredShaderProgram, settings::displayWidth(), settings::displayHeight());
 }
 
-TestScene::~TestScene() {
+ProjectScene::~ProjectScene() {
 	delete diffuse;
 	delete normal;
 	delete specular;
-	
+
 	delete multipleRenderTargets;
 	delete deferredShaderProgram;
 	delete shaderProgram;
@@ -67,7 +67,7 @@ TestScene::~TestScene() {
 	delete player;
 }
 
-Scene::SceneEnd* TestScene::update(double time) {
+Scene::SceneEnd* ProjectScene::update(double time) {
 	player->update(time);
 
 	if (input::triggered(input::CHANGE_RENDER_STATE))
@@ -76,7 +76,7 @@ Scene::SceneEnd* TestScene::update(double time) {
 	return nullptr;
 }
 
-void TestScene::render(int width, int height) {
+void ProjectScene::render(int width, int height) {
 	multipleRenderTargets->bindForWriting();
 
 	glViewport(0, 0, width, height);
