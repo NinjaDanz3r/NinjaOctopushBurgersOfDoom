@@ -22,25 +22,34 @@ out VertexData {
 } vertexOut;
 
 void main() {
-	vec4 cameraRight = vec4(viewMatrix[0][0], viewMatrix[1][0], viewMatrix[2][0], 0.0);		//Right, relative to camera
-	vec4 cameraUp = vec4(viewMatrix[0][1], viewMatrix[1][1], viewMatrix[2][1], 0.0);		//Up, relative to camera
+	//Up relative to camera extracted from view matrix
+	vec4 cameraUp = vec4(viewMatrix[0][1], viewMatrix[1][1], viewMatrix[2][1], 0.0);
 
-	gl_Position = projectionMatrix*viewMatrix*(gl_in[0].gl_Position - cameraRight + cameraUp);
+	//vector from camera to point, cameras position extracted from view matrix
+	vec4 look = -vec4(viewMatrix[3][0], viewMatrix[3][1], viewMatrix[3][2], viewMatrix[3][3]) - vec4(gl_in[0].gl_Position.xyz, 1.0);
+
+	//Particle right vector = camera up x look
+	vec4 right = normalize(vec4(cross(cameraUp.xyz, look.xyz), 0.0));
+	
+	//Particle up vector = particle right x look
+	vec4 up = normalize(vec4(cross(look.xyz, right.xyz), 0.0));
+	
+	gl_Position = projectionMatrix*viewMatrix*(gl_in[0].gl_Position - right + up);
 	vertexOut.tex_coords = vec2(0.0, 0.0);
 	vertexOut.alpha = vertexIn[0].alpha;
 	EmitVertex();
 
-	gl_Position = projectionMatrix*viewMatrix*(gl_in[0].gl_Position - cameraRight - cameraUp );
+	gl_Position = projectionMatrix*viewMatrix*(gl_in[0].gl_Position - right - up );
 	vertexOut.tex_coords = vec2(1.0,0.0);
 	vertexOut.alpha = vertexIn[0].alpha;
 	EmitVertex();
 
-	gl_Position = projectionMatrix*viewMatrix*(gl_in[0].gl_Position + cameraRight + cameraUp );
+	gl_Position = projectionMatrix*viewMatrix*(gl_in[0].gl_Position + right + up );
 	vertexOut.tex_coords = vec2(0.0, 1.0);
 	vertexOut.alpha = vertexIn[0].alpha;
 	EmitVertex();
 
-	gl_Position = projectionMatrix*viewMatrix*(gl_in[0].gl_Position + cameraRight - cameraUp );
+	gl_Position = projectionMatrix*viewMatrix*(gl_in[0].gl_Position + right - up );
 	vertexOut.tex_coords = vec2(1.0, 1.0);
 	vertexOut.alpha = vertexIn[0].alpha;
 	EmitVertex();
