@@ -8,6 +8,7 @@
 
 class ModelResource;
 class TextureResource;
+class SceneResource;
 
 /** @ingroup core
  * @{
@@ -48,9 +49,16 @@ class Resources {
 		 */
 		CORE_EXPORT std::map<std::string, TextureResource*>* textureResources() const;
 
+		/// Get scene resources.
+		/**
+		 * @return Scene resources
+		 */
+		CORE_EXPORT std::map<std::string, SceneResource*>* sceneResources() const;
+
 	private:
 		std::map<std::string, ModelResource*>* models;
 		std::map<std::string, TextureResource*>* textures;
+		std::map<std::string, SceneResource*>* scenes;
 };
 
 /** @} */

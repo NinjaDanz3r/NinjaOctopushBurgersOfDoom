@@ -1,11 +1,13 @@
 #include "Resources.h"
 #include "ModelResource.h"
 #include "TextureResource.h"
+#include "SceneResource.h"
 #include "util.h"
 
 Resources::Resources() {
 	models = new std::map<std::string, ModelResource*>();
 	textures = new std::map<std::string, TextureResource*>();
+	scenes = new std::map<std::string, SceneResource*>();
 }
 
 Resources::~Resources() {
@@ -18,6 +20,11 @@ Resources::~Resources() {
 		delete texture.second;
 	}
 	delete textures;
+
+	for (auto scene : *scenes) {
+		delete scene.second;
+	}
+	delete scenes;
 }
 
 void Resources::save(std::ofstream &file, std::string directory) {
@@ -40,6 +47,16 @@ void Resources::save(std::ofstream &file, std::string directory) {
 	for (auto model : *models) {
 		model.second->save(file, directory + "/Models");
 	}
+
+	// Scenes
+	util::createDirectory((directory + "/Scenes").c_str());
+
+	std::map<std::string, SceneResource*>::size_type scenesSize = scenes->size();
+	file.write(reinterpret_cast<const char*>(&scenesSize), sizeof(scenesSize));
+
+	for (auto scene : *scenes) {
+		scene.second->save(file, directory + "/Scenes");
+	}
 }
 
 void Resources::load(std::ifstream &file, std::string directory) {
@@ -60,6 +77,15 @@ void Resources::load(std::ifstream &file, std::string directory) {
 		ModelResource* model = new ModelResource(file, directory + "/Models");
 		(*models)[model->name] = model;
 	}
+
+	// Scenes
+	std::map<std::string, SceneResource*>::size_type scenesSize;
+	file.read(reinterpret_cast<char*>(&scenesSize), sizeof(scenesSize));
+
+	for (auto i = 0; i < scenesSize; i++) {
+		SceneResource* scene = new SceneResource(file, directory + "/Scenes");
+		(*scenes)[scene->name] = scene;
+	}
 }
 
 std::map<std::string, ModelResource*>* Resources::modelResources() const {
@@ -68,4 +94,8 @@ std::map<std::string, ModelResource*>* Resources::modelResources() const {
 
 std::map<std::string, TextureResource*>* Resources::textureResources() const {
 	return textures;
+}
+
+std::map<std::string, SceneResource*>* Resources::sceneResources() const {
+	return scenes;
 }
