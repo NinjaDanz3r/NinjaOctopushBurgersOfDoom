@@ -20,7 +20,7 @@ class OBB {
 		* @param aabb AABB to create the OBB from.
 		* @param matrix Transformation matrix to apply to the AABB.
 		*/
-		OBB(AABB aabb, glm::mat4 matrix);
+		OBB(const AABB& aabb, const glm::mat4& matrix);
 
 		/// First base vector.
 		glm::vec3 e1;
