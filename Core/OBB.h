@@ -15,7 +15,11 @@
  */
 class OBB {
 	public:
-		//OBB from AABB constructor
+		/// OBB from AABB constructor
+		/**
+		* @param aabb AABB to create the OBB from.
+		* @param matrix Transformation matrix to apply to the AABB.
+		*/
 		OBB(AABB aabb, glm::mat4 matrix);
 
 		/// First base vector.
