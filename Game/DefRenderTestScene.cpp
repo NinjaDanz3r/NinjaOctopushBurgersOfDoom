@@ -15,6 +15,7 @@
 #include "Square.h"
 #include "Cube.h"
 #include "ShadowMap.h"
+#include "Game.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -80,6 +81,12 @@ DefRenderTestScene::~DefRenderTestScene() {
 
 Scene::SceneEnd* DefRenderTestScene::update(double time) {
 	player->update(time);
+
+	shadowTime += time;
+	multipleRenderTargets->light.position = glm::vec4(5.f * sin(shadowTime), 3.f, 3.f + 5.f * cos(shadowTime), 1.f);
+
+	Game::additionalData = std::to_string(shadowTime);
+
 	return nullptr;
 }
 
@@ -143,7 +150,7 @@ void DefRenderTestScene::renderShadows(int width, int height) {
 
 	// Model matrix, unique for each model.
 	glm::mat4 model = geometryObject->modelMatrix();
-	glm::vec3 position = glm::vec3(0.f, 3.f, 3.f);
+	glm::vec3 position = glm::vec3(multipleRenderTargets->light.position);
 
 	// Send the matrices to the shader.
 	glm::mat4 viewMatrix = glm::lookAt(position, geometryObject->position(), glm::vec3(0, 1, 0));

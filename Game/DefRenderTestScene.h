@@ -72,5 +72,7 @@ class DefRenderTestScene : public Scene {
 		// Misc
 		Texture* texture;
 		Player* player;
+
+		double shadowTime = 0.0;
 };
 #endif
