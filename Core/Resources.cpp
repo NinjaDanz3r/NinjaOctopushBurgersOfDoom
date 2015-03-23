@@ -64,7 +64,7 @@ void Resources::load(std::ifstream &file, std::string directory) {
 	std::map<std::string, TextureResource*>::size_type texturesSize;
 	file.read(reinterpret_cast<char*>(&texturesSize), sizeof(texturesSize));
 
-	for (auto i = 0; i < texturesSize; i++) {
+	for (std::map<std::string, TextureResource*>::size_type i = 0; i < texturesSize; i++) {
 		TextureResource* texture = new TextureResource(file, directory + "/Textures");
 		(*textures)[texture->name] = texture;
 	}
@@ -73,7 +73,7 @@ void Resources::load(std::ifstream &file, std::string directory) {
 	std::map<std::string, ModelResource*>::size_type modelsSize;
 	file.read(reinterpret_cast<char*>(&modelsSize), sizeof(modelsSize));
 
-	for (auto i = 0; i < modelsSize; i++) {
+	for (std::map<std::string, ModelResource*>::size_type i = 0; i < modelsSize; i++) {
 		ModelResource* model = new ModelResource(file, directory + "/Models");
 		(*models)[model->name] = model;
 	}
@@ -82,7 +82,7 @@ void Resources::load(std::ifstream &file, std::string directory) {
 	std::map<std::string, SceneResource*>::size_type scenesSize;
 	file.read(reinterpret_cast<char*>(&scenesSize), sizeof(scenesSize));
 
-	for (auto i = 0; i < scenesSize; i++) {
+	for (std::map<std::string, SceneResource*>::size_type i = 0; i < scenesSize; i++) {
 		SceneResource* scene = new SceneResource(file, directory + "/Scenes");
 		(*scenes)[scene->name] = scene;
 	}
