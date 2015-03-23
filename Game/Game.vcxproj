@@ -55,6 +55,7 @@
     <ClCompile Include="WaveFile.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Light.h" />
     <ClInclude Include="MorphScene.h" />
     <ClInclude Include="AudioScene.h" />
     <ClInclude Include="ProjectScene.h" />

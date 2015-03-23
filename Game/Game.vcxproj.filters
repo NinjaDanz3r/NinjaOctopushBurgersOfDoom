@@ -93,7 +93,7 @@
     </ClCompile>
     <ClCompile Include="MorphScene.cpp">
       <Filter>Source Files\Scene</Filter>
-	 </ClCompile>
+    </ClCompile>
     <ClCompile Include="QuadTree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -214,6 +214,9 @@
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="default_vertex.glsl">

@@ -3,6 +3,7 @@
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
+#include "Light.h"
 
 class ShaderProgram;
 class Camera;
@@ -73,6 +74,9 @@ class FrameBufferObjects {
 		 * @param height Height of the context.
 		 */
 		void render(Camera* camera, int width, int height);
+
+		/// Light.
+		Light light;
 
 	private:
 		static void attachTexture(GLuint texture, unsigned int width, unsigned int height, GLenum attachment);
