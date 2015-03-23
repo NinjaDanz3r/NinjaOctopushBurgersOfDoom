@@ -100,13 +100,12 @@ Scene::SceneEnd* MorphScene::update(double time) {
 
 	if (direction == true) {
 		if (t < 1.f)
-			t += (0.3f)*time;
+			t += 0.3f * static_cast<float>(time);
 		else
 			direction = false;
-	}
-	else if (direction == false){
+	} else if (direction == false){
 		if (t > 0.f)
-			t -= (0.3f)*time;
+			t -= 0.3f * static_cast<float>(time);
 		else
 			direction = true;
 	}
@@ -164,8 +163,7 @@ void MorphScene::render(int width, int height) {
 
 	if (state == 1) {
 		multipleRenderTargets->showTextures(width, height);
-	}
-	else if (state == 0) {
+	} else if (state == 0) {
 		multipleRenderTargets->render(player->camera(), width, height);
 	}
 }
