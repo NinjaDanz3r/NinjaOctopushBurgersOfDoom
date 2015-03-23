@@ -106,6 +106,7 @@
     <None Include="particle_geometry.glsl" />
     <None Include="particle_vertex.glsl" />
     <None Include="shadow_fragment.glsl" />
+    <None Include="shadow_geometry.glsl" />
     <None Include="shadow_vertex.glsl" />
     <None Include="picking_fragment.glsl" />
     <None Include="skybox_fragment.glsl" />

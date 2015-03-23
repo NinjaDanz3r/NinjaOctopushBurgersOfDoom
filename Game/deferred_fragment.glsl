@@ -22,8 +22,6 @@ uniform vec2 screenSize;
 
 out vec4 fragment_color;
 
-const float EPSILON = 0.05;
-
 const vec2 poisson[15] = vec2[](
 	vec2( 0.3717325, 0.1279892),
 	vec2(0.4879754, -0.3658713),
@@ -48,7 +46,7 @@ float calculateShadow(vec4 lightSpacePosition) {
 
 	float visibility = 1.0;
 	for (int i = 0; i < 10; i++){
-		if (texture(tShadowMap, (shadowCoord.xy / shadowCoord.w) + poisson[i] / 300.0).z < (shadowCoord.z - EPSILON) / shadowCoord.w){
+		if (texture(tShadowMap, (shadowCoord.xy / shadowCoord.w) + poisson[i] / 300.0).z < (shadowCoord.z)/ shadowCoord.w){
 			visibility -= 1.0/12.0;
 		 }
 	}
@@ -63,8 +61,8 @@ vec2 calculateTexCoord() {
 // Ambient, diffuse and specular lighting.
 vec3 ads(vec3 normal, vec3 position, vec3 specular) {
 	vec4 lightSpacePos = lightProjectionMatrix * lightViewMatrix * 	inverseViewMatrix * vec4(position, 1.0);
+	vec3 lightDirection = normalize(vec3(lightPosition) - position);	
 	float visibility = calculateShadow(lightSpacePos);
-	vec3 lightDirection = normalize(vec3(lightPosition) - position);
 	vec3 v = normalize(vec3(-position));
 	vec3 r = reflect(-lightDirection, normal)* ((visibility*2) -1.0);
 	vec3 diffuseLight = diffuseKoefficient * max(dot(lightDirection, normal), 0.0);

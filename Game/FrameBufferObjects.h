@@ -79,7 +79,7 @@ class FrameBufferObjects {
 		Light light;
 
 	private:
-		static void attachTexture(GLuint texture, unsigned int width, unsigned int height, GLenum attachment);
+		static void attachTexture(GLuint texture, unsigned int width, unsigned int height, GLenum attachment, GLint internalFormat);
 		void bindLighting(Camera* camera, int width, int height);
 		void bindQuad();
 

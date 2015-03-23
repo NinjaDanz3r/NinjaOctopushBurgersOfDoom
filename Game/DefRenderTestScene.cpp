@@ -28,7 +28,8 @@ DefRenderTestScene::DefRenderTestScene() {
 
 	shadowVertexShader = new Shader("shadow_vertex.glsl", GL_VERTEX_SHADER);
 	shadowFragmentShader = new Shader("shadow_fragment.glsl", GL_FRAGMENT_SHADER);
-	shadowShaderProgram = new ShaderProgram({ shadowVertexShader, shadowFragmentShader });
+	shadowGeometryShader = new Shader("shadow_geometry.glsl", GL_GEOMETRY_SHADER);
+	shadowShaderProgram = new ShaderProgram({ shadowVertexShader, shadowGeometryShader, shadowFragmentShader });
 
 	vertexShader = new Shader("default_vertex.glsl", GL_VERTEX_SHADER);
 	geometryShader = new Shader("default_geometry.glsl", GL_GEOMETRY_SHADER);
@@ -42,6 +43,7 @@ DefRenderTestScene::DefRenderTestScene() {
 	geometry = new Cube();
 	geometryObject = new GeometryObject(geometry);
 	geometryGround = new GeometryObject(geometry);
+	geometryObject->move(glm::vec3(0.f, 0.f, -1.f));
 	geometryGround->setScale(5.0, 5.0, 5.0);
 	geometryGround->setPosition(0.5, -3.0, -2.0);
 
@@ -155,16 +157,23 @@ void DefRenderTestScene::renderShadows(int width, int height) {
 	// Send the matrices to the shader.
 	glm::mat4 viewMatrix = glm::lookAt(position, geometryObject->position(), glm::vec3(0, 1, 0));
 	glm::mat4 perspectiveMatrix = glm::perspective(45.0f, 1.0f, 2.0f, 50.0f);
+	glm::mat4 modelView = viewMatrix * model;
+	glm::mat4 normalMatrix = glm::transpose(glm::inverse(modelView));
 
 	glUniformMatrix4fv(shadowShaderProgram->uniformLocation("lightModelMatrix"), 1, GL_FALSE, &model[0][0]);
 	glUniformMatrix4fv(shadowShaderProgram->uniformLocation("lightViewMatrix"), 1, GL_FALSE, &viewMatrix[0][0]);
 	glUniformMatrix4fv(shadowShaderProgram->uniformLocation("lightProjectionMatrix"), 1, GL_FALSE, &perspectiveMatrix[0][0]);
+	glUniformMatrix3fv(shadowShaderProgram->uniformLocation("normalMatrix"), 1, GL_FALSE, &glm::mat3(normalMatrix)[0][0]);
 
 	// Draw the triangles
 	glDrawElements(GL_TRIANGLES, geometryObject->geometry()->indexCount(), GL_UNSIGNED_INT, (void*)0);
 
 	// Model matrix, unique for each model.
 	model = geometryGround->modelMatrix();
+	modelView = viewMatrix * model;
+	normalMatrix = glm::transpose(glm::inverse(modelView));
+
+	glUniformMatrix3fv(shadowShaderProgram->uniformLocation("normalMatrix"), 1, GL_FALSE, &glm::mat3(normalMatrix)[0][0]);
 	glUniformMatrix4fv(shadowShaderProgram->uniformLocation("lightModelMatrix"), 1, GL_FALSE, &model[0][0]);
 
 	// Draw the triangles
@@ -172,7 +181,6 @@ void DefRenderTestScene::renderShadows(int width, int height) {
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	
 	//shadow map render call complete.
 	//Now Bind uniform for sampling the shadow map in lighting pass.
 

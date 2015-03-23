@@ -66,6 +66,7 @@ class DefRenderTestScene : public Scene {
 
 		// Shaders shadows pass
 		Shader* shadowVertexShader;
+		Shader* shadowGeometryShader;
 		Shader* shadowFragmentShader;
 		ShaderProgram* shadowShaderProgram;
 

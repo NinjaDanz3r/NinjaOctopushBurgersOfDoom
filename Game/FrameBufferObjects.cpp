@@ -22,8 +22,10 @@ FrameBufferObjects::FrameBufferObjects(ShaderProgram* shaderProgram, unsigned in
 	glGenTextures(NUM_TEXTURES, mTextures);
 	glGenTextures(1, &depthHandle);
 
-	for (unsigned int i = 0; i < NUM_TEXTURES; i++)
-		attachTexture(mTextures[i], width, height, GL_COLOR_ATTACHMENT0 + i);
+	attachTexture(mTextures[POSITION], width, height, GL_COLOR_ATTACHMENT0 + POSITION, GL_RGB16F);
+	attachTexture(mTextures[DIFFUSE], width, height, GL_COLOR_ATTACHMENT0 + DIFFUSE, GL_RGB);
+	attachTexture(mTextures[NORMAL], width, height, GL_COLOR_ATTACHMENT0 + NORMAL, GL_RGB16F);
+	attachTexture(mTextures[SPECULAR], width, height, GL_COLOR_ATTACHMENT0 + SPECULAR, GL_RGB);
 
 	// Bind depthHandle
 	glBindTexture(GL_TEXTURE_2D, depthHandle);
@@ -160,9 +162,9 @@ void FrameBufferObjects::render(Camera* camera, int width, int height) {
 	glDepthFunc(oldDepthFunctionMode);
 }
 
-void FrameBufferObjects::attachTexture(GLuint texture, unsigned int width, unsigned int height, GLenum attachment) {
+void FrameBufferObjects::attachTexture(GLuint texture, unsigned int width, unsigned int height, GLenum attachment, GLint internalFormat) {
 	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, width, height, 0, GL_RGB, GL_FLOAT, nullptr);
+	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, GL_RGB, GL_FLOAT, nullptr);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, attachment, GL_TEXTURE_2D, texture, 0);

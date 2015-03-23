@@ -267,6 +267,9 @@
     <None Include="morph_vertex.glsl">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="shadow_geometry.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
