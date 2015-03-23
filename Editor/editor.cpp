@@ -10,7 +10,6 @@
 #include <SceneResource.h>
 #include "TexturePreview.h"
 #include "ModelPreview.h"
-#include <util.h>
 
 Editor::Editor(QWidget *parent) : QMainWindow(parent) {
 	ui.setupUi(this);
@@ -195,7 +194,6 @@ void Editor::selectionChanged() {
 }
 
 void Editor::applyScene() {
-	util::log("asg");
 	activeSceneResource->playerPosition.x = ui.playerXLineEdit->text().toFloat();
 	activeSceneResource->playerPosition.y = ui.playerYLineEdit->text().toFloat();
 	activeSceneResource->playerPosition.z = ui.playerZLineEdit->text().toFloat();

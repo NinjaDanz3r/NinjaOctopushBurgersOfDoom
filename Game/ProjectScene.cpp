@@ -14,6 +14,7 @@
 #include <ShaderProgram.h>
 #include "Camera.h"
 #include "Player.h"
+#include <SceneResource.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -47,6 +48,8 @@ ProjectScene::ProjectScene() {
 
 	project.setFilename("Resources/Game.proj");
 	project.load();
+
+	player->camera()->setPosition((*project.resources()->sceneResources())["TestScene"]->playerPosition);
 }
 
 ProjectScene::~ProjectScene() {
