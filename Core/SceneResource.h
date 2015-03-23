@@ -4,6 +4,7 @@
 #include "Core.h"
 #include <string>
 #include <fstream>
+#include <glm/glm.hpp>
 
 /** @ingroup core
  * @{
@@ -30,6 +31,9 @@ class SceneResource {
 
 		/// Name of the scene resource.
 		std::string name;
+
+		/// Player starting position.
+		glm::vec3 playerPosition;
 
 		/// Save scene resource to file.
 		/**
