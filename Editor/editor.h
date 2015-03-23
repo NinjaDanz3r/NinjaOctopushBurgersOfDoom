@@ -5,6 +5,7 @@
 #include "ui_editor.h"
 
 class Project;
+class SceneResource;
 
 /// The editor.
 /** @defgroup editor Editor
@@ -50,6 +51,9 @@ class Editor : public QMainWindow {
 		/// Handle selected item in tree widget being changed.
 		void selectionChanged();
 
+		/// Apply scene resource changes.
+		void applyScene();
+
 	private:
 		// Stacked widget indexes.
 		enum WidgetIndex {
@@ -67,6 +71,8 @@ class Editor : public QMainWindow {
 		QTreeWidgetItem* modelsRoot;
 		QTreeWidgetItem* texturesRoot;
 		QTreeWidgetItem* scenesRoot;
+
+		SceneResource* activeSceneResource;
 };
 
 /** @} */

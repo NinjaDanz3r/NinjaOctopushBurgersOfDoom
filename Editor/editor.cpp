@@ -5,11 +5,12 @@
 #include <OBJModel.h>
 #include <Project.h>
 #include "convert.h"
-#include "ModelResource.h"
-#include "TextureResource.h"
-#include "SceneResource.h"
+#include <ModelResource.h>
+#include <TextureResource.h>
+#include <SceneResource.h>
 #include "TexturePreview.h"
 #include "ModelPreview.h"
+#include <util.h>
 
 Editor::Editor(QWidget *parent) : QMainWindow(parent) {
 	ui.setupUi(this);
@@ -24,6 +25,8 @@ Editor::Editor(QWidget *parent) : QMainWindow(parent) {
 	connect(ui.actionNew_Scene, SIGNAL(triggered()), this, SLOT(newScene()));
 
 	connect(ui.treeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(selectionChanged()));
+
+	connect(ui.applySceneButton, SIGNAL(released()), this, SLOT(applyScene()));
 
 	texturesRoot = addTreeRoot("Textures");
 	modelsRoot = addTreeRoot("Models");
@@ -83,6 +86,12 @@ void Editor::openProject() {
 		treeItem->setText(0, QString::fromStdString(model.first));
 		modelsRoot->addChild(treeItem);
 	}
+
+	for (auto scene : *activeProject->resources()->sceneResources()) {
+		QTreeWidgetItem *treeItem = new QTreeWidgetItem();
+		treeItem->setText(0, QString::fromStdString(scene.first));
+		scenesRoot->addChild(treeItem);
+	}
 }
 
 void Editor::saveProject() {
@@ -97,6 +106,7 @@ void Editor::closeProject() {
 
 	deleteChildren(modelsRoot);
 	deleteChildren(texturesRoot);
+	deleteChildren(scenesRoot);
 
 	enableActions(false);
 
@@ -105,6 +115,7 @@ void Editor::closeProject() {
 	ui.previewWidget->repaint();
 
 	ui.stackedWidget->setCurrentIndex(EMPTY_PAGE);
+	activeSceneResource = nullptr;
 }
 
 void Editor::importModel() {
@@ -175,8 +186,19 @@ void Editor::selectionChanged() {
 			ui.previewWidget->repaint();
 		} else if (selected->parent() == scenesRoot) {
 			ui.stackedWidget->setCurrentIndex(SCENE_PAGE);
+			activeSceneResource = (*activeProject->resources()->sceneResources())[selected->text(0).toStdString()];
+			ui.playerXLineEdit->setText(QString::number(activeSceneResource->playerPosition.x));
+			ui.playerYLineEdit->setText(QString::number(activeSceneResource->playerPosition.y));
+			ui.playerZLineEdit->setText(QString::number(activeSceneResource->playerPosition.z));
 		}
 	}
+}
+
+void Editor::applyScene() {
+	util::log("asg");
+	activeSceneResource->playerPosition.x = ui.playerXLineEdit->text().toFloat();
+	activeSceneResource->playerPosition.y = ui.playerYLineEdit->text().toFloat();
+	activeSceneResource->playerPosition.z = ui.playerZLineEdit->text().toFloat();
 }
 
 void Editor::enableActions(bool enabled) {
