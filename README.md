@@ -15,10 +15,11 @@ Core (1|1|2)
 ------------
 * Deferred rendering and lighting.
 
-Geometry (2|2|5)
+Geometry (3|2|5)
 ----------------
 * Parsing and rendering of an existing model format.
 * Height-map terrain rendering, user can walk on the terrain.
+* Morph based vertex animation.
 
 Texturing and lighting (2|1|3)
 ------------------------------
