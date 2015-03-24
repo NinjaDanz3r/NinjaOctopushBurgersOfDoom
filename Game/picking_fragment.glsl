@@ -24,9 +24,19 @@ uniform int closestObjectHit;
 
 out vec4 fragment_color;
 
+vec3 calculateNormal(vec3 normal, vec3 tangent, vec3 mapNormal) {
+    vec3 n = normalize(normal);
+    vec3 t = normalize(tangent);
+    t = normalize(t - dot(t, n) * n);
+    vec3 b = cross(t, n);
+    vec3 mn = normalize(2.0 * mapNormal - vec3(1.0, 1.0, 1.0));
+    mat3 TBN = mat3(t, b, n);
+    return TBN * mn;
+}
+
 // Ambient, diffuse and specular lighting.
 vec3 ads() {
-	vec3 n = normalize(vertexIn.normal);
+	vec3 n = normalize(calculateNormal(vertexIn.normal, vertexIn.tangent, texture(normalMap, vertexIn.tex_coords).rgb));
 	vec3 s = normalize(vec3(lightPosition) - vertexIn.position);
 	vec3 v = normalize(vec3(-vertexIn.position));
 	vec3 r = reflect(-s, n);
