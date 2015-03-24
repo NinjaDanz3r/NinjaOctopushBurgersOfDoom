@@ -42,7 +42,8 @@ class AABB {
 		/**
 		 * Create infinitely high axis-aligned bounding box from a 2D rectangle.
 		 * Useful for frustum culling.
-		 * @param rectangle The rectangle.
+		 * @param rectangle The rectangle to base the AABB on.
+		 * @param height Height.
 		 */
 		CORE_EXPORT AABB(const Rectangle2D& rectangle, const float height);
 

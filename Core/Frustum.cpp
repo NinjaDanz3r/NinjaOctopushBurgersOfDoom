@@ -70,7 +70,7 @@ bool Frustum::collide(const AABB& aabb) const {
 	return true;
 }
 
-bool Frustum::collide(const Rectangle2D& rectangle, const float height) const {
+bool Frustum::collide(const Rectangle2D& rectangle, float height) const {
 	return collide(AABB(rectangle, height));
 }
 
