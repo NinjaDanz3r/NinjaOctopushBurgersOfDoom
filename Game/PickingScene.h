@@ -6,6 +6,7 @@
 #include <AABB.h>
 #include <vector>
 
+class FrameBufferObjects;
 class Shader;
 class ShaderProgram;
 class Texture;
@@ -45,17 +46,24 @@ class PickingScene : public Scene {
 		void render(int width, int height);
 
 	private:
+		FrameBufferObjects* multipleRenderTargets;
+
 		// Shaders
 		Shader* vertexShader;
 		Shader* geometryShader;
 		Shader* fragmentShader;
 		ShaderProgram* shaderProgram;
+
+		// Shaders lighting pass
+		Shader* deferredVertexShader;
+		Shader* deferredFragmentShader;
+		ShaderProgram* deferredShaderProgram;
+
 		Texture* diffuse;
 		Texture* normal;
 		Texture* specular;
 		AABB aabb;
 
-		Texture* texture;
 		Geometry* geometry;
 		std::vector<GeometryObject*> multiGeometry;
 		int numModels = 850;

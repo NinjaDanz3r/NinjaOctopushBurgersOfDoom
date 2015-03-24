@@ -1,5 +1,6 @@
 #include "PickingScene.h"
 
+#include "FrameBufferObjects.h"
 #include "Shader.h"
 #include "ShaderProgram.h"
 #include "GeometryObject.h"
@@ -12,6 +13,7 @@
 #include "Square.h"
 #include "Texture2D.h"
 #include "input.h"
+#include "settings.h"
 #include "Model.h"
 #include "Camera.h"
 
@@ -30,6 +32,10 @@ PickingScene::PickingScene() {
 	geometryShader = new Shader("default_geometry.glsl", GL_GEOMETRY_SHADER);
 	fragmentShader = new Shader("picking_fragment.glsl", GL_FRAGMENT_SHADER);
 	shaderProgram = new ShaderProgram({ vertexShader, geometryShader, fragmentShader });
+
+	deferredVertexShader = new Shader("deferred_vertex.glsl", GL_VERTEX_SHADER);
+	deferredFragmentShader = new Shader("deferred_fragment.glsl", GL_FRAGMENT_SHADER);
+	deferredShaderProgram = new ShaderProgram({ deferredVertexShader, deferredFragmentShader });
 
 	geometry = new Model("Resources/Models/Rock.bin");
 	geometry->createAabb();
@@ -51,6 +57,8 @@ PickingScene::PickingScene() {
 
 	player = new Player();
 	player->setMovementSpeed(2.0f);
+
+	multipleRenderTargets = new FrameBufferObjects(deferredShaderProgram, settings::displayWidth(), settings::displayHeight());
 }
 
 PickingScene::~PickingScene() {
@@ -58,7 +66,13 @@ PickingScene::~PickingScene() {
 	delete normal;
 	delete specular;
 
+	delete multipleRenderTargets;
+	delete deferredShaderProgram;
 	delete shaderProgram;
+
+	delete deferredVertexShader;
+	delete deferredFragmentShader;
+
 	delete vertexShader;
 	delete geometryShader;
 	delete fragmentShader;
@@ -79,6 +93,8 @@ Scene::SceneEnd* PickingScene::update(double time) {
 }
 
 void PickingScene::render(int width, int height) {
+	multipleRenderTargets->bindForWriting();
+
 	glViewport(0, 0, width, height);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -205,4 +221,6 @@ void PickingScene::render(int width, int height) {
 
 		glDrawElements(GL_TRIANGLES, geometry->indexCount(), GL_UNSIGNED_INT, (void*)0);
 	}
+
+	multipleRenderTargets->render(player->camera(), width, height);
 }

@@ -22,7 +22,9 @@ uniform int isHit;
 uniform int currentlyDrawingObject;
 uniform int closestObjectHit;
 
-out vec4 fragment_color;
+layout(location = 0) out vec3 diffuseOut;
+layout(location = 1) out vec3 normalsOut;
+layout(location = 2) out vec3 specularOut;
 
 vec3 calculateNormal(vec3 normal, vec3 tangent, vec3 mapNormal) {
     vec3 n = normalize(normal);
@@ -34,23 +36,11 @@ vec3 calculateNormal(vec3 normal, vec3 tangent, vec3 mapNormal) {
     return TBN * mn;
 }
 
-// Ambient, diffuse and specular lighting.
-vec3 ads() {
-	vec3 n = normalize(calculateNormal(vertexIn.normal, vertexIn.tangent, texture(normalMap, vertexIn.tex_coords).rgb));
-	vec3 s = normalize(vec3(lightPosition) - vertexIn.position);
-	vec3 v = normalize(vec3(-vertexIn.position));
-	vec3 r = reflect(-s, n);
-	vec3 diffuseLight = diffuseKoefficient * max(dot(s, n), 0.0);
-	vec3 Ks = texture(specularMap, vertexIn.tex_coords).rgb;
-	float shinyPower = 2000.0f;
-	vec3 Ka = vec3(0.2, 0.2, 0.2);
-	vec3 specularLight = Ks * pow(max(dot(r, v), 0.0), shinyPower);
-	return lightIntensity * (Ka + diffuseLight + specularLight);
-}
-
 void main () {
-	if((closestObjectHit == currentlyDrawingObject))
-		fragment_color = texture(baseImage, vertexIn.tex_coords)* vec4(0.1f,1.0f,0.1f,1.0f) * vec4(ads(), 1.0);
+	if (closestObjectHit == currentlyDrawingObject)
+		diffuseOut = texture(baseImage, vertexIn.tex_coords).rgb * vec3(0.1f, 1.0f, 0.1f);
 	else
-		fragment_color = texture(baseImage, vertexIn.tex_coords) * vec4(ads(), 1.0);
+		diffuseOut = texture(baseImage, vertexIn.tex_coords).rgb;
+	normalsOut = calculateNormal(vertexIn.normal, vertexIn.tangent, texture(normalMap, vertexIn.tex_coords).rgb);
+	specularOut = texture(specularMap, vertexIn.tex_coords).rgb;
 }
