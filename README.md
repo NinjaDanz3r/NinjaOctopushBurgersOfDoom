@@ -35,10 +35,11 @@ Acceleration (2|2|3)
 * View frustum culling against a quadtree.
 * Back-face culling using geometry shader.
 
-Miscellaneous (2|2|9)
+Miscellaneous (3|2|9)
 ---------------------
 * Particle system with billboarded particles.
 * Picking.
+* Make a small game out of it.
 
 Libraries
 =========
