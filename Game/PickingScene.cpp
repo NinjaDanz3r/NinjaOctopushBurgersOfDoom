@@ -16,7 +16,6 @@
 #include "settings.h"
 #include "Model.h"
 #include "Camera.h"
-#include "Game.h"
 
 #include <Frustum.h>
 #include <Rectangle2D.h>
@@ -60,7 +59,10 @@ PickingScene::PickingScene() {
 		tempGeometry->setRotation((float)rand1, (float)rand2, (float)rand3);
 		
 		Rectangle2D tempRectangle = Rectangle2D(*tempGeometry->geometry(), tempGeometry->modelMatrix());
+
+		//Store in mutliGeometry in order to ensure clean garbage collection
 		multiGeometry.push_back(tempGeometry);
+		
 		quadTree->addObject(tempGeometry, tempRectangle);
 	}
 
@@ -86,9 +88,9 @@ PickingScene::~PickingScene() {
 	delete geometryShader;
 	delete fragmentShader;
 
-	for (int i = 0; i < numModels; i++) {
-		delete multiGeometry[i];
-	}
+	delete quadTree;
+	for (GeometryObject* obj : multiGeometry)
+		delete obj;
 	multiGeometry.clear();
 
 	delete geometry;
@@ -161,6 +163,7 @@ void PickingScene::render(int width, int height) {
 	glUniform3fv(shaderProgram->uniformLocation("lightIntensity"), 1, &lightIntensity[0]);
 	glUniform3fv(shaderProgram->uniformLocation("diffuseKoefficient"), 1, &diffuseKoefficient[0]);
 	
+	//Cull objects against quadtree
 	Frustum* frustum = new Frustum(player->camera()->projection(width, height) * player->camera()->view());
 	quadTree->getObjects(*frustum, geometryMap);
 	delete frustum;
@@ -172,47 +175,52 @@ void PickingScene::render(int width, int height) {
 		// Model matrix, unique for each model.
 		glm::mat4 model = iterator.second->modelMatrix();
 
-		// Matrices for each model
-		glm::mat4 MV = view * model;
-		glm::mat4 N = glm::transpose(glm::inverse(MV));
+		//Cull still not visible objects
+		frustum = new Frustum(player->camera()->projection(width, height) * player->camera()->view() * model);
+		if (frustum->collide(geometry->aabb)) {
+			// Matrices for each model
+			glm::mat4 MV = view * model;
+			glm::mat4 N = glm::transpose(glm::inverse(MV));
 
-		// Ray in world space
-		glm::vec4 rayOrigin(0.0f, 0.0f, 0.0f, 1.0f);
-		rayOrigin = inverseView * rayOrigin;
-		glm::vec4 rayWor = glm::vec4(inverseView * rayEye);
+			// Ray in world space
+			glm::vec4 rayOrigin(0.0f, 0.0f, 0.0f, 1.0f);
+			rayOrigin = inverseView * rayOrigin;
+			glm::vec4 rayWor = glm::vec4(inverseView * rayEye);
 
-		// Ray in local space
-		glm::mat4 inverseModel = glm::inverse(model);
-		rayOrigin = inverseModel * rayOrigin;
-		glm::vec3 rayMod = glm::vec3(inverseModel * rayWor);
-		rayMod = glm::normalize(rayMod);
-		Ray ray(glm::vec3(rayOrigin), rayMod);
+			// Ray in local space
+			glm::mat4 inverseModel = glm::inverse(model);
+			rayOrigin = inverseModel * rayOrigin;
+			glm::vec3 rayMod = glm::vec3(inverseModel * rayWor);
+			rayMod = glm::normalize(rayMod);
+			Ray ray(glm::vec3(rayOrigin), rayMod);
 
-		// Search for hits.
-		float distanceToBox = ray.intersect(aabb);
-		if (distanceToBox > 0.f) {
-			// If the distance to the box exceeds the distance to the closest triangle, 
-			// there is no way that any triangle contained inside that box will 
-			// be closer to the viewer.
-			if (distanceToBox < closestDistance) {
-				for (unsigned int y = 0; (y < geometry->indexCount()); y += 3) {
-					unsigned int ind1 = geometry->indices()[y];
-					unsigned int ind2 = geometry->indices()[y + 1];
-					unsigned int ind3 = geometry->indices()[y + 2];
+			// Search for hits.
+			float distanceToBox = ray.intersect(aabb);
+			if (distanceToBox > 0.f) {
+				// If the distance to the box exceeds the distance to the closest triangle, 
+				// there is no way that any triangle contained inside that box will 
+				// be closer to the viewer.
+				if (distanceToBox < closestDistance) {
+					for (unsigned int y = 0; (y < geometry->indexCount()); y += 3) {
+						unsigned int ind1 = geometry->indices()[y];
+						unsigned int ind2 = geometry->indices()[y + 1];
+						unsigned int ind3 = geometry->indices()[y + 2];
 
-					Triangle triangle;
-					triangle.v1 = geometry->vertices()[ind1].position;
-					triangle.v2 = geometry->vertices()[ind2].position;
-					triangle.v3 = geometry->vertices()[ind3].position;
+						Triangle triangle;
+						triangle.v1 = geometry->vertices()[ind1].position;
+						triangle.v2 = geometry->vertices()[ind2].position;
+						triangle.v3 = geometry->vertices()[ind3].position;
 
-					float distanceToTriangle = ray.intersect(triangle);
-					if ((distanceToTriangle > 0.f) && (distanceToTriangle < closestDistance)) {
-						closestDistance = distanceToTriangle;
-						closestObjectHit = iterator.second;
+						float distanceToTriangle = ray.intersect(triangle);
+						if ((distanceToTriangle > 0.f) && (distanceToTriangle < closestDistance)) {
+							closestDistance = distanceToTriangle;
+							closestObjectHit = iterator.second;
+						}
 					}
 				}
 			}
 		}
+		delete frustum;
 	}
 
 	glBindVertexArray(geometry->vertexArray());
