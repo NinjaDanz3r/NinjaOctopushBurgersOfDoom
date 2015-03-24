@@ -125,12 +125,16 @@ void PickingScene::render(int width, int height) {
 	glm::mat4 inverseView = glm::inverse(view);
 	glm::mat4 inverseProj = glm::inverse(proj);
 	
-	//Ray in clip space
+	//Ray direction in clip space
 	glm::vec4 rayClip(vx, vy, -1.0f, 0.0f);
 	
-	//Ray in view space
+	//Ray direction in view space
 	glm::vec4 rayEye = inverseProj*rayClip;
 	rayEye = glm::vec4(rayEye.x, rayEye.y, -1.0, 0.0);
+
+	//Ray direction in world space
+	glm::vec4 rayWor = glm::vec4(inverseView * rayEye);
+
 	//Per object ray operations continued inside per object loop.
 
 	// Texture unit 0 is for base images.
@@ -181,10 +185,9 @@ void PickingScene::render(int width, int height) {
 			glm::mat4 MV = view * model;
 			glm::mat4 N = glm::transpose(glm::inverse(MV));
 
-			// Ray in world space
+			// Ray origin in world space (relative to model)
 			glm::vec4 rayOrigin(0.0f, 0.0f, 0.0f, 1.0f);
 			rayOrigin = inverseView * rayOrigin;
-			glm::vec4 rayWor = glm::vec4(inverseView * rayEye);
 
 			// Ray in local space
 			glm::mat4 inverseModel = glm::inverse(model);
