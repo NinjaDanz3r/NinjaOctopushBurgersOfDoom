@@ -22,7 +22,7 @@
 #include <stdio.h>
 
 static std::map<std::string, Scene*(*)()>* sceneMap;
-std::string Game::additionalData;
+char Game::additionalData[128];
 
 Game::Game(GLFWwindow* window, const char* sceneName) {
 	this->window = window;
@@ -87,7 +87,7 @@ void Game::setWindowTitle()
 			len += sprintf(title + len, "[FPS: %i] - ", frames);
 		if (settings::showCursorCoordinates())
 			len += sprintf(title + len, "[CursorXY: %.f %.f] - ", input::cursorX(), input::cursorY());
-		len += sprintf(title + len, "%s", additionalData.c_str());
+		len += sprintf(title + len, "%s", additionalData);
 
 		glfwSetWindowTitle(window, title);
 
