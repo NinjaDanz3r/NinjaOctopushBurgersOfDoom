@@ -186,6 +186,8 @@ void FrameBufferObjects::bindLighting(Camera* camera, int width, int height){
 	glUniform4fv(shaderProgram->uniformLocation("lightPosition"), 1, &(view * light.position)[0]);
 	glUniform3fv(shaderProgram->uniformLocation("lightIntensity"), 1, &light.intensity[0]);
 	glUniform3fv(shaderProgram->uniformLocation("diffuseKoefficient"), 1, &light.diffuseKoefficient[0]);
+
+	glUniformMatrix4fv(shaderProgram->uniformLocation("inverseProjectionMatrix"), 1, GL_FALSE, &glm::inverse(camera->projection(width, height))[0][0]);
 }
 
 void FrameBufferObjects::bindQuad() {
