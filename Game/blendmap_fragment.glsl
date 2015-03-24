@@ -22,11 +22,11 @@ layout(location = 2) out vec3 specularOut;
 
 void main () {
 	vec4 blendMap = texture(blendMapTexture, vertexIn.tex_coords);
-	float sum = blendMap.r + blendMap.g + blendMap.b + blendMap.a;
-	diffuseOut = (blendMap.r / sum * texture(redTexture, vertexIn.tex_coords * textureRepeat) +
-				  blendMap.g / sum * texture(greenTexture, vertexIn.tex_coords * textureRepeat) +
-				  blendMap.b / sum * texture(blueTexture, vertexIn.tex_coords * textureRepeat) +
-				  blendMap.a / sum * texture(alphaTexture, vertexIn.tex_coords * textureRepeat)).rgb;
+	float sum = 1.0 / (blendMap.r + blendMap.g + blendMap.b + blendMap.a);
+	diffuseOut = (blendMap.r * sum * texture(redTexture, vertexIn.tex_coords * textureRepeat) +
+				  blendMap.g * sum * texture(greenTexture, vertexIn.tex_coords * textureRepeat) +
+				  blendMap.b * sum * texture(blueTexture, vertexIn.tex_coords * textureRepeat) +
+				  blendMap.a * sum * texture(alphaTexture, vertexIn.tex_coords * textureRepeat)).rgb;
 
 	normalsOut = vertexIn.normal;
 	specularOut = vec3(0.0, 0.0, 0.0);
