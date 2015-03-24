@@ -20,7 +20,8 @@ namespace input {
 		LEFT, ///< Left button
 		RIGHT, ///< Right button
 		CHANGE_RENDER_STATE, ///< Change render state button
-		BUTTONS ///< Total number of buttons
+		NEW_SCENE,  ///< Trigger scene change
+		BUTTONS, ///< Total number of buttons
 	};
 
 	/// Initialize the input module.

@@ -23,6 +23,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
+#include "AudioScene.h"
 
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))
 
@@ -99,6 +100,10 @@ PickingScene::~PickingScene() {
 
 Scene::SceneEnd* PickingScene::update(double time) {
 	player->update(time);
+
+	if (input::triggered(input::NEW_SCENE))
+		return new Scene::SceneEnd(SceneEnd::NEW_SCENE);
+
 
 	return nullptr;
 }

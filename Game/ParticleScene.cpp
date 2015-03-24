@@ -9,6 +9,8 @@
 #include "Player.h"
 #include "ParticleSystem.h"
 #include "Camera.h"
+#include "input.h"
+#include "Scene.h"
 
 #include <glm/glm.hpp>
 
@@ -40,6 +42,9 @@ ParticleScene::~ParticleScene() {
 Scene::SceneEnd* ParticleScene::update(double time) {
 	player->update(time);
 	particleSystem->update(time);
+
+	if (input::triggered(input::NEW_SCENE))
+		return new Scene::SceneEnd(SceneEnd::NEW_SCENE);
 
 	return nullptr;
 }

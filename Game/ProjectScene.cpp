@@ -78,6 +78,8 @@ Scene::SceneEnd* ProjectScene::update(double time) {
 
 	if (input::triggered(input::CHANGE_RENDER_STATE))
 		state = !state;
+	if (input::triggered(input::NEW_SCENE))
+		return new Scene::SceneEnd(SceneEnd::NEW_SCENE);
 
 	return nullptr;
 }

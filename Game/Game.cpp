@@ -44,6 +44,9 @@ Game::~Game() {
 	delete currentScene;
 	delete soundSystem;
 	delete sceneMap;
+	for (auto iterator : sceneVector)
+		delete iterator;
+	sceneVector.clear();
 }
 
 void Game::update() {
@@ -61,8 +64,8 @@ void Game::update() {
 	}
 	else {
 		if (status->command == Scene::SceneEnd::NEW_SCENE) {
-			delete currentScene;
-			currentScene = status->nextScene;
+			currentScene = sceneVector[sceneNumber];
+			sceneNumber++;
 		}
 
 		if (status->command == Scene::SceneEnd::QUIT)
@@ -102,6 +105,7 @@ void Game::assignKeyboardBindings() {
 	input::assignKeyboard(input::LEFT, GLFW_KEY_A);
 	input::assignKeyboard(input::RIGHT, GLFW_KEY_D);
 	input::assignKeyboard(input::CHANGE_RENDER_STATE, GLFW_KEY_F1);
+	input::assignKeyboard(input::NEW_SCENE, GLFW_KEY_N);
 }
 
 template<typename T> Scene * createInstance() {
@@ -119,6 +123,10 @@ void Game::setSceneMap() {
 	(*sceneMap)["frustum"] = &createInstance<FrustumScene>;
 	(*sceneMap)["project"] = &createInstance<ProjectScene>;
 	(*sceneMap)["morph"] = &createInstance<MorphScene>;
+
+	for (auto iterator : (*sceneMap) ) {
+		sceneVector.push_back(iterator.second());
+	}
 }
 
 void Game::setScene(const char* sceneName){

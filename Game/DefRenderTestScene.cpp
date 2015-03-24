@@ -15,6 +15,7 @@
 #include "Square.h"
 #include "Cube.h"
 #include "ShadowMap.h"
+#include "input.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -86,6 +87,9 @@ Scene::SceneEnd* DefRenderTestScene::update(double time) {
 
 	shadowTime += time;
 	multipleRenderTargets->light.position = glm::vec4(5.f * sin(shadowTime), 3.f, 3.f + 5.f * cos(shadowTime), 1.f);
+
+	if (input::triggered(input::NEW_SCENE))
+		return new Scene::SceneEnd(SceneEnd::NEW_SCENE);
 
 	return nullptr;
 }
