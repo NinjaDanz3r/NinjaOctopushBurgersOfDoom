@@ -138,6 +138,8 @@ void DefRenderTestScene::render(int width, int height) {
 	renderShadows(width, height);
 	//Shadow map rendering complete.
 
+	glUniformMatrix4fv(deferredShaderProgram->uniformLocation("inverseProjectionMatrix"), 1, GL_FALSE, &glm::inverse(player->camera()->projection(width, height))[0][0]);
+
 	multipleRenderTargets->render(player->camera(), width, height);
 	//Lighting render pass complete.
 }

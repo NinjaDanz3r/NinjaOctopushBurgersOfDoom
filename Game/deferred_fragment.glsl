@@ -12,6 +12,7 @@ uniform sampler2D tDepth;
 
 uniform mat4 UVtransformMatrix;
 uniform mat4 inverseViewMatrix;
+uniform mat4 inverseProjectionMatrix;
 uniform mat4 lightViewMatrix;
 uniform mat4 lightProjectionMatrix;
 
@@ -72,13 +73,22 @@ vec3 ads(vec3 normal, vec3 position, vec3 specular) {
 	return lightIntensity * (Ka + visibility*(diffuseLight + specularLight));
 }
 
+// Reconstruct position.
+vec3 reconstructPos(vec2 texCoord, float depth){
+    vec4 sPos = vec4(texCoord * 2.0 - 1.0, depth * 2.0 - 1.0, 1.0);
+    sPos = inverseProjectionMatrix * sPos;
+
+    return (sPos.xyz / sPos.w);
+}
+
 void main () {
 	vec2 texCoord = calculateTexCoord();
-	vec3 position = texture(tPosition, texCoord).xyz;
+	float depth = texture(tDepth, texCoord).r;
+	vec3 position = reconstructPos(texCoord, depth);
 	vec3 diffuse = texture(tDiffuse, texCoord).rgb;
 	vec3 normal = texture(tNormals, texCoord).xyz;
 	vec3 specular = texture(tSpecular, texCoord).xyz;
 	
 	fragment_color = vec4(diffuse, 1.0) * vec4(ads(normal, position, specular), 1.0);
-	gl_FragDepth = texture(tDepth, texCoord).r;
+	gl_FragDepth = depth;
 }
