@@ -14,7 +14,7 @@ class Scene {
 		* \code{.cpp}
 		* SceneEnd* ExampleScene::update(double time) {
 		*     if (input::triggered(input::FORWARD))
-		*         return new SceneEnd(SceneEnd::NEW_SCENE, new TitleScene());
+		*         return new SceneEnd(SceneEnd::NEW_SCENE);
 		*     return nullptr;
 		* }
 		* \endcode
@@ -32,15 +32,11 @@ class Scene {
 				/// What to do next.
 				Command command;
 
-				/// Next scene to go to. (nullptr if we shouldn't go to any scene next.)
-				Scene* nextScene;
-
 				/// Create a new SceneEnd and define what should be done next.
 				/**
 				 * @param command What to do.
-				 * @param nextScene New Scene to go to if command is NEW_SCENE.
 				 */
-				SceneEnd(Command command, Scene* nextScene = nullptr);
+				SceneEnd(Command command);
 
 			private:
 				SceneEnd();

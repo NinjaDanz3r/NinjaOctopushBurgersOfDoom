@@ -111,6 +111,9 @@ Scene::SceneEnd* GameScene::update(double time) {
 	if (geometryObject->position().x < 0.f)
 		return new SceneEnd(SceneEnd::QUIT);
 
+	if (input::triggered(input::NEW_SCENE))
+		return new Scene::SceneEnd(SceneEnd::NEW_SCENE);
+
 	return nullptr;
 }
 

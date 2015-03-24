@@ -1,6 +1,5 @@
 #include "Scene.h"
 
-Scene::SceneEnd::SceneEnd(Command command, Scene* nextScene) {
+Scene::SceneEnd::SceneEnd(Command command) {
 	this->command = command;
-	this->nextScene = nextScene;
 }

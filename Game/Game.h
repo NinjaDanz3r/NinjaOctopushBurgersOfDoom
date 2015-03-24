@@ -49,7 +49,7 @@ class Game {
 		GLFWwindow* window;
 		SoundSystem* soundSystem;
 		Scene* currentScene;
-		std::vector<Scene*> sceneVector;
+		std::vector<Scene*(*)()> sceneVector;
 		double lastTime;
 		double prevFPSTime = 0.0;
 		int sceneNumber = 0;

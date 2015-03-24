@@ -45,9 +45,6 @@ Game::~Game() {
 	delete currentScene;
 	delete soundSystem;
 	delete sceneMap;
-	for (auto iterator : sceneVector)
-		delete iterator;
-	sceneVector.clear();
 }
 
 void Game::update() {
@@ -62,11 +59,11 @@ void Game::update() {
 
 	if (status == nullptr) {
 		currentScene->render(width, height);
-	}
-	else {
+	} else {
 		if (status->command == Scene::SceneEnd::NEW_SCENE) {
-			currentScene = sceneVector[sceneNumber];
-			sceneNumber++;
+			delete currentScene;
+			currentScene = sceneVector[sceneNumber]();
+			sceneNumber = (sceneNumber + 1) % sceneVector.size();
 		}
 
 		if (status->command == Scene::SceneEnd::QUIT)
@@ -78,8 +75,7 @@ void Game::update() {
 }
 
 
-void Game::setWindowTitle()
-{
+void Game::setWindowTitle() {
 	frames++;
 
 	if (glfwGetTime() - prevFPSTime >= 1.0) {
@@ -127,7 +123,7 @@ void Game::setSceneMap() {
 	(*sceneMap)["game"] = &createInstance<GameScene>;
 
 	for (auto iterator : (*sceneMap) ) {
-		sceneVector.push_back(iterator.second());
+		sceneVector.push_back(iterator.second);
 	}
 	
 }
