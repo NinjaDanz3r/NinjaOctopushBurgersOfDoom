@@ -16,6 +16,12 @@
 #include "Player.h"
 #include "ParticleSystem.h"
 
+#include "SoundSystem.h"
+#include "Listener.h"
+#include "WaveFile.h"
+#include "SoundBuffer.h"
+#include "Sound.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
@@ -52,6 +58,12 @@ GameScene::GameScene() {
 	player = new Player();
 	player->setMovementSpeed(2.0f);
 	multipleRenderTargets = new FrameBufferObjects(deferredShaderProgram, settings::displayWidth(), settings::displayHeight());
+
+	waveFile = new WaveFile("Resources/Audio/DontBurnTheRock.wav");
+	buffer = new SoundBuffer(waveFile);
+	sound = new Sound(buffer);
+	sound->setGain(2.f);
+	sound->play();
 }
 
 GameScene::~GameScene() {
@@ -81,6 +93,10 @@ GameScene::~GameScene() {
 	delete geometryObject;
 	delete geometry;
 	delete player;
+
+	delete sound;
+	delete buffer;
+	delete waveFile;
 }
 
 Scene::SceneEnd* GameScene::update(double time) {

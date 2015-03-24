@@ -11,6 +11,9 @@ class Geometry;
 class GeometryObject;
 class Player;
 class ParticleSystem;
+class WaveFile;
+class SoundBuffer;
+class Sound;
 
 /** @ingroup game
 * @{
@@ -71,6 +74,11 @@ private:
 
 	Texture* particleTexture;
 	ParticleSystem* particleSystem;
+
+	// Audio
+	WaveFile* waveFile;
+	SoundBuffer* buffer;
+	Sound* sound;
 };
 
 /** @} */
