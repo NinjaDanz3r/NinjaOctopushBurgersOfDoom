@@ -52,14 +52,6 @@ TerrainScene::TerrainScene() {
 	deferredFragmentShader = new Shader("deferred_fragment.glsl", GL_FRAGMENT_SHADER);
 	deferredShaderProgram = new ShaderProgram({ deferredVertexShader, deferredFragmentShader });
 
-	// Set texture locations.
-	shaderProgram->use();
-	glUniform1i(shaderProgram->uniformLocation("blendMap"), 0);
-	glUniform1i(shaderProgram->uniformLocation("redTexture"), 1);
-	glUniform1i(shaderProgram->uniformLocation("greenTexture"), 2);
-	glUniform1i(shaderProgram->uniformLocation("blueTexture"), 3);
-	glUniform1i(shaderProgram->uniformLocation("alphaTexture"), 4);
-
 	terrain = new Terrain("Resources/HeightMaps/TestMapSmall.tga");
 	terrainObject = new TerrainObject(terrain);
 	terrainObject->setPosition(0.f, -5.f, 0.f);
@@ -119,6 +111,14 @@ void TerrainScene::render(int width, int height) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	shaderProgram->use();
+
+	// Set texture locations.
+	shaderProgram->use();
+	glUniform1i(shaderProgram->uniformLocation("blendMapTexture"), 0);
+	glUniform1i(shaderProgram->uniformLocation("redTexture"), 1);
+	glUniform1i(shaderProgram->uniformLocation("greenTexture"), 2);
+	glUniform1i(shaderProgram->uniformLocation("blueTexture"), 3);
+	glUniform1i(shaderProgram->uniformLocation("alphaTexture"), 4);
 
 	// Blend map
 	glActiveTexture(GL_TEXTURE0);

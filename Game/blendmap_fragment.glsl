@@ -9,7 +9,7 @@ in VertexData {
 	vec2 tex_coords;
 } vertexIn;
 
-uniform sampler2D blendMap;
+uniform sampler2D blendMapTexture;
 uniform sampler2D redTexture;
 uniform sampler2D greenTexture;
 uniform sampler2D blueTexture;
@@ -21,7 +21,7 @@ layout(location = 1) out vec3 normalsOut;
 layout(location = 2) out vec3 specularOut;
 
 void main () {
-	vec4 blendMap = texture(blendMap, vertexIn.tex_coords);
+	vec4 blendMap = texture(blendMapTexture, vertexIn.tex_coords);
 	float sum = blendMap.r + blendMap.g + blendMap.b + blendMap.a;
 	diffuseOut = (blendMap.r / sum * texture(redTexture, vertexIn.tex_coords * textureRepeat) +
 				  blendMap.g / sum * texture(greenTexture, vertexIn.tex_coords * textureRepeat) +
