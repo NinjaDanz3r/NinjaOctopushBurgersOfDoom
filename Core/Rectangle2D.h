@@ -42,7 +42,7 @@ class Rectangle2D {
 		* @param frustum The Frustum to check collision against.
 		* @return Whether there was a collision
 		*/
-		CORE_EXPORT bool collide(const Frustum& frustum) const;
+		CORE_EXPORT bool collide(const Frustum& frustum, const float height) const;
 
 		/// Check collision between rectangle and another rectangle.
 		/**

@@ -14,8 +14,6 @@ uniform sampler2D normalMap;
 uniform sampler2D specularMap;
 
 uniform int isHit;
-uniform int currentlyDrawingObject;
-uniform int closestObjectHit;
 
 layout(location = 0) out vec3 diffuseOut;
 layout(location = 1) out vec3 normalsOut;
@@ -32,7 +30,7 @@ vec3 calculateNormal(vec3 normal, vec3 tangent, vec3 mapNormal) {
 }
 
 void main () {
-	if (closestObjectHit == currentlyDrawingObject)
+	if (isHit == 1)
 		diffuseOut = texture(baseImage, vertexIn.tex_coords).rgb * vec3(0.1f, 1.0f, 0.1f);
 	else
 		diffuseOut = texture(baseImage, vertexIn.tex_coords).rgb;

@@ -70,8 +70,8 @@ bool Frustum::collide(const AABB& aabb) const {
 	return true;
 }
 
-bool Frustum::collide(const Rectangle2D& rectangle) const {
-	return collide(AABB(rectangle));
+bool Frustum::collide(const Rectangle2D& rectangle, const float height) const {
+	return collide(AABB(rectangle, height));
 }
 
 float Frustum::distanceToPoint(const glm::vec4& plane, const glm::vec3& point) {

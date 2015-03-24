@@ -5,6 +5,8 @@
 #include <gl/glew.h>
 #include <AABB.h>
 #include <vector>
+#include "QuadTree.h"
+#include <map>
 
 class FrameBufferObjects;
 class Shader;
@@ -64,9 +66,12 @@ class PickingScene : public Scene {
 		Texture* specular;
 		AABB aabb;
 
+		QuadTree* quadTree;
+		std::map<GeometryObject*, GeometryObject*> geometryMap;
+
 		Geometry* geometry;
 		std::vector<GeometryObject*> multiGeometry;
-		int numModels = 850;
+		int numModels = 250;
 		Player* player;
 
 		GLuint hitData = 1;

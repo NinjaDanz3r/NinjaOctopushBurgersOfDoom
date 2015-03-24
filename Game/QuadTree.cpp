@@ -3,14 +3,15 @@
 #include <Frustum.h>
 #include <glm/glm.hpp>
 
-QuadTree::QuadTree(const Rectangle2D & rectangle, int maxDepth) : QuadTree(rectangle, 0, maxDepth) {
+QuadTree::QuadTree(const Rectangle2D & rectangle, float height, int maxDepth) : QuadTree(rectangle, height, 0, maxDepth) {
 
 }
 
-QuadTree::QuadTree(const Rectangle2D & rectangle, int depth, int maxDepth) {
+QuadTree::QuadTree(const Rectangle2D & rectangle, float height, int depth, int maxDepth) {
 	this->rectangle = rectangle;
 	this->depth = depth;
 	this->maxDepth = maxDepth;
+	this->height = height;
 
 	// If we're at a leaf, we should populate it with objects 
 	if (depth == maxDepth) {
@@ -31,10 +32,10 @@ QuadTree::QuadTree(const Rectangle2D & rectangle, int depth, int maxDepth) {
 		Rectangle2D q3Rect(glm::vec2(rectangle.origin.x + quarterWidth, rectangle.origin.y - quarterHeight), quadrantDim);
 		Rectangle2D q4Rect(glm::vec2(rectangle.origin.x - quarterWidth, rectangle.origin.y - quarterHeight), quadrantDim);
 
-		childTree[Q1] = new QuadTree(q1Rect, nextDepth, maxDepth);
-		childTree[Q2] = new QuadTree(q2Rect, nextDepth, maxDepth);
-		childTree[Q3] = new QuadTree(q3Rect, nextDepth, maxDepth);
-		childTree[Q4] = new QuadTree(q4Rect, nextDepth, maxDepth);
+		childTree[Q1] = new QuadTree(q1Rect, height, nextDepth, maxDepth);
+		childTree[Q2] = new QuadTree(q2Rect, height, nextDepth, maxDepth);
+		childTree[Q3] = new QuadTree(q3Rect, height, nextDepth, maxDepth);
+		childTree[Q4] = new QuadTree(q4Rect, height, nextDepth, maxDepth);
 	}
 }
 
@@ -65,10 +66,10 @@ void QuadTree::addObject(GeometryObject* object, Rectangle2D rectangle) {
 }
 
 void QuadTree::getObjects(Frustum& frustum, std::map<GeometryObject*, GeometryObject*>& geometryMap) {
-	if ((depth == maxDepth) && frustum.collide(rectangle)) {
+	if ((depth == maxDepth) && frustum.collide(rectangle, height)) {
 		for (GeometryObject* obj : objects)
 			geometryMap[obj] = obj;
-	} else if (frustum.collide(rectangle)) {
+	} else if (frustum.collide(rectangle, height)) {
 			childTree[Q1]->getObjects(frustum, geometryMap);
 			childTree[Q2]->getObjects(frustum, geometryMap);
 			childTree[Q3]->getObjects(frustum, geometryMap);

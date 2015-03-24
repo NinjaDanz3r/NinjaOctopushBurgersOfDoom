@@ -22,7 +22,7 @@ class QuadTree {
 		 * @param rectangle Rectangle the quad tree should be contained in.
 		 * @param maxDepth Depth of the quad tree to be created.
 		 */
-		QuadTree(const Rectangle2D& rectangle, int maxDepth);
+		QuadTree(const Rectangle2D& rectangle, float height, int maxDepth);
 
 		/// Destructor.
 		~QuadTree();
@@ -52,11 +52,12 @@ class QuadTree {
 			Q4		// Fourth quadrant, southwest
 		};
 
-		QuadTree(const Rectangle2D& rectangle, int depth, int maxDepth);
+		QuadTree(const Rectangle2D& rectangle, float height, int depth, int maxDepth);
 
 		Rectangle2D rectangle;
 
 		QuadTree* childTree[4];
+		float height;
 		
 		unsigned int depth;
 		unsigned int maxDepth;

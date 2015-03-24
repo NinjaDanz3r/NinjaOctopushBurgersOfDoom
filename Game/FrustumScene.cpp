@@ -44,7 +44,7 @@ FrustumScene::FrustumScene() {
 	geometry = new Model("Resources/Models/Rock.bin");
 	geometry->createAabb();
 	Rectangle2D rect(glm::vec2(0.f, 0.f), glm::vec2(40.0f, 40.0f));
-	quadTree = new QuadTree(rect, 4); 
+	quadTree = new QuadTree(rect, 40, 4); 
 	
 	for (int i = 0; i < numModels; i++){
 		GeometryObject* tempGeometry = new GeometryObject(geometry);

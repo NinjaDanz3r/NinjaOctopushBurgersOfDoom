@@ -6,8 +6,8 @@ Rectangle2D::Rectangle2D(const glm::vec2& origin, const glm::vec2& dimensions) {
 	this->dimensions = dimensions;
 }
 
-bool Rectangle2D::collide(const Frustum& frustum) const {
-	return frustum.collide(*this);
+bool Rectangle2D::collide(const Frustum& frustum, const float height) const {
+	return frustum.collide(*this, height);
 }
 
 Rectangle2D::Rectangle2D(const Geometry & geometry, const glm::mat4& matrix) {

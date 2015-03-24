@@ -65,6 +65,7 @@ DefRenderTestScene::~DefRenderTestScene() {
 	delete shaderProgram;
 
 	delete shadowVertexShader;
+	delete shadowGeometryShader;
 	delete shadowFragmentShader;
 	
 	delete deferredVertexShader;
