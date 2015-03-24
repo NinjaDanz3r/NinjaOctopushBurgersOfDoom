@@ -6,18 +6,21 @@
 
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))
 
-ParticleSystem::ParticleSystem(ShaderProgram* shaderProgram, Texture* texture, glm::vec3 origin, int maxParticleCount, int chanceToEmit, float maxVelocity, float maxLifeTime) {
+ParticleSystem::ParticleSystem(ShaderProgram* shaderProgram, Texture* texture, glm::vec3 origin, int maxParticleCount, double minEmitTime, double maxEmitTime, float maxVelocity, float maxLifeTime) {
 	this->shaderProgram = shaderProgram;
 	this->texture = texture;
 
 	particleOrigin = origin;
 	this->maxParticleCount = maxParticleCount;
-	this->chanceToEmit = chanceToEmit;
+	this->minEmitTime = minEmitTime;
+	this->maxEmitTime = maxEmitTime;
 	this->maxVelocity = maxVelocity;
 	this->maxLifeTime = maxLifeTime;
 	particleCount = 0;
 
 	bindPointData();
+
+	timeToNext = minEmitTime + ((double)rand() / RAND_MAX) * (maxEmitTime - minEmitTime);
 }
 
 ParticleSystem::~ParticleSystem() {
@@ -47,7 +50,12 @@ void ParticleSystem::update(double time) {
 			}
 		}
 	}
-	emitParticle();
+
+	timeToNext -= time;
+	while (timeToNext < 0.0) {
+		timeToNext += minEmitTime + ((double)rand() / RAND_MAX) * (maxEmitTime - minEmitTime);
+		emitParticle();
+	}
 
 	if (particleCount > 0)
 		glBufferSubData(GL_ARRAY_BUFFER, 0, particleCount * sizeof(ParticleSystem::ParticlePosition), &this->particlePositions[0]);
@@ -110,7 +118,7 @@ void ParticleSystem::bindPointData() {
 }
 
 void ParticleSystem::emitParticle() {
-	if ((rand() % 1000 < chanceToEmit) && (particleCount < maxParticleCount)) {
+	if (particleCount < maxParticleCount) {
 		ParticlePosition newPosition;
 		ParticleProperty newProperty;
 

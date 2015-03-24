@@ -38,11 +38,13 @@ class ParticleSystem {
 		 * @param texture Texture to apply to the particles.
 		 * @param origin Origin of the particle system.
 		 * @param maxParticleCount The maximum amount of particles the particle system can hold.
+		 * @param minEmitTime The minimum time between each emitted particle.
+		 * @param maxEmitTime The maximum time between each emitted particle.
 		 * @param chanceToEmit How large chance to emit a particle each step (x in 1000 chance).
 		 * @param maxVelocity Maximum velocity of the particles emitted.
 		 * @param maxLifeTime Maximum lifetime of the particles emitted.
 		 */
-		ParticleSystem(ShaderProgram* shaderProgram, Texture* texture, glm::vec3 origin, int maxParticleCount, int chanceToEmit, float maxVelocity, float maxLifeTime);
+		ParticleSystem(ShaderProgram* shaderProgram, Texture* texture, glm::vec3 origin, int maxParticleCount, double minEmitTime, double maxEmitTime, float maxVelocity, float maxLifeTime);
 
 		/// Destructor.
 		~ParticleSystem();
@@ -90,7 +92,10 @@ class ParticleSystem {
 		unsigned int maxParticleCount;
 		float maxLifeTime;
 		float maxVelocity;
-		int chanceToEmit;
+		double minEmitTime;
+		double maxEmitTime;
+
+		double timeToNext;
 
 		// Vertex buffer.
 		GLuint vertexBuffer = 0;
