@@ -20,6 +20,7 @@ class QuadTree {
 		/**
 		 * The amount of leaf nodes is 4^maxDepth.
 		 * @param rectangle Rectangle the quad tree should be contained in.
+		 * @param height Height of the quad tree.
 		 * @param maxDepth Depth of the quad tree to be created.
 		 */
 		QuadTree(const Rectangle2D& rectangle, float height, int maxDepth);

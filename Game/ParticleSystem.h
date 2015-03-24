@@ -40,7 +40,6 @@ class ParticleSystem {
 		 * @param maxParticleCount The maximum amount of particles the particle system can hold.
 		 * @param minEmitTime The minimum time between each emitted particle.
 		 * @param maxEmitTime The maximum time between each emitted particle.
-		 * @param chanceToEmit How large chance to emit a particle each step (x in 1000 chance).
 		 * @param maxVelocity Maximum velocity of the particles emitted.
 		 * @param maxLifeTime Maximum lifetime of the particles emitted.
 		 */
