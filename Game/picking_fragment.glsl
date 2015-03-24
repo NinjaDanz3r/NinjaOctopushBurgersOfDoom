@@ -13,10 +13,6 @@ uniform sampler2D baseImage;
 uniform sampler2D normalMap;
 uniform sampler2D specularMap;
 
-uniform vec4 lightPosition;
-uniform vec3 lightIntensity;
-uniform vec3 diffuseKoefficient;
-
 uniform int isHit;
 uniform int currentlyDrawingObject;
 uniform int closestObjectHit;

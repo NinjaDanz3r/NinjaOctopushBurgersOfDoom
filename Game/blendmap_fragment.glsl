@@ -16,10 +16,6 @@ uniform sampler2D blueTexture;
 uniform sampler2D alphaTexture;
 uniform vec2 textureRepeat;
 
-uniform vec4 lightPosition;
-uniform vec3 lightIntensity;
-uniform vec3 diffuseKoefficient;
-
 layout(location = 0) out vec3 diffuseOut;
 layout(location = 1) out vec3 normalsOut;
 layout(location = 2) out vec3 specularOut;
