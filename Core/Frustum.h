@@ -35,7 +35,7 @@ class Frustum {
 		* @param rectangle The rectangle to check collision against.
 		* @return Whether there was a collision
 		*/
-		CORE_EXPORT bool collide(const Rectangle2D& rectangle) const;
+		CORE_EXPORT bool collide(const Rectangle2D& rectangle, const float height) const;
 
 	private:
 		glm::vec4 planes[6];

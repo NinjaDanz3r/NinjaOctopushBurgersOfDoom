@@ -16,6 +16,10 @@
 #include "settings.h"
 #include "Model.h"
 #include "Camera.h"
+#include "Game.h"
+
+#include <Frustum.h>
+#include <Rectangle2D.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -40,19 +44,24 @@ PickingScene::PickingScene() {
 	geometry = new Model("Resources/Models/Rock.bin");
 	geometry->createAabb();
 	aabb = geometry->aabb;
+	Rectangle2D rect(glm::vec2(0.f, 0.f), glm::vec2(40.0f, 40.0f));
+	quadTree = new QuadTree(rect, 40, 4);
 
 	for (int i = 0; i < numModels; i++){
 		GeometryObject* tempGeometry = new GeometryObject(geometry);
 		tempGeometry->setScale(glm::vec3(0.01f, 0.01f, 0.01f));
-		int rand1 = rand() % 21 - 10;
-		int rand2 = rand() % 21 - 10;
-		int rand3 = -10 - rand() % 10;
+		int rand1 = rand() % 41 - 20;
+		int rand2 = rand() % 41 - 20;
+		int rand3 = rand() % 41 - 20;
 		tempGeometry->setPosition(glm::vec3((float)rand1, (float)rand2, (float)rand3));
 		rand1 = rand() % 361;
 		rand2 = rand() % 361;
 		rand3 = rand() % 361;
 		tempGeometry->setRotation((float)rand1, (float)rand2, (float)rand3);
+		
+		Rectangle2D tempRectangle = Rectangle2D(*tempGeometry->geometry(), tempGeometry->modelMatrix());
 		multiGeometry.push_back(tempGeometry);
+		quadTree->addObject(tempGeometry, tempRectangle);
 	}
 
 	player = new Player();
@@ -151,13 +160,17 @@ void PickingScene::render(int width, int height) {
 	glUniform4fv(shaderProgram->uniformLocation("lightPosition"), 1, &lightPosition[0]);
 	glUniform3fv(shaderProgram->uniformLocation("lightIntensity"), 1, &lightIntensity[0]);
 	glUniform3fv(shaderProgram->uniformLocation("diffuseKoefficient"), 1, &diffuseKoefficient[0]);
+	
+	Frustum* frustum = new Frustum(player->camera()->projection(width, height) * player->camera()->view());
+	quadTree->getObjects(*frustum, geometryMap);
+	delete frustum;
 
 	// Intersection loop
 	float closestDistance = std::numeric_limits<float>::max();
-	int closestObjectHit = -1;
-	for (int i = 0; i < numModels; i++) {
+	GeometryObject* closestObjectHit = nullptr;
+	for (auto iterator : geometryMap) {
 		// Model matrix, unique for each model.
-		glm::mat4 model = multiGeometry[i]->modelMatrix();
+		glm::mat4 model = iterator.second->modelMatrix();
 
 		// Matrices for each model
 		glm::mat4 MV = view * model;
@@ -195,7 +208,7 @@ void PickingScene::render(int width, int height) {
 					float distanceToTriangle = ray.intersect(triangle);
 					if ((distanceToTriangle > 0.f) && (distanceToTriangle < closestDistance)) {
 						closestDistance = distanceToTriangle;
-						closestObjectHit = i;
+						closestObjectHit = iterator.second;
 					}
 				}
 			}
@@ -203,15 +216,16 @@ void PickingScene::render(int width, int height) {
 	}
 
 	glBindVertexArray(geometry->vertexArray());
-
 	// Drawing loop
-	for (int i = 0; i < numModels; i++) {
+	for (auto iterator : geometryMap) {
 		// Pass hit to shader
-		glUniform1i(shaderProgram->uniformLocation("closestObjectHit"), closestObjectHit);
-		glUniform1i(shaderProgram->uniformLocation("currentlyDrawingObject"), i);
+		if (iterator.second == closestObjectHit)
+			glUniform1i(shaderProgram->uniformLocation("isHit"), 1);
+		else
+			glUniform1i(shaderProgram->uniformLocation("isHit"), 0);
 
 		// Model matrix, unique for each model.
-		glm::mat4 model = multiGeometry[i]->modelMatrix();
+		glm::mat4 model = iterator.second->modelMatrix();
 
 		glm::mat4 MV = view * model;
 		glm::mat4 N = glm::transpose(glm::inverse(MV));
@@ -221,6 +235,7 @@ void PickingScene::render(int width, int height) {
 
 		glDrawElements(GL_TRIANGLES, geometry->indexCount(), GL_UNSIGNED_INT, (void*)0);
 	}
+	geometryMap.clear();
 
 	multipleRenderTargets->render(player->camera(), width, height);
 }

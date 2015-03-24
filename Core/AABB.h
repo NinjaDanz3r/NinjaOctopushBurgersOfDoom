@@ -44,7 +44,7 @@ class AABB {
 		 * Useful for frustum culling.
 		 * @param rectangle The rectangle.
 		 */
-		CORE_EXPORT AABB(const Rectangle2D& rectangle);
+		CORE_EXPORT AABB(const Rectangle2D& rectangle, const float height);
 
 		/// Check collision between AABB and a frustum.
 		/**
