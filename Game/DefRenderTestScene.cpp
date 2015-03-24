@@ -42,7 +42,7 @@ DefRenderTestScene::DefRenderTestScene() {
 	geometry = new Cube();
 	geometryObject = new GeometryObject(geometry);
 	geometryGround = new GeometryObject(geometry);
-	geometryObject->move(glm::vec3(0.f, 0.005f, -1.f));
+	geometryObject->move(glm::vec3(0.f, 0.f, -0.1f));
 	geometryGround->setScale(5.0, 5.0, 5.0);
 	geometryGround->setPosition(0.5, -3.0, -2.0);
 
