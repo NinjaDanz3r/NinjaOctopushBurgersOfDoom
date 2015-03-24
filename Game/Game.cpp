@@ -10,6 +10,7 @@
 #include "MorphScene.h"
 #include "DefRenderTestScene.h"
 #include "ProjectScene.h"
+#include "GameScene.h"
 
 #include "input.h"
 #include "settings.h"
@@ -123,10 +124,12 @@ void Game::setSceneMap() {
 	(*sceneMap)["frustum"] = &createInstance<FrustumScene>;
 	(*sceneMap)["project"] = &createInstance<ProjectScene>;
 	(*sceneMap)["morph"] = &createInstance<MorphScene>;
+	(*sceneMap)["game"] = &createInstance<GameScene>;
 
 	for (auto iterator : (*sceneMap) ) {
 		sceneVector.push_back(iterator.second());
 	}
+	
 }
 
 void Game::setScene(const char* sceneName){
