@@ -17,7 +17,6 @@ class FrameBufferObjects {
 	public:
 		/// The different buffer types.
 		enum TEXTURE_TYPE {
-			POSITION, ///< Position
 			DIFFUSE, ///< Diffuse texture
 			NORMAL, ///< Normals
 			SPECULAR, ///< Specular

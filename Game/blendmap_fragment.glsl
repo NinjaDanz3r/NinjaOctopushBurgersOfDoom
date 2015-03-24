@@ -21,10 +21,9 @@ uniform vec4 lightPosition;
 uniform vec3 lightIntensity;
 uniform vec3 diffuseKoefficient;
 
-layout(location = 0) out vec3 positionOut;
-layout(location = 1) out vec3 diffuseOut;
-layout(location = 2) out vec3 normalsOut;
-layout(location = 3) out vec3 specularOut;
+layout(location = 0) out vec3 diffuseOut;
+layout(location = 1) out vec3 normalsOut;
+layout(location = 2) out vec3 specularOut;
 
 void main () {
 	vec4 blendMap = texture(blendMap, vertexIn.tex_coords);
@@ -34,7 +33,6 @@ void main () {
 				  blendMap.b / sum * texture(blueTexture, vertexIn.tex_coords * textureRepeat) +
 				  blendMap.a / sum * texture(alphaTexture, vertexIn.tex_coords * textureRepeat)).rgb;
 
-	positionOut = vertexIn.position;
 	normalsOut = vertexIn.normal;
 	specularOut = vec3(0.0, 0.0, 0.0);
 }

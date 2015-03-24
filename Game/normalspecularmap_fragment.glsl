@@ -18,10 +18,9 @@ uniform vec4 lightPosition;
 uniform vec3 lightIntensity;
 uniform vec3 diffuseKoefficient;
 
-layout(location = 0) out vec3 positionOut;
-layout(location = 1) out vec3 diffuseOut;
-layout(location = 2) out vec3 normalsOut;
-layout(location = 3) out vec3 specularOut;
+layout(location = 0) out vec3 diffuseOut;
+layout(location = 1) out vec3 normalsOut;
+layout(location = 2) out vec3 specularOut;
 
 vec3 calculateNormal(vec3 normal, vec3 tangent, vec3 mapNormal) {
     vec3 n = normalize(normal);
@@ -35,7 +34,6 @@ vec3 calculateNormal(vec3 normal, vec3 tangent, vec3 mapNormal) {
 
 void main () {
 	diffuseOut = texture(baseImage, vertexIn.tex_coords).rgb;
-	positionOut = vertexIn.position;
 	normalsOut = calculateNormal(vertexIn.normal, vertexIn.tangent, texture(normalMap, vertexIn.tex_coords).rgb);
 	specularOut = texture(specularMap, vertexIn.tex_coords).rgb;
 }

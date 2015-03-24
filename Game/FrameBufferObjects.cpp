@@ -22,7 +22,6 @@ FrameBufferObjects::FrameBufferObjects(ShaderProgram* shaderProgram, unsigned in
 	glGenTextures(NUM_TEXTURES, mTextures);
 	glGenTextures(1, &depthHandle);
 
-	attachTexture(mTextures[POSITION], width, height, GL_COLOR_ATTACHMENT0 + POSITION, GL_RGB16F);
 	attachTexture(mTextures[DIFFUSE], width, height, GL_COLOR_ATTACHMENT0 + DIFFUSE, GL_RGB);
 	attachTexture(mTextures[NORMAL], width, height, GL_COLOR_ATTACHMENT0 + NORMAL, GL_RGB16F);
 	attachTexture(mTextures[SPECULAR], width, height, GL_COLOR_ATTACHMENT0 + SPECULAR, GL_RGB);
@@ -34,8 +33,6 @@ FrameBufferObjects::FrameBufferObjects(ShaderProgram* shaderProgram, unsigned in
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_DEPTH_TEXTURE_MODE, GL_INTENSITY);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
 	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthHandle, 0);
 
@@ -113,13 +110,13 @@ void FrameBufferObjects::showTextures(int width, int height) {
 
 	bindForTexReading();
 
-	setReadBuffer(FrameBufferObjects::POSITION);
+	setReadBuffer(FrameBufferObjects::DIFFUSE);
 	glBlitFramebuffer(0, 0, width, height, 0, 0, halfWidth, halfHeight, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
-	setReadBuffer(FrameBufferObjects::DIFFUSE);
+	setReadBuffer(FrameBufferObjects::NORMAL);
 	glBlitFramebuffer(0, 0, width, height, 0, halfHeight, halfWidth, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
-	setReadBuffer(FrameBufferObjects::NORMAL);
+	setReadBuffer(FrameBufferObjects::SPECULAR);
 	glBlitFramebuffer(0, 0, width, height, halfWidth, halfHeight, width, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
 	if (depthTest)
@@ -176,7 +173,6 @@ void FrameBufferObjects::bindLighting(Camera* camera, int width, int height){
 
 	glm::vec2 screenSize(width, height);
 
-	glUniform1i(shaderProgram->uniformLocation("tPosition"), FrameBufferObjects::POSITION);
 	glUniform1i(shaderProgram->uniformLocation("tDiffuse"), FrameBufferObjects::DIFFUSE);
 	glUniform1i(shaderProgram->uniformLocation("tNormals"), FrameBufferObjects::NORMAL);
 	glUniform1i(shaderProgram->uniformLocation("tSpecular"), FrameBufferObjects::SPECULAR);
