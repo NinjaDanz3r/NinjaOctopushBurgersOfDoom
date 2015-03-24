@@ -21,7 +21,6 @@ uniform mat4 projectionMatrix;
 
 // Output
 out VertexData {
-    vec3 position;
 	vec3 normal;
 	vec3 tangent;
 	vec2 tex_coords;
@@ -37,11 +36,10 @@ void main() {
 	if (d > 0.0) {
 		for(int i = 0; i < gl_in.length(); i++) {
 			// Copy attributes
-			vertexOut.position = vec3(viewMatrix * modelMatrix * gl_in[i].gl_Position);
 			vertexOut.normal =  normalize(normalMatrix * vertexIn[i].normal);
 			vertexOut.tangent = normalize(normalMatrix * vertexIn[i].tangent);
 			vertexOut.tex_coords = vertexIn[i].tex_coords;
-			gl_Position = projectionMatrix * vec4(vertexOut.position, 1.0);
+			gl_Position = projectionMatrix * viewMatrix * modelMatrix * gl_in[i].gl_Position;
 		
 			// done with the vertex
 			EmitVertex();
