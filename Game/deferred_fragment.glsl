@@ -22,6 +22,8 @@ uniform vec2 screenSize;
 
 out vec4 fragment_color;
 
+const float EPSILON = 0.01;
+
 const vec2 poisson[15] = vec2[](
 	vec2( 0.3717325, 0.1279892),
 	vec2(0.4879754, -0.3658713),
@@ -46,8 +48,8 @@ float calculateShadow(vec4 lightSpacePosition) {
 
 	float visibility = 1.0;
 	for (int i = 0; i < 10; i++){
-		if (texture(tShadowMap, (shadowCoord.xy / shadowCoord.w) + poisson[i] / 300.0).z < (shadowCoord.z)/ shadowCoord.w){
-			visibility -= 1.0/12.0;
+		if (texture(tShadowMap, (shadowCoord.xy / shadowCoord.w) + poisson[i] / 300.0).z < (shadowCoord.z-EPSILON)/ shadowCoord.w){
+			visibility -= 1.0/20.0;
 		 }
 	}
     return visibility;

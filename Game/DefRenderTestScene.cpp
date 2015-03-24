@@ -42,7 +42,7 @@ DefRenderTestScene::DefRenderTestScene() {
 	geometry = new Cube();
 	geometryObject = new GeometryObject(geometry);
 	geometryGround = new GeometryObject(geometry);
-	geometryObject->move(glm::vec3(0.f, 0.f, -1.f));
+	geometryObject->move(glm::vec3(0.f, 0.005f, -1.f));
 	geometryGround->setScale(5.0, 5.0, 5.0);
 	geometryGround->setPosition(0.5, -3.0, -2.0);
 
@@ -175,7 +175,7 @@ void DefRenderTestScene::renderShadows(int width, int height) {
 
 	// Draw the triangles
 	glDrawElements(GL_TRIANGLES, geometryObject->geometry()->indexCount(), GL_UNSIGNED_INT, (void*)0);
-
+	
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	//shadow map render call complete.
