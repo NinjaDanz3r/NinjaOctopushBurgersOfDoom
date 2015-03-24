@@ -47,7 +47,5 @@ Scene::SceneEnd* ParticleScene::update(double time) {
 void ParticleScene::render(int width, int height) {
 	glViewport(0, 0, width, height);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glm::vec3 cameraPos = player->camera()->position();
-	glUniform3fv(shaderProgram->uniformLocation("cameraPosition"), 1,  &cameraPos[0]);
 	particleSystem->render(width, height, player->camera());
 }

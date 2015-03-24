@@ -89,8 +89,9 @@ void ParticleSystem::render(int width, int height, const Camera* camera) {
 	// Send the matrices to the shader.
 	glm::mat4 view = camera->view();
 
-	glUniformMatrix4fv(shaderProgram->uniformLocation("viewMatrix"), 1, GL_FALSE, &view[0][0]);
-	glUniformMatrix4fv(shaderProgram->uniformLocation("projectionMatrix"), 1, GL_FALSE, &camera->projection(width, height)[0][0]);
+	glUniform3fv(shaderProgram->uniformLocation("cameraPosition"), 1, &camera->position()[0]);
+	glUniform3fv(shaderProgram->uniformLocation("cameraUp"), 1, &camera->up()[0]);
+	glUniformMatrix4fv(shaderProgram->uniformLocation("viewProjectionMatrix"), 1, GL_FALSE, &(camera->projection(width, height) * view)[0][0]);
 
 	// Draw the triangles
 	glDrawArrays(GL_POINTS, 0, getParticleCount());
