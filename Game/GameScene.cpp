@@ -106,7 +106,7 @@ Scene::SceneEnd* GameScene::update(double time) {
 	geometryObject->move(glm::vec3(-static_cast<float>(time), 0.0f, 0.0f));
 
 	if (input::triggered(input::CHANGE_RENDER_STATE))
-		geometryObject->move(glm::vec3(1.f, 0.0f, 0.0f));
+		geometryObject->setPosition(glm::vec3(10.f, 0.0f, 0.0f));
 
 	if (geometryObject->position().x < 0.f)
 		return new SceneEnd(SceneEnd::QUIT);
