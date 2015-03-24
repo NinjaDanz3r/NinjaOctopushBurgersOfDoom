@@ -160,7 +160,8 @@ void FrustumScene::render(int width, int height) {
 		}
 		delete frustum;
 	}
-	Game::additionalData = std::to_string(objectsRendered);
+	
+	strcpy(Game::additionalData, std::to_string(objectsRendered).c_str());
 	geometryMap.clear();
 
 	if (state == 1) {
