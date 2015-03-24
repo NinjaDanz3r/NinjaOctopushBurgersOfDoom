@@ -88,8 +88,6 @@ Scene::SceneEnd* DefRenderTestScene::update(double time) {
 	shadowTime += time;
 	multipleRenderTargets->light.position = glm::vec4(5.f * sin(shadowTime), 3.f, 3.f + 5.f * cos(shadowTime), 1.f);
 
-	Game::additionalData = std::to_string(shadowTime);
-
 	return nullptr;
 }
 
