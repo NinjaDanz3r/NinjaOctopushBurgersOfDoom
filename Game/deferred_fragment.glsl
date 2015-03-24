@@ -22,7 +22,7 @@ uniform vec2 screenSize;
 
 out vec4 fragment_color;
 
-const float EPSILON = 0.01;
+const float EPSILON = 0.015;
 
 const vec2 poisson[15] = vec2[](
 	vec2( 0.3717325, 0.1279892),

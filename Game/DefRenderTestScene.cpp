@@ -124,7 +124,8 @@ void DefRenderTestScene::render(int width, int height) {
 
 	// Model matrix, unique for each model.
 	model = geometryGround->modelMatrix();
-	glUniformMatrix4fv(shaderProgram->uniformLocation("modelMatrix"), 1, GL_FALSE, &model[0][0]);
+	MV = view * model;
+	glUniformMatrix4fv(shaderProgram->uniformLocation("modelViewMatrix"), 1, GL_FALSE, &MV[0][0]);
 
 	// Draw the triangles
 	glDrawElements(GL_TRIANGLES, geometryObject->geometry()->indexCount(), GL_UNSIGNED_INT, (void*)0);
