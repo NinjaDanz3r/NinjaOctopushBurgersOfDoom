@@ -57,8 +57,10 @@ void ParticleSystem::update(double time) {
 		emitParticle();
 	}
 
-	if (particleCount > 0)
+	if (particleCount > 0) {
+		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, particleCount * sizeof(ParticleSystem::ParticlePosition), &this->particlePositions[0]);
+	}
 }
 
 void ParticleSystem::render(int width, int height, const Camera* camera) {
@@ -116,6 +118,8 @@ void ParticleSystem::bindPointData() {
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(ParticleSystem::ParticlePosition), BUFFER_OFFSET(0));
 	glVertexAttribPointer(1, 1, GL_FLOAT, GL_FALSE, sizeof(ParticleSystem::ParticlePosition), BUFFER_OFFSET(sizeof(float) * 3));
+
+	glBindVertexArray(0);
 }
 
 void ParticleSystem::emitParticle() {
