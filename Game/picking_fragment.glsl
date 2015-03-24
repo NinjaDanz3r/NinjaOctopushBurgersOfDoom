@@ -6,6 +6,7 @@ Normal map and specular map.
 in VertexData {
 	vec3 position;
 	vec3 normal;
+	vec3 tangent;
 	vec2 tex_coords;
 } vertexIn;
 

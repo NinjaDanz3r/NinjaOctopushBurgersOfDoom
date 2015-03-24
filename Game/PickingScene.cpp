@@ -31,15 +31,6 @@ PickingScene::PickingScene() {
 	fragmentShader = new Shader("picking_fragment.glsl", GL_FRAGMENT_SHADER);
 	shaderProgram = new ShaderProgram({ vertexShader, geometryShader, fragmentShader });
 
-	shaderProgram->use();
-
-	// Texture unit 0 is for base images.
-	glUniform1i(shaderProgram->uniformLocation("baseImage"), 0);
-	// Texture unit 1 is for normal map.
-	glUniform1i(shaderProgram->uniformLocation("normalMap"), 1);
-	// Texture unit 0 is for specular map.
-	glUniform1i(shaderProgram->uniformLocation("specularMap"), 2);
-
 	geometry = new Model("Resources/Models/Rock.bin");
 	geometry->createAabb();
 	aabb = geometry->aabb;
@@ -91,6 +82,8 @@ void PickingScene::render(int width, int height) {
 	glViewport(0, 0, width, height);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	shaderProgram->use();
+
 	// Send the matrices to the shader (Per render call operations).
 	glm::mat4 view = player->camera()->view();
 	glm::mat4 proj = player->camera()->projection(width, height);
@@ -112,6 +105,13 @@ void PickingScene::render(int width, int height) {
 	glm::vec4 rayEye = inverseProj*rayClip;
 	rayEye = glm::vec4(rayEye.x, rayEye.y, -1.0, 0.0);
 	//Per object ray operations continued inside per object loop.
+
+	// Texture unit 0 is for base images.
+	glUniform1i(shaderProgram->uniformLocation("baseImage"), 0);
+	// Texture unit 1 is for normal map.
+	glUniform1i(shaderProgram->uniformLocation("normalMap"), 1);
+	// Texture unit 0 is for specular map.
+	glUniform1i(shaderProgram->uniformLocation("specularMap"), 2);
 
 	// Base image texture
 	glActiveTexture(GL_TEXTURE0);
