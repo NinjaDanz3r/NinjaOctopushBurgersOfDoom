@@ -14,8 +14,7 @@ in VertexData {
 } vertexIn[3];
 
 // Uniform matrices.
-uniform mat4 modelMatrix;
-uniform mat4 viewMatrix;
+uniform mat4 modelViewMatrix;
 uniform mat3 normalMatrix;
 uniform mat4 projectionMatrix;
 
@@ -28,20 +27,20 @@ out VertexData {
 
 void main() {
 	// Calculate normal.
-	vec3 n = cross(gl_in[1].gl_Position.xyz-gl_in[0].gl_Position.xyz, gl_in[2].gl_Position.xyz-gl_in[0].gl_Position.xyz);
+	vec3 n = cross(gl_in[1].gl_Position.xyz - gl_in[0].gl_Position.xyz, gl_in[2].gl_Position.xyz - gl_in[0].gl_Position.xyz);
 	vec3 normal = normalMatrix * n;
 	
 	// Only display triangle if it's facing the viewer.
-	float d = dot(normal, -vec3(viewMatrix * modelMatrix * gl_in[0].gl_Position));
+	float d = dot(normal, -vec3(modelViewMatrix * gl_in[0].gl_Position));
 	if (d > 0.0) {
 		for(int i = 0; i < gl_in.length(); i++) {
 			// Copy attributes
 			vertexOut.normal =  normalize(normalMatrix * vertexIn[i].normal);
 			vertexOut.tangent = normalize(normalMatrix * vertexIn[i].tangent);
 			vertexOut.tex_coords = vertexIn[i].tex_coords;
-			gl_Position = projectionMatrix * viewMatrix * modelMatrix * gl_in[i].gl_Position;
+			gl_Position = projectionMatrix * (modelViewMatrix * gl_in[i].gl_Position);
 		
-			// done with the vertex
+			// Done with the vertex
 			EmitVertex();
 		}
 		EndPrimitive();

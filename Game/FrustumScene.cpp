@@ -131,7 +131,6 @@ void FrustumScene::render(int width, int height) {
 	// Send the matrices to the shader.
 	glm::mat4 view = player->camera()->view();
 
-	glUniformMatrix4fv(shaderProgram->uniformLocation("viewMatrix"), 1, GL_FALSE, &view[0][0]);
 	glUniformMatrix4fv(shaderProgram->uniformLocation("projectionMatrix"), 1, GL_FALSE, &player->camera()->projection(width, height)[0][0]);
 	glBindVertexArray(geometry->vertexArray());
 
@@ -153,7 +152,7 @@ void FrustumScene::render(int width, int height) {
 			glm::mat4 MV = view * model;
 			glm::mat4 N = glm::transpose(glm::inverse(MV));
 
-			glUniformMatrix4fv(shaderProgram->uniformLocation("modelMatrix"), 1, GL_FALSE, &model[0][0]);
+			glUniformMatrix4fv(shaderProgram->uniformLocation("modelViewMatrix"), 1, GL_FALSE, &MV[0][0]);
 			glUniformMatrix3fv(shaderProgram->uniformLocation("normalMatrix"), 1, GL_FALSE, &glm::mat3(N)[0][0]);
 
 			glDrawElements(GL_TRIANGLES, geometry->indexCount(), GL_UNSIGNED_INT, (void*)0);
