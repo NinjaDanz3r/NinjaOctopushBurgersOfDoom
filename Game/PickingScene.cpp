@@ -195,7 +195,7 @@ void PickingScene::render(int width, int height) {
 
 			// Search for hits.
 			float distanceToBox = ray.intersect(aabb);
-			if (distanceToBox > 0.f) {
+			if (distanceToBox >= 0.f) {
 				// If the distance to the box exceeds the distance to the closest triangle, 
 				// there is no way that any triangle contained inside that box will 
 				// be closer to the viewer.

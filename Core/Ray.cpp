@@ -94,6 +94,12 @@ float Ray::intersect(const OBB& obb) const {
 }
 
 float Ray::intersect(const AABB& aabb) const {
+	// First check if the ray's origin is inside the AABB
+	if (origin.x >= aabb.minVertex.x && origin.x <= aabb.maxVertex.x &&
+		origin.y >= aabb.minVertex.y && origin.y <= aabb.maxVertex.y &&
+		origin.z >= aabb.minVertex.z && origin.z <= aabb.maxVertex.z)
+		return 0.f;
+
 	glm::vec3 inverseRay = (1.0f / direction);
 	float t1, t2, t3, t4, t5, t6;
 	t1 = (aabb.minVertex.x - origin.x) * inverseRay.x;
