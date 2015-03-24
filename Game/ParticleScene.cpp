@@ -1,7 +1,6 @@
 #include "ParticleScene.h"
 
 #include <gl/glew.h>
-#include <gl/GL.h>
 
 #include <Texture2D.h>
 
