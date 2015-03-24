@@ -4,7 +4,6 @@ Uses blend map (4 channels, rgba) for diffuse texture and does not have a specul
 */
 #version 400
 in VertexData {
-	vec3 position;
 	vec3 normal;
 	vec3 tangent;
 	vec2 tex_coords;

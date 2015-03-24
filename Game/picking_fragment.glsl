@@ -4,7 +4,6 @@ Normal map and specular map.
 */
 #version 400
 in VertexData {
-	vec3 position;
 	vec3 normal;
 	vec3 tangent;
 	vec2 tex_coords;
