@@ -71,7 +71,7 @@ class PickingScene : public Scene {
 
 		Geometry* geometry;
 		std::vector<GeometryObject*> multiGeometry;
-		int numModels = 850;
+		int numModels = 250;
 		Player* player;
 
 		GLuint hitData = 1;
