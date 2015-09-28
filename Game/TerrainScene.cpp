@@ -52,7 +52,7 @@ TerrainScene::TerrainScene() {
 	deferredFragmentShader = new Shader("deferred_fragment.glsl", GL_FRAGMENT_SHADER);
 	deferredShaderProgram = new ShaderProgram({ deferredVertexShader, deferredFragmentShader });
 
-	terrain = new Terrain("Resources/HeightMaps/TestMapSmall.tga");
+	terrain = new Terrain("Resources/HeightMaps/FlatMapSmall.tga");
 	terrainObject = new TerrainObject(terrain);
 	terrainObject->setPosition(0.f, -5.f, 0.f);
 	terrainObject->setScale(50.f, 10.f, 50.f);
